@@ -26,13 +26,15 @@ const app = async () => {
   const {
     argv,
     env: {
-      NODE_PATH = process.cwd()
+      DEPS_PATH = process.cwd()
     }
   } = process
 
+  console.log(DEPS_PATH)
+
   let PACKAGE
   try {
-    const p = resolve(NODE_PATH, 'package.json')
+    const p = resolve(DEPS_PATH, 'package.json')
     const s = await readFile(p, 'utf8')
     PACKAGE = JSON.parse(s)
   } catch ({ message }) {
@@ -75,8 +77,8 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeProd(dependencies)
-      await executeDev(devDependencies)
+      await executeProd(DEPS_PATH, dependencies)
+      await executeDev(DEPS_PATH, devDependencies)
     } catch ({ message }) {
       error(message)
     }
@@ -86,7 +88,7 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeProd(dependencies)
+      await executeProd(DEPS_PATH, dependencies)
     } catch ({ message }) {
       error(message)
     }
@@ -96,7 +98,7 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeDev(devDependencies)
+      await executeDev(DEPS_PATH, devDependencies)
     } catch ({ message }) {
       error(message)
     }
@@ -106,7 +108,7 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeOptional(optionalDependencies)
+      await executeOptional(DEPS_PATH, optionalDependencies)
     } catch ({ message }) {
       error(message)
     }
@@ -116,7 +118,7 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeBundle(bundleDependencies)
+      await executeBundle(DEPS_PATH, bundleDependencies)
     } catch ({ message }) {
       error(message)
     }

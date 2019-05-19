@@ -4,66 +4,66 @@ import {
 
 const transform = (v) => Array.isArray(v) ? v.map((s) => s.trim().concat('@latest')).join(String.fromCharCode(32)) : v.concat('@latest')
 
-const installSaveBundle = (v) => (
+const installSaveBundle = (d, v) => (
   new Promise((resolve, reject) => {
-    spawn('npm', ['install', '--save-bundle', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    spawn(`cd "${d}" && npm`, ['install', '--save-bundle', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
 )
 
-const installSaveOptional = (v) => (
+const installSaveOptional = (d, v) => (
   new Promise((resolve, reject) => {
-    spawn('npm', ['install', '--save-optional', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    spawn(`cd "${d}" && npm`, ['install', '--save-optional', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
 )
 
-const installSaveDev = (v) => (
+const installSaveDev = (d, v) => (
   new Promise((resolve, reject) => {
-    spawn('npm', ['install', '--save-dev', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    spawn(`cd "${d}" && npm`, ['install', '--save-dev', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
 )
 
-const installSaveProd = (v) => (
+const installSaveProd = (d, v) => (
   new Promise((resolve, reject) => {
-    spawn('npm', ['install', '--save-prod', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    spawn(`cd "${d}" && npm`, ['install', '--save-prod', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
 )
 
-export async function executeEachBundle ([key, ...array] = []) {
-  if (key) await installSaveBundle(key)
+export async function executeEachBundle (dir = '.', [key, ...array] = []) {
+  if (key) await installSaveBundle(dir, key)
 
-  return (array.length) ? executeEachBundle(array) : array
+  return (array.length) ? executeEachBundle(dir, array) : array
 }
 
-export async function executeEachOptional ([key, ...array] = []) {
-  if (key) await installSaveOptional(key)
+export async function executeEachOptional (dir = '.', [key, ...array] = []) {
+  if (key) await installSaveOptional(dir, key)
 
-  return (array.length) ? executeEachOptional(array) : array
+  return (array.length) ? executeEachOptional(dir, array) : array
 }
 
-export async function executeEachDev ([key, ...array] = []) {
-  if (key) await installSaveDev(key)
+export async function executeEachDev (dir = '.', [key, ...array] = []) {
+  if (key) await installSaveDev(dir, key)
 
-  return (array.length) ? executeEachDev(array) : array
+  return (array.length) ? executeEachDev(dir, array) : array
 }
 
-export async function executeEach ([key, ...array] = []) {
-  if (key) await installSaveProd(key)
+export async function executeEach (dir = '.', [key, ...array] = []) {
+  if (key) await installSaveProd(dir, key)
 
-  return (array.length) ? executeEach(array) : array
+  return (array.length) ? executeEach(dir, array) : array
 }
 
-export const executeBundle = async (dependencies = {}) => installSaveBundle(Object.keys(dependencies))
+export const executeBundle = async (dir = '.', dependencies = {}) => installSaveBundle(dir, Object.keys(dependencies))
 
-export const executeOptional = async (dependencies = {}) => installSaveOptional(Object.keys(dependencies))
+export const executeOptional = async (dir = '.', dependencies = {}) => installSaveOptional(dir, Object.keys(dependencies))
 
-export const executeDev = async (dependencies = {}) => installSaveDev(Object.keys(dependencies))
+export const executeDev = async (dir = '.', dependencies = {}) => installSaveDev(dir, Object.keys(dependencies))
 
-export const executeProd = async (dependencies = {}) => installSaveProd(Object.keys(dependencies))
+export const executeProd = async (dir = '.', dependencies = {}) => installSaveProd(dir, Object.keys(dependencies))

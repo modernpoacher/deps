@@ -1,12 +1,9 @@
 # @modernpoacher/deps
 
-*Deps* updates all of your `package` dependencies to the latest versions.
+*Deps* updates all of your `package.json` dependencies to the latest versions.
 
-*Deps* updates both `dependencies` and `devDependencies` by default -- you can choose to update only _production_ or _development_ dependencies with additional arguments.
+*Deps* updates both `dependencies` and `devDependencies` by default (but you can choose to update only _production_ or _development_ dependencies with arguments).
 
-```
-DEPS_PATH=<path to your package> node app --save-dev
-```
 ## Using Deps
 
 Install `@modernpoacher/deps` to your project.
@@ -15,7 +12,7 @@ Install `@modernpoacher/deps` to your project.
 npm install --save-dev @modernpoacher/deps
 ```
 
-In `package.json` add a script target:
+In `package.json` add some script targets:
 
 ```
 {
@@ -33,13 +30,40 @@ At the command line execute:
 npm run deps
 ```
 
-To update only `dependencies`:
+### Updating only production dependencies
+
+To update only _production_ dependencies (on the `dependencies` field):
 
 ```
 npm run deps:prod
 ```
-To update only `devDependencies`:
+
+Or: 
+
+```
+npm run deps -- --save-prod
+```
+
+### Updating only development dependencies
+
+To update only _development_ dependencies (dependencies on the `devDependencies` field):
 
 ```
 npm run deps:dev
 ```
+
+Or: 
+
+```
+npm run deps -- --save-dev
+```
+
+### Etc
+
+_Deps_ is written in ES and is transpiled to JS with Babel. 
+
+ES functions can be found in `src`.
+
+JS functions can be found in `lib`. 
+
+The ES functions are transpiled to JS when the package is installed. To build them again, change into the `@modernpoacher/deps` directory and at the command line execute `npm run babel`.

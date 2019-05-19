@@ -1,4 +1,6 @@
-require('@babel/register')
+require('@babel/register')({
+  cwd: __dirname
+})
 
 const {
   resolve
@@ -26,11 +28,10 @@ const app = async () => {
   const {
     argv,
     env: {
-      DEPS_PATH = process.cwd()
+      PWD,
+      DEPS_PATH = PWD || process.cwd()
     }
   } = process
-
-  console.log(DEPS_PATH)
 
   let PACKAGE
   try {

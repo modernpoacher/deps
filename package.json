@@ -13,6 +13,9 @@
     "dev": "cross-env DEBUG=deps*,-babel* NODE_ENV=development node app",
     "prepare": "npm run build"
   },
+  "bin": {
+    "@modernpoacher/deps": "app.js"
+  },
   "author": "Jonathan Perry <modernpoacher@modernpoacher.com>",
   "license": "MIT",
   "repository": {

@@ -19,10 +19,10 @@ In `package.json` add a script target:
 
 ```
 {
-  "scripts": { 
-  	"deps": "@modernpoacher/deps",
-  	"deps:prod": "npm run deps -- --save-prod",
-  	"deps:dev": "npm run deps -- --save-dev"
+  "scripts": {
+    "deps": "@modernpoacher/deps",
+    "deps:prod": "npm run deps -- --save-prod",
+    "deps:dev": "npm run deps -- --save-dev"
   }
 }
 ```

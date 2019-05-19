@@ -1,7 +1,7 @@
 {
   "name": "@modernpoacher/deps",
   "description": "Update NPM package dependencies from the command line",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "app.js",
   "scripts": {
     "prepublishOnly": "npm run build",

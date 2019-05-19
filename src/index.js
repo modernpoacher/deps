@@ -2,7 +2,7 @@ import {
   spawn
 } from 'child_process'
 
-const transform = (v) => Array.isArray(v) ? v.map((s) => s.trim()).join(String.fromCharCode(32)) : v
+const transform = (v) => Array.isArray(v) ? v.map((s) => s.trim().concat('@latest')).join(String.fromCharCode(32)) : v.concat('@latest')
 
 const installSaveBundle = (v) => (
   new Promise((resolve, reject) => {

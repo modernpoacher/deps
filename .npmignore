@@ -1,0 +1,8 @@
+# NPM
+.npmignore
+.npm
+
+.eslintignore
+.eslintrc
+
+babel.config.js

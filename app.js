@@ -21,7 +21,7 @@ const {
   executeDev,
   executeOptional,
   executeBundle
-} = require('./src')
+} = require('./lib')
 
 const error = debug('deps:error')
 const log = debug('deps:log')

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 require('@babel/register')({
-  cwd: __dirname
+  cwd: process.cwd() // __dirname
 })
 
 const {

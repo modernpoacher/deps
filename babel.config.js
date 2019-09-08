@@ -6,7 +6,7 @@ const presets = [
       targets: {
         node: 'current'
       },
-      corejs: '3.0.1'
+      corejs: 3
     }
   ]
 ]

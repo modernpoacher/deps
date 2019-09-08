@@ -4,66 +4,74 @@ import {
 
 const transform = (v) => Array.isArray(v) ? v.map((s) => s.trim().concat('@latest')).join(String.fromCharCode(32)) : v.concat('@latest')
 
-const installSaveBundle = (d, v) => (
+const installSaveBundle = (d, v, r) => (
   new Promise((resolve, reject) => {
-    spawn(`cd "${d}" && npm`, ['install', '--save-bundle', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    const commands = ['install', '--save-bundle', transform(v)]
+
+    spawn(`cd "${d}" && npm`, (!r) ? commands : commands.concat('--registry', r), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
 )
 
-const installSaveOptional = (d, v) => (
+const installSaveOptional = (d, v, r) => (
   new Promise((resolve, reject) => {
-    spawn(`cd "${d}" && npm`, ['install', '--save-optional', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    const commands = ['install', '--save-optional', transform(v)]
+
+    spawn(`cd "${d}" && npm`, (!r) ? commands : commands.concat('--registry', r), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
 )
 
-const installSaveDev = (d, v) => (
+const installSaveDev = (d, v, r) => (
   new Promise((resolve, reject) => {
-    spawn(`cd "${d}" && npm`, ['install', '--save-dev', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    const commands = ['install', '--save-dev', transform(v)]
+
+    spawn(`cd "${d}" && npm`, (!r) ? commands : commands.concat('--registry', r), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
 )
 
-const installSaveProd = (d, v) => (
+const installSaveProd = (d, v, r) => (
   new Promise((resolve, reject) => {
-    spawn(`cd "${d}" && npm`, ['install', '--save-prod', transform(v)], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    const commands = ['install', '--save-prod', transform(v)]
+
+    spawn(`cd "${d}" && npm`, (!r) ? commands : commands.concat('--registry', r), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
 )
 
-export async function executeEachBundle (dir = '.', [key, ...array] = []) {
-  if (key) await installSaveBundle(dir, key)
+export async function executeEachBundle (dir = '.', [key, ...array] = [], registry) {
+  if (key) await installSaveBundle(dir, key, registry)
 
-  return (array.length) ? executeEachBundle(dir, array) : array
+  return (array.length) ? executeEachBundle(dir, array, registry) : array
 }
 
-export async function executeEachOptional (dir = '.', [key, ...array] = []) {
-  if (key) await installSaveOptional(dir, key)
+export async function executeEachOptional (dir = '.', [key, ...array] = [], registry) {
+  if (key) await installSaveOptional(dir, key, registry)
 
-  return (array.length) ? executeEachOptional(dir, array) : array
+  return (array.length) ? executeEachOptional(dir, array, registry) : array
 }
 
-export async function executeEachDev (dir = '.', [key, ...array] = []) {
-  if (key) await installSaveDev(dir, key)
+export async function executeEachDev (dir = '.', [key, ...array] = [], registry) {
+  if (key) await installSaveDev(dir, key, registry)
 
-  return (array.length) ? executeEachDev(dir, array) : array
+  return (array.length) ? executeEachDev(dir, array, registry) : array
 }
 
-export async function executeEach (dir = '.', [key, ...array] = []) {
-  if (key) await installSaveProd(dir, key)
+export async function executeEach (dir = '.', [key, ...array] = [], registry) {
+  if (key) await installSaveProd(dir, key, registry)
 
-  return (array.length) ? executeEach(dir, array) : array
+  return (array.length) ? executeEach(dir, array, registry) : array
 }
 
-export const executeBundle = async (dir = '.', dependencies = {}) => installSaveBundle(dir, Object.keys(dependencies))
+export const executeBundle = async (dir = '.', dependencies = {}, registry) => installSaveBundle(dir, Object.keys(dependencies), registry)
 
-export const executeOptional = async (dir = '.', dependencies = {}) => installSaveOptional(dir, Object.keys(dependencies))
+export const executeOptional = async (dir = '.', dependencies = {}, registry) => installSaveOptional(dir, Object.keys(dependencies), registry)
 
-export const executeDev = async (dir = '.', dependencies = {}) => installSaveDev(dir, Object.keys(dependencies))
+export const executeDev = async (dir = '.', dependencies = {}, registry) => installSaveDev(dir, Object.keys(dependencies), registry)
 
-export const executeProd = async (dir = '.', dependencies = {}) => installSaveProd(dir, Object.keys(dependencies))
+export const executeProd = async (dir = '.', dependencies = {}, registry) => installSaveProd(dir, Object.keys(dependencies), registry)

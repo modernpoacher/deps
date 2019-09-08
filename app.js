@@ -57,20 +57,23 @@ const app = async () => {
     .option('-D, --save-dev [devDependencies]', 'Install `devDependencies`')
     .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`')
     .option('-B, --save-bundle [bundleDependencies]', 'Install `bundleDependencies`')
+    .option('--registry [registry]', 'Installation registry')
     .parse(argv)
 
   const {
     saveProd: P = false,
     saveDev: D = false,
     saveOptional: O = false,
-    saveBundle: B = false
+    saveBundle: B = false,
+    registry = null
   } = commander
 
   log({
     saveProd: P,
     saveDev: D,
     saveOptional: O,
-    saveBundle: B
+    saveBundle: B,
+    registry
   })
 
   if ((P && D) || (!P && !D && !O && !B)) {
@@ -80,8 +83,8 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeProd(DEPS_PATH, dependencies)
-      await executeDev(DEPS_PATH, devDependencies)
+      await executeProd(DEPS_PATH, dependencies, registry)
+      await executeDev(DEPS_PATH, devDependencies, registry)
     } catch ({ message }) {
       error(message)
     }
@@ -91,7 +94,7 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeProd(DEPS_PATH, dependencies)
+      await executeProd(DEPS_PATH, dependencies, registry)
     } catch ({ message }) {
       error(message)
     }
@@ -101,7 +104,7 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeDev(DEPS_PATH, devDependencies)
+      await executeDev(DEPS_PATH, devDependencies, registry)
     } catch ({ message }) {
       error(message)
     }
@@ -111,7 +114,7 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeOptional(DEPS_PATH, optionalDependencies)
+      await executeOptional(DEPS_PATH, optionalDependencies, registry)
     } catch ({ message }) {
       error(message)
     }
@@ -121,7 +124,7 @@ const app = async () => {
     } = PACKAGE
 
     try {
-      await executeBundle(DEPS_PATH, bundleDependencies)
+      await executeBundle(DEPS_PATH, bundleDependencies, registry)
     } catch ({ message }) {
       error(message)
     }

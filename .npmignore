@@ -1,6 +1,10 @@
-# NPM
-.npmignore
-.npm
+.DS_Store
 
 .eslintignore
 .eslintrc
+
+.gitignore
+
+# NPM
+.npmignore
+.npmrc

@@ -6,9 +6,12 @@ const transform = (v) => Array.isArray(v) ? v.map((s) => s.trim().concat('@lates
 
 const installSaveBundle = (d, v, r) => (
   new Promise((resolve, reject) => {
-    const commands = ['install', '--save-bundle', transform(v)]
+    const commands = (
+      ['install', '--save-bundle', transform(v)]
+        .concat(r ? ['--registry', r] :[])
+    )
 
-    spawn(`cd "${d}" && npm`, (!r) ? commands : commands.concat('--registry', r), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
@@ -16,9 +19,12 @@ const installSaveBundle = (d, v, r) => (
 
 const installSaveOptional = (d, v, r) => (
   new Promise((resolve, reject) => {
-    const commands = ['install', '--save-optional', transform(v)]
+    const commands = (
+      ['install', '--save-optional', transform(v)]
+        .concat(r ? ['--registry', r] :[])
+    )
 
-    spawn(`cd "${d}" && npm`, (!r) ? commands : commands.concat('--registry', r), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
@@ -26,9 +32,12 @@ const installSaveOptional = (d, v, r) => (
 
 const installSaveDev = (d, v, r) => (
   new Promise((resolve, reject) => {
-    const commands = ['install', '--save-dev', transform(v)]
+    const commands = (
+      ['install', '--save-dev', transform(v)]
+        .concat(r ? ['--registry', r] :[])
+    )
 
-    spawn(`cd "${d}" && npm`, (!r) ? commands : commands.concat('--registry', r), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })
@@ -36,9 +45,12 @@ const installSaveDev = (d, v, r) => (
 
 const installSaveProd = (d, v, r) => (
   new Promise((resolve, reject) => {
-    const commands = ['install', '--save-prod', transform(v)]
+    const commands = (
+      ['install', '--save-prod', transform(v)]
+        .concat(r ? ['--registry', r] :[])
+    )
 
-    spawn(`cd "${d}" && npm`, (!r) ? commands : commands.concat('--registry', r), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
       .on('close', resolve)
       .on('error', reject)
   })

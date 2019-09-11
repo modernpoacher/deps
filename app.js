@@ -53,19 +53,19 @@ const app = async () => {
 
   commander
     .version(version)
-    .option('-P, --save-prod [dependencies]', 'Install `dependencies`')
-    .option('-D, --save-dev [devDependencies]', 'Install `devDependencies`')
-    .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`')
-    .option('-B, --save-bundle [bundleDependencies]', 'Install `bundleDependencies`')
+    .option('-P, --save-prod [dependencies]', 'Install `dependencies`', false)
+    .option('-D, --save-dev [devDependencies]', 'Install `devDependencies`', false)
+    .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`', false)
+    .option('-B, --save-bundle [bundleDependencies]', 'Install `bundleDependencies`', false)
     .option('--registry [registry]', 'Installation registry')
     .parse(argv)
 
   const {
-    saveProd: P = false,
-    saveDev: D = false,
-    saveOptional: O = false,
-    saveBundle: B = false,
-    registry = null
+    saveProd: P,
+    saveDev: D,
+    saveOptional: O,
+    saveBundle: B,
+    registry
   } = commander
 
   log({

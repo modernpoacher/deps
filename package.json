@@ -32,7 +32,8 @@
     "dependencies",
     "devDependencies",
     "optionalDependencies",
-    "bundleDependencies"
+    "bundleDependencies",
+    "peerDependencies"
   ],
   "devDependencies": {
     "babel-eslint": "^10.0.3",

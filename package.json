@@ -16,7 +16,7 @@
   },
   "bin": {
     "deps": "./app.js",
-    "deps/install": "./install/app.js"
+    "deps-install": "./install/app.js"
   },
   "author": "Jonathan Perry <modernpoacher@modernpoacher.com>",
   "license": "MIT",

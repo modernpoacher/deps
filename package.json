@@ -8,14 +8,15 @@
     "postinstall": "npm run build",
     "build": "npm run babel",
     "babel": "babel src -d lib",
-    "lint": "eslint app.js src",
+    "lint": "eslint *.js src install",
     "lint:fix": "npm run lint -- --fix",
     "start": "cross-env DEBUG=deps* NODE_ENV=production node app",
     "dev": "cross-env DEBUG=deps*,-babel* NODE_ENV=development node app",
     "prepare": "npm run build"
   },
   "bin": {
-    "deps": "./app.js"
+    "deps": "./app.js",
+    "deps/install": "./install/app.js"
   },
   "author": "Jonathan Perry <modernpoacher@modernpoacher.com>",
   "license": "MIT",

@@ -1,61 +1,86 @@
 # @modernpoacher/deps
 
-*Deps* updates all of your `package.json` dependencies to the latest versions.
+*Deps* updates each of your `package.json` dependencies to their latest version.
 
-*Deps* updates both `dependencies` and `devDependencies` by default (but you can choose to update only _production_ or _development_ dependencies with arguments).
+*Deps* updates both `dependencies` and `devDependencies` by default. You can choose to update only _production_ or _development_ dependencies.
+
+## Installing Deps
+
+Globally:
+
+```sh
+npm i -g @modernpoacher/deps
+```
+
+Locally, to your project:
+
+```sh
+npm i -D @modernpoacher/deps
+```
 
 ## Using Deps
 
-Install `@modernpoacher/deps` to your project.
-
+When installed globally, change into the root directory of the package you want to update and execute the command:
+```sh
+deps
 ```
-npm install --save-dev @modernpoacher/deps
-```
 
-In `package.json` add some script targets:
+When installed locally, or not installed, use `npx`:
 
+```sh
+npx @modernpoacher/deps
 ```
+Or when installed locally, use `npm` with script targets in `package.json`:
+
+```json
 {
   "scripts": {
-    "deps": "deps",
-    "deps:prod": "deps --save-prod",
-    "deps:dev": "deps --save-dev"
+    "deps": "deps"
   }
 }
 ```
-
-At the command line execute:
-
-```
+Then:
+```sh
 npm run deps
 ```
-
 ### Updating only production dependencies
 
 To update only _production_ dependencies (on the `dependencies` field):
 
+```sh
+deps --save-prod # or -P
 ```
-npm run deps:prod
+
+Or:
+
+```sh
+npx @modernpoacher/deps --save-prod # or -P
 ```
 
 Or: 
 
-```
-npm run deps -- --save-prod
+```sh
+npm run deps -- --save-prod # or -P
 ```
 
 ### Updating only development dependencies
 
 To update only _development_ dependencies (dependencies on the `devDependencies` field):
 
+```sh
+deps --save-dev # or -D
 ```
-npm run deps:dev
+
+Or:
+
+```sh
+npx @modernpoacher/deps --save-dev # or -D
 ```
 
 Or: 
 
-```
-npm run deps -- --save-dev
+```sh
+npm run deps -- --save-dev # or -D
 ```
 
 ### Etc
@@ -66,4 +91,4 @@ ES functions can be found in `src`.
 
 JS functions can be found in `lib`. 
 
-The ES functions are transpiled to JS when the package is installed. To build them again, change into the `@modernpoacher/deps` directory and at the command line execute `npm run babel`.
+The ES functions are transpiled to JS when the package is installed. To build them again, change into the root directory of this package and at the command line execute `npm install && npm run build`.

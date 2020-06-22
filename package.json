@@ -6,13 +6,13 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "postinstall": "npm run build",
+    "prepare": "npm run build",
+    "start": "cross-env DEBUG=deps* NODE_ENV=production node app",
+    "dev": "cross-env DEBUG=deps*,-babel* NODE_ENV=development node app",
     "build": "npm run babel",
     "babel": "babel src -d lib",
     "lint": "eslint *.js src install",
-    "lint:fix": "npm run lint -- --fix",
-    "start": "cross-env DEBUG=deps* NODE_ENV=production node app",
-    "dev": "cross-env DEBUG=deps*,-babel* NODE_ENV=development node app",
-    "prepare": "npm run build"
+    "lint:fix": "npm run lint -- --fix"
   },
   "bin": {
     "deps": "./app.js",
@@ -38,23 +38,23 @@
   ],
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
-    "eslint-plugin-import": "^2.20.1",
-    "eslint-plugin-node": "^11.0.0",
+    "eslint": "^7.3.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1"
   },
   "dependencies": {
-    "@babel/cli": "^7.8.4",
-    "@babel/core": "^7.8.7",
-    "@babel/polyfill": "^7.8.7",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/register": "^7.8.6",
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/polyfill": "^7.10.1",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/register": "^7.10.3",
     "babel-plugin-syntax-async-functions": "^6.13.0",
-    "core-js": "^3.6.4",
+    "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "debug": "^4.1.1",
-    "sacred-fs": "^1.0.14"
+    "sacred-fs": "^1.0.15"
   }
 }

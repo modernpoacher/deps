@@ -4,10 +4,9 @@
   "version": "0.0.22",
   "main": "app.js",
   "scripts": {
-    "prepare": "cross-env NODE_ENV=production npm run build",
-    "install": "npm run prepare",
+    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
     "prebuild": "npm run clean",
-    "start": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=production node app",
+    "start": "NODE_ENV=production node app",
     "dev": "cross-env DEBUG=@modernpoacher/deps*,-babel* NODE_ENV=development node app",
     "build": "npm run babel",
     "build:watch": "npm run babel:watch",

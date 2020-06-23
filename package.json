@@ -1,7 +1,7 @@
 {
   "name": "@modernpoacher/deps",
   "description": "Update NPM package dependencies from the command line",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "main": "app.js",
   "scripts": {
     "prepare": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=production npm run build",

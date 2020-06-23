@@ -1,3 +1,18 @@
+const debug = require('debug')
+
+const log = debug('@modernpoacher/deps')
+
+const {
+  env: {
+    DEBUG = '@modernpoacher/deps',
+    NODE_ENV = 'development'
+  }
+} = process
+
+debug.enable(DEBUG)
+
+log('`@modernpoacher/deps` is awake')
+
 const presets = [
   [
     '@babel/env',
@@ -15,9 +30,19 @@ const plugins = [
   'syntax-async-functions'
 ]
 
-module.exports = {
-  compact: true,
-  comments: false,
-  presets,
-  plugins
+function using () {
+  log({ NODE_ENV })
+
+  return NODE_ENV === 'production'
+}
+
+module.exports = (api) => {
+  if (api) api.cache.using(using)
+
+  return {
+    compact: true,
+    comments: false,
+    presets,
+    plugins
+  }
 }

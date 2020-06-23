@@ -23,8 +23,8 @@ const {
   executeBundle
 } = require('./lib')
 
-const error = debug('deps:error')
-const log = debug('deps:log')
+const error = debug('@modernpoacher/deps:error')
+const log = debug('@modernpoacher/deps:log')
 
 const app = async () => {
   const {

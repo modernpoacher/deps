@@ -4,7 +4,7 @@ import {
 
 import debug from 'debug'
 
-const log = debug('deps')
+const log = debug('@modernpoacher/deps')
 
 const getDepsExact = (v) => Object.entries(v).reduce((accumulator, [module, version]) => /^\d/.test(version) ? accumulator.concat(module) : accumulator, [])
 const getDeps = (v) => Object.entries(v).reduce((accumulator, [module, version]) => /^\d/.test(version) ? accumulator : accumulator.concat(module), [])

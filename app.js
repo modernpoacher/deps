@@ -23,10 +23,9 @@ const {
   executeBundle
 } = require('./lib')
 
-const error = debug('@modernpoacher/deps:error')
-const log = debug('@modernpoacher/deps:log')
+const log = debug('@modernpoacher/deps')
 
-const app = async () => {
+async function app () {
   const {
     argv,
     env: {
@@ -41,7 +40,7 @@ const app = async () => {
     const s = await readFile(p, 'utf8')
     PACKAGE = JSON.parse(s)
   } catch ({ message }) {
-    error(message)
+    log(message)
   }
 
   const {
@@ -86,7 +85,7 @@ const app = async () => {
       await executeProd(DEPS_PATH, dependencies, registry)
       await executeDev(DEPS_PATH, devDependencies, registry)
     } catch ({ message }) {
-      error(message)
+      log(message)
     }
   } else if (P) {
     const {
@@ -96,7 +95,7 @@ const app = async () => {
     try {
       await executeProd(DEPS_PATH, dependencies, registry)
     } catch ({ message }) {
-      error(message)
+      log(message)
     }
   } else if (D) {
     const {
@@ -106,7 +105,7 @@ const app = async () => {
     try {
       await executeDev(DEPS_PATH, devDependencies, registry)
     } catch ({ message }) {
-      error(message)
+      log(message)
     }
   } else if (O) {
     const {
@@ -116,7 +115,7 @@ const app = async () => {
     try {
       await executeOptional(DEPS_PATH, optionalDependencies, registry)
     } catch ({ message }) {
-      error(message)
+      log(message)
     }
   } else if (B) {
     const {
@@ -126,7 +125,7 @@ const app = async () => {
     try {
       await executeBundle(DEPS_PATH, bundleDependencies, registry)
     } catch ({ message }) {
-      error(message)
+      log(message)
     }
   }
 }

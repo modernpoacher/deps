@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-require('@babel/register')({
-  cwd: process.cwd() // __dirname
-})
-
 const {
   resolve
 } = require('path')

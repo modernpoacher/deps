@@ -44,14 +44,11 @@ async function app () {
   }
 
   const {
-    name = '@modernpoacher/deps',
     version
   } = PACKAGE
 
-  log(name, version)
-
   commander
-    .version(version)
+    .version(version, '-v, --version', 'Version')
     .option('-P, --save-prod [dependencies]', 'Install `dependencies`', false)
     .option('-D, --save-dev [devDependencies]', 'Install `devDependencies`', false)
     .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`', false)

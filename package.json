@@ -11,7 +11,7 @@
     "peerDependencies"
   ],
   "main": "app.js",
-  "author": "Jonathan Perry <modernpoacher@modernpoacher.com>",
+  "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "license": "MIT",
   "repository": {
     "type": "git",

@@ -3,8 +3,6 @@ import debug from 'debug'
 import { expect } from 'chai'
 
 import {
-  hasConfiguration,
-  getConfiguration,
   getDepsExact,
   getDeps,
   transform,
@@ -26,20 +24,6 @@ describe('@modernpoacher/deps/common', () => {
     } = process
 
     if (DEBUG) debug.enable(DEBUG)
-  })
-
-  describe('`hasConfiguration`', () => {
-    it('is a function', () => {
-      expect(hasConfiguration)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`getConfiguration`', () => {
-    it('is a function', () => {
-      expect(getConfiguration)
-        .to.be.a('function')
-    })
   })
 
   describe('`getDepsExact`', () => {
@@ -109,6 +93,131 @@ describe('@modernpoacher/deps/common', () => {
     it('is a function', () => {
       expect(getDependency)
         .to.be.a('function')
+    })
+  })
+
+  describe('`getDeps()`', () => {
+    describe('The dependency version is exact', () => {
+      it('returns an array', () => {
+        const dependencies = {
+          'mock-package': '0.0.0'
+        }
+
+        return expect(getDeps(dependencies))
+          .to.eql([])
+      })
+    })
+
+    describe('The dependency version is not exact', () => {
+      it('returns an array', () => {
+        const dependencies = {
+          'mock-package': '^0.0.0'
+        }
+
+        return expect(getDeps(dependencies))
+          .to.eql([
+            {
+              name: 'mock-package',
+              version: 'latest'
+            }
+          ])
+      })
+    })
+  })
+
+  describe('`getDepsExact()`', () => {
+    describe('The dependency version is exact', () => {
+      describe('With configuration', () => {
+        describe('The configuration version is exact', () => {
+          it('returns an array', () => {
+            const dependencies = {
+              'mock-package': '0.0.0'
+            }
+
+            const configuration = {
+              'mock-package': '1.2.3'
+            }
+
+            return expect(getDepsExact(dependencies, configuration))
+              .to.eql([
+                {
+                  name: 'mock-package',
+                  version: '1.2.3'
+                }
+              ])
+          })
+        })
+
+        describe('The configuration version is `latest`', () => {
+          it('returns an array', () => {
+            const dependencies = {
+              'mock-package': '0.0.0'
+            }
+
+            const configuration = {
+              'mock-package': 'latest'
+            }
+
+            return expect(getDepsExact(dependencies, configuration))
+              .to.eql([
+                {
+                  name: 'mock-package',
+                  version: 'latest'
+                }
+              ])
+          })
+        })
+      })
+
+      describe('Without configuration', () => {
+        it('returns an array', () => {
+          const dependencies = {
+            'mock-package': '0.0.0'
+          }
+
+          const configuration = {}
+
+          return expect(getDepsExact(dependencies, configuration))
+            .to.eql([
+              {
+                name: 'mock-package',
+                version: '0.0.0'
+              }
+            ])
+        })
+      })
+    })
+
+    describe('The dependency version is not exact', () => {
+      describe('With configuration', () => {
+        it('returns an array', () => {
+          const dependencies = {
+            'mock-package': '^0.0.0'
+          }
+
+          const configuration = {
+            'mock-package': '1.2.3'
+          }
+
+          expect(getDepsExact(dependencies, configuration))
+            .to.eql([])
+        })
+      })
+
+      describe('Without configuration', () => {
+        it('returns an array', () => {
+          const dependencies = {
+            'mock-package': '^0.0.0'
+          }
+
+          const configuration = {
+            'mock-package': '1.2.3'
+          }
+
+          expect(getDepsExact(dependencies, configuration))
+            .to.eql([])
+        })
+      })
     })
   })
 })

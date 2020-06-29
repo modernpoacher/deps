@@ -10,22 +10,6 @@ export const getPeerDependencies = ({ peerDependencies } = {}) => peerDependenci
 
 export const isExact = (v) => /^\d/.test(v)
 
-export function hasConfiguration (configuration, name) {
-  if (Reflect.has(configuration, name)) {
-    const version = Reflect.get(configuration, name)
-
-    return isExact(version)
-  }
-}
-
-export function getConfiguration (configuration, name) {
-  if (Reflect.has(configuration, name)) {
-    const version = Reflect.get(configuration, name)
-
-    return version
-  }
-}
-
 export const getDependency = ({ name = '@modernpoacher/deps', version = 'latest' } = {}) => `${name}@${version}`
 
 export function getDepsExact (v, c) {
@@ -35,7 +19,7 @@ export function getDepsExact (v, c) {
     Object.entries(v)
       .reduce((accumulator, [name, version]) => (
         isExact(version)
-          ? accumulator.concat({ name, version: hasConfiguration(c, name) ? getConfiguration(c, name) : 'latest' })
+          ? accumulator.concat({ name, version: Reflect.has(c, name) ? Reflect.get(c, name) : version })
           : accumulator
       ), [])
   )
@@ -54,7 +38,7 @@ export function getDeps (v) {
   )
 }
 
-export function transform (v, c = {}) {
+export function transform (v) {
   log('transform')
 
   return (

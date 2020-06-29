@@ -1,234 +1,303 @@
+import debug from 'debug'
+
 import {
   spawn
 } from 'child_process'
 
-import debug from 'debug'
+import {
+  isExact,
+  transform,
+  getDepsExact,
+  getDeps
+} from './common'
 
 const log = debug('@modernpoacher/deps')
 
-const getDepsExact = (v) => Object.entries(v).reduce((accumulator, [module, version]) => /^\d/.test(version) ? accumulator.concat(module) : accumulator, [])
-const getDeps = (v) => Object.entries(v).reduce((accumulator, [module, version]) => /^\d/.test(version) ? accumulator : accumulator.concat(module), [])
-const transform = (v) => Array.isArray(v) ? v.map((s) => s.trim().concat('@latest')).join(String.fromCharCode(32)).trim() : v.concat('@latest')
-
-const getCommands = (v, r, e) => (
+const getCommands = (v, c, r, e) => (
   ['install']
-    .concat(transform(v)) // string or array
+    .concat(transform(v, c)) // string or array
     .concat(r ? ['--registry', r] : [])
     .concat(e ? '--save-exact' : [])
 )
 
-const getSaveBundleCommands = (v, r, e = false) => (
-  getCommands(v, r, e).concat('--save-bundle')
-)
+function getSaveBundleCommands (v, c, r, e = false) {
+  log('getSaveBundleCommands')
 
-const getSaveOptionalCommands = (v, r, e = false) => (
-  getCommands(v, r, e).concat('--save-optional')
-)
+  return (
+    getCommands(v, c, r, e).concat('--save-bundle')
+  )
+}
 
-const getSaveDevCommands = (v, r, e = false) => (
-  getCommands(v, r, e).concat('--save-dev')
-)
+function getSaveOptionalCommands (v, c, r, e = false) {
+  log('getSaveOptionalCommands')
 
-const getSavProdCommands = (v, r, e = false) => (
-  getCommands(v, r, e).concat('--save-prod')
-)
+  return (
+    getCommands(v, c, r, e).concat('--save-optional')
+  )
+}
 
-const installSaveBundleExact = (d, v, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getSaveBundleCommands(v, r, true)
+function getSaveDevCommands (v, c, r, e = false) {
+  log('getSaveDevCommands')
 
-    log(commands.join(String.fromCharCode(32)).trim())
+  return (
+    getCommands(v, c, r, e).concat('--save-dev')
+  )
+}
 
-    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+function getSaveProdCommands (v, c, r, e = false) {
+  log('getSaveProdCommands')
 
-const installSaveBundle = (d, v, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getSaveBundleCommands(v, r)
+  return (
+    getCommands(v, c, r, e).concat('--save-prod')
+  )
+}
 
-    log(commands.join(String.fromCharCode(32)).trim())
+function installSaveBundleExact (d, v, c, r) {
+  log('installSaveBundleExact')
 
-    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getSaveBundleCommands(v, c, r, true)
 
-const installSaveOptionalExact = (d, v, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getSaveOptionalCommands(v, r, true)
+      log(commands.join(String.fromCharCode(32)).trim())
 
-    log(commands.join(String.fromCharCode(32)).trim())
+      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
 
-    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+function installSaveBundle (d, v, c, r) {
+  log('installSaveBundle')
 
-const installSaveOptional = (d, v, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getSaveOptionalCommands(v, r)
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getSaveBundleCommands(v, c, r)
 
-    log(commands.join(String.fromCharCode(32)).trim())
+      log(commands.join(String.fromCharCode(32)).trim())
 
-    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
 
-const installSaveDevExact = (d, v, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getSaveDevCommands(v, r, true)
+function installSaveOptionalExact (d, v, c, r) {
+  log('installSaveOptionalExact')
 
-    log(commands.join(String.fromCharCode(32)).trim())
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getSaveOptionalCommands(v, c, r, true)
 
-    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+      log(commands.join(String.fromCharCode(32)).trim())
 
-const installSaveDev = (d, v, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getSaveDevCommands(v, r)
+      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
 
-    log(commands.join(String.fromCharCode(32)).trim())
+function installSaveOptional (d, v, c, r) {
+  log('installSaveOptional')
 
-    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getSaveOptionalCommands(v, c, r)
 
-const installSaveProdExact = (d, v, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getSavProdCommands(v, r, true)
+      log(commands.join(String.fromCharCode(32)).trim())
 
-    log(commands.join(String.fromCharCode(32)).trim())
+      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
 
-    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+function installSaveDevExact (d, v, c, r) {
+  log('installSaveDevExact')
 
-const installSaveProd = (d, v, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getSavProdCommands(v, r)
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getSaveDevCommands(v, c, r, true)
 
-    log(commands.join(String.fromCharCode(32)).trim())
+      log(commands.join(String.fromCharCode(32)).trim())
 
-    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
 
-export async function executeEachBundle (dir = '.', [entry, ...array] = [], registry) {
+function installSaveDev (d, v, c, r) {
+  log('installSaveDev')
+
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getSaveDevCommands(v, c, r)
+
+      log(commands.join(String.fromCharCode(32)).trim())
+
+      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
+
+function installSaveProdExact (d, v, c, r) {
+  log('installSaveProdExact')
+
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getSaveProdCommands(v, c, r, true)
+
+      log(commands.join(String.fromCharCode(32)).trim())
+
+      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
+
+function installSaveProd (d, v, c, r) {
+  log('installSaveProd')
+
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getSaveProdCommands(v, c, r)
+
+      log(commands.join(String.fromCharCode(32)).trim())
+
+      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
+
+export async function executeEachBundle (dir = '.', [entry, ...array] = [], configuration, registry) {
+  log('executeEachBundle')
+
   const [
-    module,
+    name,
     version
   ] = entry
 
-  if (module) {
-    if (/^\d/.test(version)) {
-      await installSaveBundleExact(dir, entry, registry)
+  if (name) {
+    if (isExact(version)) {
+      await installSaveBundleExact(dir, entry, configuration, registry)
     } else {
-      await installSaveBundle(dir, entry, registry)
+      await installSaveBundle(dir, entry, configuration, registry)
     }
   }
 
-  return (array.length) ? executeEachBundle(dir, array, registry) : array
+  return (array.length) ? executeEachBundle(dir, array, configuration, registry) : array
 }
 
-export async function executeEachOptional (dir = '.', [entry, ...array] = [], registry) {
+export async function executeEachOptional (dir = '.', [entry, ...array] = [], configuration, registry) {
+  log('executeEachOptional')
+
   const [
-    module,
+    name,
     version
   ] = entry
 
-  if (module) {
-    if (/^\d/.test(version)) {
-      await installSaveOptionalExact(dir, entry, registry)
+  if (name) {
+    if (isExact(version)) {
+      await installSaveOptionalExact(dir, entry, configuration, registry)
     } else {
-      await installSaveOptional(dir, entry, registry)
+      await installSaveOptional(dir, entry, configuration, registry)
     }
   }
 
-  return (array.length) ? executeEachOptional(dir, array, registry) : array
+  return (array.length) ? executeEachOptional(dir, array, configuration, registry) : array
 }
 
-export async function executeEachDev (dir = '.', [entry, ...array] = [], registry) {
+export async function executeEachDev (dir = '.', [entry, ...array] = [], configuration, registry) {
+  log('executeEachDev')
+
   const [
-    module,
+    name,
     version
   ] = entry
 
-  if (module) {
-    if (/^\d/.test(version)) {
-      await installSaveDevExact(dir, entry, registry)
+  if (name) {
+    if (isExact(version)) {
+      await installSaveDevExact(dir, entry, configuration, registry)
     } else {
-      await installSaveDev(dir, entry, registry)
+      await installSaveDev(dir, entry, configuration, registry)
     }
   }
 
-  return (array.length) ? executeEachDev(dir, array, registry) : array
+  return (array.length) ? executeEachDev(dir, array, configuration, registry) : array
 }
 
-export async function executeEach (dir = '.', [entry, ...array] = [], registry) {
+export async function executeEach (dir = '.', [entry, ...array] = [], configuration, registry) {
+  log('executeEach')
+
   const [
-    module,
+    name,
     version
   ] = entry
 
-  if (module) {
-    if (/^\d/.test(version)) {
-      await installSaveProdExact(dir, entry, registry)
+  if (name) {
+    if (isExact(version)) {
+      await installSaveProdExact(dir, entry, configuration, registry)
     } else {
-      await installSaveProd(dir, entry, registry)
+      await installSaveProd(dir, entry, configuration, registry)
     }
   }
 
-  return (array.length) ? executeEach(dir, array, registry) : array
+  return (array.length) ? executeEach(dir, array, configuration, registry) : array
 }
 
-export const executeBundle = async (dir = '.', dependencies = {}, registry) => {
-  const depsExact = getDepsExact(dependencies)
-  const deps = getDeps(dependencies)
+export async function executeBundle (dir = '.', packages = {}, configuration = {}, registry) {
+  const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveBundleExact(dir, depsExact, registry)
+  if (depsExact.length) await installSaveBundleExact(dir, depsExact, configuration, registry)
 
-  if (deps.length) await installSaveBundle(dir, deps, registry)
+  const deps = getDeps(packages)
+
+  if (deps.length) await installSaveBundle(dir, deps, configuration, registry)
 }
 
-export const executeOptional = async (dir = '.', dependencies = {}, registry) => {
-  const depsExact = getDepsExact(dependencies)
-  const deps = getDeps(dependencies)
+export async function executeOptional (dir = '.', packages = {}, configuration = {}, registry) {
+  log('executeOptional')
 
-  if (depsExact.length) await installSaveOptionalExact(dir, depsExact, registry)
+  const depsExact = getDepsExact(packages, configuration)
 
-  if (deps.length) await installSaveOptional(dir, deps, registry)
+  if (depsExact.length) await installSaveOptionalExact(dir, depsExact, configuration, registry)
+
+  const deps = getDeps(packages)
+
+  if (deps.length) await installSaveOptional(dir, deps, configuration, registry)
 }
 
-export const executeDev = async (dir = '.', dependencies = {}, registry) => {
-  const depsExact = getDepsExact(dependencies)
-  const deps = getDeps(dependencies)
+export async function executeDev (dir = '.', packages = {}, configuration = {}, registry) {
+  log('executeDev')
 
-  if (depsExact.length) await installSaveDevExact(dir, depsExact, registry)
+  const depsExact = getDepsExact(packages, configuration)
 
-  if (deps.length) await installSaveDev(dir, deps, registry)
+  if (depsExact.length) await installSaveDevExact(dir, depsExact, configuration, registry)
+
+  const deps = getDeps(packages)
+
+  if (deps.length) await installSaveDev(dir, deps, configuration, registry)
 }
 
-export const executeProd = async (dir = '.', dependencies = {}, registry) => {
-  const depsExact = getDepsExact(dependencies)
-  const deps = getDeps(dependencies)
+export async function executeProd (dir = '.', packages = {}, configuration = {}, registry) {
+  log('executeProd')
 
-  if (depsExact.length) await installSaveProdExact(dir, depsExact, registry)
+  const depsExact = getDepsExact(packages, configuration)
 
-  if (deps.length) await installSaveProd(dir, deps, registry)
+  if (depsExact.length) await installSaveProdExact(dir, depsExact, configuration, registry)
+
+  const deps = getDeps(packages)
+
+  if (deps.length) await installSaveProd(dir, deps, configuration, registry)
 }

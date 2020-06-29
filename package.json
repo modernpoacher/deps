@@ -10,9 +10,12 @@
     "bundleDependencies",
     "peerDependencies"
   ],
-  "main": "app.js",
+  "main": "./app.js",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=12.18.1"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/modernpoacher/deps"
@@ -23,16 +26,16 @@
   },
   "scripts": {
     "prepublishOnly": "cross-env NODE_ENV=production npm run build",
-    "install": "cross-env NODE_ENV=production npm run build",
     "prebuild": "npm run clean",
-    "start": "cross-env NODE_ENV=production node app",
+    "start": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=production node app",
     "dev": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=development node app",
+    "dev-install": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=development node install/app",
     "build": "npm run babel",
     "build:watch": "npm run babel:watch",
     "clean": "rimraf lib",
     "babel": "babel src -d lib",
     "babel:watch": "npm run babel -- -w",
-    "lint": "eslint *.js src install",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix"
   },
   "bin": {
@@ -40,26 +43,24 @@
     "deps-install": "./install/app.js"
   },
   "dependencies": {
-    "@babel/cli": "^7.10.3",
-    "@babel/core": "^7.10.3",
-    "@babel/polyfill": "^7.10.1",
-    "@babel/preset-env": "^7.10.3",
-    "@babel/register": "^7.10.3",
-    "babel-plugin-syntax-async-functions": "^6.13.0",
     "commander": "^5.1.0",
     "core-js": "^3.6.5",
-    "cross-env": "^7.0.2",
     "debug": "^4.1.1",
-    "rimraf": "^3.0.2",
     "sacred-fs": "^1.0.17"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.3",
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-syntax-async-functions": "^6.13.0",
+    "cross-env": "^7.0.2",
     "eslint": "^7.3.1",
     "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1"
+    "eslint-plugin-standard": "^4.0.1",
+    "rimraf": "^3.0.2"
   }
 }

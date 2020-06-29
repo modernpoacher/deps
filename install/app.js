@@ -1,9 +1,5 @@
 #!/usr/bin/env node
 
-require('@babel/register')({
-  cwd: process.cwd() // __dirname
-})
-
 const {
   resolve
 } = require('path')
@@ -17,13 +13,21 @@ const commander = require('commander')
 const debug = require('debug')
 
 const {
+  getProdDependencies,
+  getDevDependencies,
+  getOptionalDependencies,
+  getBundleDependencies,
+  getPeerDependencies
+} = require('../lib/common')
+
+const {
   execute
 } = require('../lib/install')
 
 const error = debug('@modernpoacher/deps:error')
 const log = debug('@modernpoacher/deps:log')
 
-const app = async () => {
+async function app () {
   const {
     argv,
     env: {
@@ -40,12 +44,30 @@ const app = async () => {
     error(message)
   }
 
+  let CONFIGURATION
+  try {
+    const p = resolve(DEPS_PATH, '.depsrc')
+    const s = await readFile(p, 'utf8')
+    CONFIGURATION = JSON.parse(s)
+  } catch (e) {
+    const {
+      code
+    } = e
+
+    if (code === 'ENOENT') CONFIGURATION = {}
+    else {
+      const {
+        message
+      } = e
+
+      log({ code, message })
+      return
+    }
+  }
+
   const {
-    name = '@modernpoacher/deps',
     version
   } = PACKAGE
-
-  log(name, version)
 
   commander
     .version(version)
@@ -75,60 +97,40 @@ const app = async () => {
     bundle: B,
     peer: p,
     save,
-    registry
+    ...(registry ? { registry } : {})
   })
 
   if (P) {
-    const {
-      dependencies = {}
-    } = PACKAGE
-
     try {
-      await execute(DEPS_PATH, dependencies, { save, registry })
+      await execute(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), save, registry)
     } catch ({ message }) {
       error(message)
     }
   } else {
     if (D) {
-      const {
-        devDependencies = {}
-      } = PACKAGE
-
       try {
-        await execute(DEPS_PATH, devDependencies, { save, registry })
+        await execute(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), save, registry)
       } catch ({ message }) {
         error(message)
       }
     } else {
       if (O) {
-        const {
-          optionalDependencies = {}
-        } = PACKAGE
-
         try {
-          await execute(DEPS_PATH, optionalDependencies, { save, registry })
+          await execute(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), save, registry)
         } catch ({ message }) {
           error(message)
         }
       } else {
         if (B) {
-          const {
-            bundleDependencies = {}
-          } = PACKAGE
-
           try {
-            await execute(DEPS_PATH, bundleDependencies, { save, registry })
+            await execute(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), save, registry)
           } catch ({ message }) {
             error(message)
           }
         } else {
           if (p) {
-            const {
-              peerDependencies = {}
-            } = PACKAGE
-
             try {
-              await execute(DEPS_PATH, peerDependencies, { save, registry })
+              await execute(DEPS_PATH, getPeerDependencies(PACKAGE), getPeerDependencies(CONFIGURATION), save, registry)
             } catch ({ message }) {
               error(message)
             }

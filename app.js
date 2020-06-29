@@ -13,6 +13,13 @@ const commander = require('commander')
 const debug = require('debug')
 
 const {
+  getProdDependencies,
+  getDevDependencies,
+  getOptionalDependencies,
+  getBundleDependencies
+} = require('./lib/common')
+
+const {
   executeProd,
   executeDev,
   executeOptional,
@@ -37,6 +44,27 @@ async function app () {
     PACKAGE = JSON.parse(s)
   } catch ({ message }) {
     log(message)
+  }
+
+  let CONFIGURATION
+  try {
+    const p = resolve(DEPS_PATH, '.depsrc')
+    const s = await readFile(p, 'utf8')
+    CONFIGURATION = JSON.parse(s)
+  } catch (e) {
+    const {
+      code
+    } = e
+
+    if (code === 'ENOENT') CONFIGURATION = {}
+    else {
+      const {
+        message
+      } = e
+
+      log(`Configuration error: "${message}"`)
+      return
+    }
   }
 
   const {
@@ -65,60 +93,47 @@ async function app () {
     saveDev: D,
     saveOptional: O,
     saveBundle: B,
-    registry
+    ...(registry ? { registry } : {})
   })
 
   if ((P && D) || (!P && !D && !O && !B)) {
-    const {
-      dependencies = {},
-      devDependencies = {}
-    } = PACKAGE
-
     try {
-      await executeProd(DEPS_PATH, dependencies, registry)
-      await executeDev(DEPS_PATH, devDependencies, registry)
+      await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry)
+      await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry)
     } catch ({ message }) {
       log(message)
     }
-  } else if (P) {
-    const {
-      dependencies = {}
-    } = PACKAGE
-
-    try {
-      await executeProd(DEPS_PATH, dependencies, registry)
-    } catch ({ message }) {
-      log(message)
-    }
-  } else if (D) {
-    const {
-      devDependencies = {}
-    } = PACKAGE
-
-    try {
-      await executeDev(DEPS_PATH, devDependencies, registry)
-    } catch ({ message }) {
-      log(message)
-    }
-  } else if (O) {
-    const {
-      optionalDependencies = {}
-    } = PACKAGE
-
-    try {
-      await executeOptional(DEPS_PATH, optionalDependencies, registry)
-    } catch ({ message }) {
-      log(message)
-    }
-  } else if (B) {
-    const {
-      bundleDependencies = {}
-    } = PACKAGE
-
-    try {
-      await executeBundle(DEPS_PATH, bundleDependencies, registry)
-    } catch ({ message }) {
-      log(message)
+  } else {
+    if (P) {
+      try {
+        await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry)
+      } catch ({ message }) {
+        log(message)
+      }
+    } else {
+      if (D) {
+        try {
+          await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry)
+        } catch ({ message }) {
+          log(message)
+        }
+      } else {
+        if (O) {
+          try {
+            await executeOptional(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), registry)
+          } catch ({ message }) {
+            log(message)
+          }
+        } else {
+          if (B) {
+            try {
+              await executeBundle(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), registry)
+            } catch ({ message }) {
+              log(message)
+            }
+          }
+        }
+      }
     }
   }
 }

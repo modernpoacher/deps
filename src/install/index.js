@@ -4,49 +4,60 @@ import {
 
 import debug from 'debug'
 
+import {
+  transform,
+  getDepsExact,
+  getDeps
+} from '../common'
+
 const log = debug('@modernpoacher/deps:install')
 
-const getDepsExact = (v) => Object.entries(v).reduce((accumulator, [module, version]) => /^\d/.test(version) ? accumulator.concat(module) : accumulator, [])
-const getDeps = (v) => Object.entries(v).reduce((accumulator, [module, version]) => /^\d/.test(version) ? accumulator : accumulator.concat(module), [])
-const transform = (v) => Array.isArray(v) ? v.map((module) => module.trim().concat('@latest')).join(String.fromCharCode(32)).trim() : v.trim()
-
-const getCommmands = (v, s, r, e = false) => (
+const getCommmands = (v, c, s, r, e = false) => (
   ['install']
-    .concat(transform(v)) // array  or string
+    .concat(transform(v, c)) // string or array
     .concat(s ? [] : '--no-save')
     .concat(r ? ['--registry', r] : [])
     .concat(e ? '--save-exact' : [])
 )
 
-const installExact = (d, v, s, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getCommmands(v, s, r, true)
+function installExact (d, v, c, s, r) {
+  log('installExact')
 
-    log(commands.join(String.fromCharCode(32)).trim())
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getCommmands(v, c, s, r, true)
 
-    spawn(`cd "${d}" && npm`, getCommmands(v, s, r, true), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+      log(commands.join(String.fromCharCode(32)).trim())
 
-const install = (d, v, s, r) => (
-  new Promise((resolve, reject) => {
-    const commands = getCommmands(v, s, r)
+      spawn(`cd "${d}" && npm`, getCommmands(v, s, r, true), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
 
-    log(commands.join(String.fromCharCode(32)).trim())
+function install (d, v, c, s, r) {
+  return (
+    new Promise((resolve, reject) => {
+      const commands = getCommmands(v, c, s, r)
 
-    spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-      .on('close', resolve)
-      .on('error', reject)
-  })
-)
+      log(commands.join(String.fromCharCode(32)).trim())
 
-export const execute = async (dir = '.', dependencies = {}, { save, registry }) => {
-  const depsExact = getDepsExact(dependencies)
-  const deps = getDeps(dependencies)
+      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+        .on('close', resolve)
+        .on('error', reject)
+    })
+  )
+}
 
-  if (depsExact.length) await installExact(dir, depsExact, save, registry)
+export async function execute (dir = '.', packages = {}, configuration = {}, save = false, registry) {
+  log('execute')
 
-  if (deps.length) await install(dir, deps, save, registry)
+  const depsExact = getDepsExact(packages, configuration)
+
+  if (depsExact.length) await installExact(dir, depsExact, configuration, save, registry)
+
+  const deps = getDeps(packages)
+
+  if (deps.length) await install(dir, deps, configuration, save, registry)
 }

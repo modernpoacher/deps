@@ -44,7 +44,6 @@
   },
   "dependencies": {
     "commander": "^5.1.0",
-    "core-js": "^3.6.5",
     "debug": "^4.1.1",
     "sacred-fs": "^1.0.17"
   },
@@ -54,6 +53,7 @@
     "@babel/preset-env": "^7.10.3",
     "babel-eslint": "^10.1.0",
     "babel-plugin-syntax-async-functions": "^6.13.0",
+    "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "eslint": "^7.3.1",
     "eslint-config-standard": "^14.1.1",

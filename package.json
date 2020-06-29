@@ -36,7 +36,9 @@
     "babel": "babel src -d lib",
     "babel:watch": "npm run babel -- -w",
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "test": "NODE_ENV=test mocha test --recursive -r @babel/register --verbose",
+    "pre-commit": "npm run lint && npm run test && npm run build && git add lib"
   },
   "bin": {
     "deps": "./app.js",
@@ -51,16 +53,28 @@
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.10.3",
     "@babel/preset-env": "^7.10.3",
+    "@babel/register": "^7.10.3",
     "babel-eslint": "^10.1.0",
+    "babel-plugin-module-resolver": "^4.0.0",
     "babel-plugin-syntax-async-functions": "^6.13.0",
+    "chai": "^4.2.0",
     "core-js": "^3.6.5",
     "cross-env": "^7.0.2",
     "eslint": "^7.3.1",
     "eslint-config-standard": "^14.1.1",
+    "eslint-import-resolver-babel-module": "^5.1.2",
     "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-mocha": "^7.0.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.2.5",
+    "mocha": "^8.0.1",
     "rimraf": "^3.0.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run pre-commit"
+    }
   }
 }

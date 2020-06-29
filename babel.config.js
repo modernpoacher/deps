@@ -32,7 +32,17 @@ const presets = [
 ]
 
 const plugins = [
-  'syntax-async-functions'
+  'syntax-async-functions',
+  [
+    'module-resolver',
+    {
+      root: ['./src'],
+      cwd: 'babelrc',
+      alias: {
+        '@modernpoacher/deps': './src'
+      }
+    }
+  ]
 ]
 
 module.exports = (api) => {

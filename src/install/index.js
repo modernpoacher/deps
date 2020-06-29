@@ -8,11 +8,11 @@ import {
   transform,
   getDepsExact,
   getDeps
-} from '../common'
+} from '@modernpoacher/deps/common'
 
 const log = debug('@modernpoacher/deps:install')
 
-const getCommmands = (v, c, s, r, e = false) => (
+export const getCommands = (v, c, s, r, e = false) => (
   ['install']
     .concat(transform(v, c)) // string or array
     .concat(s ? [] : '--no-save')
@@ -20,26 +20,26 @@ const getCommmands = (v, c, s, r, e = false) => (
     .concat(e ? '--save-exact' : [])
 )
 
-function installExact (d, v, c, s, r) {
+export function installExact (d, v, c, s, r) {
   log('installExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommmands(v, c, s, r, true)
+      const commands = getCommands(v, c, s, r, true)
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd "${d}" && npm`, getCommmands(v, s, r, true), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd "${d}" && npm`, getCommands(v, s, r, true), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
   )
 }
 
-function install (d, v, c, s, r) {
+export function install (d, v, c, s, r) {
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommmands(v, c, s, r)
+      const commands = getCommands(v, c, s, r)
 
       log(commands.join(String.fromCharCode(32)).trim())
 

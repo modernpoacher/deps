@@ -13,14 +13,14 @@ import {
 
 const log = debug('@modernpoacher/deps')
 
-const getCommands = (v, c, r, e) => (
+export const getCommands = (v, c, r, e) => (
   ['install']
     .concat(transform(v, c)) // string or array
     .concat(r ? ['--registry', r] : [])
     .concat(e ? '--save-exact' : [])
 )
 
-function getSaveBundleCommands (v, c, r, e = false) {
+export function getSaveBundleCommands (v, c, r, e = false) {
   log('getSaveBundleCommands')
 
   return (
@@ -28,7 +28,7 @@ function getSaveBundleCommands (v, c, r, e = false) {
   )
 }
 
-function getSaveOptionalCommands (v, c, r, e = false) {
+export function getSaveOptionalCommands (v, c, r, e = false) {
   log('getSaveOptionalCommands')
 
   return (
@@ -36,7 +36,7 @@ function getSaveOptionalCommands (v, c, r, e = false) {
   )
 }
 
-function getSaveDevCommands (v, c, r, e = false) {
+export function getSaveDevCommands (v, c, r, e = false) {
   log('getSaveDevCommands')
 
   return (
@@ -44,7 +44,7 @@ function getSaveDevCommands (v, c, r, e = false) {
   )
 }
 
-function getSaveProdCommands (v, c, r, e = false) {
+export function getSaveProdCommands (v, c, r, e = false) {
   log('getSaveProdCommands')
 
   return (
@@ -52,7 +52,7 @@ function getSaveProdCommands (v, c, r, e = false) {
   )
 }
 
-function installSaveBundleExact (d, v, c, r) {
+export function installSaveBundleExact (d, v, c, r) {
   log('installSaveBundleExact')
 
   return (
@@ -68,7 +68,7 @@ function installSaveBundleExact (d, v, c, r) {
   )
 }
 
-function installSaveBundle (d, v, c, r) {
+export function installSaveBundle (d, v, c, r) {
   log('installSaveBundle')
 
   return (
@@ -84,7 +84,7 @@ function installSaveBundle (d, v, c, r) {
   )
 }
 
-function installSaveOptionalExact (d, v, c, r) {
+export function installSaveOptionalExact (d, v, c, r) {
   log('installSaveOptionalExact')
 
   return (
@@ -100,7 +100,7 @@ function installSaveOptionalExact (d, v, c, r) {
   )
 }
 
-function installSaveOptional (d, v, c, r) {
+export function installSaveOptional (d, v, c, r) {
   log('installSaveOptional')
 
   return (
@@ -116,7 +116,7 @@ function installSaveOptional (d, v, c, r) {
   )
 }
 
-function installSaveDevExact (d, v, c, r) {
+export function installSaveDevExact (d, v, c, r) {
   log('installSaveDevExact')
 
   return (
@@ -132,7 +132,7 @@ function installSaveDevExact (d, v, c, r) {
   )
 }
 
-function installSaveDev (d, v, c, r) {
+export function installSaveDev (d, v, c, r) {
   log('installSaveDev')
 
   return (
@@ -148,7 +148,7 @@ function installSaveDev (d, v, c, r) {
   )
 }
 
-function installSaveProdExact (d, v, c, r) {
+export function installSaveProdExact (d, v, c, r) {
   log('installSaveProdExact')
 
   return (
@@ -164,7 +164,7 @@ function installSaveProdExact (d, v, c, r) {
   )
 }
 
-function installSaveProd (d, v, c, r) {
+export function installSaveProd (d, v, c, r) {
   log('installSaveProd')
 
   return (

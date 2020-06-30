@@ -28,70 +28,70 @@ describe('@modernpoacher/deps/common', () => {
 
   describe('`getDepsExact`', () => {
     it('is a function', () => {
-      expect(getDepsExact)
+      return expect(getDepsExact)
         .to.be.a('function')
     })
   })
 
   describe('`getDeps`', () => {
     it('is a function', () => {
-      expect(getDeps)
+      return expect(getDeps)
         .to.be.a('function')
     })
   })
 
   describe('`transform`', () => {
     it('is a function', () => {
-      expect(transform)
+      return expect(transform)
         .to.be.a('function')
     })
   })
 
   describe('`getProdDependencies`', () => {
     it('is a function', () => {
-      expect(getProdDependencies)
+      return expect(getProdDependencies)
         .to.be.a('function')
     })
   })
 
   describe('`getDevDependencies`', () => {
     it('is a function', () => {
-      expect(getDevDependencies)
+      return expect(getDevDependencies)
         .to.be.a('function')
     })
   })
 
   describe('`getOptionalDependencies`', () => {
     it('is a function', () => {
-      expect(getOptionalDependencies)
+      return expect(getOptionalDependencies)
         .to.be.a('function')
     })
   })
 
   describe('`getBundleDependencies`', () => {
     it('is a function', () => {
-      expect(getBundleDependencies)
+      return expect(getBundleDependencies)
         .to.be.a('function')
     })
   })
 
   describe('`getPeerDependencies`', () => {
     it('is a function', () => {
-      expect(getPeerDependencies)
+      return expect(getPeerDependencies)
         .to.be.a('function')
     })
   })
 
   describe('`isExact`', () => {
     it('is a function', () => {
-      expect(isExact)
+      return expect(isExact)
         .to.be.a('function')
     })
   })
 
   describe('`getDependency`', () => {
     it('is a function', () => {
-      expect(getDependency)
+      return expect(getDependency)
         .to.be.a('function')
     })
   })
@@ -199,7 +199,7 @@ describe('@modernpoacher/deps/common', () => {
             'mock-package': '1.2.3'
           }
 
-          expect(getDepsExact(dependencies, configuration))
+          return expect(getDepsExact(dependencies, configuration))
             .to.eql([])
         })
       })
@@ -214,7 +214,7 @@ describe('@modernpoacher/deps/common', () => {
             'mock-package': '1.2.3'
           }
 
-          expect(getDepsExact(dependencies, configuration))
+          return expect(getDepsExact(dependencies, configuration))
             .to.eql([])
         })
       })

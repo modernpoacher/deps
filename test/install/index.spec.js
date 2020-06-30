@@ -22,28 +22,28 @@ describe('@modernpoacher/deps/install', () => {
 
   describe('`installExact`', () => {
     it('is a function', () => {
-      expect(installExact)
+      return expect(installExact)
         .to.be.a('function')
     })
   })
 
   describe('`install`', () => {
     it('is a function', () => {
-      expect(install)
+      return expect(install)
         .to.be.a('function')
     })
   })
 
   describe('`getCommands`', () => {
     it('is a function', () => {
-      expect(getCommands)
+      return expect(getCommands)
         .to.be.a('function')
     })
   })
 
   describe('`execute`', () => {
     it('is an function', () => {
-      expect(execute)
+      return expect(execute)
         .to.be.a('function')
     })
   })

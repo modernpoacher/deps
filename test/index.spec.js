@@ -36,119 +36,119 @@ describe('@modernpoacher/deps', () => {
 
   describe('`getSaveProdCommands`', () => {
     it('is a function', () => {
-      expect(getSaveProdCommands)
+      return expect(getSaveProdCommands)
         .to.be.a('function')
     })
   })
 
   describe('`getSaveDevCommands`', () => {
     it('is a function', () => {
-      expect(getSaveDevCommands)
+      return expect(getSaveDevCommands)
         .to.be.a('function')
     })
   })
 
   describe('`getSaveOptionalCommands`', () => {
     it('is a function', () => {
-      expect(getSaveOptionalCommands)
+      return expect(getSaveOptionalCommands)
         .to.be.a('function')
     })
   })
 
   describe('`getSaveBundleCommands`', () => {
     it('is a function', () => {
-      expect(getSaveBundleCommands)
+      return expect(getSaveBundleCommands)
         .to.be.a('function')
     })
   })
 
   describe('`installSaveProdExact`', () => {
     it('is a function', () => {
-      expect(installSaveProdExact)
+      return expect(installSaveProdExact)
         .to.be.a('function')
     })
   })
 
   describe('`installSaveProd`', () => {
     it('is a function', () => {
-      expect(installSaveProd)
+      return expect(installSaveProd)
         .to.be.a('function')
     })
   })
 
   describe('`installSaveDevExact`', () => {
     it('is a function', () => {
-      expect(installSaveDevExact)
+      return expect(installSaveDevExact)
         .to.be.a('function')
     })
   })
 
   describe('`installSaveDev`', () => {
     it('is a function', () => {
-      expect(installSaveDev)
+      return expect(installSaveDev)
         .to.be.a('function')
     })
   })
 
   describe('`installSaveOptionalExact`', () => {
     it('is a function', () => {
-      expect(installSaveOptionalExact)
+      return expect(installSaveOptionalExact)
         .to.be.a('function')
     })
   })
 
   describe('`installSaveOptional`', () => {
     it('is a function', () => {
-      expect(installSaveOptional)
+      return expect(installSaveOptional)
         .to.be.a('function')
     })
   })
 
   describe('`installSaveBundleExact`', () => {
     it('is a function', () => {
-      expect(installSaveBundleExact)
+      return expect(installSaveBundleExact)
         .to.be.a('function')
     })
   })
 
   describe('`installSaveBundle`', () => {
     it('is a function', () => {
-      expect(installSaveBundle)
+      return expect(installSaveBundle)
         .to.be.a('function')
     })
   })
 
   describe('`getCommands`', () => {
     it('is a function', () => {
-      expect(getCommands)
+      return expect(getCommands)
         .to.be.a('function')
     })
   })
 
   describe('`executeProd`', () => {
     it('is a function', () => {
-      expect(executeProd)
+      return expect(executeProd)
         .to.be.a('function')
     })
   })
 
   describe('`executeDev`', () => {
     it('is a function', () => {
-      expect(executeDev)
+      return expect(executeDev)
         .to.be.a('function')
     })
   })
 
   describe('`executeOptional`', () => {
     it('is an function', () => {
-      expect(executeOptional)
+      return expect(executeOptional)
         .to.be.a('function')
     })
   })
 
   describe('`executeBundle`', () => {
     it('is an function', () => {
-      expect(executeBundle)
+      return expect(executeBundle)
         .to.be.a('function')
     })
   })

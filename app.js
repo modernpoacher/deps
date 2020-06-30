@@ -42,8 +42,21 @@ async function app () {
     const p = resolve(DEPS_PATH, 'package.json')
     const s = await readFile(p, 'utf8')
     PACKAGE = JSON.parse(s)
-  } catch ({ message }) {
-    log(message)
+  } catch (e) {
+    const {
+      code
+    } = e
+
+    if (code === 'ENOENT') log(`No package at "${DEPS_PATH}"`)
+    else {
+      const {
+        message
+      } = e
+
+      log(`Package error: "${message}"`)
+    }
+
+    return
   }
 
   let CONFIGURATION

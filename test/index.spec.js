@@ -4,22 +4,18 @@ import debug from 'debug'
 import { expect } from 'chai'
 
 import {
-  getSaveBundleCommands,
-  getSaveOptionalCommands,
-  getSaveDevCommands,
   getSaveProdCommands,
-  installSaveBundleExact,
-  installSaveBundle,
-  installSaveOptionalExact,
-  installSaveOptional,
-  installSaveDevExact,
-  installSaveDev,
+  getSaveDevCommands,
+  getSaveOptionalCommands,
+  getSaveBundleCommands,
   installSaveProdExact,
   installSaveProd,
-  executeEachBundle,
-  executeEachOptional,
-  executeEachDev,
-  executeEach,
+  installSaveDevExact,
+  installSaveDev,
+  installSaveOptionalExact,
+  installSaveOptional,
+  installSaveBundleExact,
+  installSaveBundle,
   executeProd,
   executeDev,
   executeOptional,
@@ -38,16 +34,9 @@ describe('@modernpoacher/deps', () => {
     if (DEBUG) debug.enable(DEBUG)
   })
 
-  describe('`getSaveBundleCommands`', () => {
+  describe('`getSaveProdCommands`', () => {
     it('is a function', () => {
-      expect(getSaveBundleCommands)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`getSaveOptionalCommands`', () => {
-    it('is a function', () => {
-      expect(getSaveOptionalCommands)
+      expect(getSaveProdCommands)
         .to.be.a('function')
     })
   })
@@ -59,51 +48,16 @@ describe('@modernpoacher/deps', () => {
     })
   })
 
-  describe('`getSaveProdCommands`', () => {
+  describe('`getSaveOptionalCommands`', () => {
     it('is a function', () => {
-      expect(getSaveProdCommands)
+      expect(getSaveOptionalCommands)
         .to.be.a('function')
     })
   })
 
-  describe('`installSaveBundleExact`', () => {
+  describe('`getSaveBundleCommands`', () => {
     it('is a function', () => {
-      expect(installSaveBundleExact)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`installSaveBundle`', () => {
-    it('is a function', () => {
-      expect(installSaveBundle)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`installSaveOptionalExact`', () => {
-    it('is a function', () => {
-      expect(installSaveOptionalExact)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`installSaveOptional`', () => {
-    it('is a function', () => {
-      expect(installSaveOptional)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`installSaveDevExact`', () => {
-    it('is a function', () => {
-      expect(installSaveDevExact)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`installSaveDev`', () => {
-    it('is a function', () => {
-      expect(installSaveDev)
+      expect(getSaveBundleCommands)
         .to.be.a('function')
     })
   })
@@ -122,30 +76,44 @@ describe('@modernpoacher/deps', () => {
     })
   })
 
-  describe('`executeEachBundle`', () => {
+  describe('`installSaveDevExact`', () => {
     it('is a function', () => {
-      expect(executeEachBundle)
+      expect(installSaveDevExact)
         .to.be.a('function')
     })
   })
 
-  describe('`executeEachOptional`', () => {
+  describe('`installSaveDev`', () => {
     it('is a function', () => {
-      expect(executeEachOptional)
+      expect(installSaveDev)
         .to.be.a('function')
     })
   })
 
-  describe('`executeEachDev`', () => {
+  describe('`installSaveOptionalExact`', () => {
     it('is a function', () => {
-      expect(executeEachDev)
+      expect(installSaveOptionalExact)
         .to.be.a('function')
     })
   })
 
-  describe('`executeEach`', () => {
+  describe('`installSaveOptional`', () => {
     it('is a function', () => {
-      expect(executeEach)
+      expect(installSaveOptional)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`installSaveBundleExact`', () => {
+    it('is a function', () => {
+      expect(installSaveBundleExact)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`installSaveBundle`', () => {
+    it('is a function', () => {
+      expect(installSaveBundle)
         .to.be.a('function')
     })
   })

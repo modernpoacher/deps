@@ -5,7 +5,6 @@ import {
 } from 'child_process'
 
 import {
-  isExact,
   transform,
   getDepsExact,
   getDeps
@@ -178,82 +177,6 @@ export function installSaveProd (d, v, c, r) {
         .on('error', reject)
     })
   )
-}
-
-export async function executeEachBundle (dir = '.', [entry, ...array] = [], configuration, registry) {
-  log('executeEachBundle')
-
-  const [
-    name,
-    version
-  ] = entry
-
-  if (name) {
-    if (isExact(version)) {
-      await installSaveBundleExact(dir, entry, configuration, registry)
-    } else {
-      await installSaveBundle(dir, entry, configuration, registry)
-    }
-  }
-
-  return (array.length) ? executeEachBundle(dir, array, configuration, registry) : array
-}
-
-export async function executeEachOptional (dir = '.', [entry, ...array] = [], configuration, registry) {
-  log('executeEachOptional')
-
-  const [
-    name,
-    version
-  ] = entry
-
-  if (name) {
-    if (isExact(version)) {
-      await installSaveOptionalExact(dir, entry, configuration, registry)
-    } else {
-      await installSaveOptional(dir, entry, configuration, registry)
-    }
-  }
-
-  return (array.length) ? executeEachOptional(dir, array, configuration, registry) : array
-}
-
-export async function executeEachDev (dir = '.', [entry, ...array] = [], configuration, registry) {
-  log('executeEachDev')
-
-  const [
-    name,
-    version
-  ] = entry
-
-  if (name) {
-    if (isExact(version)) {
-      await installSaveDevExact(dir, entry, configuration, registry)
-    } else {
-      await installSaveDev(dir, entry, configuration, registry)
-    }
-  }
-
-  return (array.length) ? executeEachDev(dir, array, configuration, registry) : array
-}
-
-export async function executeEach (dir = '.', [entry, ...array] = [], configuration, registry) {
-  log('executeEach')
-
-  const [
-    name,
-    version
-  ] = entry
-
-  if (name) {
-    if (isExact(version)) {
-      await installSaveProdExact(dir, entry, configuration, registry)
-    } else {
-      await installSaveProd(dir, entry, configuration, registry)
-    }
-  }
-
-  return (array.length) ? executeEach(dir, array, configuration, registry) : array
 }
 
 export async function executeBundle (dir = '.', packages = {}, configuration = {}, registry) {

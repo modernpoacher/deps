@@ -10,7 +10,7 @@
     "bundleDependencies",
     "peerDependencies"
   ],
-  "main": "./app.js",
+  "main": "./index.js",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "license": "MIT",
   "engines": {
@@ -41,12 +41,13 @@
     "pre-commit": "npm run lint && npm run test && npm run build && git add lib"
   },
   "bin": {
-    "deps": "./app.js",
-    "deps-install": "./install/app.js"
+    "deps": "./bin/app.js",
+    "deps-install": "./bin/install/app.js"
   },
   "dependencies": {
     "commander": "^5.1.0",
     "debug": "^4.1.1",
+    "module-alias": "^2.2.2",
     "sacred-fs": "^1.0.17"
   },
   "devDependencies": {
@@ -71,6 +72,9 @@
     "husky": "^4.2.5",
     "mocha": "^8.0.1",
     "rimraf": "^3.0.2"
+  },
+  "_moduleAliases": {
+    "@modernpoacher/deps": "./lib"
   },
   "husky": {
     "hooks": {

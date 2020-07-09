@@ -42,7 +42,8 @@
   },
   "bin": {
     "deps": "./bin/app.js",
-    "deps-install": "./bin/install/app.js"
+    "deps-install": "./bin/install/app.js",
+    "deps-update-package": "./bin/update-package/app.js"
   },
   "dependencies": {
     "commander": "^5.1.0",

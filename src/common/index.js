@@ -1,6 +1,6 @@
 import debug from 'debug'
 
-const log = debug('@modernpoacher/deps:common')
+const log = debug('@modernpoacher/deps')
 
 export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
 export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependencies

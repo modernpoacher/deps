@@ -20,8 +20,8 @@ export function gitRevParse (p) {
         stderr
       } = exec('git rev-parse --show-toplevel', { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
 
-      stdout.on('data', debug('@modernpoacher/deps:gitRevParse'))
-      stderr.on('data', debug('@modernpoacher/deps:gitRevParse'))
+      stdout.on('data', (data) => debug('@modernpoacher/deps:gitRevParse')(data.trim()))
+      stderr.on('data', (data) => debug('@modernpoacher/deps:gitRevParse')(data.trim()))
     })
   )
 }
@@ -36,8 +36,8 @@ export function gitCheckout (p = '.', b = 'master') {
         stderr
       } = exec(`cd "${p}" && git checkout ${b}`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', debug('@modernpoacher/deps:gitCheckout'))
-      stderr.on('data', debug('@modernpoacher/deps:gitCheckout'))
+      stdout.on('data', (data) => debug('@modernpoacher/deps:gitCheckout')(data.trim()))
+      stderr.on('data', (data) => debug('@modernpoacher/deps:gitCheckout')(data.trim()))
     })
   )
 }
@@ -52,8 +52,8 @@ export function gitPull (p = '.') {
         stderr
       } = exec(`cd "${p}" && git pull`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', debug('@modernpoacher/deps:gitPull'))
-      stderr.on('data', debug('@modernpoacher/deps:gitPull'))
+      stdout.on('data', (data) => debug('@modernpoacher/deps:gitPull')(data.trim()))
+      stderr.on('data', (data) => debug('@modernpoacher/deps:gitPull')(data.trim()))
     })
   )
 }
@@ -68,8 +68,8 @@ export function gitPush (p = '.') {
         stderr
       } = exec(`cd "${p}" && git push`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', debug('@modernpoacher/deps:gitPush'))
-      stderr.on('data', debug('@modernpoacher/deps:gitPush'))
+      stdout.on('data', (data) => debug('@modernpoacher/deps:gitPush')(data.trim()))
+      stderr.on('data', (data) => debug('@modernpoacher/deps:gitPush')(data.trim()))
     })
   )
 }
@@ -84,8 +84,8 @@ export function gitAdd (p = '.', a = 'package.json package-lock.json') {
         stderr
       } = exec(`cd "${p}" && git add ${a}`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', debug('@modernpoacher/deps:gitPush'))
-      stderr.on('data', debug('@modernpoacher/deps:gitPush'))
+      stdout.on('data', (data) => debug('@modernpoacher/deps:gitPush')(data.trim()))
+      stderr.on('data', (data) => debug('@modernpoacher/deps:gitPush')(data.trim()))
     })
   )
 }
@@ -100,8 +100,8 @@ export function gitCommit (p = '.', m = 'Updated `package.json` &/ `package-lock
         stderr
       } = exec(`cd "${p}" && git commit -m '${m}'`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', debug('@modernpoacher/deps:gitPush'))
-      stderr.on('data', debug('@modernpoacher/deps:gitPush'))
+      stdout.on('data', (data) => debug('@modernpoacher/deps:gitPush')(data.trim()))
+      stderr.on('data', (data) => debug('@modernpoacher/deps:gitPush')(data.trim()))
     })
   )
 }

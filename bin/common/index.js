@@ -16,8 +16,8 @@ function rmrf (p = '.') {
         stderr
       } = exec(`cd '${p}' && rm -rf node_modules package-lock.json`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', debug('@modernpoacher/deps:rmrf'))
-      stderr.on('data', debug('@modernpoacher/deps:rmrf'))
+      stdout.on('data', (data) => debug('@modernpoacher/deps:rmrf')(data.trim()))
+      stderr.on('data', (data) => debug('@modernpoacher/deps:rmrf')(data.trim()))
     })
   )
 }
@@ -32,8 +32,8 @@ function npmi (p = '.', r = 'https://registry.npmjs.org') {
         stderr
       } = exec(`cd '${p}' && npm i --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', debug('@modernpoacher/deps:npmi'))
-      stderr.on('data', debug('@modernpoacher/deps:npmi'))
+      stdout.on('data', (data) => debug('@modernpoacher/deps:npmi')(data.trim()))
+      stderr.on('data', (data) => debug('@modernpoacher/deps:npmi')(data.trim()))
     })
   )
 }
@@ -48,8 +48,8 @@ function deps (p = '.', r = 'https://registry.npmjs.org') {
         stderr
       } = exec(`cd '${p}' && deps --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', debug('@modernpoacher/deps:rmrf'))
-      stderr.on('data', debug('@modernpoacher/deps:rmrf'))
+      stdout.on('data', (data) => debug('@modernpoacher/deps:rmrf')(data.trim()))
+      stderr.on('data', (data) => debug('@modernpoacher/deps:rmrf')(data.trim()))
     })
   )
 }

@@ -26,7 +26,7 @@ const {
   rmrf,
   npmi,
   deps
-} = require('../common')
+} = require('~/bin/common')
 
 const log = debug('@modernpoacher/deps')
 

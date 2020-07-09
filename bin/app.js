@@ -2,6 +2,8 @@
 
 require('module-alias/register')
 
+const debug = require('debug')
+
 const {
   resolve
 } = require('path')
@@ -11,8 +13,6 @@ const {
 } = require('sacred-fs')
 
 const commander = require('commander')
-
-const debug = require('debug')
 
 const {
   getProdDependencies,

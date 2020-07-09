@@ -39,6 +39,7 @@ const plugins = [
       root: ['./src'],
       cwd: 'babelrc',
       alias: {
+        '~': '.',
         '@modernpoacher/deps': './src'
       }
     }

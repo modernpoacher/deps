@@ -24,7 +24,7 @@ const {
 
 const {
   handleError
-} = require('../common')
+} = require('~/bin/common')
 
 const {
   execute

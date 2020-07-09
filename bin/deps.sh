@@ -86,7 +86,7 @@ then
   do
     if [ -d "$d" ]
     then
-      cd $d
+      cd "$d"
 
       execute $d
 
@@ -96,13 +96,13 @@ then
 else
   if [ ! -z "$path" ]
   then
-    cd $path
+    cd "$path"
 
     for d in *
     do
       if [ -d "$d" ]
       then
-        cd $d
+        cd "$d"
 
         execute $d
 
@@ -110,7 +110,7 @@ else
       fi
     done
 
-    cd $HOME
+    cd "$HOME"
   else
     if [ ! -z "$from" ]
     then
@@ -122,7 +122,7 @@ else
         then
           if [ -d "$d" ]
           then
-            cd $d
+            cd "$d"
 
             execute $d
 
@@ -139,7 +139,7 @@ else
           then
             if [ -d "$d" ]
             then
-              cd $d
+              cd "$d"
 
               execute $d
 

@@ -3,15 +3,17 @@
 echo
 echo -e "\033[0;32mStarting ...\033[0m" # "Starting ..."
 
-for d in *; do
-  if [ -d "$d" ]; then
+for d in *
+do
+  if [ -d "$d" ]
+  then
     echo
     echo "==========================="
     echo -e "\033[0;35m$d\033[0m" # $d
     echo "==========================="
     echo
 
-    cd $d
+    cd "$d"
 
     git checkout master 2> /dev/null
 

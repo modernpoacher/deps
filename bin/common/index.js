@@ -7,6 +7,8 @@ const {
 const log = debug('@modernpoacher/deps')
 const use = (l) => (d) => l(d.trim())
 
+const handleError = ({ code = 'NONE', message = 'No error message defined' }) => log({ code, message })
+
 function rmrf (p = '.') {
   log('rmrf')
 
@@ -62,6 +64,7 @@ function deps (p = '.', r = 'https://registry.npmjs.org') {
 }
 
 module.exports = {
+  handleError,
   rmrf,
   npmi,
   deps

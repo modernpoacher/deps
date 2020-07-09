@@ -23,6 +23,10 @@ const {
 } = require('@modernpoacher/deps/common')
 
 const {
+  handleError
+} = require('../common')
+
+const {
   execute
 } = require('@modernpoacher/deps/install')
 
@@ -44,8 +48,9 @@ async function app () {
     const p = resolve(DEPS_PATH, 'package.json')
     const s = await readFile(p, 'utf8')
     PACKAGE = JSON.parse(s)
-  } catch ({ code = 'NONE', message }) {
-    log({ code, message })
+  } catch (e) {
+    handleError(e)
+
     return
   }
 
@@ -103,36 +108,36 @@ async function app () {
   if (P) {
     try {
       await execute(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), save, registry)
-    } catch ({ code = 'NONE', message }) {
-      log({ code, message })
+    } catch (e) {
+      handleError(e)
     }
   } else {
     if (D) {
       try {
         await execute(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), save, registry)
-      } catch ({ code = 'NONE', message }) {
-        log({ code, message })
+      } catch (e) {
+        handleError(e)
       }
     } else {
       if (O) {
         try {
           await execute(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), save, registry)
-        } catch ({ code = 'NONE', message }) {
-          log({ code, message })
+        } catch (e) {
+          handleError(e)
         }
       } else {
         if (B) {
           try {
             await execute(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), save, registry)
-          } catch ({ code = 'NONE', message }) {
-            log({ code, message })
+          } catch (e) {
+            handleError(e)
           }
         } else {
           if (p) {
             try {
               await execute(DEPS_PATH, getPeerDependencies(PACKAGE), getPeerDependencies(CONFIGURATION), save, registry)
-            } catch ({ code = 'NONE', message }) {
-              log({ code, message })
+            } catch (e) {
+              handleError(e)
             }
           }
         }

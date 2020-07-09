@@ -22,6 +22,7 @@ const {
 } = require('@modernpoacher/deps/common/git')
 
 const {
+  handleError,
   rmrf,
   npmi,
   deps
@@ -55,8 +56,8 @@ async function getDepsList (pathList) {
           : accumulator.concat(v)
       ), [])
     )
-  } catch ({ code, message }) {
-    log({ code, message })
+  } catch (e) {
+    handleError(e)
   }
 }
 
@@ -112,8 +113,8 @@ async function execute (directory = DIRECTORY, registry = REGISTRY) {
     await gitPush(directory)
 
     log({ directory, registry })
-  } catch ({ code = 'NONE', message }) {
-    log({ code, message })
+  } catch (e) {
+    handleError(e)
   }
 }
 
@@ -250,22 +251,22 @@ async function app () {
   if (P || (!F && !O)) {
     try {
       await executePath(P, registry)
-    } catch ({ code = 'NONE', message }) {
-      log({ code, message })
+    } catch (e) {
+      handleError(e)
     }
   } else {
     if (F) {
       try {
         await executeFrom(P, registry)
-      } catch ({ code = 'NONE', message }) {
-        log({ code, message })
+      } catch (e) {
+        handleError(e)
       }
     } else {
       if (O) {
         try {
           await executeOnly(P, registry)
-        } catch ({ code = 'NONE', message }) {
-          log({ code, message })
+        } catch (e) {
+          handleError(e)
         }
       }
     }

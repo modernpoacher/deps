@@ -22,6 +22,10 @@ const {
 } = require('@modernpoacher/deps/common')
 
 const {
+  handleError
+} = require('./common')
+
+const {
   executeProd,
   executeDev,
   executeOptional,
@@ -110,36 +114,36 @@ async function app () {
     try {
       await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry)
       await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry)
-    } catch ({ message }) {
-      log(message)
+    } catch (e) {
+      handleError(e)
     }
   } else {
     if (P) {
       try {
         await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry)
-      } catch ({ message }) {
-        log(message)
+      } catch (e) {
+        handleError(e)
       }
     } else {
       if (D) {
         try {
           await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry)
-        } catch ({ message }) {
-          log(message)
+        } catch (e) {
+          handleError(e)
         }
       } else {
         if (O) {
           try {
             await executeOptional(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), registry)
-          } catch ({ message }) {
-            log(message)
+          } catch (e) {
+            handleError(e)
           }
         } else {
           if (B) {
             try {
               await executeBundle(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), registry)
-            } catch ({ message }) {
-              log(message)
+            } catch (e) {
+              handleError(e)
             }
           }
         }

@@ -44,7 +44,7 @@ async function app () {
     const p = resolve(DEPS_PATH, 'package.json')
     const s = await readFile(p, 'utf8')
     PACKAGE = JSON.parse(s)
-  } catch ({ code, message }) {
+  } catch ({ code = 'NONE', message }) {
     log({ code, message })
     return
   }
@@ -56,7 +56,7 @@ async function app () {
     CONFIGURATION = JSON.parse(s)
   } catch (e) {
     const {
-      code
+      code = 'NONE'
     } = e
 
     if (code === 'ENOENT') CONFIGURATION = {}

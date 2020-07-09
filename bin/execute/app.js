@@ -29,7 +29,7 @@ const {
 
 const log = debug('@modernpoacher/deps')
 
-const CWD = process.cwd()
+const DIRECTORY = process.cwd()
 const REGISTRY = 'https://registry.npmjs.org'
 
 function getPathList (directory) {
@@ -55,8 +55,8 @@ async function getDepsList (pathList) {
           : accumulator.concat(v)
       ), [])
     )
-  } catch (e) {
-    log('Whoops', e)
+  } catch ({ code, message }) {
+    log({ code, message })
   }
 }
 
@@ -69,7 +69,7 @@ async function mapRevParse (p) {
     )
   } catch (e) {
     const {
-      code
+      code = 'NONE'
     } = e
 
     if (code !== 128) {
@@ -94,7 +94,7 @@ async function iterate ([directory, ...depsList] = [], registry = REGISTRY) {
   }
 }
 
-async function execute (directory = CWD, registry = REGISTRY) {
+async function execute (directory = DIRECTORY, registry = REGISTRY) {
   log('execute')
 
   try {
@@ -106,12 +106,12 @@ async function execute (directory = CWD, registry = REGISTRY) {
     await gitAdd(directory)
     await gitCommit(directory)
     await gitPush(directory)
-  } catch ({ code, message }) {
+  } catch ({ code = 'NONE', message }) {
     log({ code, message })
   }
 }
 
-async function executeFrom (directory = CWD, registry = REGISTRY) {
+async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
   log('executeFrom')
 
   const path = resolve(directory)
@@ -124,7 +124,7 @@ async function executeFrom (directory = CWD, registry = REGISTRY) {
     }
   } catch (e) {
     const {
-      code
+      code = 'NONE'
     } = e
 
     if (code !== 128) {
@@ -133,7 +133,6 @@ async function executeFrom (directory = CWD, registry = REGISTRY) {
       } = e
 
       log({ code, message })
-
       return
     }
   }
@@ -141,7 +140,7 @@ async function executeFrom (directory = CWD, registry = REGISTRY) {
   log('Done.')
 }
 
-async function executeOnly (directory = CWD, registry = REGISTRY) {
+async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
   log('executeOnly')
 
   const path = resolve(directory)
@@ -154,7 +153,7 @@ async function executeOnly (directory = CWD, registry = REGISTRY) {
     }
   } catch (e) {
     const {
-      code
+      code = 'NONE'
     } = e
 
     if (code !== 128) {
@@ -163,7 +162,6 @@ async function executeOnly (directory = CWD, registry = REGISTRY) {
       } = e
 
       log({ code, message })
-
       return
     }
   }
@@ -171,7 +169,7 @@ async function executeOnly (directory = CWD, registry = REGISTRY) {
   log('Done.')
 }
 
-async function executePath (directory = CWD, registry = REGISTRY) {
+async function executePath (directory = DIRECTORY, registry = REGISTRY) {
   log('executePath')
 
   const path = resolve(directory)
@@ -184,7 +182,7 @@ async function executePath (directory = CWD, registry = REGISTRY) {
     }
   } catch (e) {
     const {
-      code
+      code = 'NONE'
     } = e
 
     if (code !== 128) {
@@ -193,7 +191,6 @@ async function executePath (directory = CWD, registry = REGISTRY) {
       } = e
 
       log({ code, message })
-
       return
     }
   }

@@ -27,14 +27,14 @@ export function gitRevParse (p) {
         if (s !== p) return
 
         l(s)
-      })(debug('@modernpoacher/deps:gitRevParse')))
+      })(debug('@modernpoacher/deps:git-rev-parse')))
       stderr.on('data', ((l) => (d) => {
         const s = d.trim()
 
         if (s === p || s.startsWith('fatal: not a git repository')) return
 
         l(s)
-      })(debug('@modernpoacher/deps:gitRevParse')))
+      })(debug('@modernpoacher/deps:git-rev-parse')))
     })
   )
 }
@@ -49,7 +49,7 @@ export function gitCheckout (p = '.', b = 'master') {
         stderr
       } = exec(`cd '${p}' && git checkout ${b}`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = debug('@modernpoacher/deps:gitCheckout')
+      const log = debug('@modernpoacher/deps:git-checkout')
 
       stdout.on('data', use(log))
       stderr.on('data', use(log))
@@ -67,7 +67,7 @@ export function gitPull (p = '.') {
         stderr
       } = exec(`cd '${p}' && git pull`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = debug('@modernpoacher/deps:gitPull')
+      const log = debug('@modernpoacher/deps:git-pull')
 
       stdout.on('data', use(log))
       stderr.on('data', use(log))
@@ -85,7 +85,7 @@ export function gitPush (p = '.') {
         stderr
       } = exec(`cd '${p}' && git push`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = debug('@modernpoacher/deps:gitPush')
+      const log = debug('@modernpoacher/deps:git-push')
 
       stdout.on('data', use(log))
       stderr.on('data', use(log))
@@ -103,7 +103,7 @@ export function gitAdd (p = '.', a = 'package.json package-lock.json') {
         stderr
       } = exec(`cd '${p}' && git add ${a}`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = debug('@modernpoacher/deps:gitAdd')
+      const log = debug('@modernpoacher/deps:git-add')
 
       stdout.on('data', use(log))
       stderr.on('data', use(log))
@@ -121,7 +121,7 @@ export function gitCommit (p = '.', m = 'Updated `package.json` &/ `package-lock
         stderr
       } = exec(`cd '${p}' && git commit -m '${m}'`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = debug('@modernpoacher/deps:gitCommit')
+      const log = debug('@modernpoacher/deps:git-commit')
 
       stdout.on('data', use(log))
       stderr.on('data', use(log))

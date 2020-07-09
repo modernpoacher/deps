@@ -26,24 +26,27 @@ const {
   execute
 } = require('@modernpoacher/deps/install')
 
-const error = debug('@modernpoacher/deps:error')
-const log = debug('@modernpoacher/deps:log')
+const log = debug('@modernpoacher/deps')
 
 async function app () {
   const {
     argv,
     env: {
+      DEBUG = '@modernpoacher/deps:*',
       DEPS_PATH = process.cwd()
     }
   } = process
+
+  debug.enable(DEBUG)
 
   let PACKAGE
   try {
     const p = resolve(DEPS_PATH, 'package.json')
     const s = await readFile(p, 'utf8')
     PACKAGE = JSON.parse(s)
-  } catch ({ message }) {
-    error(message)
+  } catch ({ code, message }) {
+    log({ code, message })
+    return
   }
 
   let CONFIGURATION
@@ -67,12 +70,7 @@ async function app () {
     }
   }
 
-  const {
-    version
-  } = PACKAGE
-
   commander
-    .version(version)
     .option('-P, --prod [dependencies]', 'Install `dependencies`', false)
     .option('-D, --dev [devDependencies]', 'Install `devDependencies`', false)
     .option('-O, --optional [optionalDependencies]', 'Install `optionalDependencies`', false)
@@ -105,36 +103,36 @@ async function app () {
   if (P) {
     try {
       await execute(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), save, registry)
-    } catch ({ message }) {
-      error(message)
+    } catch ({ code = 'NONE', message }) {
+      log({ code, message })
     }
   } else {
     if (D) {
       try {
         await execute(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), save, registry)
-      } catch ({ message }) {
-        error(message)
+      } catch ({ code = 'NONE', message }) {
+        log({ code, message })
       }
     } else {
       if (O) {
         try {
           await execute(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), save, registry)
-        } catch ({ message }) {
-          error(message)
+        } catch ({ code = 'NONE', message }) {
+          log({ code, message })
         }
       } else {
         if (B) {
           try {
             await execute(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), save, registry)
-          } catch ({ message }) {
-            error(message)
+          } catch ({ code = 'NONE', message }) {
+            log({ code, message })
           }
         } else {
           if (p) {
             try {
               await execute(DEPS_PATH, getPeerDependencies(PACKAGE), getPeerDependencies(CONFIGURATION), save, registry)
-            } catch ({ message }) {
-              error(message)
+            } catch ({ code = 'NONE', message }) {
+              log({ code, message })
             }
           }
         }

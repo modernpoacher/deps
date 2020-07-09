@@ -82,12 +82,7 @@ async function app () {
     }
   }
 
-  const {
-    version
-  } = PACKAGE
-
   commander
-    .version(version, '-v, --version', 'Version')
     .option('-P, --save-prod [dependencies]', 'Install `dependencies`', false)
     .option('-D, --save-dev [devDependencies]', 'Install `devDependencies`', false)
     .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`', false)

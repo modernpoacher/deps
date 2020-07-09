@@ -98,6 +98,10 @@ async function execute (directory = DIRECTORY, registry = REGISTRY) {
   log('execute')
 
   try {
+    const log = debug('@modernpoacher/deps:execute')
+
+    log({ directory, registry })
+
     await gitCheckout(directory)
     await gitPull(directory)
     await rmrf(directory)
@@ -106,6 +110,8 @@ async function execute (directory = DIRECTORY, registry = REGISTRY) {
     await gitAdd(directory)
     await gitCommit(directory)
     await gitPush(directory)
+
+    log({ directory, registry })
   } catch ({ code = 'NONE', message }) {
     log({ code, message })
   }

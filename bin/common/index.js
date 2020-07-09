@@ -17,10 +17,10 @@ function rmrf (p = '.') {
         stderr
       } = exec(`cd '${p}' && rm -rf node_modules package-lock.json`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = debug('@modernpoacher/deps:rmrf')
+      const log = use(debug('@modernpoacher/deps:rmrf'))
 
-      stdout.on('data', use(log))
-      stderr.on('data', use(log))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -35,10 +35,10 @@ function npmi (p = '.', r = 'https://registry.npmjs.org') {
         stderr
       } = exec(`cd '${p}' && npm i --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = debug('@modernpoacher/deps:npmi')
+      const log = use(debug('@modernpoacher/deps:npmi'))
 
-      stdout.on('data', use(log))
-      stderr.on('data', use(log))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -53,10 +53,10 @@ function deps (p = '.', r = 'https://registry.npmjs.org') {
         stderr
       } = exec(`cd '${p}' && deps --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = debug('@modernpoacher/deps:rmrf')
+      const log = use(debug('@modernpoacher/deps:rmrf'))
 
-      stdout.on('data', use(log))
-      stderr.on('data', use(log))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }

@@ -10,10 +10,6 @@ const {
 
 const glob = require('glob-all')
 
-const {
-  readFile
-} = require('sacred-fs')
-
 const commander = require('commander')
 
 const {
@@ -221,41 +217,13 @@ async function app () {
   const {
     argv,
     env: {
-      DEBUG = '@modernpoacher/deps:*',
-      DEPS_PATH = CWD
+      DEBUG = '@modernpoacher/deps:*'
     }
   } = process
 
   debug.enable(DEBUG)
 
-  let PACKAGE
-  try {
-    const p = resolve(DEPS_PATH, 'package.json')
-    const s = await readFile(p, 'utf8')
-    PACKAGE = JSON.parse(s)
-  } catch (e) {
-    const {
-      code
-    } = e
-
-    if (code === 'ENOENT') log(`No package at "${DEPS_PATH}"`)
-    else {
-      const {
-        message
-      } = e
-
-      log(`Package error: "${message}"`)
-    }
-
-    return
-  }
-
-  const {
-    version
-  } = PACKAGE
-
   commander
-    .version(version, '-v, --version', 'Version')
     .option('-p, --path [path]', 'Update path')
     .option('-f, --from [from]', 'Update from directory')
     .option('-o, --only [only]', 'Update only directory')

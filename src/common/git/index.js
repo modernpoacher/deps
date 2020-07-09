@@ -20,8 +20,20 @@ export function gitRevParse (p) {
         stderr
       } = exec('git rev-parse --show-toplevel', { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
 
-      stdout.on('data', (data) => debug('@modernpoacher/deps:gitRevParse')(data.trim()))
-      stderr.on('data', (data) => debug('@modernpoacher/deps:gitRevParse')(data.trim()))
+      stdout.on('data', (data) => {
+        const s = data.trim()
+
+        if (s === p) return
+
+        debug('@modernpoacher/deps:gitRevParse')(s)
+      })
+      stderr.on('data', (data) => {
+        const s = data.trim()
+
+        if (s === p || s.startsWith('fatal: not a git repository')) return
+
+        debug('@modernpoacher/deps:gitRevParse')(s)
+      })
     })
   )
 }

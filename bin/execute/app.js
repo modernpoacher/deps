@@ -2,6 +2,8 @@
 
 require('module-alias/register')
 
+const debug = require('debug')
+
 const {
   resolve
 } = require('path')
@@ -13,8 +15,6 @@ const {
 } = require('sacred-fs')
 
 const commander = require('commander')
-
-const debug = require('debug')
 
 const {
   gitRevParse,
@@ -111,7 +111,7 @@ async function execute (directory = CWD, registry = REGISTRY) {
     await gitCommit(directory)
     await gitPush(directory)
   } catch ({ code, message }) {
-    log(code, message)
+    log({ code, message })
   }
 }
 
@@ -221,9 +221,12 @@ async function app () {
   const {
     argv,
     env: {
+      DEBUG = '@modernpoacher/deps:*',
       DEPS_PATH = CWD
     }
   } = process
+
+  debug.enable(DEBUG)
 
   let PACKAGE
   try {

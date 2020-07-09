@@ -11,7 +11,13 @@ function rmrf (p = '.') {
 
   return (
     new Promise((resolve, reject) => {
-      exec(`cd '${p}' && rm -rf node_modules package-lock.json`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      const {
+        stdout,
+        stderr
+      } = exec(`cd '${p}' && rm -rf node_modules package-lock.json`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', debug('@modernpoacher/deps:rmrf'))
+      stderr.on('data', debug('@modernpoacher/deps:rmrf'))
     })
   )
 }
@@ -21,7 +27,13 @@ function npmi (p = '.', r = 'https://registry.npmjs.org') {
 
   return (
     new Promise((resolve, reject) => {
-      exec(`cd '${p}' && npm i --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      const {
+        stdout,
+        stderr
+      } = exec(`cd '${p}' && npm i --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', debug('@modernpoacher/deps:npmi'))
+      stderr.on('data', debug('@modernpoacher/deps:npmi'))
     })
   )
 }
@@ -31,7 +43,13 @@ function deps (p = '.', r = 'https://registry.npmjs.org') {
 
   return (
     new Promise((resolve, reject) => {
-      exec(`cd '${p}' && deps --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      const {
+        stdout,
+        stderr
+      } = exec(`cd '${p}' && deps --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', debug('@modernpoacher/deps:rmrf'))
+      stderr.on('data', debug('@modernpoacher/deps:rmrf'))
     })
   )
 }

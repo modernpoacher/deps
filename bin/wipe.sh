@@ -17,7 +17,7 @@ do
 
     git checkout master 2> /dev/null
 
-    if [[ $? != 0 ]];
+    if [[ $? != 0 ]]
     then
       echo -e "\033[0;35m$d\033[0m is not configured for Git" # "$d is not configured for Git"
     else

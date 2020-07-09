@@ -4,6 +4,10 @@ import {
   exec
 } from 'child_process'
 
+const OPTIONS = {
+  maxBuffer: 1024 * 2000
+}
+
 const log = debug('@modernpoacher/deps')
 
 export function gitRevParse (p) {
@@ -11,7 +15,13 @@ export function gitRevParse (p) {
 
   return (
     new Promise((resolve, reject) => {
-      exec('git rev-parse --show-toplevel', { cwd: p, stdio: 'inherit' }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
+      const {
+        stdout,
+        stderr
+      } = exec('git rev-parse --show-toplevel', { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
+
+      stdout.on('data', debug('@modernpoacher/deps:gitRevParse'))
+      stderr.on('data', debug('@modernpoacher/deps:gitRevParse'))
     })
   )
 }
@@ -21,7 +31,13 @@ export function gitCheckout (p = '.', b = 'master') {
 
   return (
     new Promise((resolve, reject) => {
-      exec(`cd '${p}' && git checkout ${b}`, { cwd: p, stdio: 'inherit' }, (e, v) => (!e) ? resolve(v) : reject(e))
+      const {
+        stdout,
+        stderr
+      } = exec(`cd "${p}" && git checkout ${b}`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', debug('@modernpoacher/deps:gitCheckout'))
+      stderr.on('data', debug('@modernpoacher/deps:gitCheckout'))
     })
   )
 }
@@ -31,7 +47,13 @@ export function gitPull (p = '.') {
 
   return (
     new Promise((resolve, reject) => {
-      exec(`cd '${p}' && git pull`, { cwd: p, stdio: 'inherit' }, (e, v) => (!e) ? resolve(v) : reject(e))
+      const {
+        stdout,
+        stderr
+      } = exec(`cd "${p}" && git pull`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', debug('@modernpoacher/deps:gitPull'))
+      stderr.on('data', debug('@modernpoacher/deps:gitPull'))
     })
   )
 }
@@ -41,7 +63,13 @@ export function gitPush (p = '.') {
 
   return (
     new Promise((resolve, reject) => {
-      exec(`cd '${p}' && git push`, { cwd: p, stdio: 'inherit' }, (e, v) => (!e) ? resolve(v) : reject(e))
+      const {
+        stdout,
+        stderr
+      } = exec(`cd "${p}" && git push`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', debug('@modernpoacher/deps:gitPush'))
+      stderr.on('data', debug('@modernpoacher/deps:gitPush'))
     })
   )
 }
@@ -51,7 +79,13 @@ export function gitAdd (p = '.', a = 'package.json package-lock.json') {
 
   return (
     new Promise((resolve, reject) => {
-      exec(`cd '${p}' && git add ${a}`, { cwd: p, stdio: 'inherit' }, (e, v) => (!e) ? resolve(v) : reject(e))
+      const {
+        stdout,
+        stderr
+      } = exec(`cd "${p}" && git add ${a}`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', debug('@modernpoacher/deps:gitPush'))
+      stderr.on('data', debug('@modernpoacher/deps:gitPush'))
     })
   )
 }
@@ -61,7 +95,13 @@ export function gitCommit (p = '.', m = 'Updated `package.json` &/ `package-lock
 
   return (
     new Promise((resolve, reject) => {
-      exec(`cd '${p}' && git commit -m '${m}'`, { cwd: p, stdio: 'inherit' }, (e, v) => (!e) ? resolve(v) : reject(e))
+      const {
+        stdout,
+        stderr
+      } = exec(`cd "${p}" && git commit -m '${m}'`, { ...OPTIONS, cwd: p /* , stdio: 'inherit' */ }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', debug('@modernpoacher/deps:gitPush'))
+      stderr.on('data', debug('@modernpoacher/deps:gitPush'))
     })
   )
 }

@@ -247,22 +247,22 @@ async function app () {
   if (P || (!F && !O)) {
     try {
       await executePath(P, registry)
-    } catch ({ message }) {
-      log(message)
+    } catch ({ code = 'NONE', message }) {
+      log({ code, message })
     }
   } else {
     if (F) {
       try {
         await executeFrom(P, registry)
-      } catch ({ message }) {
-        log(message)
+      } catch ({ code = 'NONE', message }) {
+        log({ code, message })
       }
     } else {
       if (O) {
         try {
           await executeOnly(P, registry)
-        } catch ({ message }) {
-          log(message)
+        } catch ({ code = 'NONE', message }) {
+          log({ code, message })
         }
       }
     }

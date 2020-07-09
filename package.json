@@ -42,8 +42,11 @@
   },
   "bin": {
     "deps": "./bin/app.js",
+    "deps-execute": "./bin/execute/app.js",
     "deps-install": "./bin/install/app.js",
-    "deps-update-package": "./bin/update-package/app.js"
+    "deps-deps": "./bin/deps.sh",
+    "deps-wipe": "./bin/wipe.sh",
+    "deps-push": "./bin/push.sh"
   },
   "dependencies": {
     "commander": "^5.1.0",

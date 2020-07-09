@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+require('module-alias/register')
+
 const {
   resolve
 } = require('path')
@@ -17,14 +19,14 @@ const {
   getDevDependencies,
   getOptionalDependencies,
   getBundleDependencies
-} = require('./lib/common')
+} = require('@modernpoacher/deps/common')
 
 const {
   executeProd,
   executeDev,
   executeOptional,
   executeBundle
-} = require('./lib')
+} = require('@modernpoacher/deps')
 
 const log = debug('@modernpoacher/deps')
 

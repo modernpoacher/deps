@@ -50,11 +50,13 @@ async function getDepsList (pathList) {
     const depsList = await Promise.all(pathList.map(mapRevParse))
 
     return (
-      depsList.reduce((accumulator, v) => (
-        accumulator.includes(v)
-          ? accumulator
-          : accumulator.concat(v)
-      ), [])
+      depsList
+        .filter((v) => v) // removes `undefined` (falsy)
+        .reduce((accumulator, v) => ( // dedupes
+          accumulator.includes(v)
+            ? accumulator
+            : accumulator.concat(v)
+        ), [])
     )
   } catch (e) {
     handleError(e)
@@ -83,14 +85,18 @@ async function mapRevParse (p) {
   }
 }
 
-async function iterate ([directory, ...depsList] = [], registry = REGISTRY) {
+async function iterate ([directory, ...directories] = [], registry = REGISTRY) {
   log('iterate')
 
   await execute(directory, registry)
 
-  if (depsList.length) {
+  if (directories.length) {
+    const log = debug('@modernpoacher/deps:iterate')
+
+    log({ directories, registry })
+
     return (
-      await iterate(depsList, registry)
+      await iterate(directories, registry)
     )
   }
 }

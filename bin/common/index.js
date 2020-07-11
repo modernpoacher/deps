@@ -5,7 +5,13 @@ const {
 } = require('child_process')
 
 const log = debug('@modernpoacher/deps')
-const use = (l) => (d) => l(d.trim())
+const use = (n) => {
+  const log = debug(`@modernpoacher/deps:${n}`)
+
+  return (v) => {
+    log(v.trim())
+  }
+}
 
 const handleError = ({ code = 'NONE', message = 'No error message defined' }) => log({ code, message })
 
@@ -19,7 +25,7 @@ function rmrf (d = '.') {
         stderr
       } = exec(`cd '${d}' && rm -rf node_modules package-lock.json`, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = use(debug('@modernpoacher/deps:rmrf'))
+      const log = use('rmrf')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -37,7 +43,7 @@ function npmi (d = '.', r = 'https://registry.npmjs.org') {
         stderr
       } = exec(`cd '${d}' && npm i --registry ${r}`, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = use(debug('@modernpoacher/deps:npmi'))
+      const log = use('npmi')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -55,7 +61,7 @@ function deps (d = '.', r = 'https://registry.npmjs.org') {
         stderr
       } = exec(`cd '${d}' && deps --registry ${r}`, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = use(debug('@modernpoacher/deps:deps'))
+      const log = use('deps')
 
       stdout.on('data', log)
       stderr.on('data', log)

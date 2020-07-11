@@ -9,7 +9,7 @@ const use = (l) => (d) => l(d.trim())
 
 const handleError = ({ code = 'NONE', message = 'No error message defined' }) => log({ code, message })
 
-function rmrf (p = '.') {
+function rmrf (d = '.') {
   log('rmrf')
 
   return (
@@ -17,7 +17,7 @@ function rmrf (p = '.') {
       const {
         stdout,
         stderr
-      } = exec(`cd '${p}' && rm -rf node_modules package-lock.json`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(`cd '${d}' && rm -rf node_modules package-lock.json`, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       const log = use(debug('@modernpoacher/deps:rmrf'))
 
@@ -27,7 +27,7 @@ function rmrf (p = '.') {
   )
 }
 
-function npmi (p = '.', r = 'https://registry.npmjs.org') {
+function npmi (d = '.', r = 'https://registry.npmjs.org') {
   log('npmi')
 
   return (
@@ -35,7 +35,7 @@ function npmi (p = '.', r = 'https://registry.npmjs.org') {
       const {
         stdout,
         stderr
-      } = exec(`cd '${p}' && npm i --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(`cd '${d}' && npm i --registry ${r}`, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       const log = use(debug('@modernpoacher/deps:npmi'))
 
@@ -45,7 +45,7 @@ function npmi (p = '.', r = 'https://registry.npmjs.org') {
   )
 }
 
-function deps (p = '.', r = 'https://registry.npmjs.org') {
+function deps (d = '.', r = 'https://registry.npmjs.org') {
   log('deps')
 
   return (
@@ -53,9 +53,9 @@ function deps (p = '.', r = 'https://registry.npmjs.org') {
       const {
         stdout,
         stderr
-      } = exec(`cd '${p}' && deps --registry ${r}`, { cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(`cd '${d}' && deps --registry ${r}`, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      const log = use(debug('@modernpoacher/deps:rmrf'))
+      const log = use(debug('@modernpoacher/deps:deps'))
 
       stdout.on('data', log)
       stderr.on('data', log)

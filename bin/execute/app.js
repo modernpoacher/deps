@@ -111,8 +111,6 @@ async function execute (directory = DIRECTORY, registry = REGISTRY) {
     await gitAdd(directory)
     await gitCommit(directory)
     await gitPush(directory)
-
-    log({ directory, registry })
   } catch (e) {
     handleError(e)
   }

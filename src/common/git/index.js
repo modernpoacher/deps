@@ -10,25 +10,13 @@ const OPTIONS = {
 
 const log = debug('@modernpoacher/deps')
 
-const use = (l) => (d) => l(d.trim())
+const use = (l) => (v) => l(v.trim())
 
-function out (p, l) {
-  return function out (d) {
-    const s = d.trim()
+function out (d, l) {
+  return function out (v) {
+    const s = v.trim()
 
-    if (p === s) return
-
-    return (
-      l(s)
-    )
-  }
-}
-
-function err (p, l) {
-  return function err (d) {
-    const s = d.trim()
-
-    if (p === s || s.toLowerCase().startsWith('fatal: not a git repository')) return
+    if (d === s) return
 
     return (
       l(s)
@@ -36,7 +24,19 @@ function err (p, l) {
   }
 }
 
-export function gitRevParse (p) {
+function err (d, l) {
+  return function err (v) {
+    const s = v.trim()
+
+    if (d === s || s.toLowerCase().startsWith('fatal: not a git repository')) return
+
+    return (
+      l(s)
+    )
+  }
+}
+
+export function gitRevParse (d = '.') {
   log('gitRevParse')
 
   return (
@@ -44,17 +44,17 @@ export function gitRevParse (p) {
       const {
         stdout,
         stderr
-      } = exec('git rev-parse --show-toplevel', { ...OPTIONS, cwd: p }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
+      } = exec('git rev-parse --show-toplevel', { ...OPTIONS, cwd: d }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
 
       const log = debug('@modernpoacher/deps:git-rev-parse')
 
-      stdout.on('data', out(p, log))
-      stderr.on('data', err(p, log))
+      stdout.on('data', out(d, log))
+      stderr.on('data', err(d, log))
     })
   )
 }
 
-export function gitCheckout (p = '.', b = 'master') {
+export function gitCheckout (d = '.', b = 'master') {
   log('gitCheckout')
 
   return (
@@ -62,7 +62,7 @@ export function gitCheckout (p = '.', b = 'master') {
       const {
         stdout,
         stderr
-      } = exec(`cd '${p}' && git checkout ${b}`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(`cd '${d}' && git checkout ${b}`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       const log = use(debug('@modernpoacher/deps:git-checkout'))
 
@@ -72,7 +72,7 @@ export function gitCheckout (p = '.', b = 'master') {
   )
 }
 
-export function gitPull (p = '.') {
+export function gitPull (d = '.') {
   log('gitPull')
 
   return (
@@ -80,7 +80,7 @@ export function gitPull (p = '.') {
       const {
         stdout,
         stderr
-      } = exec(`cd '${p}' && git pull`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(`cd '${d}' && git pull`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       const log = use(debug('@modernpoacher/deps:git-pull'))
 
@@ -90,7 +90,7 @@ export function gitPull (p = '.') {
   )
 }
 
-export function gitPush (p = '.') {
+export function gitPush (d = '.') {
   log('gitPush')
 
   return (
@@ -98,7 +98,7 @@ export function gitPush (p = '.') {
       const {
         stdout,
         stderr
-      } = exec(`cd '${p}' && git push`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(`cd '${d}' && git push`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       const log = use(debug('@modernpoacher/deps:git-push'))
 
@@ -108,7 +108,7 @@ export function gitPush (p = '.') {
   )
 }
 
-export function gitAdd (p = '.', a = 'package.json package-lock.json') {
+export function gitAdd (d = '.', a = 'package.json package-lock.json') {
   log('gitAdd')
 
   return (
@@ -116,7 +116,7 @@ export function gitAdd (p = '.', a = 'package.json package-lock.json') {
       const {
         stdout,
         stderr
-      } = exec(`cd '${p}' && git add ${a}`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(`cd '${d}' && git add ${a}`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       const log = use(debug('@modernpoacher/deps:git-add'))
 
@@ -126,7 +126,7 @@ export function gitAdd (p = '.', a = 'package.json package-lock.json') {
   )
 }
 
-export function gitCommit (p = '.', m = 'Updated `package.json` &/ `package-lock.json`') {
+export function gitCommit (d = '.', m = 'Updated `package.json` &/ `package-lock.json`') {
   log('gitCommit')
 
   return (
@@ -134,7 +134,7 @@ export function gitCommit (p = '.', m = 'Updated `package.json` &/ `package-lock
       const {
         stdout,
         stderr
-      } = exec(`cd '${p}' && git commit -m '${m}'`, { ...OPTIONS, cwd: p }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(`cd '${d}' && git commit -m '${m}'`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       const log = use(debug('@modernpoacher/deps:git-commit'))
 

@@ -45,13 +45,13 @@ function report {
 }
 
 function execute {
-  report $1
+  report "$1"
 
-  can_update $1
+  can_update "$1"
 
   if [[ $? = 0 ]]
   then
-    update $1
+    update "$1"
   fi
 
   return 0
@@ -88,7 +88,7 @@ then
     then
       cd "$d"
 
-      execute $d
+      execute "$d"
 
       cd ..
     fi
@@ -104,7 +104,7 @@ else
       then
         cd "$d"
 
-        execute $d
+        execute "$d"
 
         cd ..
       fi
@@ -124,7 +124,7 @@ else
           then
             cd "$d"
 
-            execute $d
+            execute "$d"
 
             cd ..
           fi
@@ -141,7 +141,7 @@ else
             then
               cd "$d"
 
-              execute $d
+              execute "$d"
 
               cd ..
             fi

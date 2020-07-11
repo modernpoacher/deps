@@ -33,6 +33,14 @@ const log = debug('@modernpoacher/deps')
 const DIRECTORY = process.cwd()
 const REGISTRY = 'https://registry.npmjs.org'
 
+const filterDeps = (v) => v // de-falsy
+
+const reduceDeps = (accumulator = [], v) => ( // de-dupe
+  accumulator.includes(v)
+    ? accumulator
+    : accumulator.concat(v)
+)
+
 function getPathList (directory) {
   log('getPathList')
 
@@ -51,12 +59,9 @@ async function getDepsList (pathList) {
 
     return (
       depsList
-        .filter((v) => v) // removes `undefined` (falsy)
-        .reduce((accumulator, v) => ( // dedupes
-          accumulator.includes(v)
-            ? accumulator
-            : accumulator.concat(v)
-        ), [])
+        .filter(filterDeps)
+        .reduce(reduceDeps, [])
+        .sort()
     )
   } catch (e) {
     handleError(e)

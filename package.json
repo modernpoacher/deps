@@ -27,9 +27,9 @@
   "scripts": {
     "prepublishOnly": "cross-env NODE_ENV=production npm run build",
     "prebuild": "npm run clean",
-    "start": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=production node app",
-    "dev": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=development node app",
-    "dev-install": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=development node install/app",
+    "start": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=production node app --color",
+    "dev": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=development node app --color",
+    "dev-install": "cross-env DEBUG=@modernpoacher/deps* NODE_ENV=development node install/app --color",
     "build": "npm run babel",
     "build:watch": "npm run babel:watch",
     "clean": "rimraf lib",
@@ -53,7 +53,8 @@
     "debug": "^4.1.1",
     "glob-all": "^3.2.1",
     "module-alias": "^2.2.2",
-    "sacred-fs": "^1.0.17"
+    "sacred-fs": "^1.0.17",
+    "supports-color": "^7.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.4",

@@ -5,11 +5,12 @@ const {
 } = require('child_process')
 
 const log = debug('@modernpoacher/deps')
+
 const use = (n) => {
   const log = debug(`@modernpoacher/deps:${n}`)
 
   return (v) => {
-    log(v.trim())
+    log(v.trim()) // .replace(/(\s+)$/g, '')
   }
 }
 

@@ -6,6 +6,8 @@ const {
 
 const log = debug('@modernpoacher/deps')
 
+log('`common` is awake')
+
 const use = (n) => {
   const log = debug(`@modernpoacher/deps:${n}`)
 

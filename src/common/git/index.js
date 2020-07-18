@@ -10,6 +10,8 @@ const OPTIONS = {
 
 const log = debug('@modernpoacher/deps')
 
+log('`git` is awake')
+
 const use = (n) => {
   const log = debug(`@modernpoacher/deps:${n}`)
 

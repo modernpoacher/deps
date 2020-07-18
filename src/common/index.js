@@ -2,6 +2,8 @@ import debug from 'debug'
 
 const log = debug('@modernpoacher/deps')
 
+log('`common` is awake')
+
 export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
 export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependencies
 export const getOptionalDependencies = ({ optionalDependencies = {} } = {}) => optionalDependencies

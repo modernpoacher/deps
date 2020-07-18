@@ -34,6 +34,8 @@ const {
 
 const log = debug('@modernpoacher/deps')
 
+log('`deps` is awake')
+
 async function app () {
   const {
     argv,

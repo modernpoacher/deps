@@ -30,6 +30,8 @@ const {
 
 const log = debug('@modernpoacher/deps')
 
+log('`execute` is awake')
+
 const DIRECTORY = process.cwd()
 const REGISTRY = 'https://registry.npmjs.org'
 

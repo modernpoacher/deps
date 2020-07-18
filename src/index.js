@@ -12,6 +12,8 @@ import {
 
 const log = debug('@modernpoacher/deps')
 
+log('`deps` is awake')
+
 export const getCommands = (v, c, r, e) => (
   ['install']
     .concat(transform(v, c)) // string or array
@@ -60,7 +62,7 @@ export function installSaveBundleExact (d, v, c, r) {
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -76,7 +78,7 @@ export function installSaveBundle (d, v, c, r) {
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -92,7 +94,7 @@ export function installSaveOptionalExact (d, v, c, r) {
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -108,7 +110,7 @@ export function installSaveOptional (d, v, c, r) {
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -124,7 +126,7 @@ export function installSaveDevExact (d, v, c, r) {
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -140,7 +142,7 @@ export function installSaveDev (d, v, c, r) {
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -156,7 +158,7 @@ export function installSaveProdExact (d, v, c, r) {
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -172,7 +174,7 @@ export function installSaveProd (d, v, c, r) {
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd "${d}" && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

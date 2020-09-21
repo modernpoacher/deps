@@ -80,8 +80,8 @@
     "rimraf": "^3.0.2"
   },
   "_moduleAliases": {
-    "~": ".",
-    "@modernpoacher/deps": "./lib"
+    "@modernpoacher/deps": "./lib",
+    "~": "."
   },
   "husky": {
     "hooks": {

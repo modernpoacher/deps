@@ -24,7 +24,7 @@ const presets = [
     {
       useBuiltIns: 'usage',
       targets: {
-        node: '12.18.1'
+        node: '12.19.0'
       },
       corejs: 3
     }

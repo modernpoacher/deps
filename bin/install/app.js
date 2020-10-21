@@ -10,7 +10,7 @@ const {
 
 const {
   readFile
-} = require('sacred-fs')
+} = require('fs/promises')
 
 const commander = require('commander')
 

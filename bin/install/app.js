@@ -47,15 +47,22 @@ async function app () {
   let PACKAGE
   try {
     PACKAGE = await getPackageJson(DEPS_PATH)
+
+    log(`Package at "${DEPS_PATH}"`)
   } catch (e) {
     const {
       code
     } = e
 
-    if (code === 'ENOENT') log(`No package at "${DEPS_PATH}"`)
-    else handlePackageError(e)
+    if (code === 'ENOENT') {
+      log(`No package at "${DEPS_PATH}"`)
 
-    return
+      return // halt
+    } else {
+      handlePackageError(e)
+
+      return // halt
+    }
   }
 
   let CONFIGURATION
@@ -69,8 +76,6 @@ async function app () {
     } = e
 
     if (code === 'ENOENT') {
-      log('No configuration at ".depsrc"')
-
       try {
         CONFIGURATION = await getDepsRcJson(DEPS_PATH)
 
@@ -81,7 +86,7 @@ async function app () {
         } = e
 
         if (code === 'ENOENT') {
-          log('No configuration at ".depsrc.json"')
+          log('No configuration at ".depsrc" or ".depsrc.json"')
 
           return // halt
         } else {

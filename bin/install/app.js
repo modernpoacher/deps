@@ -4,14 +4,6 @@ require('module-alias/register')
 
 const debug = require('debug')
 
-const {
-  resolve
-} = require('path')
-
-const {
-  readFile
-} = require('fs/promises')
-
 const commander = require('commander')
 
 const {
@@ -23,7 +15,12 @@ const {
 } = require('@modernpoacher/deps/common')
 
 const {
-  handleError
+  handleError,
+  handlePackageError,
+  handleConfigurationError,
+  getPackageJson,
+  getDepsRc,
+  getDepsRcJson
 } = require('~/bin/common')
 
 const {
@@ -35,6 +32,8 @@ const log = debug('@modernpoacher/deps')
 log('`install` is awake')
 
 async function app () {
+  log('Deps')
+
   const {
     argv,
     env: {
@@ -47,33 +46,54 @@ async function app () {
 
   let PACKAGE
   try {
-    const p = resolve(DEPS_PATH, 'package.json')
-    const s = await readFile(p, 'utf8')
-    PACKAGE = JSON.parse(s)
+    PACKAGE = await getPackageJson(DEPS_PATH)
   } catch (e) {
-    handleError(e)
+    const {
+      code
+    } = e
+
+    if (code === 'ENOENT') log(`No package at "${DEPS_PATH}"`)
+    else handlePackageError(e)
 
     return
   }
 
   let CONFIGURATION
   try {
-    const p = resolve(DEPS_PATH, '.depsrc')
-    const s = await readFile(p, 'utf8')
-    CONFIGURATION = JSON.parse(s)
+    CONFIGURATION = await getDepsRc(DEPS_PATH)
+
+    log('Configuration at ".depsrc"') // proceed
   } catch (e) {
     const {
-      code = 'NONE'
+      code
     } = e
 
-    if (code === 'ENOENT') CONFIGURATION = {}
-    else {
-      const {
-        message
-      } = e
+    if (code === 'ENOENT') {
+      log('No configuration at ".depsrc"')
 
-      log({ code, message })
-      return
+      try {
+        CONFIGURATION = await getDepsRcJson(DEPS_PATH)
+
+        log('Configuration at ".depsrc.json"') // proceed
+      } catch (e) {
+        const {
+          code
+        } = e
+
+        if (code === 'ENOENT') {
+          log('No configuration at ".depsrc.json"')
+
+          return // halt
+        } else {
+          handleConfigurationError(e)
+
+          return // halt
+        }
+      }
+    } else {
+      handleConfigurationError(e)
+
+      return // halt
     }
   }
 
@@ -146,6 +166,8 @@ async function app () {
       }
     }
   }
+
+  log('Done.')
 }
 
 module.exports = app()

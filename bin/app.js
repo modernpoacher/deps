@@ -4,6 +4,11 @@ require('module-alias/register')
 
 const debug = require('debug')
 
+const {
+  resolve,
+  relative
+} = require('path')
+
 const commander = require('commander')
 
 const {
@@ -36,11 +41,12 @@ log('`deps` is awake')
 async function app () {
   log('Deps')
 
+  const CWD = process.cwd()
   const {
     argv,
     env: {
       PWD,
-      DEPS_PATH = PWD || process.cwd()
+      DEPS_PATH = PWD || CWD
     }
   } = process
 
@@ -48,14 +54,14 @@ async function app () {
   try {
     PACKAGE = await getPackageJson(DEPS_PATH)
 
-    log(`Package at "${DEPS_PATH}"`)
+    log(`Package at "${relative(CWD, resolve(DEPS_PATH, 'package.json'))}"`)
   } catch (e) {
     const {
       code
     } = e
 
     if (code === 'ENOENT') {
-      log(`No package at "${DEPS_PATH}"`)
+      log(`No package at "${relative(CWD, resolve(DEPS_PATH, 'package.json'))}"`)
 
       return // halt
     } else {
@@ -69,7 +75,7 @@ async function app () {
   try {
     CONFIGURATION = await getDepsRc(DEPS_PATH)
 
-    log('Configuration at ".depsrc"') // proceed
+    log(`Configuration at "${relative(CWD, resolve(DEPS_PATH, '.depsrc'))}"`) // proceed
   } catch (e) {
     const {
       code
@@ -79,16 +85,16 @@ async function app () {
       try {
         CONFIGURATION = await getDepsRcJson(DEPS_PATH)
 
-        log('Configuration at ".depsrc.json"') // proceed
+        log(`Configuration at "${relative(CWD, resolve(DEPS_PATH, '.depsrc.json'))}"`) // proceed
       } catch (e) {
         const {
           code
         } = e
 
         if (code === 'ENOENT') {
-          log('No configuration at ".depsrc" or ".depsrc.json"')
+          CONFIGURATION = {}
 
-          return // halt
+          log(`No configuration at "${relative(CWD, resolve(DEPS_PATH, '.depsrc'))}" or "${relative(CWD, resolve(DEPS_PATH, '.depsrc.json'))}"`) // proceed
         } else {
           handleConfigurationError(e)
 

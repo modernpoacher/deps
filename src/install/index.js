@@ -31,7 +31,7 @@ export function installExact (d, v, c, s, r) {
 
       log(commands.join(String.fromCharCode(32)).trim())
 
-      spawn(`cd '${d}' && npm`, getCommands(v, s, r, true), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

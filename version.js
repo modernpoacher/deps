@@ -20,7 +20,7 @@ function getJs () {
 
   return (
     new Promise((resolve, reject) => {
-      glob(['./src/**/*.js', './bin/**/*.js'], (e, a) => (!e) ? resolve(a) : reject(e))
+      glob('./bin/**/*.js', (e, a) => (!e) ? resolve(a) : reject(e))
     })
   )
 }

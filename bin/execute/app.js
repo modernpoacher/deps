@@ -235,7 +235,7 @@ async function app () {
    *  `version` is printed into this file at pre-commit
    */
   commander
-    .version('1.0.22')
+    .version('1.0.23')
     .option('-p, --path [path]', 'Update path')
     .option('-f, --from [from]', 'Update from directory')
     .option('-o, --only [only]', 'Update only directory')

@@ -151,11 +151,8 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
       } = e
 
       log({ code, message })
-      return
     }
   }
-
-  log('Done.')
 }
 
 async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
@@ -180,11 +177,8 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
       } = e
 
       log({ code, message })
-      return
     }
   }
-
-  log('Done.')
 }
 
 async function executePath (directory = DIRECTORY, registry = REGISTRY) {
@@ -209,7 +203,6 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY) {
       } = e
 
       log({ code, message })
-      return
     }
   }
 
@@ -224,11 +217,11 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY) {
       )
     }
   }
-
-  log('Done.')
 }
 
 async function app () {
+  log('Deps')
+
   const {
     argv,
     env: {
@@ -238,7 +231,11 @@ async function app () {
 
   debug.enable(DEBUG)
 
+  /*
+   *  `version` is printed into this file at pre-commit
+   */
   commander
+    .version('1.0.22')
     .option('-p, --path [path]', 'Update path')
     .option('-f, --from [from]', 'Update from directory')
     .option('-o, --only [only]', 'Update only directory')
@@ -282,6 +279,8 @@ async function app () {
       }
     }
   }
+
+  log('Done.')
 }
 
 module.exports = app()

@@ -5,7 +5,6 @@ require('module-alias/register')
 const debug = require('debug')
 
 const {
-  resolve,
   relative
 } = require('path')
 
@@ -22,6 +21,9 @@ const {
   handleError,
   handlePackageError,
   handleConfigurationError,
+  getPackageJsonPath,
+  getDepsRcPath,
+  getDepsRcJsonPath,
   getPackageJson,
   getDepsRc,
   getDepsRcJson
@@ -41,12 +43,33 @@ log('`deps` is awake')
 async function app () {
   log('Deps')
 
-  const CWD = process.cwd()
   const {
-    argv,
+    argv
+  } = process
+
+  /*
+   *  `version` is printed into this file at pre-commit
+   */
+  commander
+    .version('1.0.27')
+    .option('-P, --save-prod [dependencies]', 'Install `dependencies`', false)
+    .option('-D, --save-dev [devDependencies]', 'Install `devDependencies`', false)
+    .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`', false)
+    .option('-B, --save-bundle [bundleDependencies]', 'Install `bundleDependencies`', false)
+    .option('--registry [registry]', 'Installation registry')
+    .parse(argv)
+
+  /*
+   *  Command `deps --version` is not dependent on a package or a configuration and on completion
+   *  it will cause the process to exit
+   *
+   *  Any other command will continue
+   */
+
+  const {
     env: {
       PWD,
-      DEPS_PATH = PWD || CWD
+      DEPS_PATH = PWD
     }
   } = process
 
@@ -54,14 +77,14 @@ async function app () {
   try {
     PACKAGE = await getPackageJson(DEPS_PATH)
 
-    log(`Package at "${relative(CWD, resolve(DEPS_PATH, 'package.json'))}"`)
+    log(`Package at "${relative(PWD, getPackageJsonPath(DEPS_PATH))}"`)
   } catch (e) {
     const {
       code
     } = e
 
     if (code === 'ENOENT') {
-      log(`No package at "${relative(CWD, resolve(DEPS_PATH, 'package.json'))}"`)
+      log(`No package at "${relative(PWD, getPackageJsonPath(DEPS_PATH))}"`)
 
       return // halt
     } else {
@@ -75,7 +98,7 @@ async function app () {
   try {
     CONFIGURATION = await getDepsRc(DEPS_PATH)
 
-    log(`Configuration at "${relative(CWD, resolve(DEPS_PATH, '.depsrc'))}"`) // proceed
+    log(`Configuration at "${relative(PWD, getDepsRcPath(DEPS_PATH))}"`) // proceed
   } catch (e) {
     const {
       code
@@ -85,7 +108,7 @@ async function app () {
       try {
         CONFIGURATION = await getDepsRcJson(DEPS_PATH)
 
-        log(`Configuration at "${relative(CWD, resolve(DEPS_PATH, '.depsrc.json'))}"`) // proceed
+        log(`Configuration at "${relative(PWD, getDepsRcJsonPath(DEPS_PATH))}"`) // proceed
       } catch (e) {
         const {
           code
@@ -94,7 +117,7 @@ async function app () {
         if (code === 'ENOENT') {
           CONFIGURATION = {}
 
-          log(`No configuration at "${relative(CWD, resolve(DEPS_PATH, '.depsrc'))}" or "${relative(CWD, resolve(DEPS_PATH, '.depsrc.json'))}"`) // proceed
+          log(`No configuration at "${relative(PWD, getDepsRcPath(DEPS_PATH))}" or "${relative(PWD, getDepsRcJsonPath(DEPS_PATH))}"`) // proceed
         } else {
           handleConfigurationError(e)
 
@@ -107,18 +130,6 @@ async function app () {
       return // halt
     }
   }
-
-  /*
-   *  `version` is printed into this file at pre-commit
-   */
-  commander
-    .version('1.0.27')
-    .option('-P, --save-prod [dependencies]', 'Install `dependencies`', false)
-    .option('-D, --save-dev [devDependencies]', 'Install `devDependencies`', false)
-    .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`', false)
-    .option('-B, --save-bundle [bundleDependencies]', 'Install `bundleDependencies`', false)
-    .option('--registry [registry]', 'Installation registry')
-    .parse(argv)
 
   const {
     saveProd: P,

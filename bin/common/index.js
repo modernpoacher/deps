@@ -30,20 +30,26 @@ const handlePackageError = ({ message }) => log(`Package error: "${message}"`)
 
 const handleConfigurationError = ({ message }) => log(`Configuration error: "${message}"`)
 
+const getPackageJsonPath = (p = '.') => resolve(p, 'package.json')
+
+const getDepsRcPath = (p = '.') => resolve(p, '.depsrc')
+
+const getDepsRcJsonPath = (p = '.') => resolve(p, '.depsrc.json')
+
 async function getPackageJson (p = '.') {
-  const f = resolve(p, 'package.json')
+  const f = getPackageJsonPath(p)
   const s = await readFile(f, 'utf8')
   return JSON.parse(s)
 }
 
 async function getDepsRc (p = '.') {
-  const f = resolve(p, '.depsrc')
+  const f = getDepsRcPath(p)
   const s = await readFile(f, 'utf8')
   return JSON.parse(s)
 }
 
 async function getDepsRcJson (p = '.') {
-  const f = resolve(p, '.depsrc.json')
+  const f = getDepsRcJsonPath(p)
   const s = await readFile(f, 'utf8')
   return JSON.parse(s)
 }
@@ -106,6 +112,9 @@ module.exports = {
   handleError,
   handlePackageError,
   handleConfigurationError,
+  getPackageJsonPath,
+  getDepsRcPath,
+  getDepsRcJsonPath,
   getPackageJson,
   getDepsRc,
   getDepsRcJson,

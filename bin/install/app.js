@@ -5,7 +5,6 @@ require('module-alias/register')
 const debug = require('debug')
 
 const {
-  resolve,
   relative
 } = require('path')
 
@@ -23,6 +22,9 @@ const {
   handleError,
   handlePackageError,
   handleConfigurationError,
+  getPackageJsonPath,
+  getDepsRcPath,
+  getDepsRcJsonPath,
   getPackageJson,
   getDepsRc,
   getDepsRcJson
@@ -39,74 +41,14 @@ log('`install` is awake')
 async function app () {
   log('Deps')
 
-  const CWD = process.cwd()
   const {
     argv,
     env: {
-      DEBUG = '@modernpoacher/deps:*',
-      DEPS_PATH = CWD
+      DEBUG = '@modernpoacher/deps:*'
     }
   } = process
 
   debug.enable(DEBUG)
-
-  let PACKAGE
-  try {
-    PACKAGE = await getPackageJson(DEPS_PATH)
-
-    log(`Package at "${relative(CWD, resolve(DEPS_PATH, 'package.json'))}"`)
-  } catch (e) {
-    const {
-      code
-    } = e
-
-    if (code === 'ENOENT') {
-      log(`No package at "${relative(CWD, resolve(DEPS_PATH, 'package.json'))}"`)
-
-      return // halt
-    } else {
-      handlePackageError(e)
-
-      return // halt
-    }
-  }
-
-  let CONFIGURATION
-  try {
-    CONFIGURATION = await getDepsRc(DEPS_PATH)
-
-    log(`Configuration at "${relative(CWD, resolve(DEPS_PATH, '.depsrc'))}"`) // proceed
-  } catch (e) {
-    const {
-      code
-    } = e
-
-    if (code === 'ENOENT') {
-      try {
-        CONFIGURATION = await getDepsRcJson(DEPS_PATH)
-
-        log(`Configuration at "${relative(CWD, resolve(DEPS_PATH, '.depsrc.json'))}"`) // proceed
-      } catch (e) {
-        const {
-          code
-        } = e
-
-        if (code === 'ENOENT') {
-          CONFIGURATION = {}
-
-          log(`No configuration at "${relative(CWD, resolve(DEPS_PATH, '.depsrc'))}" or "${relative(CWD, resolve(DEPS_PATH, '.depsrc.json'))}"`) // proceed
-        } else {
-          handleConfigurationError(e)
-
-          return // halt
-        }
-      }
-    } else {
-      handleConfigurationError(e)
-
-      return // halt
-    }
-  }
 
   /*
    *  `version` is printed into this file at pre-commit
@@ -121,6 +63,78 @@ async function app () {
     .option('-s, --save [save]', 'Install `peerDependencies`', false)
     .option('--registry [registry]', 'Installation registry')
     .parse(argv)
+
+  /*
+   *  Command `deps --version` is not dependent on a package or a configuration and on completion
+   *  it will cause the process to exit
+   *
+   *  Any other command will continue
+   */
+
+  const {
+    env: {
+      PWD,
+      DEPS_PATH = PWD
+    }
+  } = process
+
+  let PACKAGE
+  try {
+    PACKAGE = await getPackageJson(DEPS_PATH)
+
+    log(`Package at "${relative(PWD, getPackageJsonPath(DEPS_PATH))}"`)
+  } catch (e) {
+    const {
+      code
+    } = e
+
+    if (code === 'ENOENT') {
+      log(`No package at "${relative(PWD, getPackageJsonPath(DEPS_PATH))}"`)
+
+      return // halt
+    } else {
+      handlePackageError(e)
+
+      return // halt
+    }
+  }
+
+  let CONFIGURATION
+  try {
+    CONFIGURATION = await getDepsRc(DEPS_PATH)
+
+    log(`Configuration at "${relative(PWD, getDepsRcPath(DEPS_PATH))}"`) // proceed
+  } catch (e) {
+    const {
+      code
+    } = e
+
+    if (code === 'ENOENT') {
+      try {
+        CONFIGURATION = await getDepsRcJson(DEPS_PATH)
+
+        log(`Configuration at "${relative(PWD, getDepsRcJsonPath(DEPS_PATH))}"`) // proceed
+      } catch (e) {
+        const {
+          code
+        } = e
+
+        if (code === 'ENOENT') {
+          CONFIGURATION = {}
+
+          log(`No configuration at "${relative(PWD, getDepsRcPath(DEPS_PATH))}" or "${relative(PWD, getDepsRcJsonPath(DEPS_PATH))}"`) // proceed
+        } else {
+          handleConfigurationError(e)
+
+          return // halt
+        }
+      }
+    } else {
+      handleConfigurationError(e)
+
+      return // halt
+    }
+  }
 
   const {
     prod: P,

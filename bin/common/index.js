@@ -46,21 +46,27 @@ const getDepsRcPath = (p = '.') => resolve(p, '.depsrc')
 const getDepsRcJsonPath = (p = '.') => resolve(p, '.depsrc.json')
 
 async function getPackageJson (p = '.') {
-  const f = getPackageJsonPath(p)
-  const s = await readFile(f, 'utf8')
-  return JSON.parse(s)
+  log('getPackageJson')
+
+  return JSON.parse(
+    await readFile(getPackageJsonPath(p), 'utf8')
+  )
 }
 
 async function getDepsRc (p = '.') {
-  const f = getDepsRcPath(p)
-  const s = await readFile(f, 'utf8')
-  return JSON.parse(s)
+  log('getDepsRc')
+
+  return JSON.parse(
+    await readFile(getDepsRcPath(p), 'utf8')
+  )
 }
 
 async function getDepsRcJson (p = '.') {
-  const f = getDepsRcJsonPath(p)
-  const s = await readFile(f, 'utf8')
-  return JSON.parse(s)
+  log('getDepsRcJson')
+
+  return JSON.parse(
+    await readFile(getDepsRcJsonPath(p), 'utf8')
+  )
 }
 
 function rmrf (d = '.') {
@@ -68,14 +74,12 @@ function rmrf (d = '.') {
 
   return (
     new Promise((resolve, reject) => {
-      const log = debug('@modernpoacher/deps:rmrf')
-
-      log({ d })
+      const command = `cd '${d}' && rm -rf node_modules package-lock.json`
 
       const {
         stdout,
         stderr
-      } = exec(`cd '${d}' && rm -rf node_modules package-lock.json`, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', use('rmrf'))
       stderr.on('data', use('rmrf'))
@@ -88,14 +92,12 @@ function npmi (d = '.', r = 'https://registry.npmjs.org') {
 
   return (
     new Promise((resolve, reject) => {
-      const log = debug('@modernpoacher/deps:npmi')
-
-      log({ d, r })
+      const command = `cd '${d}' && npm i --registry ${r}`
 
       const {
         stdout,
         stderr
-      } = exec(`cd '${d}' && npm i --registry ${r}`, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', use('npmi'))
       stderr.on('data', use('npmi'))
@@ -108,14 +110,12 @@ function deps (d = '.', r = 'https://registry.npmjs.org') {
 
   return (
     new Promise((resolve, reject) => {
-      const log = debug('@modernpoacher/deps:deps')
-
-      log({ d, r })
+      const command = `cd '${d}' && deps --registry ${r}`
 
       const {
         stdout,
         stderr
-      } = exec(`cd '${d}' && deps --registry ${r}`, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', use('deps'))
       stderr.on('data', use('deps'))

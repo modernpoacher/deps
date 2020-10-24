@@ -43,6 +43,23 @@ log('`execute` is awake')
 const DIRECTORY = process.cwd()
 const REGISTRY = 'https://registry.npmjs.org'
 
+function handleExecuteError (e) {
+  const {
+    code = 'NONE'
+  } = e
+
+  if (code !== 128) {
+    const {
+      message
+    } = e
+
+    log({
+      code,
+      message
+    })
+  }
+}
+
 const filterDeps = (v) => v // de-falsy
 
 const reduceDeps = (accumulator = [], v) => ( // de-dupe
@@ -90,26 +107,7 @@ async function mapRevParse (p) {
       await gitRevParse(p)
     )
   } catch (e) {
-    const {
-      code = 'NONE'
-    } = e
-
-    if (code === 1) {
-      const {
-        message
-      } = e
-
-      log(message)
-    } else if (code !== 128) {
-      const {
-        message
-      } = e
-
-      log({
-        code,
-        message
-      })
-    }
+    handleError(e) // handleExecuteError(e)
   }
 }
 
@@ -166,26 +164,7 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
       )
     }
   } catch (e) {
-    const {
-      code = 'NONE'
-    } = e
-
-    if (code === 1) {
-      const {
-        message
-      } = e
-
-      log(message)
-    } else if (code !== 128) {
-      const {
-        message
-      } = e
-
-      log({
-        code,
-        message
-      })
-    }
+    handleExecuteError(e)
   }
 }
 
@@ -205,26 +184,7 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
       )
     }
   } catch (e) {
-    const {
-      code = 'NONE'
-    } = e
-
-    if (code === 1) {
-      const {
-        message
-      } = e
-
-      log(message)
-    } else if (code !== 128) {
-      const {
-        message
-      } = e
-
-      log({
-        code,
-        message
-      })
-    }
+    handleExecuteError(e)
   }
 }
 
@@ -244,26 +204,7 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY) {
       )
     }
   } catch (e) {
-    const {
-      code = 'NONE'
-    } = e
-
-    if (code === 1) {
-      const {
-        message
-      } = e
-
-      log(message)
-    } else if (code !== 128) {
-      const {
-        message
-      } = e
-
-      log({
-        code,
-        message
-      })
-    }
+    handleExecuteError(e)
   }
 
   const pathList = await getPathList(path)

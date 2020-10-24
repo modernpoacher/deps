@@ -36,6 +36,14 @@ const {
   executeBundle
 } = require('@modernpoacher/deps')
 
+const {
+  env: {
+    DEBUG = '@modernpoacher/deps*'
+  }
+} = process
+
+debug.enable(DEBUG)
+
 const log = debug('@modernpoacher/deps')
 
 log('`deps` is awake')

@@ -34,6 +34,14 @@ const {
   execute
 } = require('@modernpoacher/deps/install')
 
+const {
+  env: {
+    DEBUG = '@modernpoacher/deps*'
+  }
+} = process
+
+debug.enable(DEBUG)
+
 const log = debug('@modernpoacher/deps')
 
 log('`install` is awake')
@@ -42,13 +50,8 @@ async function app () {
   log('Deps')
 
   const {
-    argv,
-    env: {
-      DEBUG = '@modernpoacher/deps:*'
-    }
+    argv
   } = process
-
-  debug.enable(DEBUG)
 
   /*
    *  `version` is printed into this file at pre-commit

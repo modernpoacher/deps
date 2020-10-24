@@ -28,6 +28,14 @@ const {
   deps
 } = require('~/bin/common')
 
+const {
+  env: {
+    DEBUG = '@modernpoacher/deps*'
+  }
+} = process
+
+debug.enable(DEBUG)
+
 const log = debug('@modernpoacher/deps')
 
 log('`execute` is awake')
@@ -74,6 +82,10 @@ async function mapRevParse (p) {
   log('mapRevParse')
 
   try {
+    const log = debug('@modernpoacher/deps:map-rev-parse')
+
+    log({ p })
+
     return (
       await gitRevParse(p)
     )
@@ -135,6 +147,10 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
   const path = resolve(directory)
 
   try {
+    const log = debug('@modernpoacher/deps:execute-from')
+
+    log({ path })
+
     if (path === await gitRevParse(path)) {
       return (
         await execute(path, registry)
@@ -161,6 +177,10 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
   const path = resolve(directory)
 
   try {
+    const log = debug('@modernpoacher/deps:execute-only')
+
+    log({ path })
+
     if (path === await gitRevParse(path)) {
       return (
         await execute(path, registry)
@@ -187,6 +207,10 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY) {
   const path = resolve(directory)
 
   try {
+    const log = debug('@modernpoacher/deps:execute-path')
+
+    log({ path })
+
     if (path === await gitRevParse(path)) {
       return (
         await execute(path, registry)
@@ -223,13 +247,8 @@ async function app () {
   log('Deps')
 
   const {
-    argv,
-    env: {
-      DEBUG = '@modernpoacher/deps:*'
-    }
+    argv
   } = process
-
-  debug.enable(DEBUG)
 
   /*
    *  `version` is printed into this file at pre-commit
@@ -250,9 +269,9 @@ async function app () {
   } = commander
 
   log({
-    path: P,
-    from: F,
-    only: O,
+    ...(P ? { path: P } : {}),
+    ...(F ? { from: F } : {}),
+    ...(O ? { only: O } : {}),
     ...(registry ? { registry } : {})
   })
 

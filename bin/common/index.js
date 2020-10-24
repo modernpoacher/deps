@@ -24,7 +24,16 @@ const use = (n) => {
   }
 }
 
-const handleError = ({ code = 'NONE', message = 'No error message defined' }) => log({ code, message })
+function handleError ({ code = 'NONE', message = 'No error message defined' }) {
+  if (code === 1) {
+    log(message)
+  } else {
+    log({
+      code,
+      message
+    })
+  }
+}
 
 const handlePackageError = ({ message }) => log(`Package error: "${message}"`)
 

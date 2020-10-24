@@ -59,7 +59,7 @@ async function app () {
    *  `version` is printed into this file at pre-commit
    */
   commander
-    .version('1.0.32')
+    .version('1.0.33')
     .option('-P, --save-prod [dependencies]', 'Install `dependencies`', false)
     .option('-D, --save-dev [devDependencies]', 'Install `devDependencies`', false)
     .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`', false)

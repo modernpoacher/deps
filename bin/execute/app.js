@@ -94,12 +94,21 @@ async function mapRevParse (p) {
       code = 'NONE'
     } = e
 
-    if (code !== 128) {
+    if (code === 1) {
       const {
         message
       } = e
 
-      log({ code, message })
+      log(message)
+    } else if (code !== 128) {
+      const {
+        message
+      } = e
+
+      log({
+        code,
+        message
+      })
     }
   }
 }
@@ -161,12 +170,21 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
       code = 'NONE'
     } = e
 
-    if (code !== 128) {
+    if (code === 1) {
       const {
         message
       } = e
 
-      log({ code, message })
+      log(message)
+    } else if (code !== 128) {
+      const {
+        message
+      } = e
+
+      log({
+        code,
+        message
+      })
     }
   }
 }
@@ -191,12 +209,21 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
       code = 'NONE'
     } = e
 
-    if (code !== 128) {
+    if (code === 1) {
       const {
         message
       } = e
 
-      log({ code, message })
+      log(message)
+    } else if (code !== 128) {
+      const {
+        message
+      } = e
+
+      log({
+        code,
+        message
+      })
     }
   }
 }
@@ -221,12 +248,21 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY) {
       code = 'NONE'
     } = e
 
-    if (code !== 128) {
+    if (code === 1) {
       const {
         message
       } = e
 
-      log({ code, message })
+      log(message)
+    } else if (code !== 128) {
+      const {
+        message
+      } = e
+
+      log({
+        code,
+        message
+      })
     }
   }
 

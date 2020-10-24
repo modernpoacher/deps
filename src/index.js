@@ -182,6 +182,8 @@ export function installSaveProd (d, v, c, r) {
 }
 
 export async function executeBundle (dir = '.', packages = {}, configuration = {}, registry) {
+  log('executeBundle')
+
   const depsExact = getDepsExact(packages, configuration)
 
   if (depsExact.length) await installSaveBundleExact(dir, depsExact, configuration, registry)

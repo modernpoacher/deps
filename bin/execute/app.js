@@ -147,11 +147,11 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
   const path = resolve(directory)
 
   try {
-    const log = debug('@modernpoacher/deps:execute-from')
-
-    log({ path })
-
     if (path === await gitRevParse(path)) {
+      const log = debug('@modernpoacher/deps:execute-from')
+
+      log({ path })
+
       return (
         await execute(path, registry)
       )
@@ -177,11 +177,11 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
   const path = resolve(directory)
 
   try {
-    const log = debug('@modernpoacher/deps:execute-only')
-
-    log({ path })
-
     if (path === await gitRevParse(path)) {
+      const log = debug('@modernpoacher/deps:execute-only')
+
+      log({ path })
+
       return (
         await execute(path, registry)
       )
@@ -207,11 +207,11 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY) {
   const path = resolve(directory)
 
   try {
-    const log = debug('@modernpoacher/deps:execute-path')
-
-    log({ path })
-
     if (path === await gitRevParse(path)) {
+      const log = debug('@modernpoacher/deps:execute-path')
+
+      log({ path })
+
       return (
         await execute(path, registry)
       )

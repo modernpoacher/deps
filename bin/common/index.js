@@ -16,6 +16,9 @@ const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
+const DIRECTORY = '.'
+const REGISTRY = 'https://registry.npmjs.org'
+
 function use (n) {
   const log = debug(`@modernpoacher/deps:${n}`)
 
@@ -35,13 +38,13 @@ const handlePackageError = ({ message }) => log(`Package error: "${message}"`)
 
 const handleConfigurationError = ({ message }) => log(`Configuration error: "${message}"`)
 
-const getPackageJsonPath = (directory = '.') => resolve(directory, 'package.json')
+const getPackageJsonPath = (directory = DIRECTORY) => resolve(directory, 'package.json')
 
-const getDepsRcPath = (directory = '.') => resolve(directory, '.depsrc')
+const getDepsRcPath = (directory = DIRECTORY) => resolve(directory, '.depsrc')
 
-const getDepsRcJsonPath = (directory = '.') => resolve(directory, '.depsrc.json')
+const getDepsRcJsonPath = (directory = DIRECTORY) => resolve(directory, '.depsrc.json')
 
-async function getPackageJson (directory = '.') {
+async function getPackageJson (directory = DIRECTORY) {
   log('getPackageJson')
 
   return JSON.parse(
@@ -49,7 +52,7 @@ async function getPackageJson (directory = '.') {
   )
 }
 
-async function getDepsRc (directory = '.') {
+async function getDepsRc (directory = DIRECTORY) {
   log('getDepsRc')
 
   return JSON.parse(
@@ -57,7 +60,7 @@ async function getDepsRc (directory = '.') {
   )
 }
 
-async function getDepsRcJson (directory = '.') {
+async function getDepsRcJson (directory = DIRECTORY) {
   log('getDepsRcJson')
 
   return JSON.parse(
@@ -65,7 +68,7 @@ async function getDepsRcJson (directory = '.') {
   )
 }
 
-function rmrf (directory = '.') {
+function rmrf (directory = DIRECTORY) {
   log('rmrf')
 
   return (
@@ -83,7 +86,7 @@ function rmrf (directory = '.') {
   )
 }
 
-function npmi (directory = '.', registry = 'https://registry.npmjs.org') {
+function npmi (directory = DIRECTORY, registry = REGISTRY) {
   log('npmi')
 
   return (
@@ -101,7 +104,7 @@ function npmi (directory = '.', registry = 'https://registry.npmjs.org') {
   )
 }
 
-function deps (directory = '.', registry = 'https://registry.npmjs.org') {
+function deps (directory = DIRECTORY, registry = REGISTRY) {
   log('deps')
 
   return (

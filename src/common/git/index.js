@@ -4,6 +4,14 @@ import {
   exec
 } from 'child_process'
 
+const DIRECTORY = '.'
+
+const BRANCH = 'master'
+
+const ADD = 'package.json package-lock.json'
+
+const COMMIT = 'Updated `package.json` &/ `package-lock.json`'
+
 const OPTIONS = {
   maxBuffer: 1024 * 2000
 }
@@ -61,7 +69,7 @@ function isCommandError (e) {
   )
 }
 
-export function gitRevParse (directory = '.') {
+export function gitRevParse (directory = DIRECTORY) {
   log('gitRevParse')
 
   return (
@@ -79,7 +87,7 @@ export function gitRevParse (directory = '.') {
   )
 }
 
-export function gitCheckout (directory = '.', branch = 'master') {
+export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
   log('gitCheckout')
 
   return (
@@ -97,7 +105,7 @@ export function gitCheckout (directory = '.', branch = 'master') {
   )
 }
 
-export function gitPull (directory = '.') {
+export function gitPull (directory = DIRECTORY) {
   log('gitPull')
 
   return (
@@ -115,7 +123,7 @@ export function gitPull (directory = '.') {
   )
 }
 
-export function gitPush (directory = '.') {
+export function gitPush (directory = DIRECTORY) {
   log('gitPush')
 
   return (
@@ -133,7 +141,7 @@ export function gitPush (directory = '.') {
   )
 }
 
-export function gitAdd (directory = '.', add = 'package.json package-lock.json') {
+export function gitAdd (directory = DIRECTORY, add = ADD) {
   log('gitAdd')
 
   return (
@@ -151,12 +159,12 @@ export function gitAdd (directory = '.', add = 'package.json package-lock.json')
   )
 }
 
-export function gitCommit (directory = '.', message = 'Updated `package.json` &/ `package-lock.json`') {
+export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
   log('gitCommit')
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${directory}' && git commit -m '${message}'`
+      const command = `cd '${directory}' && git commit -m '${commit}'`
 
       const {
         stdout,

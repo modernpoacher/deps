@@ -29,8 +29,6 @@ export function installExact (d, v, c, s, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(v, c, s, r, true)
 
-      log(commands.join(String.fromCharCode(32)).trim())
-
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
@@ -42,8 +40,6 @@ export function install (d, v, c, s, r) {
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(v, c, s, r)
-
-      log(commands.join(String.fromCharCode(32)).trim())
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)

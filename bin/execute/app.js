@@ -43,7 +43,7 @@ log('`execute` is awake')
 const DIRECTORY = process.cwd()
 const REGISTRY = 'https://registry.npmjs.org'
 
-function handleExecuteError (e) {
+function handleCommandError (e) {
   const {
     code = 'NONE'
   } = e
@@ -73,19 +73,19 @@ function getPathList (directory) {
 
   return (
     new Promise((resolve, reject) => {
-      glob(`${directory}/*/`, (e, a) => (!e) ? resolve(a) : reject(e))
+      glob(`${directory}/*/`, (error, array) => (!error) ? resolve(array) : reject(error))
     })
   )
 }
 
-async function getDepsList (pathList) {
+async function getDepsList (directories) {
   log('getDepsList')
 
   try {
-    const depsList = await Promise.all(pathList.map(mapRevParse))
+    const array = await Promise.all(directories.map(mapRevParse))
 
     return (
-      depsList
+      array
         .filter(filterDeps)
         .reduce(reduceDeps, [])
         .sort()
@@ -99,28 +99,20 @@ async function mapRevParse (p) {
   log('mapRevParse')
 
   try {
-    const log = debug('@modernpoacher/deps:map-rev-parse')
-
-    log({ p })
-
     return (
       await gitRevParse(p)
     )
   } catch (e) {
-    handleError(e) // handleExecuteError(e)
+    handleCommandError(e)
   }
 }
 
 async function iterate ([directory, ...directories] = [], registry = REGISTRY) {
   log('iterate')
 
-  await execute(directory, registry)
+  if (directory) await execute(directory, registry)
 
   if (directories.length) {
-    const log = debug('@modernpoacher/deps:iterate')
-
-    log({ directories, registry })
-
     return (
       await iterate(directories, registry)
     )
@@ -131,8 +123,6 @@ async function execute (directory = DIRECTORY, registry = REGISTRY) {
   log('execute')
 
   try {
-    const log = debug('@modernpoacher/deps:execute')
-
     log({ directory, registry })
 
     await gitCheckout(directory)
@@ -155,16 +145,12 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
 
   try {
     if (path === await gitRevParse(path)) {
-      const log = debug('@modernpoacher/deps:execute-from')
-
-      log({ path })
-
       return (
         await execute(path, registry)
       )
     }
   } catch (e) {
-    handleExecuteError(e)
+    handleCommandError(e)
   }
 }
 
@@ -175,16 +161,12 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
 
   try {
     if (path === await gitRevParse(path)) {
-      const log = debug('@modernpoacher/deps:execute-only')
-
-      log({ path })
-
       return (
         await execute(path, registry)
       )
     }
   } catch (e) {
-    handleExecuteError(e)
+    handleCommandError(e)
   }
 }
 
@@ -195,16 +177,12 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY) {
 
   try {
     if (path === await gitRevParse(path)) {
-      const log = debug('@modernpoacher/deps:execute-path')
-
-      log({ path })
-
       return (
         await execute(path, registry)
       )
     }
   } catch (e) {
-    handleExecuteError(e)
+    handleCommandError(e)
   }
 
   const pathList = await getPathList(path)

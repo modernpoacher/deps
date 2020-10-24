@@ -60,8 +60,6 @@ export function installSaveBundleExact (d, v, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveBundleCommands(v, c, r, true)
 
-      log(commands.join(String.fromCharCode(32)).trim())
-
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
@@ -75,8 +73,6 @@ export function installSaveBundle (d, v, c, r) {
   return (
     new Promise((resolve, reject) => {
       const commands = getSaveBundleCommands(v, c, r)
-
-      log(commands.join(String.fromCharCode(32)).trim())
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -92,8 +88,6 @@ export function installSaveOptionalExact (d, v, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveOptionalCommands(v, c, r, true)
 
-      log(commands.join(String.fromCharCode(32)).trim())
-
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
@@ -107,8 +101,6 @@ export function installSaveOptional (d, v, c, r) {
   return (
     new Promise((resolve, reject) => {
       const commands = getSaveOptionalCommands(v, c, r)
-
-      log(commands.join(String.fromCharCode(32)).trim())
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -124,8 +116,6 @@ export function installSaveDevExact (d, v, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveDevCommands(v, c, r, true)
 
-      log(commands.join(String.fromCharCode(32)).trim())
-
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
@@ -139,8 +129,6 @@ export function installSaveDev (d, v, c, r) {
   return (
     new Promise((resolve, reject) => {
       const commands = getSaveDevCommands(v, c, r)
-
-      log(commands.join(String.fromCharCode(32)).trim())
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -156,8 +144,6 @@ export function installSaveProdExact (d, v, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveProdCommands(v, c, r, true)
 
-      log(commands.join(String.fromCharCode(32)).trim())
-
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
@@ -171,8 +157,6 @@ export function installSaveProd (d, v, c, r) {
   return (
     new Promise((resolve, reject) => {
       const commands = getSaveProdCommands(v, c, r)
-
-      log(commands.join(String.fromCharCode(32)).trim())
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)

@@ -48,19 +48,30 @@ function err (n, d) {
   }
 }
 
+const getErrorCode = ({ code = 0 }) => code
+
+const getErrorMessage = ({ message = '' }) => message
+
+function isCommandError (e) {
+  log('isCommandError')
+
+  return (
+    getErrorCode(e) === 1 &&
+    getErrorMessage(e).toLowerCase().startsWith('command failed:')
+  )
+}
+
 export function gitRevParse (d = '.') {
   log('gitRevParse')
 
   return (
     new Promise((resolve, reject) => {
-      const log = debug('@modernpoacher/deps:git-rev-parse')
-
-      log({ d })
+      const command = 'git rev-parse --show-toplevel'
 
       const {
         stdout,
         stderr
-      } = exec('git rev-parse --show-toplevel', { ...OPTIONS, cwd: d }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
+      } = exec(command, { ...OPTIONS, cwd: d }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
 
       stdout.on('data', out('git-rev-parse', d))
       stderr.on('data', err('git-rev-parse', d))
@@ -73,14 +84,12 @@ export function gitCheckout (d = '.', b = 'master') {
 
   return (
     new Promise((resolve, reject) => {
-      const log = debug('@modernpoacher/deps:git-checkout')
-
-      log({ d, b })
+      const command = `cd '${d}' && git checkout ${b}`
 
       const {
         stdout,
         stderr
-      } = exec(`cd '${d}' && git checkout ${b}`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-checkout'))
       stderr.on('data', use('git-checkout'))
@@ -93,14 +102,12 @@ export function gitPull (d = '.') {
 
   return (
     new Promise((resolve, reject) => {
-      const log = debug('@modernpoacher/deps:git-pull')
-
-      log({ d })
+      const command = `cd '${d}' && git pull`
 
       const {
         stdout,
         stderr
-      } = exec(`cd '${d}' && git pull`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-pull'))
       stderr.on('data', use('git-pull'))
@@ -113,14 +120,12 @@ export function gitPush (d = '.') {
 
   return (
     new Promise((resolve, reject) => {
-      const log = debug('@modernpoacher/deps:git-push')
-
-      log({ d })
+      const command = `cd '${d}' && git push`
 
       const {
         stdout,
         stderr
-      } = exec(`cd '${d}' && git push`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-push'))
       stderr.on('data', use('git-push'))
@@ -133,14 +138,12 @@ export function gitAdd (d = '.', a = 'package.json package-lock.json') {
 
   return (
     new Promise((resolve, reject) => {
-      const log = debug('@modernpoacher/deps:git-add')
-
-      log({ d, a })
+      const command = `cd '${d}' && git add ${a}`
 
       const {
         stdout,
         stderr
-      } = exec(`cd '${d}' && git add ${a}`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-add'))
       stderr.on('data', use('git-add'))
@@ -153,14 +156,12 @@ export function gitCommit (d = '.', m = 'Updated `package.json` &/ `package-lock
 
   return (
     new Promise((resolve, reject) => {
-      const log = debug('@modernpoacher/deps:git-commit')
-
-      log({ d, m })
+      const command = `cd '${d}' && git commit -m '${m}'`
 
       const {
         stdout,
         stderr
-      } = exec(`cd '${d}' && git commit -m '${m}'`, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-commit'))
       stderr.on('data', use('git-commit'))

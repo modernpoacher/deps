@@ -12,21 +12,21 @@ const log = debug('@modernpoacher/deps')
 
 log('`git` is awake')
 
-const use = (n) => {
-  const log = debug(`@modernpoacher/deps:${n}`)
+function use (key) {
+  const log = debug(`@modernpoacher/deps:${key}`)
 
-  return (v) => {
+  return function use (v) {
     log(v.trim()) // .replace(/(\s+)$/g, '')
   }
 }
 
-function out (n, d) {
-  const log = debug(`@modernpoacher/deps:${n}`)
+function out (key, directory) {
+  const log = debug(`@modernpoacher/deps:${key}`)
 
   return function out (v) {
     const s = v.trim()
 
-    if (d === s) return
+    if (directory === s) return
 
     return (
       log(s)
@@ -34,13 +34,13 @@ function out (n, d) {
   }
 }
 
-function err (n, d) {
-  const log = debug(`@modernpoacher/deps:${n}`)
+function err (key, directory) {
+  const log = debug(`@modernpoacher/deps:${key}`)
 
   return function err (v) {
     const s = v.trim()
 
-    if (d === s || s.toLowerCase().startsWith('fatal: not a git repository')) return
+    if (directory === s || s.toLowerCase().startsWith('fatal: not a git repository')) return
 
     return (
       log(s)
@@ -61,7 +61,7 @@ function isCommandError (e) {
   )
 }
 
-export function gitRevParse (d = '.') {
+export function gitRevParse (directory = '.') {
   log('gitRevParse')
 
   return (
@@ -71,25 +71,25 @@ export function gitRevParse (d = '.') {
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: d }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
 
-      stdout.on('data', out('git-rev-parse', d))
-      stderr.on('data', err('git-rev-parse', d))
+      stdout.on('data', out('git-rev-parse', directory))
+      stderr.on('data', err('git-rev-parse', directory))
     })
   )
 }
 
-export function gitCheckout (d = '.', b = 'master') {
+export function gitCheckout (directory = '.', branch = 'master') {
   log('gitCheckout')
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${d}' && git checkout ${b}`
+      const command = `cd '${directory}' && git checkout ${branch}`
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-checkout'))
       stderr.on('data', use('git-checkout'))
@@ -97,17 +97,17 @@ export function gitCheckout (d = '.', b = 'master') {
   )
 }
 
-export function gitPull (d = '.') {
+export function gitPull (directory = '.') {
   log('gitPull')
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${d}' && git pull`
+      const command = `cd '${directory}' && git pull`
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-pull'))
       stderr.on('data', use('git-pull'))
@@ -115,17 +115,17 @@ export function gitPull (d = '.') {
   )
 }
 
-export function gitPush (d = '.') {
+export function gitPush (directory = '.') {
   log('gitPush')
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${d}' && git push`
+      const command = `cd '${directory}' && git push`
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-push'))
       stderr.on('data', use('git-push'))
@@ -133,17 +133,17 @@ export function gitPush (d = '.') {
   )
 }
 
-export function gitAdd (d = '.', a = 'package.json package-lock.json') {
+export function gitAdd (directory = '.', add = 'package.json package-lock.json') {
   log('gitAdd')
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${d}' && git add ${a}`
+      const command = `cd '${directory}' && git add ${add}`
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-add'))
       stderr.on('data', use('git-add'))
@@ -151,17 +151,17 @@ export function gitAdd (d = '.', a = 'package.json package-lock.json') {
   )
 }
 
-export function gitCommit (d = '.', m = 'Updated `package.json` &/ `package-lock.json`') {
+export function gitCommit (directory = '.', message = 'Updated `package.json` &/ `package-lock.json`') {
   log('gitCommit')
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${d}' && git commit -m '${m}'`
+      const command = `cd '${directory}' && git commit -m '${message}'`
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: d }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', use('git-commit'))
       stderr.on('data', use('git-commit'))

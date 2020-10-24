@@ -14,6 +14,12 @@ const log = debug('@modernpoacher/deps')
 
 log('`deps` is awake')
 
+/**
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ *  e  exact
+ */
 export const getCommands = (v, c, r, e) => (
   ['install']
     .concat(transform(v, c)) // string or array
@@ -21,6 +27,12 @@ export const getCommands = (v, c, r, e) => (
     .concat(e ? '--save-exact' : [])
 )
 
+/**
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ *  e  exact
+ */
 export function getSaveBundleCommands (v, c, r, e = false) {
   log('getSaveBundleCommands')
 
@@ -29,6 +41,12 @@ export function getSaveBundleCommands (v, c, r, e = false) {
   )
 }
 
+/**
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ *  e  exact
+ */
 export function getSaveOptionalCommands (v, c, r, e = false) {
   log('getSaveOptionalCommands')
 
@@ -37,6 +55,12 @@ export function getSaveOptionalCommands (v, c, r, e = false) {
   )
 }
 
+/**
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ *  e  exact
+ */
 export function getSaveDevCommands (v, c, r, e = false) {
   log('getSaveDevCommands')
 
@@ -45,6 +69,12 @@ export function getSaveDevCommands (v, c, r, e = false) {
   )
 }
 
+/**
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ *  e  exact
+ */
 export function getSaveProdCommands (v, c, r, e = false) {
   log('getSaveProdCommands')
 
@@ -53,6 +83,12 @@ export function getSaveProdCommands (v, c, r, e = false) {
   )
 }
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ */
 export function installSaveBundleExact (d, v, c, r) {
   log('installSaveBundleExact')
 
@@ -67,6 +103,12 @@ export function installSaveBundleExact (d, v, c, r) {
   )
 }
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ */
 export function installSaveBundle (d, v, c, r) {
   log('installSaveBundle')
 
@@ -81,6 +123,12 @@ export function installSaveBundle (d, v, c, r) {
   )
 }
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ */
 export function installSaveOptionalExact (d, v, c, r) {
   log('installSaveOptionalExact')
 
@@ -95,6 +143,12 @@ export function installSaveOptionalExact (d, v, c, r) {
   )
 }
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ */
 export function installSaveOptional (d, v, c, r) {
   log('installSaveOptional')
 
@@ -109,6 +163,12 @@ export function installSaveOptional (d, v, c, r) {
   )
 }
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ */
 export function installSaveDevExact (d, v, c, r) {
   log('installSaveDevExact')
 
@@ -123,6 +183,12 @@ export function installSaveDevExact (d, v, c, r) {
   )
 }
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ */
 export function installSaveDev (d, v, c, r) {
   log('installSaveDev')
 
@@ -137,6 +203,12 @@ export function installSaveDev (d, v, c, r) {
   )
 }
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ */
 export function installSaveProdExact (d, v, c, r) {
   log('installSaveProdExact')
 
@@ -151,6 +223,12 @@ export function installSaveProdExact (d, v, c, r) {
   )
 }
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  r  registry
+ */
 export function installSaveProd (d, v, c, r) {
   log('installSaveProd')
 
@@ -165,50 +243,74 @@ export function installSaveProd (d, v, c, r) {
   )
 }
 
-export async function executeBundle (dir = '.', packages = {}, configuration = {}, registry) {
+/**
+ *  directory
+ *  packages
+ *  configuration
+ *  registry
+ */
+export async function executeBundle (directory = '.', packages = {}, configuration = {}, registry) {
   log('executeBundle')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveBundleExact(dir, depsExact, configuration, registry)
+  if (depsExact.length) await installSaveBundleExact(directory, depsExact, configuration, registry)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await installSaveBundle(dir, deps, configuration, registry)
+  if (deps.length) await installSaveBundle(directory, deps, configuration, registry)
 }
 
-export async function executeOptional (dir = '.', packages = {}, configuration = {}, registry) {
+/**
+ *  directory
+ *  packages
+ *  configuration
+ *  registry
+ */
+export async function executeOptional (directory = '.', packages = {}, configuration = {}, registry) {
   log('executeOptional')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveOptionalExact(dir, depsExact, configuration, registry)
+  if (depsExact.length) await installSaveOptionalExact(directory, depsExact, configuration, registry)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await installSaveOptional(dir, deps, configuration, registry)
+  if (deps.length) await installSaveOptional(directory, deps, configuration, registry)
 }
 
-export async function executeDev (dir = '.', packages = {}, configuration = {}, registry) {
+/**
+ *  directory
+ *  packages
+ *  configuration
+ *  registry
+ */
+export async function executeDev (directory = '.', packages = {}, configuration = {}, registry) {
   log('executeDev')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveDevExact(dir, depsExact, configuration, registry)
+  if (depsExact.length) await installSaveDevExact(directory, depsExact, configuration, registry)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await installSaveDev(dir, deps, configuration, registry)
+  if (deps.length) await installSaveDev(directory, deps, configuration, registry)
 }
 
-export async function executeProd (dir = '.', packages = {}, configuration = {}, registry) {
+/**
+ *  directory
+ *  packages
+ *  configuration
+ *  registry
+ */
+export async function executeProd (directory = '.', packages = {}, configuration = {}, registry) {
   log('executeProd')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveProdExact(dir, depsExact, configuration, registry)
+  if (depsExact.length) await installSaveProdExact(directory, depsExact, configuration, registry)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await installSaveProd(dir, deps, configuration, registry)
+  if (deps.length) await installSaveProd(directory, deps, configuration, registry)
 }

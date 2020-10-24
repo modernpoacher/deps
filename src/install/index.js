@@ -14,6 +14,13 @@ const log = debug('@modernpoacher/deps:install')
 
 log('`install` is awake')
 
+/**
+ *  v  values
+ *  c  configuration
+ *  s  save
+ *  r  registry
+ *  e  exact
+ */
 export const getCommands = (v, c, s, r, e = false) => (
   ['install']
     .concat(transform(v, c)) // string or array
@@ -22,6 +29,13 @@ export const getCommands = (v, c, s, r, e = false) => (
     .concat(e ? '--save-exact' : [])
 )
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  s  save
+ *  r  registry
+ */
 export function installExact (d, v, c, s, r) {
   log('installExact')
 
@@ -36,6 +50,13 @@ export function installExact (d, v, c, s, r) {
   )
 }
 
+/**
+ *  d  directory
+ *  v  values
+ *  c  configuration
+ *  s  save
+ *  r  registry
+ */
 export function install (d, v, c, s, r) {
   return (
     new Promise((resolve, reject) => {
@@ -48,14 +69,21 @@ export function install (d, v, c, s, r) {
   )
 }
 
-export async function execute (dir = '.', packages = {}, configuration = {}, save = false, registry) {
+/**
+ *  directory
+ *  packages
+ *  configuration
+ *  save
+ *  registry
+ */
+export async function execute (directory = '.', packages = {}, configuration = {}, save = false, registry) {
   log('execute')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installExact(dir, depsExact, configuration, save, registry)
+  if (depsExact.length) await installExact(directory, depsExact, configuration, save, registry)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await install(dir, deps, configuration, save, registry)
+  if (deps.length) await install(directory, deps, configuration, save, registry)
 }

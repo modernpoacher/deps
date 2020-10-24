@@ -95,12 +95,12 @@ async function getDepsList (directories) {
   }
 }
 
-async function mapRevParse (p) {
+async function mapRevParse (directory) {
   log('mapRevParse')
 
   try {
     return (
-      await gitRevParse(p)
+      await gitRevParse(directory)
     )
   } catch (e) {
     handleCommandError(e)

@@ -16,70 +16,66 @@ const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
-const use = (n) => {
+function use (n) {
   const log = debug(`@modernpoacher/deps:${n}`)
 
-  return (v) => {
+  return function use (v) {
     log(v.trim()) // .replace(/(\s+)$/g, '')
   }
 }
 
 function handleError ({ code = 'NONE', message = 'No error message defined' }) {
-  if (code === 1) {
-    log(message)
-  } else {
-    log({
-      code,
-      message
-    })
-  }
+  log({
+    code,
+    message
+  })
 }
 
 const handlePackageError = ({ message }) => log(`Package error: "${message}"`)
 
 const handleConfigurationError = ({ message }) => log(`Configuration error: "${message}"`)
 
-const getPackageJsonPath = (p = '.') => resolve(p, 'package.json')
+const getPackageJsonPath = (directory = '.') => resolve(directory, 'package.json')
 
-const getDepsRcPath = (p = '.') => resolve(p, '.depsrc')
+const getDepsRcPath = (directory = '.') => resolve(directory, '.depsrc')
 
-const getDepsRcJsonPath = (p = '.') => resolve(p, '.depsrc.json')
+const getDepsRcJsonPath = (directory = '.') => resolve(directory, '.depsrc.json')
 
-async function getPackageJson (p = '.') {
+async function getPackageJson (directory = '.') {
   log('getPackageJson')
 
   return JSON.parse(
-    await readFile(getPackageJsonPath(p), 'utf8')
+    await readFile(getPackageJsonPath(directory), 'utf8')
   )
 }
 
-async function getDepsRc (p = '.') {
+async function getDepsRc (directory = '.') {
   log('getDepsRc')
 
   return JSON.parse(
-    await readFile(getDepsRcPath(p), 'utf8')
+    await readFile(getDepsRcPath(directory), 'utf8')
   )
 }
 
-async function getDepsRcJson (p = '.') {
+async function getDepsRcJson (directory = '.') {
   log('getDepsRcJson')
 
   return JSON.parse(
-    await readFile(getDepsRcJsonPath(p), 'utf8')
+    await readFile(getDepsRcJsonPath(directory), 'utf8')
   )
 }
 
-function rmrf (d = '.') {
+function rmrf (directory = '.') {
   log('rmrf')
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${d}' && rm -rf node_modules package-lock.json`
+      const command = `cd '${directory}' && rm -rf node_modules package-lock.json`
 
       const {
         stdout,
         stderr
-      } = exec(command, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', use('rmrf'))
       stderr.on('data', use('rmrf'))
@@ -87,17 +83,17 @@ function rmrf (d = '.') {
   )
 }
 
-function npmi (d = '.', r = 'https://registry.npmjs.org') {
+function npmi (directory = '.', registry = 'https://registry.npmjs.org') {
   log('npmi')
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${d}' && npm i --registry ${r}`
+      const command = `cd '${directory}' && npm i --registry ${registry}`
 
       const {
         stdout,
         stderr
-      } = exec(command, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', use('npmi'))
       stderr.on('data', use('npmi'))
@@ -105,17 +101,17 @@ function npmi (d = '.', r = 'https://registry.npmjs.org') {
   )
 }
 
-function deps (d = '.', r = 'https://registry.npmjs.org') {
+function deps (directory = '.', registry = 'https://registry.npmjs.org') {
   log('deps')
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${d}' && deps --registry ${r}`
+      const command = `cd '${directory}' && deps --registry ${registry}`
 
       const {
         stdout,
         stderr
-      } = exec(command, { cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(command, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', use('deps'))
       stderr.on('data', use('deps'))

@@ -6,13 +6,13 @@ import {
   getDepsExact,
   getDeps,
   transform,
+  transformDependency,
+  isExact,
   getProdDependencies,
   getDevDependencies,
   getOptionalDependencies,
   getBundleDependencies,
-  getPeerDependencies,
-  isExact,
-  getDependency
+  getPeerDependencies
 } from '@modernpoacher/deps/common'
 
 describe('@modernpoacher/deps/common', () => {
@@ -43,6 +43,20 @@ describe('@modernpoacher/deps/common', () => {
   describe('`transform`', () => {
     it('is a function', () => {
       return expect(transform)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`transformDependency`', () => {
+    it('is a function', () => {
+      return expect(transformDependency)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`isExact`', () => {
+    it('is a function', () => {
+      return expect(isExact)
         .to.be.a('function')
     })
   })
@@ -78,20 +92,6 @@ describe('@modernpoacher/deps/common', () => {
   describe('`getPeerDependencies`', () => {
     it('is a function', () => {
       return expect(getPeerDependencies)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`isExact`', () => {
-    it('is a function', () => {
-      return expect(isExact)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`getDependency`', () => {
-    it('is a function', () => {
-      return expect(getDependency)
         .to.be.a('function')
     })
   })

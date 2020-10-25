@@ -4,15 +4,71 @@ const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
+/**
+ *  @function getProdDependencies
+ *
+ *  Get the production dependencies by destructuring the package
+ *
+ *  @param {Object} package
+ *
+ *  @return {Object}
+ */
 export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
+
+/**
+ *  @function getDevDependencies
+ *
+ *  Get the development dependencies by destructuring the package
+ *
+ *  @param {Object} package
+ *
+ *  @return {Object}
+ */
 export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependencies
+
+/**
+ *  @function getOptionalDependencies
+ *
+ *  Get the optional dependencies by destructuring the package
+ *
+ *  @param {Object} package
+ *
+ *  @return {Object}
+ */
 export const getOptionalDependencies = ({ optionalDependencies = {} } = {}) => optionalDependencies
+
+/**
+ *  @function getBundleDependencies
+ *
+ *  Get the bundle dependencies by destructuring the package
+ *
+ *  @param {Object} package
+ *
+ *  @return {Object}
+ */
 export const getBundleDependencies = ({ bundleDependencies = [] } = {}) => bundleDependencies
+
+/**
+ *  @function getPeerDependencies
+ *
+ *  Get the peer dependencies by destructuring the package
+ *
+ *  @param {Object} package
+ *
+ *  @return {Object}
+ */
 export const getPeerDependencies = ({ peerDependencies } = {}) => peerDependencies
 
+/**
+ *  @function isExact
+ *
+ *  Determine whether the dependency is exact with a Regular Expression
+ *
+ *  @param {String} v
+ *
+ *  @return {Boolean}
+ */
 export const isExact = (v) => /^\d/.test(v)
-
-export const getDependency = ({ name = '@modernpoacher/deps', version = 'latest' } = {}) => `${name}@${version}`
 
 /**
  *  @function getDepsExact
@@ -60,20 +116,31 @@ export function getDeps (values) {
 }
 
 /**
+ *  @function transformDependency
+ *
+ *  Transform by destructuring the value
+ *
+ *  @param {Object}
+ *
+ *  @return {String}
+ */
+export const transformDependency = ({ name = '@modernpoacher/deps', version = 'latest' } = {}) => `${name}@${version}`
+
+/**
  *  @function transform
  *
  *  Transform the param to a string
  *
- *  @param {(Array|string)} value
+ *  @param {(Array|Object)} value
  *
- *  @return {string}
+ *  @return {String}
  */
 export function transform (value) {
   log('transform')
 
   return (
     Array.isArray(value)
-      ? value.map(getDependency).join(String.fromCharCode(32)).trim()
-      : getDependency(value)
+      ? value.map(transformDependency).join(String.fromCharCode(32)).trim()
+      : transformDependency(value)
   )
 }

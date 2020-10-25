@@ -56,10 +56,37 @@ function err (key, directory) {
   }
 }
 
+/**
+ *  @function getErrorCode
+ *
+ *  Get an error code from an error
+ *
+ *  @param {Error}
+ *
+ *  @return {Number}
+ */
 const getErrorCode = ({ code = 0 }) => code
 
+/**
+ *  @function getErrorMessage
+ *
+ *  Get an error message from an error
+ *
+ *  @param {Error}
+ *
+ *  @return {String}
+ */
 const getErrorMessage = ({ message = '' }) => message
 
+/**
+ *  @function isCommandError
+ *
+ *  Determine whether an error is a safe non-zero exit from a Git command
+ *
+ *  @param {Error}
+ *
+ *  @return {Boolean}
+ */
 function isCommandError (e) {
   log('isCommandError')
 
@@ -69,6 +96,15 @@ function isCommandError (e) {
   )
 }
 
+/**
+ *  @function gitRevParse
+ *
+ *  Determine whether a directory is configured for Git
+ *
+ *  @param {String} directory - A directory
+ *
+ *  @return {Promise}
+ */
 export function gitRevParse (directory = DIRECTORY) {
   log('gitRevParse')
 
@@ -87,6 +123,15 @@ export function gitRevParse (directory = DIRECTORY) {
   )
 }
 
+/**
+ *  @function gitCheckout
+ *
+ *  Switch to the default value if none is supplied
+ *
+ *  @param {String} directory - A directory configured for Git
+ *
+ *  @return {Promise}
+ */
 export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
   log('gitCheckout')
 
@@ -105,6 +150,15 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
   )
 }
 
+/**
+ *  @function gitPull
+ *
+ *  Pull changes from the Git remote
+ *
+ *  @param {String} directory - A directory configured for Git
+ *
+ *  @return {Promise}
+ */
 export function gitPull (directory = DIRECTORY) {
   log('gitPull')
 
@@ -123,6 +177,15 @@ export function gitPull (directory = DIRECTORY) {
   )
 }
 
+/**
+ *  @function gitPush
+ *
+ *  Push changes to the Git remote
+ *
+ *  @param {String} directory - A directory configured for Git
+ *
+ *  @return {Promise}
+ */
 export function gitPush (directory = DIRECTORY) {
   log('gitPush')
 
@@ -141,6 +204,16 @@ export function gitPush (directory = DIRECTORY) {
   )
 }
 
+/**
+ *  @function gitAdd
+ *
+ *  Add changes to Git with a default value if none is supplied
+ *
+ *  @param {String} directory - A directory configured for Git
+ *  @param {String} add - An add parameter
+ *
+ *  @return {Promise}
+ */
 export function gitAdd (directory = DIRECTORY, add = ADD) {
   log('gitAdd')
 
@@ -159,6 +232,16 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
   )
 }
 
+/**
+ *  @function gitCommit
+ *
+ *  Commit changes to Git with a default value if none is supplied
+ *
+ *  @param {String} directory - A directory configured for Git
+ *  @param {String} commit - A commit message
+ *
+ *  @return {Promise}
+ */
 export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
   log('gitCommit')
 

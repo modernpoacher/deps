@@ -14,24 +14,43 @@ export const isExact = (v) => /^\d/.test(v)
 
 export const getDependency = ({ name = '@modernpoacher/deps', version = 'latest' } = {}) => `${name}@${version}`
 
-export function getDepsExact (v, c) {
+/**
+ *  @function getDepsExact
+ *
+ *  Get an array of dependencies to be installed with the `-E` flag
+ *
+ *  @param {Object} values
+ *  @param {Object} configuration
+ *
+ *  @return {Array}
+ */
+export function getDepsExact (values, configuration) {
   log('getDepsExact')
 
   return (
-    Object.entries(v)
+    Object.entries(values)
       .reduce((accumulator, [name, version]) => (
         isExact(version)
-          ? accumulator.concat({ name, version: Reflect.has(c, name) ? Reflect.get(c, name) : version })
+          ? accumulator.concat({ name, version: Reflect.has(configuration, name) ? Reflect.get(configuration, name) : version })
           : accumulator
       ), [])
   )
 }
 
-export function getDeps (v) {
+/**
+ *  @function getDeps
+ *
+ *  Get an array of dependencies to be installed
+ *
+ *  @param {Object} values
+ *
+ *  @return {Array}
+ */
+export function getDeps (values) {
   log('getDeps')
 
   return (
-    Object.entries(v)
+    Object.entries(values)
       .reduce((accumulator, [name, version]) => (
         isExact(version)
           ? accumulator
@@ -40,12 +59,21 @@ export function getDeps (v) {
   )
 }
 
-export function transform (v) {
+/**
+ *  @function transform
+ *
+ *  Transform the param to a string
+ *
+ *  @param {(Array|string)} value
+ *
+ *  @return {string}
+ */
+export function transform (value) {
   log('transform')
 
   return (
-    Array.isArray(v)
-      ? v.map(getDependency).join(String.fromCharCode(32)).trim()
-      : getDependency(v)
+    Array.isArray(value)
+      ? value.map(getDependency).join(String.fromCharCode(32)).trim()
+      : getDependency(value)
   )
 }

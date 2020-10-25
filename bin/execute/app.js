@@ -112,11 +112,7 @@ async function iterate ([directory, ...directories] = [], registry = REGISTRY) {
 
   if (directory) await execute(directory, registry)
 
-  if (directories.length) {
-    return (
-      await iterate(directories, registry)
-    )
-  }
+  if (directories.length) await iterate(directories, registry)
 }
 
 async function execute (directory = DIRECTORY, registry = REGISTRY) {

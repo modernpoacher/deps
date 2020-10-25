@@ -4,10 +4,6 @@ require('module-alias/register')
 
 const debug = require('debug')
 
-const {
-  relative
-} = require('path')
-
 const commander = require('commander')
 
 const {
@@ -19,14 +15,10 @@ const {
 
 const {
   handleError,
-  handlePackageError,
-  handleConfigurationError,
-  getPackageJsonPath,
-  getDepsRcPath,
-  getDepsRcJsonPath,
-  getPackageJson,
-  getDepsRc,
-  getDepsRcJson
+  hasPackage,
+  getPackage,
+  hasConfiguration,
+  getConfiguration
 } = require('./common')
 
 const {
@@ -81,63 +73,13 @@ async function app () {
     }
   } = process
 
-  let PACKAGE
-  try {
-    PACKAGE = await getPackageJson(DEPS_PATH)
+  const PACKAGE = await hasPackage(DEPS_PATH)
+    ? await getPackage(DEPS_PATH)
+    : {}
 
-    log(`Package at "${relative(PWD, getPackageJsonPath(DEPS_PATH))}"`)
-  } catch (e) {
-    const {
-      code
-    } = e
-
-    if (code === 'ENOENT') {
-      log(`No package at "${relative(PWD, getPackageJsonPath(DEPS_PATH))}"`)
-
-      return // halt
-    } else {
-      handlePackageError(e)
-
-      return // halt
-    }
-  }
-
-  let CONFIGURATION
-  try {
-    CONFIGURATION = await getDepsRc(DEPS_PATH)
-
-    log(`Configuration at "${relative(PWD, getDepsRcPath(DEPS_PATH))}"`) // proceed
-  } catch (e) {
-    const {
-      code
-    } = e
-
-    if (code === 'ENOENT') {
-      try {
-        CONFIGURATION = await getDepsRcJson(DEPS_PATH)
-
-        log(`Configuration at "${relative(PWD, getDepsRcJsonPath(DEPS_PATH))}"`) // proceed
-      } catch (e) {
-        const {
-          code
-        } = e
-
-        if (code === 'ENOENT') {
-          CONFIGURATION = {}
-
-          log(`No configuration at "${relative(PWD, getDepsRcPath(DEPS_PATH))}" or "${relative(PWD, getDepsRcJsonPath(DEPS_PATH))}"`) // proceed
-        } else {
-          handleConfigurationError(e)
-
-          return // halt
-        }
-      }
-    } else {
-      handleConfigurationError(e)
-
-      return // halt
-    }
-  }
+  const CONFIGURATION = await hasConfiguration(DEPS_PATH)
+    ? await getConfiguration(DEPS_PATH)
+    : {}
 
   const {
     saveProd: P,

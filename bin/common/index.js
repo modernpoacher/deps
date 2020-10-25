@@ -5,10 +5,16 @@ const {
 } = require('child_process')
 
 const {
-  resolve
+  resolve,
+  relative
 } = require('path')
 
 const {
+  constants
+} = require('fs')
+
+const {
+  access,
   readFile
 } = require('fs/promises')
 
@@ -18,6 +24,12 @@ log('`common` is awake')
 
 const DIRECTORY = '.'
 const REGISTRY = 'https://registry.npmjs.org'
+
+/*
+const toRelativePath = relative.bind(null, process.cwd())
+*/
+
+const toRelativePath = (to) => relative(process.cwd(), to)
 
 function use (n) {
   const log = debug(`@modernpoacher/deps:${n}`)
@@ -66,6 +78,87 @@ async function getDepsRcJson (directory = DIRECTORY) {
   return JSON.parse(
     await readFile(getDepsRcJsonPath(directory), 'utf8')
   )
+}
+
+async function hasPackage (directory = '.') {
+  try {
+    await access(getPackageJsonPath(directory), constants.R_OK)
+
+    log(`Package at "${toRelativePath(getPackageJsonPath(directory))}"`)
+    return true
+  } catch (e) {
+    log(`No package at "${toRelativePath(getPackageJsonPath(directory))}"`)
+    return false
+  }
+}
+
+async function getPackage (directory = '.') {
+  try {
+    return await getPackageJson(directory)
+  } catch (e) {
+    handlePackageError(e)
+  }
+}
+
+async function hasConfiguration (directory = '.') {
+  try {
+    await access(getDepsRcPath(directory), constants.R_OK)
+
+    log(`Configuration at "${toRelativePath(getDepsRcPath(directory))}"`)
+    return true
+  } catch (e) {
+    const {
+      code
+    } = e
+
+    if (code !== 'ENOENT') {
+      handleConfigurationError(e)
+    } else {
+      try {
+        await access(getDepsRcJsonPath(directory), constants.R_OK)
+
+        log(`Configuration at "${toRelativePath(getDepsRcJsonPath(directory))}"`)
+        return true
+      } catch (e) {
+        const {
+          code
+        } = e
+
+        if (code !== 'ENOENT') {
+          handleConfigurationError(e)
+        }
+      }
+    }
+  }
+
+  log(`No configuration at "${toRelativePath(getDepsRcPath(directory))}" or "${toRelativePath(getDepsRcJsonPath(directory))}"`)
+  return false
+}
+
+async function getConfiguration (directory = '.') {
+  try {
+    return await getDepsRc(directory)
+  } catch (e) {
+    const {
+      code
+    } = e
+
+    if (code !== 'ENOENT') {
+      handleConfigurationError(e)
+    } else {
+      try {
+        return await getDepsRcJson(directory)
+      } catch (e) {
+        const {
+          code
+        } = e
+
+        if (code !== 'ENOENT') {
+          handleConfigurationError(e)
+        }
+      }
+    }
+  }
 }
 
 function rmrf (directory = DIRECTORY) {
@@ -132,6 +225,10 @@ module.exports = {
   getPackageJson,
   getDepsRc,
   getDepsRcJson,
+  hasPackage,
+  getPackage,
+  hasConfiguration,
+  getConfiguration,
   rmrf,
   npmi,
   deps

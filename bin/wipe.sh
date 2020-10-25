@@ -19,6 +19,7 @@ function execute {
   else
     git pull
     git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
+    git remote prune origin
     git gc --aggressive --prune=now
   fi
 

@@ -15,10 +15,16 @@ const log = debug('@modernpoacher/deps')
 log('`deps` is awake')
 
 /**
- *  v  values
- *  c  configuration
- *  r  registry
- *  e  exact
+ *  @function getCommands
+ *
+ *  Get the `install` and `install -E` commands as an array containing configuration and parameters as flags
+ *
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
  */
 export const getCommands = (v, c, r, e) => (
   ['install']
@@ -28,10 +34,16 @@ export const getCommands = (v, c, r, e) => (
 )
 
 /**
- *  v  values
- *  c  configuration
- *  r  registry
- *  e  exact
+ *  @function getSaveBundleCommands
+ *
+ *  Get the `--save-bundle` commands as an array containing configuration and parameters as flags
+ *
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
  */
 export function getSaveBundleCommands (v, c, r, e = false) {
   log('getSaveBundleCommands')
@@ -42,10 +54,16 @@ export function getSaveBundleCommands (v, c, r, e = false) {
 }
 
 /**
- *  v  values
- *  c  configuration
- *  r  registry
- *  e  exact
+ *  @function getSaveOptionalCommands
+ *
+ *  Get the `--save-optional` commands as an array containing configuration and parameters as flags
+ *
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
  */
 export function getSaveOptionalCommands (v, c, r, e = false) {
   log('getSaveOptionalCommands')
@@ -56,10 +74,16 @@ export function getSaveOptionalCommands (v, c, r, e = false) {
 }
 
 /**
- *  v  values
- *  c  configuration
- *  r  registry
- *  e  exact
+ *  @function getSaveDevCommands
+ *
+ *  Get the `--save-dev` commands as an array containing configuration and parameters as flags
+ *
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
  */
 export function getSaveDevCommands (v, c, r, e = false) {
   log('getSaveDevCommands')
@@ -70,10 +94,16 @@ export function getSaveDevCommands (v, c, r, e = false) {
 }
 
 /**
- *  v  values
- *  c  configuration
- *  r  registry
- *  e  exact
+ *  @function getSaveProdCommands
+ *
+ *  Get the `--save-prod` commands as an array containing configuration and parameters as flags
+ *
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
  */
 export function getSaveProdCommands (v, c, r, e = false) {
   log('getSaveProdCommands')
@@ -84,10 +114,16 @@ export function getSaveProdCommands (v, c, r, e = false) {
 }
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  r  registry
+ *  @function installSaveBundleExact
+ *
+ *  Spawn the `install --save-bundle -E` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function installSaveBundleExact (d, v, c, r) {
   log('installSaveBundleExact')
@@ -104,10 +140,16 @@ export function installSaveBundleExact (d, v, c, r) {
 }
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  r  registry
+ *  @function installSaveBundle
+ *
+ *  Spawn the `install --save-bundle` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function installSaveBundle (d, v, c, r) {
   log('installSaveBundle')
@@ -124,10 +166,16 @@ export function installSaveBundle (d, v, c, r) {
 }
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  r  registry
+ *  @function installSaveOptionalExact
+ *
+ *  Spawn the `install --save-optional -E` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function installSaveOptionalExact (d, v, c, r) {
   log('installSaveOptionalExact')
@@ -144,10 +192,16 @@ export function installSaveOptionalExact (d, v, c, r) {
 }
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  r  registry
+ *  @function installSaveOptional
+ *
+ *  Spawn the `install --save-optional` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function installSaveOptional (d, v, c, r) {
   log('installSaveOptional')
@@ -164,10 +218,16 @@ export function installSaveOptional (d, v, c, r) {
 }
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  r  registry
+ *  @function installSaveDevExact
+ *
+ *  Spawn the `install --save-dev -E` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function installSaveDevExact (d, v, c, r) {
   log('installSaveDevExact')
@@ -184,10 +244,16 @@ export function installSaveDevExact (d, v, c, r) {
 }
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  r  registry
+ *  @function installSaveDev
+ *
+ *  Spawn the `install --save-dev` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function installSaveDev (d, v, c, r) {
   log('installSaveDev')
@@ -204,10 +270,16 @@ export function installSaveDev (d, v, c, r) {
 }
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  r  registry
+ *  @function installSaveProdExact
+ *
+ *  Spawn the `install --save-prod -E` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function installSaveProdExact (d, v, c, r) {
   log('installSaveProdExact')
@@ -224,10 +296,16 @@ export function installSaveProdExact (d, v, c, r) {
 }
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  r  registry
+ *  @function installSaveProd
+ *
+ *  Spawn the `install --save-prod` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function installSaveProd (d, v, c, r) {
   log('installSaveProd')
@@ -244,10 +322,17 @@ export function installSaveProd (d, v, c, r) {
 }
 
 /**
- *  directory
- *  packages
- *  configuration
- *  registry
+ *  @function executeBundle
+ *
+ *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {Boolean} s - Save
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export async function executeBundle (directory = '.', packages = {}, configuration = {}, registry) {
   log('executeBundle')
@@ -262,10 +347,17 @@ export async function executeBundle (directory = '.', packages = {}, configurati
 }
 
 /**
- *  directory
- *  packages
- *  configuration
- *  registry
+ *  @function executeOptional
+ *
+ *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {Boolean} s - Save
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export async function executeOptional (directory = '.', packages = {}, configuration = {}, registry) {
   log('executeOptional')
@@ -280,10 +372,17 @@ export async function executeOptional (directory = '.', packages = {}, configura
 }
 
 /**
- *  directory
- *  packages
- *  configuration
- *  registry
+ *  @function executeDev
+ *
+ *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {Boolean} s - Save
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export async function executeDev (directory = '.', packages = {}, configuration = {}, registry) {
   log('executeDev')
@@ -298,10 +397,17 @@ export async function executeDev (directory = '.', packages = {}, configuration 
 }
 
 /**
- *  directory
- *  packages
- *  configuration
- *  registry
+ *  @function executeProd
+ *
+ *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {Boolean} s - Save
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export async function executeProd (directory = '.', packages = {}, configuration = {}, registry) {
   log('executeProd')

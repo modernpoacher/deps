@@ -15,11 +15,17 @@ const log = debug('@modernpoacher/deps:install')
 log('`install` is awake')
 
 /**
- *  v  values
- *  c  configuration
- *  s  save
- *  r  registry
- *  e  exact
+ *  @function getCommands
+ *
+ *  Get the `install` and `install -E` commands as an array containing configuration and parameters as flags
+ *
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {Boolean} s - Save
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
  */
 export const getCommands = (v, c, s, r, e = false) => (
   ['install']
@@ -30,11 +36,17 @@ export const getCommands = (v, c, s, r, e = false) => (
 )
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  s  save
- *  r  registry
+ *  @function installExact
+ *
+ *  Spawn the `install -E` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {Boolean} s - Save
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function installExact (d, v, c, s, r) {
   log('installExact')
@@ -51,11 +63,17 @@ export function installExact (d, v, c, s, r) {
 }
 
 /**
- *  d  directory
- *  v  values
- *  c  configuration
- *  s  save
- *  r  registry
+ *  @function install
+ *
+ *  Spawn the `install` commands
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} v - Values
+ *  @param {Object} c - Configuration
+ *  @param {Boolean} s - Save
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export function install (d, v, c, s, r) {
   return (
@@ -70,11 +88,17 @@ export function install (d, v, c, s, r) {
 }
 
 /**
- *  directory
- *  packages
- *  configuration
- *  save
- *  registry
+ *  @function execute
+ *
+ *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *
+ *  @param {String} d - Directory
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {Boolean} s - Save
+ *  @param {String} r - Registry
+ *
+ *  @return {Promise}
  */
 export async function execute (directory = '.', packages = {}, configuration = {}, save = false, registry) {
   log('execute')

@@ -19,16 +19,16 @@ log('`deps` is awake')
  *
  *  Get the `install` and `install -E` commands as an array containing configuration and parameters as flags
  *
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *  @param {Boolean} e - Exact
  *
  *  @return {Array}
  */
-export const getCommands = (v, c, r, e) => (
+export const getCommands = (p, c, r, e) => (
   ['install']
-    .concat(transform(v, c)) // string or array
+    .concat(transform(p, c)) // string or array
     .concat(r ? ['--registry', r] : [])
     .concat(e ? '--save-exact' : [])
 )
@@ -38,18 +38,18 @@ export const getCommands = (v, c, r, e) => (
  *
  *  Get the `--save-bundle` commands as an array containing configuration and parameters as flags
  *
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *  @param {Boolean} e - Exact
  *
  *  @return {Array}
  */
-export function getSaveBundleCommands (v, c, r, e = false) {
+export function getSaveBundleCommands (p, c, r, e = false) {
   log('getSaveBundleCommands')
 
   return (
-    getCommands(v, c, r, e).concat('--save-bundle')
+    getCommands(p, c, r, e).concat('--save-bundle')
   )
 }
 
@@ -58,18 +58,18 @@ export function getSaveBundleCommands (v, c, r, e = false) {
  *
  *  Get the `--save-optional` commands as an array containing configuration and parameters as flags
  *
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *  @param {Boolean} e - Exact
  *
  *  @return {Array}
  */
-export function getSaveOptionalCommands (v, c, r, e = false) {
+export function getSaveOptionalCommands (p, c, r, e = false) {
   log('getSaveOptionalCommands')
 
   return (
-    getCommands(v, c, r, e).concat('--save-optional')
+    getCommands(p, c, r, e).concat('--save-optional')
   )
 }
 
@@ -78,18 +78,18 @@ export function getSaveOptionalCommands (v, c, r, e = false) {
  *
  *  Get the `--save-dev` commands as an array containing configuration and parameters as flags
  *
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *  @param {Boolean} e - Exact
  *
  *  @return {Array}
  */
-export function getSaveDevCommands (v, c, r, e = false) {
+export function getSaveDevCommands (p, c, r, e = false) {
   log('getSaveDevCommands')
 
   return (
-    getCommands(v, c, r, e).concat('--save-dev')
+    getCommands(p, c, r, e).concat('--save-dev')
   )
 }
 
@@ -98,18 +98,18 @@ export function getSaveDevCommands (v, c, r, e = false) {
  *
  *  Get the `--save-prod` commands as an array containing configuration and parameters as flags
  *
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *  @param {Boolean} e - Exact
  *
  *  @return {Array}
  */
-export function getSaveProdCommands (v, c, r, e = false) {
+export function getSaveProdCommands (p, c, r, e = false) {
   log('getSaveProdCommands')
 
   return (
-    getCommands(v, c, r, e).concat('--save-prod')
+    getCommands(p, c, r, e).concat('--save-prod')
   )
 }
 
@@ -119,18 +119,18 @@ export function getSaveProdCommands (v, c, r, e = false) {
  *  Spawn the `install --save-bundle -E` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function installSaveBundleExact (d, v, c, r) {
+export function installSaveBundleExact (d, p, c, r) {
   log('installSaveBundleExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveBundleCommands(v, c, r, true)
+      const commands = getSaveBundleCommands(p, c, r, true)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -145,18 +145,18 @@ export function installSaveBundleExact (d, v, c, r) {
  *  Spawn the `install --save-bundle` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function installSaveBundle (d, v, c, r) {
+export function installSaveBundle (d, p, c, r) {
   log('installSaveBundle')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveBundleCommands(v, c, r)
+      const commands = getSaveBundleCommands(p, c, r)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -171,18 +171,18 @@ export function installSaveBundle (d, v, c, r) {
  *  Spawn the `install --save-optional -E` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function installSaveOptionalExact (d, v, c, r) {
+export function installSaveOptionalExact (d, p, c, r) {
   log('installSaveOptionalExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveOptionalCommands(v, c, r, true)
+      const commands = getSaveOptionalCommands(p, c, r, true)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -197,18 +197,18 @@ export function installSaveOptionalExact (d, v, c, r) {
  *  Spawn the `install --save-optional` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function installSaveOptional (d, v, c, r) {
+export function installSaveOptional (d, p, c, r) {
   log('installSaveOptional')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveOptionalCommands(v, c, r)
+      const commands = getSaveOptionalCommands(p, c, r)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -223,18 +223,18 @@ export function installSaveOptional (d, v, c, r) {
  *  Spawn the `install --save-dev -E` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function installSaveDevExact (d, v, c, r) {
+export function installSaveDevExact (d, p, c, r) {
   log('installSaveDevExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveDevCommands(v, c, r, true)
+      const commands = getSaveDevCommands(p, c, r, true)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -249,18 +249,18 @@ export function installSaveDevExact (d, v, c, r) {
  *  Spawn the `install --save-dev` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function installSaveDev (d, v, c, r) {
+export function installSaveDev (d, p, c, r) {
   log('installSaveDev')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveDevCommands(v, c, r)
+      const commands = getSaveDevCommands(p, c, r)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -275,18 +275,18 @@ export function installSaveDev (d, v, c, r) {
  *  Spawn the `install --save-prod -E` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function installSaveProdExact (d, v, c, r) {
+export function installSaveProdExact (d, p, c, r) {
   log('installSaveProdExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveProdCommands(v, c, r, true)
+      const commands = getSaveProdCommands(p, c, r, true)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -301,18 +301,18 @@ export function installSaveProdExact (d, v, c, r) {
  *  Spawn the `install --save-prod` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function installSaveProd (d, v, c, r) {
+export function installSaveProd (d, p, c, r) {
   log('installSaveProd')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveProdCommands(v, c, r)
+      const commands = getSaveProdCommands(p, c, r)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)

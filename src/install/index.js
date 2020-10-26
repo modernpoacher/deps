@@ -19,7 +19,7 @@ log('`install` is awake')
  *
  *  Get the `install` and `install -E` commands as an array containing configuration and parameters as flags
  *
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {Boolean} s - Save
  *  @param {String} r - Registry
@@ -27,9 +27,9 @@ log('`install` is awake')
  *
  *  @return {Array}
  */
-export const getCommands = (v, c, s, r, e = false) => (
+export const getCommands = (p, c, s, r, e = false) => (
   ['install']
-    .concat(transform(v, c)) // string or array
+    .concat(transform(p, c)) // string or array
     .concat(s ? [] : '--no-save')
     .concat(r ? ['--registry', r] : [])
     .concat(e ? '--save-exact' : [])
@@ -41,19 +41,19 @@ export const getCommands = (v, c, s, r, e = false) => (
  *  Spawn the `install -E` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {Boolean} s - Save
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function installExact (d, v, c, s, r) {
+export function installExact (d, p, c, s, r) {
   log('installExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(v, c, s, r, true)
+      const commands = getCommands(p, c, s, r, true)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -68,17 +68,17 @@ export function installExact (d, v, c, s, r) {
  *  Spawn the `install` commands
  *
  *  @param {String} d - Directory
- *  @param {Object} v - Values
+ *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
  *  @param {Boolean} s - Save
  *  @param {String} r - Registry
  *
  *  @return {Promise}
  */
-export function install (d, v, c, s, r) {
+export function install (d, p, c, s, r) {
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(v, c, s, r)
+      const commands = getCommands(p, c, s, r)
 
       spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)

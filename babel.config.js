@@ -32,7 +32,6 @@ const presets = [
 ]
 
 const plugins = [
-  'syntax-async-functions',
   [
     'module-resolver',
     {

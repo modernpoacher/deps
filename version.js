@@ -26,7 +26,7 @@ function getJs () {
 }
 
 async function execute (p) {
-  log('execute', p)
+  log('execute')
 
   const r = await readFile(p, 'utf8')
 
@@ -38,7 +38,7 @@ async function execute (p) {
 }
 
 async function recurse ([p, ...a]) {
-  log('recurse', p)
+  log('recurse')
 
   await execute(p)
 

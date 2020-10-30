@@ -334,7 +334,7 @@ export function installSaveProd (d, p, c, r) {
  *
  *  @return {Promise}
  */
-export async function executeBundle (directory = '.', packages = {}, configuration = {}, registry) {
+export async function executeBundle (directory = '.', packages = {}, configuration = {}, registry = 'https://registry.npmjs.org') {
   log('executeBundle')
 
   const depsExact = getDepsExact(packages, configuration)
@@ -359,7 +359,7 @@ export async function executeBundle (directory = '.', packages = {}, configurati
  *
  *  @return {Promise}
  */
-export async function executeOptional (directory = '.', packages = {}, configuration = {}, registry) {
+export async function executeOptional (directory = '.', packages = {}, configuration = {}, registry = 'https://registry.npmjs.org') {
   log('executeOptional')
 
   const depsExact = getDepsExact(packages, configuration)
@@ -384,7 +384,7 @@ export async function executeOptional (directory = '.', packages = {}, configura
  *
  *  @return {Promise}
  */
-export async function executeDev (directory = '.', packages = {}, configuration = {}, registry) {
+export async function executeDev (directory = '.', packages = {}, configuration = {}, registry = 'https://registry.npmjs.org') {
   log('executeDev')
 
   const depsExact = getDepsExact(packages, configuration)
@@ -409,7 +409,7 @@ export async function executeDev (directory = '.', packages = {}, configuration 
  *
  *  @return {Promise}
  */
-export async function executeProd (directory = '.', packages = {}, configuration = {}, registry) {
+export async function executeProd (directory = '.', packages = {}, configuration = {}, registry = 'https://registry.npmjs.org') {
   log('executeProd')
 
   const depsExact = getDepsExact(packages, configuration)

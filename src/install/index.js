@@ -100,7 +100,7 @@ export function install (d, p, c, s, r) {
  *
  *  @return {Promise}
  */
-export async function execute (directory = '.', packages = {}, configuration = {}, save = false, registry) {
+export async function execute (directory = '.', packages = {}, configuration = {}, save = false, registry = 'https://registry.npmjs.org') {
   log('execute')
 
   const depsExact = getDepsExact(packages, configuration)

@@ -62,7 +62,7 @@ function handleCommandError (e) {
 
 const filterDeps = (v) => v // de-falsy
 
-const reduceDeps = (accumulator = [], v) => ( // de-dupe
+const reduceDeps = (accumulator, v) => ( // de-dupe
   accumulator.includes(v)
     ? accumulator
     : accumulator.concat(v)

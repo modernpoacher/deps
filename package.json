@@ -42,12 +42,12 @@
     "pre-commit": "npm run lint && npm run test && npm run version && npm run build && git add bin lib"
   },
   "bin": {
-    "deps": "./bin/app.js",
-    "deps-execute": "./bin/execute/app.js",
-    "deps-install": "./bin/install/app.js",
-    "deps-deps": "./bin/deps.sh",
-    "deps-wipe": "./bin/wipe.sh",
-    "deps-push": "./bin/push.sh"
+    "deps": "bin/app.js",
+    "deps-execute": "bin/execute/app.js",
+    "deps-install": "bin/install/app.js",
+    "deps-deps": "bin/deps.sh",
+    "deps-wipe": "bin/wipe.sh",
+    "deps-push": "bin/push.sh"
   },
   "dependencies": {
     "commander": "^6.2.0",

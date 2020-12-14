@@ -50,7 +50,7 @@
     "deps-push": "bin/push.sh"
   },
   "dependencies": {
-    "commander": "^6.2.0",
+    "commander": "^6.2.1",
     "debug": "^4.3.1",
     "glob-all": "^3.2.1",
     "module-alias": "^2.2.2",
@@ -73,7 +73,7 @@
     "eslint-plugin-mocha": "^8.0.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "husky": "^4.3.5",
+    "husky": "^4.3.6",
     "mocha": "^8.2.1",
     "rimraf": "^3.0.2"
   },

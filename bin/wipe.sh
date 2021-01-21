@@ -18,7 +18,7 @@ function execute {
     echo -e "\033[0;35m$1\033[0m is not configured for Git" # "$d is not configured for Git"
   else
     git pull
-    git branch --merged | egrep -v "(^\*|master|dev)" | xargs git branch -d
+    git branch --merged | egrep -v "(^\*|master|trunk|main|dev)" | xargs git branch -d
     git remote prune origin
     git gc --aggressive --prune=now
   fi

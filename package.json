@@ -47,7 +47,8 @@
     "deps-install": "bin/install/app.js",
     "deps-deps": "bin/deps.sh",
     "deps-wipe": "bin/wipe.sh",
-    "deps-push": "bin/push.sh"
+    "deps-push": "bin/push.sh",
+    "deps-head": "bin/head.sh"
   },
   "dependencies": {
     "commander": "^7.0.0",

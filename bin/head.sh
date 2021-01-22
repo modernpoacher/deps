@@ -8,6 +8,26 @@ function report {
   echo
 }
 
+function has_git {
+  git_status=$(git status 2> /dev/null)
+
+  if [[ $? != 0 ]]
+  then
+    echo -e "\033[0;35m$1\033[0m is not configured for Git" # "$1 is not configured for Git"
+
+    return 1
+  else
+    if [[ ! "$git_status" =~ "nothing to commit" ]]
+    then
+      echo -e "\033[0;35m$1\033[0m has changes to commit" # "$1 has changes to commit"
+
+      return 1
+    fi
+  fi
+
+  return 0
+}
+
 function can_git_remote_set_head {
   [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ [-0-9a-zA-Z]*$ ]] && default_branch="${BASH_REMATCH[0]}"
 
@@ -24,7 +44,7 @@ function can_git_remote_set_head {
 }
 
 function git_remote_set_head {
-  git remote set-head origin -a
+  git remote set-head origin -a 2> /dev/null
 
   return $?
 }
@@ -32,21 +52,26 @@ function git_remote_set_head {
 function execute {
   report "$1"
 
-  can_git_remote_set_head "$1"
+  has_git "$1"
 
-  if [[ $? = 1 ]]
+  if [[ $? = 0 ]]
   then
-    git_remote_set_head
+    can_git_remote_set_head "$1"
 
-    if [[ $? = 0 ]]
+    if [[ $? = 1 ]]
     then
-      echo -e "Changed the default branch for \033[0;35m$1\033[0m"
+      git_remote_set_head
 
-      return 1
-    else
-      echo -e "Failed to change the default branch for \033[0;35m$1\033[0m"
+      if [[ $? = 0 ]]
+      then
+        echo -e "Changed the default branch for \033[0;35m$1\033[0m"
 
-      return 0
+        return 1
+      else
+        echo -e "Failed to change the default branch for \033[0;35m$1\033[0m"
+
+        return 0
+      fi
     fi
   fi
 }

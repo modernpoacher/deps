@@ -8,33 +8,48 @@ function report {
   echo
 }
 
-function execute {
-  report "$1"
-
+function checkout_default_branch {
   [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ [-0-9a-zA-Z]*$ ]] && default_branch="${BASH_REMATCH[0]}"
 
   if [ -z "$default_branch" ]
   then
-    echo -e "Failed to identify the default branch"
+    echo -e "Failed to identify the default branch for \033[0;35m$1\033[0m"
 
     return 1
   else
-    echo -e "Default branch is '$default_branch'"
+    echo -e "The default branch for \033[0;35m$1\033[0m is '$default_branch'"
 
     git checkout $default_branch 2> /dev/null
 
     if [[ $? != 0 ]]
     then
-      echo -e "\033[0;35m$1\033[0m is not configured for Git" # "$d is not configured for Git"
-    else
-      git pull
-      git branch --merged | egrep -v "(^\*|$default_branch)" | xargs git branch -d
-      git remote prune origin
-      git gc --aggressive --prune=now
-    fi
+      echo -e "Failed to checkout the default branch for \033[0;35m$1\033[0m" # "$d is not configured for Git"
 
-    return 0
+      return 1
+    fi
   fi
+
+  return 0
+}
+
+function update {
+  git pull
+  git branch --merged | egrep -v "(^\*|$default_branch)" | xargs git branch -d
+  git remote prune origin
+  git gc --aggressive --prune=now
+}
+
+function execute {
+  report "$1"
+
+  checkout_default_branch "$1"
+
+  if [[ $? = 0 ]]
+  then
+    update
+  fi
+
+  return 0
 }
 
 HOME=$PWD

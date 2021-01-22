@@ -8,21 +8,47 @@ function report {
   echo
 }
 
-function execute {
-  report "$1"
-
+function can_git_remote_set_head {
   [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ [-0-9a-zA-Z]*$ ]] && default_branch="${BASH_REMATCH[0]}"
 
   if [ -z "$default_branch" ]
   then
-    echo -e "Failed to identify the default branch"
+    echo -e "Failed to identify the default branch for \033[0;35m$1\033[0m"
+
+    return 1
   else
-    echo -e "Default branch is '$default_branch'"
+    echo -e "The default branch for \033[0;35m$1\033[0m is '$default_branch'"
+
+    return 0
   fi
+}
 
-  git symbolic-ref refs/remotes/origin/HEAD refs/remotes/origin/${default_branch:-master} 2> /dev/null
+function git_remote_set_head {
+  git remote set-head origin -a
 
-  return 0
+  return $?
+}
+
+function execute {
+  report "$1"
+
+  can_git_remote_set_head "$1"
+
+  if [[ $? = 1 ]]
+  then
+    git_remote_set_head
+
+    if [[ $? = 0 ]]
+    then
+      echo -e "Changed the default branch for \033[0;35m$1\033[0m"
+
+      return 1
+    else
+      echo -e "Failed to change the default branch for \033[0;35m$1\033[0m"
+
+      return 0
+    fi
+  fi
 }
 
 HOME=$PWD

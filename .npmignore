@@ -11,3 +11,4 @@
 # NPM
 .npmignore
 .npmrc
+.npm

@@ -3,7 +3,8 @@
 # https://google.github.io/styleguide/shellguide.html#s7-naming-conventions
 
 function update {
-  git checkout master
+  git checkout $default_branch
+
   git pull
 
   rm -rf node_modules package-lock.json
@@ -33,7 +34,18 @@ function can_update {
     fi
   fi
 
-  return 0
+  [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ [-0-9a-zA-Z]*$ ]] && default_branch="${BASH_REMATCH[0]}"
+
+  if [ -z "$default_branch" ]
+  then
+    echo -e "Failed to identify the default branch"
+
+    return 1
+  else
+    echo -e "Default branch is '$default_branch'"
+
+    return 0
+  fi
 }
 
 function report {

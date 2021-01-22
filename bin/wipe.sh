@@ -11,19 +11,30 @@ function report {
 function execute {
   report "$1"
 
-  git checkout master 2> /dev/null
+  [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ [-0-9a-zA-Z]*$ ]] && default_branch="${BASH_REMATCH[0]}"
 
-  if [[ $? != 0 ]]
+  if [ -z "$default_branch" ]
   then
-    echo -e "\033[0;35m$1\033[0m is not configured for Git" # "$d is not configured for Git"
-  else
-    git pull
-    git branch --merged | egrep -v "(^\*|master|trunk|main|dev)" | xargs git branch -d
-    git remote prune origin
-    git gc --aggressive --prune=now
-  fi
+    echo -e "Failed to identify the default branch"
 
-  return 0
+    return 1
+  else
+    echo -e "Default branch is '$default_branch'"
+
+    git checkout $default_branch 2> /dev/null
+
+    if [[ $? != 0 ]]
+    then
+      echo -e "\033[0;35m$1\033[0m is not configured for Git" # "$d is not configured for Git"
+    else
+      git pull
+      git branch --merged | egrep -v "(^\*|$default_branch)" | xargs git branch -d
+      git remote prune origin
+      git gc --aggressive --prune=now
+    fi
+
+    return 0
+  fi
 }
 
 HOME=$PWD

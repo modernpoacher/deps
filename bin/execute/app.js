@@ -13,6 +13,7 @@ const glob = require('glob-all')
 const commander = require('commander')
 
 const {
+  catGitRefsRemotesOriginHead,
   gitRevParse,
   gitCheckout,
   gitPull,
@@ -121,7 +122,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY) {
   try {
     log({ directory, registry })
 
-    await gitCheckout(directory)
+    await gitCheckout(directory, await catGitRefsRemotesOriginHead(directory))
     await gitPull(directory)
     await rmrf(directory)
     await npmi(directory, registry)

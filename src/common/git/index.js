@@ -97,6 +97,31 @@ function isCommandError (e) {
 }
 
 /**
+ *  @function catGitRefsRemotesOriginHead
+ *
+ *  Get the default branch from `.git/refs/remotes/origin/HEAD`
+ *
+ *  @param {String} directory - A directory configured for Git
+ *
+ *  @return {Promise}
+ */
+export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
+  return (
+    new Promise((resolve, reject) => {
+      const command = `[[ $(cat "${directory}/.git/refs/remotes/origin/HEAD") =~ [-0-9a-zA-Z]*$ ]] && echo "\$\{BASH_REMATCH[0]\}"` // eslint-disable-line
+
+      const {
+        stdout,
+        stderr
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
+
+      stdout.on('data', out('cat-git-refs-remotes-origin-head', directory))
+      stderr.on('data', err('cat-git-refs-remotes-origin-head', directory))
+    })
+  )
+}
+
+/**
  *  @function gitRevParse
  *
  *  Determine whether a directory is configured for Git

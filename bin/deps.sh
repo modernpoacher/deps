@@ -38,11 +38,11 @@ function can_update {
 
   if [ -z "$default_branch" ]
   then
-    echo -e "Failed to identify the default branch"
+    echo -e "Failed to identify the default branch for \033[0;35m$1\033[0m"
 
     return 1
   else
-    echo -e "Default branch is '$default_branch'"
+    echo -e "The default branch for \033[0;35m$1\033[0m is '$default_branch'"
 
     return 0
   fi

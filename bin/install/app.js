@@ -89,7 +89,7 @@ async function app () {
     peer: p,
     save,
     registry
-  } = commander
+  } = commander.opts()
 
   log({
     prod: P,

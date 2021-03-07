@@ -218,7 +218,7 @@ async function app () {
     from: F,
     only: O,
     registry
-  } = commander
+  } = commander.opts()
 
   log({
     ...(P ? { path: P } : {}),

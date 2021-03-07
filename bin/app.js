@@ -87,7 +87,7 @@ async function app () {
     saveOptional: O,
     saveBundle: B,
     registry
-  } = commander
+  } = commander.opts()
 
   log({
     saveProd: P,

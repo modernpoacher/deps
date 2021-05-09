@@ -55,7 +55,7 @@ export function installExact (d, p, c, s, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(p, c, s, r, true)
 
-      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' nvm use &> /dev/null &| npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -80,7 +80,7 @@ export function install (d, p, c, s, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(p, c, s, r)
 
-      spawn(`cd '${d}' && npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(`cd '${d}' nvm use &> /dev/null &| npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

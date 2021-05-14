@@ -5,6 +5,7 @@ import {
 import debug from 'debug'
 
 import {
+  initialiseAt,
   transform,
   getDepsExact,
   getDeps
@@ -28,7 +29,7 @@ log('`install` is awake')
  *  @return {Array}
  */
 export const getCommands = (p, c, s, r, e = false) => (
-  ['install']
+  ['npm', 'i']
     .concat(transform(p, c)) // string or array
     .concat(s ? [] : '--no-save')
     .concat(r ? ['--registry', r] : [])
@@ -55,7 +56,7 @@ export function installExact (d, p, c, s, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(p, c, s, r, true)
 
-      spawn(`cd '${d}' & nvm use &> /dev/null & npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -76,11 +77,13 @@ export function installExact (d, p, c, s, r) {
  *  @return {Promise}
  */
 export function install (d, p, c, s, r) {
+  log('install')
+
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(p, c, s, r)
 
-      spawn(`cd '${d}' & nvm use &> /dev/null & npm`, commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

@@ -5,6 +5,39 @@ const log = debug('@modernpoacher/deps')
 log('`common` is awake')
 
 /**
+ *  @function initialiseAt
+ *
+ *  Change directory into `d` and execute `nvm use` if it is available
+ *
+ *  @param {String} d - Directory
+ *
+ *  @return {String}
+ */
+export const initialiseAt = (d) => `
+#!/bin/sh
+
+set -e
+
+cd "${d}"
+
+if [ -f ~/.nvm/nvm.sh ];
+then
+  . ~/.nvm/nvm.sh
+
+  nvm use
+elif command -v brew;
+then
+  NVM=$(brew --prefix nvm)
+  if [ -f "$NVM/nvm.sh" ];
+  then
+    . $NVM/nvm.sh
+
+    nvm use
+  fi
+fi
+`
+
+/**
  *  @function getProdDependencies
  *
  *  Get the production dependencies by destructuring the package

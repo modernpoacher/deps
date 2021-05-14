@@ -26,7 +26,7 @@ const DIRECTORY = '.'
 const REGISTRY = 'https://registry.npmjs.org'
 
 const getRmrfCommand = (directory = DIRECTORY) => `
-#!/bin/sh
+#!/bin/bash
 
 cd "${directory}"
 
@@ -36,28 +36,23 @@ exit 0
 `
 
 const getNpmiCommand = (directory = DIRECTORY, registry = REGISTRY) => `
-#!/bin/sh
+#!/bin/bash
 
 cd "${directory}"
 
-if [ -f ~/.nvm/nvm.sh ];
+NVM=~/.nvm
+if [ -f "$NVM/nvm.sh" ];
 then
-  . ~/.nvm/nvm.sh
-
-  VERSION=$(nvm --version)
+  . $NVM/nvm.sh
 else
-  if command -v brew &> /dev/null;
+  NVM=$(brew --prefix nvm)
+  if [ -f "$NVM/nvm.sh" ];
   then
-    NVM=$(brew --prefix nvm)
-
-    if [ -f "$NVM/nvm.sh" ];
-    then
-      . $NVM/nvm.sh
-
-      VERSION=$(nvm --version)
-    fi
+    . $NVM/nvm.sh
   fi
 fi
+
+VERSION=$(nvm --version)
 
 if [ -z "$VERSION" ];
 then
@@ -83,7 +78,7 @@ exit 0
 `
 
 const getDepsCommand = (directory = DIRECTORY, registry = REGISTRY) => `
-#!/bin/sh
+#!/bin/bash
 
 cd "${directory}"
 

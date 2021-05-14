@@ -17,7 +17,7 @@ export const initialiseAt = (d) => {
   log('initialiseAt')
 
   return `
-#!/bin/sh
+#!/bin/bash
 
 cd "${d}"
 

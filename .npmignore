@@ -2,6 +2,9 @@
 
 .circleci
 .github
+.husky
+
+.editorconfig
 
 .eslintignore
 .eslintrc

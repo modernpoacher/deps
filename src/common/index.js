@@ -13,10 +13,11 @@ log('`common` is awake')
  *
  *  @return {String}
  */
-export const initialiseAt = (d) => `
-#!/bin/sh
+export const initialiseAt = (d) => {
+  log('initialiseAt')
 
-set -e
+  return `
+#!/bin/sh
 
 cd "${d}"
 
@@ -24,18 +25,42 @@ if [ -f ~/.nvm/nvm.sh ];
 then
   . ~/.nvm/nvm.sh
 
-  nvm use
-elif command -v brew;
-then
-  NVM=$(brew --prefix nvm)
-  if [ -f "$NVM/nvm.sh" ];
+  VERSION=$(nvm --version)
+else
+  if command -v brew &> /dev/null;
   then
-    . $NVM/nvm.sh
+    NVM=$(brew --prefix nvm)
 
-    nvm use
+    if [ -f "$NVM/nvm.sh" ];
+    then
+      . $NVM/nvm.sh
+
+      VERSION=$(nvm --version)
+    fi
   fi
 fi
-`
+
+if [ -z "$VERSION" ];
+then
+  echo NVM not available
+else
+  echo NVM version $VERSION available
+
+  set -e
+
+  nvm use
+
+  if [[ $? != 0 ]];
+  then
+    echo NVM not configured
+  else
+    echo NVM configured
+  fi
+fi
+
+exit 0
+  `
+}
 
 /**
  *  @function getProdDependencies

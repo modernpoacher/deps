@@ -24,12 +24,12 @@ cd "${directory}"
 NVM=~/.nvm
 if [ -f "$NVM/nvm.sh" ];
 then
-  . $NVM/nvm.sh
+  source $NVM/nvm.sh
 else
   NVM=$(brew --prefix nvm)
   if [ -f "$NVM/nvm.sh" ];
   then
-    . $NVM/nvm.sh
+    source $NVM/nvm.sh
   fi
 fi
 

@@ -7,19 +7,19 @@ log('`common` is awake')
 /**
  *  @function initialiseAt
  *
- *  Change directory into `d` and execute `nvm use` if it is available
+ *  Change directory into `directory` and execute `nvm use` if it is available
  *
  *  @param {String} d - Directory
  *
  *  @return {String}
  */
-export const initialiseAt = (d) => {
+export const initialiseAt = (directory) => {
   log('initialiseAt')
 
   return `
 #!/bin/bash
 
-cd "${d}"
+cd "${directory}"
 
 NVM=~/.nvm
 if [ -f "$NVM/nvm.sh" ];

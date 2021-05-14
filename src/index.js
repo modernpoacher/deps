@@ -5,7 +5,7 @@ import {
 } from 'child_process'
 
 import {
-  initialiseAt,
+  NVM,
   transform,
   getDepsExact,
   getDeps
@@ -133,7 +133,7 @@ export function installSaveBundleExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveBundleCommands(p, c, r, true)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -159,7 +159,7 @@ export function installSaveBundle (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveBundleCommands(p, c, r)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -185,7 +185,7 @@ export function installSaveOptionalExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveOptionalCommands(p, c, r, true)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -211,7 +211,7 @@ export function installSaveOptional (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveOptionalCommands(p, c, r)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -237,7 +237,7 @@ export function installSaveDevExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveDevCommands(p, c, r, true)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -263,7 +263,7 @@ export function installSaveDev (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveDevCommands(p, c, r)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -289,7 +289,7 @@ export function installSaveProdExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveProdCommands(p, c, r, true)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -315,7 +315,7 @@ export function installSaveProd (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveProdCommands(p, c, r)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

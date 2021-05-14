@@ -22,24 +22,11 @@ const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
-const DIRECTORY = '.'
-const REGISTRY = 'https://registry.npmjs.org'
+export const DIRECTORY = '.'
 
-const getRmrfCommand = (directory = DIRECTORY) => `
-#!/bin/bash
+export const REGISTRY = 'https://registry.npmjs.org'
 
-cd "${directory}"
-
-rm -rf node_modules package-lock.json
-
-exit 0
-`
-
-const getNpmiCommand = (directory = DIRECTORY, registry = REGISTRY) => `
-#!/bin/bash
-
-cd "${directory}"
-
+export const NVM = `
 NVM=~/.nvm
 if [ -f "$NVM/nvm.sh" ];
 then
@@ -71,6 +58,24 @@ else
     echo NVM configured
   fi
 fi
+`
+
+const getRmrfCommand = (directory = DIRECTORY) => `
+#!/bin/bash
+
+cd "${directory}"
+
+rm -rf node_modules package-lock.json
+
+exit 0
+`
+
+const getNpmiCommand = (directory = DIRECTORY, registry = REGISTRY) => `
+#!/bin/bash
+
+cd "${directory}"
+
+${NVM}
 
 npm i --registry ${registry}
 

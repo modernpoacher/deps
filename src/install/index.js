@@ -5,7 +5,7 @@ import {
 import debug from 'debug'
 
 import {
-  initialiseAt,
+  NVM,
   transform,
   getDepsExact,
   getDeps
@@ -56,7 +56,7 @@ export function installExact (d, p, c, s, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(p, c, s, r, true)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -83,7 +83,7 @@ export function install (d, p, c, s, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(p, c, s, r)
 
-      spawn(initialiseAt(d), commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

@@ -22,11 +22,11 @@ const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
-export const DIRECTORY = '.'
+const DIRECTORY = '.'
 
-export const REGISTRY = 'https://registry.npmjs.org'
+const REGISTRY = 'https://registry.npmjs.org'
 
-export const NVM = `
+const NVM = `
 NVM=~/.nvm
 if [ -f "$NVM/nvm.sh" ];
 then
@@ -283,6 +283,9 @@ function deps (directory = DIRECTORY, registry = REGISTRY) {
 }
 
 module.exports = {
+  DIRECTORY,
+  REGISTRY,
+  NVM,
   handleError,
   handlePackageError,
   handleConfigurationError,

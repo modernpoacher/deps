@@ -75,7 +75,7 @@ const getNpmiCommand = (directory = DIRECTORY, registry = REGISTRY) => `
 
 cd "${directory}"
 
-${NVM}
+${NVM.trim()}
 
 npm i --registry ${registry}
 

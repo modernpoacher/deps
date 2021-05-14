@@ -25,6 +25,73 @@ log('`common` is awake')
 const DIRECTORY = '.'
 const REGISTRY = 'https://registry.npmjs.org'
 
+const getRmrfCommand = (directory = DIRECTORY) => `
+#!/bin/sh
+
+cd "${directory}"
+
+rm -rf node_modules package-lock.json
+
+exit 0
+`
+
+const getNpmiCommand = (directory = DIRECTORY, registry = REGISTRY) => `
+#!/bin/sh
+
+cd "${directory}"
+
+if [ -f ~/.nvm/nvm.sh ];
+then
+  . ~/.nvm/nvm.sh
+
+  VERSION=$(nvm --version)
+else
+  if command -v brew &> /dev/null;
+  then
+    NVM=$(brew --prefix nvm)
+
+    if [ -f "$NVM/nvm.sh" ];
+    then
+      . $NVM/nvm.sh
+
+      VERSION=$(nvm --version)
+    fi
+  fi
+fi
+
+if [ -z "$VERSION" ];
+then
+  echo NVM not available
+else
+  echo NVM version $VERSION available
+
+  set -e
+
+  nvm use
+
+  if [[ $? != 0 ]];
+  then
+    echo NVM not configured
+  else
+    echo NVM configured
+  fi
+fi
+
+npm i --registry ${registry}
+
+exit 0
+`
+
+const getDepsCommand = (directory = DIRECTORY, registry = REGISTRY) => `
+#!/bin/sh
+
+cd "${directory}"
+
+deps --registry ${registry}
+
+exit 0
+`
+
 /*
 const toRelativePath = relative.bind(null, process.cwd())
 */
@@ -166,7 +233,7 @@ function rmrf (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${directory}' && rm -rf node_modules package-lock.json`
+      const command = getRmrfCommand(directory)
 
       const {
         stdout,
@@ -184,7 +251,7 @@ function npmi (directory = DIRECTORY, registry = REGISTRY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${directory}' && npm i --registry ${registry}`
+      const command = getNpmiCommand(directory, registry)
 
       const {
         stdout,
@@ -202,7 +269,7 @@ function deps (directory = DIRECTORY, registry = REGISTRY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${directory}' && deps --registry ${registry}`
+      const command = getDepsCommand(directory, registry)
 
       const {
         stdout,

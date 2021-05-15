@@ -28,6 +28,7 @@ const REGISTRY = 'https://registry.npmjs.org'
 
 const NVM = `
 NVM=~/.nvm
+
 if [ -f "$NVM/nvm.sh" ];
 then
   source $NVM/nvm.sh
@@ -39,7 +40,11 @@ else
   fi
 fi
 
+echo 1
+
 VERSION=$(nvm --version)
+
+echo 2
 
 if [ -z "$VERSION" ];
 then
@@ -47,9 +52,9 @@ then
 else
   echo NVM version $VERSION available
 
-  set -e
+  set +e
 
-  nvm use
+  nvm use &> /dev/null
 
   if [[ $? != 0 ]];
   then

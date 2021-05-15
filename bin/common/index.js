@@ -29,24 +29,21 @@ const REGISTRY = 'https://registry.npmjs.org'
 const NVM = `
 NVM=~/.nvm
 
-if [ -f "$NVM/nvm.sh" ];
+if [[ -f "$NVM/nvm.sh" ]];
 then
   source $NVM/nvm.sh
 else
   NVM=$(brew --prefix nvm)
-  if [ -f "$NVM/nvm.sh" ];
+
+  if [[ -f "$NVM/nvm.sh" ]];
   then
     source $NVM/nvm.sh
   fi
 fi
 
-echo 1
-
 VERSION=$(nvm --version)
 
-echo 2
-
-if [ -z "$VERSION" ];
+if [[ -z "$VERSION" ]];
 then
   echo NVM not available
 else

@@ -17,15 +17,37 @@ function has_git {
 
     return 1
   else
-    if [[ ! "$git_status" =~ "nothing to commit" ]]
-    then
-      echo -e "\033[0;35m$1\033[0m has changes to commit" # "$1 has changes to commit"
+    echo -e "\033[0;35m$1\033[0m is configured for Git" # "$1 is configured for Git"
 
-      return 1
-    fi
+    return 0
   fi
+}
 
-  return 0
+function is_clean {
+  git_status=$(git status 2> /dev/null)
+
+  if [[ ! "$git_status" =~ "nothing to commit" ]]
+  then
+    echo -e "\033[0;35m$1\033[0m is not clean" # "$1 is not clean"
+
+    return 1
+  else
+    echo -e "\033[0;35m$1\033[0m is clean" # "$1 is clean"
+
+    return 0
+  fi
+}
+
+function get_default_branch {
+  [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ [-0-9a-zA-Z]*$ ]] && default_branch="${BASH_REMATCH[0]}"
+
+  echo $default_branch
+}
+
+function get_current_branch {
+  current_branch=$(git rev-parse --abbrev-ref HEAD)
+
+  echo $current_branch
 }
 
 function can_git_remote_set_head {
@@ -56,21 +78,37 @@ function execute {
 
   if [[ $? = 0 ]]
   then
-    can_git_remote_set_head "$1"
+    is_clean "$1"
 
-    if [[ $? = 1 ]]
+    if [[ $? = 0 ]]
     then
-      git_remote_set_head
+      can_git_remote_set_head "$1"
 
       if [[ $? = 0 ]]
       then
-        echo -e "Changed the default branch for \033[0;35m$1\033[0m"
+        default_branch=$(get_default_branch)
 
-        return 1
-      else
-        echo -e "Failed to change the default branch for \033[0;35m$1\033[0m"
+        current_branch=$(get_current_branch)
 
-        return 0
+        if [[ $default_branch == $current_branch ]];
+        then
+          echo -e "The current branch for \033[0;35m$1\033[0m is '$default_branch'"
+
+          return 0
+        else
+          git_remote_set_head "$1"
+
+          if [[ $? = 1 ]]
+          then
+            echo -e "Failed to change current branch for \033[0;35m$1\033[0m to '$default_branch'"
+
+            return 1
+          else
+            echo -e "The current branch for \033[0;35m$1\033[0m is '$default_branch'"
+
+            return 0
+          fi
+        fi
       fi
     fi
   fi

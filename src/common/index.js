@@ -1,42 +1,26 @@
 import debug from 'debug'
 
+import {
+  resolve
+} from 'path'
+
+import {
+  readFileSync
+} from 'fs'
+
 const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
-export const NVM = `
-NVM=~/.nvm
-if [ -f "$NVM/nvm.sh" ];
-then
-  source $NVM/nvm.sh
-else
-  NVM=$(brew --prefix nvm)
-  if [ -f "$NVM/nvm.sh" ];
-  then
-    source $NVM/nvm.sh
-  fi
-fi
+const {
+  path
+} = module
 
-VERSION=$(nvm --version)
+const NVM = readFileSync(resolve(path, '../../bin/common/nvm.sh')).toString('utf8')
 
-if [ -z "$VERSION" ];
-then
-  echo NVM not available
-else
-  echo NVM version $VERSION available
-
-  set -e
-
-  nvm use
-
-  if [[ $? != 0 ]];
-  then
-    echo NVM not configured
-  else
-    echo NVM configured
-  fi
-fi
-`
+export {
+  NVM
+}
 
 /**
  *  @function getProdDependencies

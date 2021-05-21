@@ -10,7 +10,8 @@ const {
 } = require('path')
 
 const {
-  constants
+  constants,
+  readFileSync
 } = require('fs')
 
 const {
@@ -22,45 +23,15 @@ const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
+const {
+  path: MODULE
+} = module
+
 const DIRECTORY = '.'
 
 const REGISTRY = 'https://registry.npmjs.org'
 
-const NVM = `
-NVM=~/.nvm
-
-if [[ -f "$NVM/nvm.sh" ]];
-then
-  source $NVM/nvm.sh
-else
-  NVM=$(brew --prefix nvm)
-
-  if [[ -f "$NVM/nvm.sh" ]];
-  then
-    source $NVM/nvm.sh
-  fi
-fi
-
-VERSION=$(nvm --version)
-
-if [[ -z "$VERSION" ]];
-then
-  echo NVM not available
-else
-  echo NVM version $VERSION available
-
-  set +e
-
-  nvm use &> /dev/null
-
-  if [[ $? != 0 ]];
-  then
-    echo NVM not configured
-  else
-    echo NVM configured
-  fi
-fi
-`
+const NVM = readFileSync(resolve(MODULE, 'nvm.sh')).toString('utf8')
 
 const getRmrfCommand = (directory = DIRECTORY) => `
 #!/bin/bash
@@ -149,7 +120,7 @@ async function getDepsRcJson (directory = DIRECTORY) {
   )
 }
 
-async function hasPackage (directory = '.') {
+async function hasPackage (directory = DIRECTORY) {
   try {
     await access(getPackageJsonPath(directory), constants.R_OK)
 
@@ -161,7 +132,7 @@ async function hasPackage (directory = '.') {
   }
 }
 
-async function getPackage (directory = '.') {
+async function getPackage (directory = DIRECTORY) {
   try {
     return await getPackageJson(directory)
   } catch (e) {
@@ -169,7 +140,7 @@ async function getPackage (directory = '.') {
   }
 }
 
-async function hasConfiguration (directory = '.') {
+async function hasConfiguration (directory = DIRECTORY) {
   try {
     await access(getDepsRcPath(directory), constants.R_OK)
 
@@ -204,7 +175,7 @@ async function hasConfiguration (directory = '.') {
   return false
 }
 
-async function getConfiguration (directory = '.') {
+async function getConfiguration (directory = DIRECTORY) {
   try {
     return await getDepsRc(directory)
   } catch (e) {

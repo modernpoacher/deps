@@ -10,8 +10,7 @@ const {
 } = require('path')
 
 const {
-  constants,
-  readFileSync
+  constants
 } = require('fs')
 
 const {
@@ -24,14 +23,14 @@ const log = debug('@modernpoacher/deps')
 log('`common` is awake')
 
 const {
-  path: MODULE
+  path: PATH
 } = module
 
 const DIRECTORY = '.'
 
 const REGISTRY = 'https://registry.npmjs.org'
 
-const NVM = readFileSync(resolve(MODULE, 'nvm.sh')).toString('utf8')
+const NVM = resolve(PATH, 'nvm.sh')
 
 const getRmrfCommand = (directory = DIRECTORY) => `
 #!/bin/bash
@@ -48,7 +47,7 @@ const getNpmiCommand = (directory = DIRECTORY, registry = REGISTRY) => `
 
 cd "${directory}"
 
-${NVM.trim()}
+. "${NVM}"
 
 npm i --registry ${registry}
 

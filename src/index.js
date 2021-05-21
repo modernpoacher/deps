@@ -5,6 +5,8 @@ import {
 } from 'child_process'
 
 import {
+  DIRECTORY,
+  REGISTRY,
   NVM,
   transform,
   getDepsExact,
@@ -133,7 +135,7 @@ export function installSaveBundleExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveBundleCommands(p, c, r, true)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -159,7 +161,7 @@ export function installSaveBundle (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveBundleCommands(p, c, r)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -185,7 +187,7 @@ export function installSaveOptionalExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveOptionalCommands(p, c, r, true)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -211,7 +213,7 @@ export function installSaveOptional (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveOptionalCommands(p, c, r)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -237,7 +239,7 @@ export function installSaveDevExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveDevCommands(p, c, r, true)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -263,7 +265,7 @@ export function installSaveDev (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveDevCommands(p, c, r)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -289,7 +291,7 @@ export function installSaveProdExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveProdCommands(p, c, r, true)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -315,7 +317,7 @@ export function installSaveProd (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getSaveProdCommands(p, c, r)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -335,7 +337,7 @@ export function installSaveProd (d, p, c, r) {
  *
  *  @return {Promise}
  */
-export async function executeBundle (directory = '.', packages = {}, configuration = {}, registry = 'https://registry.npmjs.org') {
+export async function executeBundle (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY) {
   log('executeBundle')
 
   const depsExact = getDepsExact(packages, configuration)
@@ -360,7 +362,7 @@ export async function executeBundle (directory = '.', packages = {}, configurati
  *
  *  @return {Promise}
  */
-export async function executeOptional (directory = '.', packages = {}, configuration = {}, registry = 'https://registry.npmjs.org') {
+export async function executeOptional (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY) {
   log('executeOptional')
 
   const depsExact = getDepsExact(packages, configuration)
@@ -385,7 +387,7 @@ export async function executeOptional (directory = '.', packages = {}, configura
  *
  *  @return {Promise}
  */
-export async function executeDev (directory = '.', packages = {}, configuration = {}, registry = 'https://registry.npmjs.org') {
+export async function executeDev (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY) {
   log('executeDev')
 
   const depsExact = getDepsExact(packages, configuration)
@@ -410,7 +412,7 @@ export async function executeDev (directory = '.', packages = {}, configuration 
  *
  *  @return {Promise}
  */
-export async function executeProd (directory = '.', packages = {}, configuration = {}, registry = 'https://registry.npmjs.org') {
+export async function executeProd (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY) {
   log('executeProd')
 
   const depsExact = getDepsExact(packages, configuration)

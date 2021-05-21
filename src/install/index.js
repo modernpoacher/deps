@@ -5,6 +5,8 @@ import {
 import debug from 'debug'
 
 import {
+  DIRECTORY,
+  REGISTRY,
   NVM,
   transform,
   getDepsExact,
@@ -56,7 +58,9 @@ export function installExact (d, p, c, s, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(p, c, s, r, true)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      log('-c', `cd "${d}" ;`, `. "${NVM}" ;`)
+
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -83,7 +87,9 @@ export function install (d, p, c, s, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(p, c, s, r)
 
-      spawn('/bin/bash', ['-c', `cd "${d}"`, NVM].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      log('-c', `cd "${d}" ;`, `. "${NVM}" ;`)
+
+      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -103,7 +109,7 @@ export function install (d, p, c, s, r) {
  *
  *  @return {Promise}
  */
-export async function execute (directory = '.', packages = {}, configuration = {}, save = false, registry = 'https://registry.npmjs.org') {
+export async function execute (directory = DIRECTORY, packages = {}, configuration = {}, save = false, registry = REGISTRY) {
   log('execute')
 
   const depsExact = getDepsExact(packages, configuration)

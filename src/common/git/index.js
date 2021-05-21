@@ -162,7 +162,7 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${directory}' && git checkout ${branch}`
+      const command = `cd "${directory}" && git checkout ${branch}`
 
       const {
         stdout,
@@ -189,7 +189,7 @@ export function gitPull (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${directory}' && git pull`
+      const command = `cd "${directory}" && git pull`
 
       const {
         stdout,
@@ -216,7 +216,7 @@ export function gitPush (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${directory}' && git push`
+      const command = `cd "${directory}" && git push`
 
       const {
         stdout,
@@ -244,7 +244,7 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${directory}' && git add ${add}`
+      const command = `cd "${directory}" && git add ${add}`
 
       const {
         stdout,
@@ -272,7 +272,7 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd '${directory}' && git commit -m '${commit}'`
+      const command = `cd "${directory}" && git commit -m '${commit}'`
 
       const {
         stdout,

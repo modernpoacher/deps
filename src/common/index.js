@@ -4,19 +4,19 @@ import {
   resolve
 } from 'path'
 
-import {
-  readFileSync
-} from 'fs'
-
 const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
 const {
-  path: MODULE
+  path: MODULE_PATH
 } = module
 
-export const NVM = readFileSync(resolve(MODULE, '../../bin/common/nvm.sh')).toString('utf8')
+export const DIRECTORY = '.'
+
+export const REGISTRY = 'https://registry.npmjs.org'
+
+export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 
 /**
  *  @function getProdDependencies

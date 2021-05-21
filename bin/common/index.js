@@ -32,16 +32,10 @@ const log = debug('@modernpoacher/deps')
 log('`common` is awake')
 
 const {
-  path: PATH
+  path: MODULE_PATH
 } = module
 
-const NVM = resolve(PATH, '../../src/common/nvm.sh')
-
-log({
-  DIRECTORY,
-  REGISTRY,
-  NVM
-})
+const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 
 const getRmrfCommand = (directory = DIRECTORY) => `
 #!/bin/bash

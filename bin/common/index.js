@@ -1,3 +1,7 @@
+#!/usr/bin/env node
+
+require('module-alias/register')
+
 const debug = require('debug')
 
 const {
@@ -18,6 +22,11 @@ const {
   readFile
 } = require('fs/promises')
 
+const {
+  DIRECTORY,
+  REGISTRY
+} = require('@modernpoacher/deps/common')
+
 const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
@@ -26,11 +35,13 @@ const {
   path: PATH
 } = module
 
-const DIRECTORY = '.'
+const NVM = resolve(PATH, '../../src/common/nvm.sh')
 
-const REGISTRY = 'https://registry.npmjs.org'
-
-const NVM = resolve(PATH, 'nvm.sh')
+log({
+  DIRECTORY,
+  REGISTRY,
+  NVM
+})
 
 const getRmrfCommand = (directory = DIRECTORY) => `
 #!/bin/bash

@@ -13,14 +13,10 @@ const log = debug('@modernpoacher/deps')
 log('`common` is awake')
 
 const {
-  path
+  path: MODULE
 } = module
 
-const NVM = readFileSync(resolve(path, '../../bin/common/nvm.sh')).toString('utf8')
-
-export {
-  NVM
-}
+export const NVM = readFileSync(resolve(MODULE, '../../bin/common/nvm.sh')).toString('utf8')
 
 /**
  *  @function getProdDependencies

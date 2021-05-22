@@ -24,20 +24,15 @@ const {
 
 const {
   DIRECTORY,
-  REGISTRY
+  REGISTRY,
+  NVM
 } = require('@modernpoacher/deps/common')
 
 const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
-const {
-  path: MODULE_PATH
-} = module
-
-const NVM = resolve(MODULE_PATH, '../../nvm.sh')
-
-const getRmrfCommand = (directory = DIRECTORY) => `
+const getRmrfCommands = (directory = DIRECTORY) => `
 #!/bin/bash
 
 cd "${directory}"
@@ -47,7 +42,7 @@ rm -rf node_modules package-lock.json
 exit 0
 `
 
-const getNpmiCommand = (directory = DIRECTORY, registry = REGISTRY) => `
+const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY) => `
 #!/bin/bash
 
 cd "${directory}"
@@ -59,7 +54,7 @@ npm i --registry ${registry}
 exit 0
 `
 
-const getDepsCommand = (directory = DIRECTORY, registry = REGISTRY) => `
+const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY) => `
 #!/bin/bash
 
 cd "${directory}"
@@ -69,11 +64,7 @@ deps --registry ${registry}
 exit 0
 `
 
-/*
-const toRelativePath = relative.bind(null, process.cwd())
-*/
-
-const toRelativePath = (to) => relative(process.cwd(), to)
+const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
 function use (n) {
   const log = debug(`@modernpoacher/deps:${n}`)
@@ -210,12 +201,12 @@ function rmrf (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = getRmrfCommand(directory)
+      const commands = getRmrfCommands(directory)
 
       const {
         stdout,
         stderr
-      } = exec(command, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', use('rmrf'))
       stderr.on('data', use('rmrf'))
@@ -228,12 +219,12 @@ function npmi (directory = DIRECTORY, registry = REGISTRY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = getNpmiCommand(directory, registry)
+      const commands = getNpmiCommands(directory, registry)
 
       const {
         stdout,
         stderr
-      } = exec(command, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', use('npmi'))
       stderr.on('data', use('npmi'))
@@ -246,12 +237,12 @@ function deps (directory = DIRECTORY, registry = REGISTRY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = getDepsCommand(directory, registry)
+      const commands = getDepsCommands(directory, registry)
 
       const {
         stdout,
         stderr
-      } = exec(command, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', use('deps'))
       stderr.on('data', use('deps'))

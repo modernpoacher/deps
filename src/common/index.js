@@ -31,8 +31,6 @@ export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 export const getCommands = (directory = DIRECTORY, commands = 'npm i') => (`
 #!/bin/bash
 
--c
-
 cd "${directory}"
 
 . "${NVM}"

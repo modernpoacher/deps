@@ -56,9 +56,9 @@ export function installExact (d, p, c, s, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getInstallCommands(p, c, s, r, true)
+      const commands = getCommands(d, getInstallCommands(p, c, s, r, true))
 
-      spawn('/bin/bash', getCommands(d, commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -83,9 +83,9 @@ export function install (d, p, c, s, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getInstallCommands(p, c, s, r)
+      const commands = getCommands(d, getInstallCommands(p, c, s, r))
 
-      spawn('/bin/bash', getCommands(d, commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

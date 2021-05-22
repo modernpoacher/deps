@@ -135,7 +135,7 @@ export function installSaveBundleExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveBundleCommands(p, c, r, true))
 
-      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -161,7 +161,7 @@ export function installSaveBundle (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveBundleCommands(p, c, r))
 
-      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -187,7 +187,7 @@ export function installSaveOptionalExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveOptionalCommands(p, c, r, true))
 
-      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -213,7 +213,7 @@ export function installSaveOptional (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveOptionalCommands(p, c, r))
 
-      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -239,7 +239,7 @@ export function installSaveDevExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveDevCommands(p, c, r, true))
 
-      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -265,7 +265,7 @@ export function installSaveDev (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveDevCommands(p, c, r))
 
-      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -291,7 +291,7 @@ export function installSaveProdExact (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveProdCommands(p, c, r, true))
 
-      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -317,7 +317,7 @@ export function installSaveProd (d, p, c, r) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveProdCommands(p, c, r))
 
-      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

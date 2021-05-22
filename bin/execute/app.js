@@ -13,6 +13,10 @@ const glob = require('glob-all')
 const commander = require('commander')
 
 const {
+  version: VERSION
+} = require('~/package')
+
+const {
   catGitRefsRemotesOriginHead,
   gitRevParse,
   gitCheckout,
@@ -39,7 +43,7 @@ debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
 
-log('`execute` is awake')
+log(`\`execute\` is awake, version ${VERSION}`)
 
 const DIRECTORY = process.cwd()
 const REGISTRY = 'https://registry.npmjs.org'
@@ -206,7 +210,7 @@ async function app () {
    *  `version` is printed into this file at pre-commit
    */
   commander
-    .version('1.1.5')
+    .version(VERSION)
     .option('-p, --path [path]', 'Update path')
     .option('-f, --from [from]', 'Update from directory')
     .option('-o, --only [only]', 'Update only directory')

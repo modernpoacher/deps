@@ -7,6 +7,10 @@ const debug = require('debug')
 const commander = require('commander')
 
 const {
+  version: VERSION
+} = require('~/package')
+
+const {
   getProdDependencies,
   getDevDependencies,
   getOptionalDependencies,
@@ -38,7 +42,7 @@ debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
 
-log('`deps` is awake')
+log('`deps` is awake', { VERSION })
 
 async function app () {
   log('Deps')
@@ -51,7 +55,7 @@ async function app () {
    *  `version` is printed into this file at pre-commit
    */
   commander
-    .version('1.1.5')
+    .version(VERSION)
     .option('-P, --save-prod [dependencies]', 'Install `dependencies`', false)
     .option('-D, --save-dev [devDependencies]', 'Install `devDependencies`', false)
     .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`', false)

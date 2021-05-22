@@ -4,10 +4,10 @@ import debug from 'debug'
 import { expect } from 'chai'
 
 import {
-  getSaveProdCommands,
-  getSaveDevCommands,
-  getSaveOptionalCommands,
-  getSaveBundleCommands,
+  getInstallSaveProdCommands,
+  getInstallSaveDevCommands,
+  getInstallSaveOptionalCommands,
+  getInstallSaveBundleCommands,
   installSaveProdExact,
   installSaveProd,
   installSaveDevExact,
@@ -20,7 +20,7 @@ import {
   executeDev,
   executeOptional,
   executeBundle,
-  getCommands
+  getInstallCommands
 } from '@modernpoacher/deps'
 
 describe('@modernpoacher/deps', () => {
@@ -34,30 +34,30 @@ describe('@modernpoacher/deps', () => {
     if (DEBUG) debug.enable(DEBUG)
   })
 
-  describe('`getSaveProdCommands`', () => {
+  describe('`getInstallSaveProdCommands`', () => {
     it('is a function', () => {
-      return expect(getSaveProdCommands)
+      return expect(getInstallSaveProdCommands)
         .to.be.a('function')
     })
   })
 
-  describe('`getSaveDevCommands`', () => {
+  describe('`getInstallSaveDevCommands`', () => {
     it('is a function', () => {
-      return expect(getSaveDevCommands)
+      return expect(getInstallSaveDevCommands)
         .to.be.a('function')
     })
   })
 
-  describe('`getSaveOptionalCommands`', () => {
+  describe('`getInstallSaveOptionalCommands`', () => {
     it('is a function', () => {
-      return expect(getSaveOptionalCommands)
+      return expect(getInstallSaveOptionalCommands)
         .to.be.a('function')
     })
   })
 
-  describe('`getSaveBundleCommands`', () => {
+  describe('`getInstallSaveBundleCommands`', () => {
     it('is a function', () => {
-      return expect(getSaveBundleCommands)
+      return expect(getInstallSaveBundleCommands)
         .to.be.a('function')
     })
   })
@@ -118,9 +118,9 @@ describe('@modernpoacher/deps', () => {
     })
   })
 
-  describe('`getCommands`', () => {
+  describe('`getInstallCommands`', () => {
     it('is a function', () => {
-      return expect(getCommands)
+      return expect(getInstallCommands)
         .to.be.a('function')
     })
   })

@@ -3,6 +3,7 @@ import debug from 'debug'
 import { expect } from 'chai'
 
 import {
+  getCommands,
   getDepsExact,
   getDeps,
   transform,
@@ -24,6 +25,13 @@ describe('@modernpoacher/deps/common', () => {
     } = process
 
     if (DEBUG) debug.enable(DEBUG)
+  })
+
+  describe('`getCommands`', () => {
+    it('is a function', () => {
+      return expect(getCommands)
+        .to.be.a('function')
+    })
   })
 
   describe('`getDepsExact`', () => {

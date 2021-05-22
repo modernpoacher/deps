@@ -6,7 +6,7 @@ import {
   installExact,
   install,
   execute,
-  getCommands
+  getInstallCommands
 } from '@modernpoacher/deps/install'
 
 describe('@modernpoacher/deps/install', () => {
@@ -34,9 +34,9 @@ describe('@modernpoacher/deps/install', () => {
     })
   })
 
-  describe('`getCommands`', () => {
+  describe('`getInstallCommands`', () => {
     it('is a function', () => {
-      return expect(getCommands)
+      return expect(getInstallCommands)
         .to.be.a('function')
     })
   })

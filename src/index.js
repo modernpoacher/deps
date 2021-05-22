@@ -7,7 +7,7 @@ import {
 import {
   DIRECTORY,
   REGISTRY,
-  NVM,
+  getCommands,
   transform,
   getDepsExact,
   getDeps
@@ -18,7 +18,7 @@ const log = debug('@modernpoacher/deps')
 log('`deps` is awake')
 
 /**
- *  @function getCommands
+ *  @function getInstallCommands
  *
  *  Get the `npm install` and `npm install -E` commands as an array containing configuration and parameters as flags
  *
@@ -29,15 +29,15 @@ log('`deps` is awake')
  *
  *  @return {Array}
  */
-export const getCommands = (p, c, r, e) => (
-  ['npm', 'i']
-    .concat(transform(p, c)) // string or array
-    .concat(r ? ['--registry', r] : [])
-    .concat(e ? '--save-exact' : [])
-)
+export const getInstallCommands = (p, c, r, e) => (`
+npm i ${
+  transform(p, c) // string
+    .concat(r ? `--registry ${r}` : '')
+    .concat(e ? '--save-exact' : '')}
+`)
 
 /**
- *  @function getSaveBundleCommands
+ *  @function getInstallSaveBundleCommands
  *
  *  Get the `--save-bundle` commands as an array containing configuration and parameters as flags
  *
@@ -48,16 +48,16 @@ export const getCommands = (p, c, r, e) => (
  *
  *  @return {Array}
  */
-export function getSaveBundleCommands (p, c, r, e = false) {
-  log('getSaveBundleCommands')
+export function getInstallSaveBundleCommands (p, c, r, e = false) {
+  log('getInstallSaveBundleCommands')
 
   return (
-    getCommands(p, c, r, e).concat('--save-bundle')
+    getInstallCommands(p, c, r, e).concat('--save-bundle')
   )
 }
 
 /**
- *  @function getSaveOptionalCommands
+ *  @function getInstallSaveOptionalCommands
  *
  *  Get the `--save-optional` commands as an array containing configuration and parameters as flags
  *
@@ -68,16 +68,16 @@ export function getSaveBundleCommands (p, c, r, e = false) {
  *
  *  @return {Array}
  */
-export function getSaveOptionalCommands (p, c, r, e = false) {
-  log('getSaveOptionalCommands')
+export function getInstallSaveOptionalCommands (p, c, r, e = false) {
+  log('getInstallSaveOptionalCommands')
 
   return (
-    getCommands(p, c, r, e).concat('--save-optional')
+    getInstallCommands(p, c, r, e).concat('--save-optional')
   )
 }
 
 /**
- *  @function getSaveDevCommands
+ *  @function getInstallSaveDevCommands
  *
  *  Get the `--save-dev` commands as an array containing configuration and parameters as flags
  *
@@ -88,16 +88,16 @@ export function getSaveOptionalCommands (p, c, r, e = false) {
  *
  *  @return {Array}
  */
-export function getSaveDevCommands (p, c, r, e = false) {
-  log('getSaveDevCommands')
+export function getInstallSaveDevCommands (p, c, r, e = false) {
+  log('getInstallSaveDevCommands')
 
   return (
-    getCommands(p, c, r, e).concat('--save-dev')
+    getInstallCommands(p, c, r, e).concat('--save-dev')
   )
 }
 
 /**
- *  @function getSaveProdCommands
+ *  @function getInstallSaveProdCommands
  *
  *  Get the `--save-prod` commands as an array containing configuration and parameters as flags
  *
@@ -108,11 +108,11 @@ export function getSaveDevCommands (p, c, r, e = false) {
  *
  *  @return {Array}
  */
-export function getSaveProdCommands (p, c, r, e = false) {
-  log('getSaveProdCommands')
+export function getInstallSaveProdCommands (p, c, r, e = false) {
+  log('getInstallSaveProdCommands')
 
   return (
-    getCommands(p, c, r, e).concat('--save-prod')
+    getInstallCommands(p, c, r, e).concat('--save-prod')
   )
 }
 
@@ -133,9 +133,9 @@ export function installSaveBundleExact (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveBundleCommands(p, c, r, true)
+      const commands = getCommands(d, getInstallSaveBundleCommands(p, c, r, true))
 
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -159,9 +159,9 @@ export function installSaveBundle (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveBundleCommands(p, c, r)
+      const commands = getCommands(d, getInstallSaveBundleCommands(p, c, r))
 
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -185,9 +185,9 @@ export function installSaveOptionalExact (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveOptionalCommands(p, c, r, true)
+      const commands = getCommands(d, getInstallSaveOptionalCommands(p, c, r, true))
 
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -211,9 +211,9 @@ export function installSaveOptional (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveOptionalCommands(p, c, r)
+      const commands = getCommands(d, getInstallSaveOptionalCommands(p, c, r))
 
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -237,9 +237,9 @@ export function installSaveDevExact (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveDevCommands(p, c, r, true)
+      const commands = getCommands(d, getInstallSaveDevCommands(p, c, r, true))
 
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -263,9 +263,9 @@ export function installSaveDev (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveDevCommands(p, c, r)
+      const commands = getCommands(d, getInstallSaveDevCommands(p, c, r))
 
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -289,9 +289,9 @@ export function installSaveProdExact (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveProdCommands(p, c, r, true)
+      const commands = getCommands(d, getInstallSaveProdCommands(p, c, r, true))
 
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -315,9 +315,9 @@ export function installSaveProd (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getSaveProdCommands(p, c, r)
+      const commands = getCommands(d, getInstallSaveProdCommands(p, c, r))
 
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', commands, { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

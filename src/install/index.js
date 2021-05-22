@@ -7,7 +7,7 @@ import debug from 'debug'
 import {
   DIRECTORY,
   REGISTRY,
-  NVM,
+  getCommands,
   transform,
   getDepsExact,
   getDeps
@@ -18,7 +18,7 @@ const log = debug('@modernpoacher/deps:install')
 log('`install` is awake')
 
 /**
- *  @function getCommands
+ *  @function getInstallCommands
  *
  *  Get the `install` and `install -E` commands as an array containing configuration and parameters as flags
  *
@@ -30,13 +30,13 @@ log('`install` is awake')
  *
  *  @return {Array}
  */
-export const getCommands = (p, c, s, r, e = false) => (
-  ['npm', 'i']
-    .concat(transform(p, c)) // string or array
-    .concat(s ? [] : '--no-save')
-    .concat(r ? ['--registry', r] : [])
-    .concat(e ? '--save-exact' : [])
-)
+export const getInstallCommands = (p, c, s, r, e = false) => (`
+npm i ${
+  transform(p, c) // string
+    .concat(s ? '' : '--no-save')
+    .concat(r ? `--registry ${r}` : '')
+    .concat(e ? '--save-exact' : '')}
+`)
 
 /**
  *  @function installExact
@@ -56,11 +56,9 @@ export function installExact (d, p, c, s, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(p, c, s, r, true)
+      const commands = getInstallCommands(p, c, s, r, true)
 
-      log('-c', `cd "${d}" ;`, `. "${NVM}" ;`)
-
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', getCommands(d, commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })
@@ -85,11 +83,9 @@ export function install (d, p, c, s, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(p, c, s, r)
+      const commands = getInstallCommands(p, c, s, r)
 
-      log('-c', `cd "${d}" ;`, `. "${NVM}" ;`)
-
-      spawn('/bin/bash', ['-c', `cd "${d}" ;`, `. "${NVM}" ;`].concat(commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', getCommands(d, commands), { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
         .on('error', reject)
     })

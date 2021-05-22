@@ -21,6 +21,30 @@ export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 /**
  *  @function getProdDependencies
  *
+ *  Get the installation shell script
+ *
+ *  @param {String} directory
+ *  @param {String} commands
+ *
+ *  @return {String}
+ */
+export const getCommands = (directory = DIRECTORY, commands = 'npm i') => (`
+#!/bin/bash
+
+-c
+
+cd "${directory}"
+
+. "${NVM}"
+
+${commands}
+
+exit 0
+`)
+
+/**
+ *  @function getProdDependencies
+ *
  *  Get the production dependencies by destructuring the package
  *
  *  @param {Object} package

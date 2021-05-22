@@ -40,7 +40,7 @@ cd "${directory}"
 rm -rf node_modules package-lock.json
 
 exit 0
-`
+`.replace(/\n\n/gm, String.fromCharCode(10)).trim()
 
 const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY) => `
 #!/bin/bash
@@ -52,7 +52,7 @@ cd "${directory}"
 npm i --registry ${registry}
 
 exit 0
-`
+`.replace(/\n\n/gm, String.fromCharCode(10)).trim()
 
 const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY) => `
 #!/bin/bash
@@ -62,7 +62,7 @@ cd "${directory}"
 deps --registry ${registry}
 
 exit 0
-`
+`.replace(/\n\n/gm, String.fromCharCode(10)).trim()
 
 const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 

@@ -21,7 +21,7 @@ export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 /**
  *  @function getRegistryParam
  *
- *  Get the registry param
+ *  Get the "registry" param
  *
  *  @param {String} registry
  *  @param {String} current string value
@@ -33,7 +33,7 @@ export const getRegistryParam = (r, v) => r ? v.concat(` --registry ${r}`) : v
 /**
  *  @function getSaveExactParam
  *
- *  Get the registry param
+ *  Get the "save exact" param
  *
  *  @param {Boolean} exact
  *  @param {String} current string value
@@ -43,9 +43,9 @@ export const getRegistryParam = (r, v) => r ? v.concat(` --registry ${r}`) : v
 export const getSaveExactParam = (e, v) => e ? v.concat(' --save-exact') : v
 
 /**
- *  @function getSaveExactParam
+ *  @function getNoSaveParam
  *
- *  Get the registry param
+ *  Get the "no save" param
  *
  *  @param {Boolean} save
  *  @param {String} current string value

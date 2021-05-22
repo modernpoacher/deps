@@ -27,7 +27,7 @@ log('`deps` is awake')
 /**
  *  @function getInstallCommands
  *
- *  Get the `npm install` or `npm install -E` commands as a string of parameters and arguments
+ *  Get the `npm install` or `npm install --save-exact` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -49,7 +49,7 @@ export const getInstallCommands = (p, c, r, e = false) => {
 /**
  *  @function getInstallSaveBundleCommands
  *
- *  Get the `--save-bundle` commands as a string of parameters and arguments
+ *  Get the "save bundle` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -71,7 +71,7 @@ export function getInstallSaveBundleCommands (p, c, r, e) {
 /**
  *  @function getInstallSaveOptionalCommands
  *
- *  Get the `--save-optional` commands as a string of parameters and arguments
+ *  Get the "save optional` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -93,7 +93,7 @@ export function getInstallSaveOptionalCommands (p, c, r, e) {
 /**
  *  @function getInstallSaveDevCommands
  *
- *  Get the `--save-dev` commands as a string of parameters and arguments
+ *  Get the "save dev" commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -115,7 +115,7 @@ export function getInstallSaveDevCommands (p, c, r, e) {
 /**
  *  @function getInstallSaveProdCommands
  *
- *  Get the `--save-prod` commands as a string of parameters and arguments
+ *  Get the "save prod" commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -137,7 +137,7 @@ export function getInstallSaveProdCommands (p, c, r, e) {
 /**
  *  @function installSaveBundleExact
  *
- *  Spawn the `install --save-bundle -E` commands
+ *  Spawn the `install --save-bundle --save-exact` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -189,7 +189,7 @@ export function installSaveBundle (d, p, c, r) {
 /**
  *  @function installSaveOptionalExact
  *
- *  Spawn the `install --save-optional -E` commands
+ *  Spawn the `install --save-optional --save-exact` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -241,7 +241,7 @@ export function installSaveOptional (d, p, c, r) {
 /**
  *  @function installSaveDevExact
  *
- *  Spawn the `install --save-dev -E` commands
+ *  Spawn the `install --save-dev --save-exact` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -293,7 +293,7 @@ export function installSaveDev (d, p, c, r) {
 /**
  *  @function installSaveProdExact
  *
- *  Spawn the `install --save-prod -E` commands
+ *  Spawn the `install --save-prod --save-exact` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -345,7 +345,7 @@ export function installSaveProd (d, p, c, r) {
 /**
  *  @function executeBundle
  *
- *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -370,7 +370,7 @@ export async function executeBundle (directory = DIRECTORY, packages = {}, confi
 /**
  *  @function executeOptional
  *
- *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -395,7 +395,7 @@ export async function executeOptional (directory = DIRECTORY, packages = {}, con
 /**
  *  @function executeDev
  *
- *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -420,7 +420,7 @@ export async function executeDev (directory = DIRECTORY, packages = {}, configur
 /**
  *  @function executeProd
  *
- *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages

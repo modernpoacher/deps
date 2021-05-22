@@ -7,8 +7,12 @@ import {
 import {
   DIRECTORY,
   REGISTRY,
-  getRegistryParam,
-  getSaveExactParam,
+  getRegistryParameter,
+  getSaveExactParameter,
+  getSaveBundleParameter,
+  getSaveOptionalParameter,
+  getSaveDevParameter,
+  getSaveProdParameter,
   getCommands,
   normalise,
   transform,
@@ -38,7 +42,7 @@ export const getInstallCommands = (p, c, r, e = false) => {
   const commands = `npm i ${transform(p, c)}`
 
   return normalise(
-    getRegistryParam(r, getSaveExactParam(e, commands))
+    getRegistryParameter(r, getSaveExactParameter(e, commands))
   )
 }
 
@@ -57,8 +61,10 @@ export const getInstallCommands = (p, c, r, e = false) => {
 export function getInstallSaveBundleCommands (p, c, r, e) {
   log('getInstallSaveBundleCommands')
 
+  const commands = getInstallCommands(p, c, r, e)
+
   return normalise(
-    getInstallCommands(p, c, r, e).concat(' --save-bundle')
+    getSaveBundleParameter(commands)
   )
 }
 
@@ -77,8 +83,10 @@ export function getInstallSaveBundleCommands (p, c, r, e) {
 export function getInstallSaveOptionalCommands (p, c, r, e) {
   log('getInstallSaveOptionalCommands')
 
+  const commands = getInstallCommands(p, c, r, e)
+
   return normalise(
-    getInstallCommands(p, c, r, e).concat(' --save-optional')
+    getSaveOptionalParameter(commands)
   )
 }
 
@@ -97,8 +105,10 @@ export function getInstallSaveOptionalCommands (p, c, r, e) {
 export function getInstallSaveDevCommands (p, c, r, e) {
   log('getInstallSaveDevCommands')
 
+  const commands = getInstallCommands(p, c, r, e)
+
   return normalise(
-    getInstallCommands(p, c, r, e).concat(' --save-dev')
+    getSaveDevParameter(commands)
   )
 }
 
@@ -117,8 +127,10 @@ export function getInstallSaveDevCommands (p, c, r, e) {
 export function getInstallSaveProdCommands (p, c, r, e) {
   log('getInstallSaveProdCommands')
 
+  const commands = getInstallCommands(p, c, r, e)
+
   return normalise(
-    getInstallCommands(p, c, r, e).concat(' --save-prod')
+    getSaveProdParameter(commands)
   )
 }
 

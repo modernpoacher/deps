@@ -19,84 +19,84 @@ export const REGISTRY = 'https://registry.npmjs.org'
 export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 
 /**
- *  @function getRegistryParam
+ *  @function getRegistryParameter
  *
  *  Get the "registry" parameter and argument
  *
  *  @param {String} registry
- *  @param {String} current string value
+ *  @param {String} current commands string
  *
  *  @return {String}
  */
-export const getRegistryParam = (r, v) => r ? v.concat(` --registry ${r}`) : v
+export const getRegistryParameter = (r, commands) => r ? commands.concat(` --registry ${r}`) : commands
 
 /**
- *  @function getSaveExactParam
+ *  @function getSaveExactParameter
  *
  *  Get the "save exact" parameter
  *
  *  @param {Boolean} exact
- *  @param {String} current string value
+ *  @param {String} current commands string
  *
  *  @return {String}
  */
-export const getSaveExactParam = (e, v) => e ? v.concat(' --save-exact') : v
+export const getSaveExactParameter = (e, commands) => e ? commands.concat(' --save-exact') : commands
 
 /**
- *  @function getNoSaveParam
+ *  @function getNoSaveParameter
  *
  *  Get the "no save" parameter
  *
  *  @param {Boolean} save
- *  @param {String} current string value
+ *  @param {String} current commands string
  *
  *  @return {String}
  */
-export const getNoSaveParam = (s, v) => s ? v : v.concat(' --no-save')
+export const getNoSaveParameter = (s, commands) => s ? commands : commands.concat(' --no-save')
 
 /**
- *  @function getSaveBundleParam
+ *  @function getSaveBundleParameter
  *
  *  Get the "save bundle" parameter
  *
- *  @param {String} current string value
+ *  @param {String} current commands string
  *
  *  @return {String}
  */
-export const getSaveBundleParam = (v) => v.concat(' --save-bundle')
+export const getSaveBundleParameter = (commands) => commands.concat(' --save-bundle')
 
 /**
- *  @function getSaveOptionalParam
+ *  @function getSaveOptionalParameter
  *
  *  Get the "save optional" parameter
  *
- *  @param {String} current string value
+ *  @param {String} current commands string
  *
  *  @return {String}
  */
-export const getSaveOptionalParam = (v) => v.concat(' --save-optional')
+export const getSaveOptionalParameter = (commands) => commands.concat(' --save-optional')
 
 /**
- *  @function getSaveDevParam
+ *  @function getSaveDevParameter
  *
  *  Get the "save optional" parameter
  *
- *  @param {String} current string value
+ *  @param {String} current commands string
  *
  *  @return {String}
  */
-export const getSaveDevParam = (v) => v.concat(' --save-dev')
+export const getSaveDevParameter = (commands) => commands.concat(' --save-dev')
 
 /**
- *  @function getSaveProdParam
+ *  @function getSaveProdParameter
  *
  *  Get the "save prod" parameter
  *
- *  @param {String} current string value
+ *  @param {String} current commands string
  *
  *  @return {String}
  */
-export const getSaveProdParam = (v) => v.concat(' --save-prod')
+export const getSaveProdParameter = (commands) => commands.concat(' --save-prod')
 
 /**
  *  @function getProdDependencies

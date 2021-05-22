@@ -7,9 +7,9 @@ import debug from 'debug'
 import {
   DIRECTORY,
   REGISTRY,
-  getNoSaveParam,
-  getRegistryParam,
-  getSaveExactParam,
+  getNoSaveParameter,
+  getRegistryParameter,
+  getSaveExactParameter,
   getCommands,
   normalise,
   transform,
@@ -40,7 +40,7 @@ export const getInstallCommands = (p, c, s, r, e = false) => {
   const commands = `npm i ${transform(p, c)}`
 
   return normalise(
-    getNoSaveParam(s, getRegistryParam(r, getSaveExactParam(e, commands)))
+    getNoSaveParameter(s, getRegistryParameter(r, getSaveExactParameter(e, commands)))
   )
 }
 

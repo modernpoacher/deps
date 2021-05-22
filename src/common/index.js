@@ -29,7 +29,7 @@ export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
  *  @return {String}
  */
 export const getCommands = (directory = DIRECTORY, commands = 'npm i') => (`
-#!/bin/bash
+export PATH=/usr/local/bin:$PATH &> /dev/null
 
 cd "${directory}"
 
@@ -38,7 +38,7 @@ cd "${directory}"
 ${commands}
 
 exit 0
-`)
+`).replace(/\n\n/gm, String.fromCharCode(10)).trim()
 
 /**
  *  @function getProdDependencies
@@ -148,6 +148,25 @@ export function getDeps (values) {
           ? accumulator
           : accumulator.concat({ name, version: 'latest' })
       ), [])
+  )
+}
+
+/**
+ *  @function normalise
+ *
+ *  Normalise the param string
+ *
+ *  @param {String} value
+ *
+ *  @return {String}
+ */
+export function normalise (value) {
+  while (/\s\s|\n/.test(value)) {
+    value = value.replace(/\s\s/gm, String.fromCharCode(32)).replace(/\n/gm, String.fromCharCode(32))
+  }
+
+  return (
+    value.trim()
   )
 }
 

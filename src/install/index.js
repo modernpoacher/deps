@@ -8,6 +8,7 @@ import {
   DIRECTORY,
   REGISTRY,
   getCommands,
+  normalise,
   transform,
   getDepsExact,
   getDeps
@@ -30,13 +31,13 @@ log('`install` is awake')
  *
  *  @return {Array}
  */
-export const getInstallCommands = (p, c, s, r, e = false) => (`
-npm i ${
-  transform(p, c) // string
-    .concat(s ? '' : '--no-save')
-    .concat(r ? `--registry ${r}` : '')
-    .concat(e ? '--save-exact' : '')}
-`)
+export const getInstallCommands = (p, c, s, r, e = false) => {
+  log('getInstallCommands')
+
+  return normalise(
+    `npm i ${transform(p, c)} ${s ? '' : '--no-save'} ${r ? `--registry ${r}` : ''} ${e ? '--save-exact' : ''}`
+  )
+}
 
 /**
  *  @function installExact

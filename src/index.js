@@ -8,6 +8,7 @@ import {
   DIRECTORY,
   REGISTRY,
   getCommands,
+  normalise,
   transform,
   getDepsExact,
   getDeps
@@ -29,12 +30,13 @@ log('`deps` is awake')
  *
  *  @return {Array}
  */
-export const getInstallCommands = (p, c, r, e) => (`
-npm i ${
-  transform(p, c) // string
-    .concat(r ? `--registry ${r}` : '')
-    .concat(e ? '--save-exact' : '')}
-`)
+export const getInstallCommands = (p, c, r, e = false) => {
+  log('getInstallCommands')
+
+  return normalise(
+    `npm i ${transform(p, c)} ${r ? `--registry ${r}` : ''} ${e ? '--save-exact' : ''}`
+  )
+}
 
 /**
  *  @function getInstallSaveBundleCommands
@@ -48,11 +50,11 @@ npm i ${
  *
  *  @return {Array}
  */
-export function getInstallSaveBundleCommands (p, c, r, e = false) {
+export function getInstallSaveBundleCommands (p, c, r, e) {
   log('getInstallSaveBundleCommands')
 
-  return (
-    getInstallCommands(p, c, r, e).concat('--save-bundle')
+  return normalise(
+    getInstallCommands(p, c, r, e).concat(' --save-bundle')
   )
 }
 
@@ -68,11 +70,11 @@ export function getInstallSaveBundleCommands (p, c, r, e = false) {
  *
  *  @return {Array}
  */
-export function getInstallSaveOptionalCommands (p, c, r, e = false) {
+export function getInstallSaveOptionalCommands (p, c, r, e) {
   log('getInstallSaveOptionalCommands')
 
-  return (
-    getInstallCommands(p, c, r, e).concat('--save-optional')
+  return normalise(
+    getInstallCommands(p, c, r, e).concat(' --save-optional')
   )
 }
 
@@ -88,11 +90,11 @@ export function getInstallSaveOptionalCommands (p, c, r, e = false) {
  *
  *  @return {Array}
  */
-export function getInstallSaveDevCommands (p, c, r, e = false) {
+export function getInstallSaveDevCommands (p, c, r, e) {
   log('getInstallSaveDevCommands')
 
-  return (
-    getInstallCommands(p, c, r, e).concat('--save-dev')
+  return normalise(
+    getInstallCommands(p, c, r, e).concat(' --save-dev')
   )
 }
 
@@ -108,11 +110,11 @@ export function getInstallSaveDevCommands (p, c, r, e = false) {
  *
  *  @return {Array}
  */
-export function getInstallSaveProdCommands (p, c, r, e = false) {
+export function getInstallSaveProdCommands (p, c, r, e) {
   log('getInstallSaveProdCommands')
 
-  return (
-    getInstallCommands(p, c, r, e).concat('--save-prod')
+  return normalise(
+    getInstallCommands(p, c, r, e).concat(' --save-prod')
   )
 }
 

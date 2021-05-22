@@ -32,7 +32,9 @@ const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
-const getRmrfCommands = (directory = DIRECTORY) => `
+const normalise = (value) => value.replace(/\n\n/gm, String.fromCharCode(10)).trim()
+
+const getRmrfCommands = (directory = DIRECTORY) => normalise(`
 #!/bin/bash
 
 cd "${directory}"
@@ -40,9 +42,9 @@ cd "${directory}"
 rm -rf node_modules package-lock.json
 
 exit 0
-`.replace(/\n\n/gm, String.fromCharCode(10)).trim()
+`)
 
-const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY) => `
+const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY) => normalise(`
 #!/bin/bash
 
 cd "${directory}"
@@ -52,9 +54,9 @@ cd "${directory}"
 npm i --registry ${registry}
 
 exit 0
-`.replace(/\n\n/gm, String.fromCharCode(10)).trim()
+`)
 
-const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY) => `
+const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY) => normalise(`
 #!/bin/bash
 
 cd "${directory}"
@@ -62,7 +64,7 @@ cd "${directory}"
 deps --registry ${registry}
 
 exit 0
-`.replace(/\n\n/gm, String.fromCharCode(10)).trim()
+`)
 
 const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 

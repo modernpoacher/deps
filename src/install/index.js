@@ -7,6 +7,9 @@ import debug from 'debug'
 import {
   DIRECTORY,
   REGISTRY,
+  getNoSaveParam,
+  getRegistryParam,
+  getSaveExactParam,
   getCommands,
   normalise,
   transform,
@@ -34,8 +37,10 @@ log('`install` is awake')
 export const getInstallCommands = (p, c, s, r, e = false) => {
   log('getInstallCommands')
 
+  const commands = `npm i ${transform(p, c)}`
+
   return normalise(
-    `npm i ${transform(p, c)} ${s ? '' : '--no-save'} ${r ? `--registry ${r}` : ''} ${e ? '--save-exact' : ''}`
+    getNoSaveParam(s, getRegistryParam(r, getSaveExactParam(e, commands)))
   )
 }
 

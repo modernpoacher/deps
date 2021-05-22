@@ -7,6 +7,8 @@ import {
 import {
   DIRECTORY,
   REGISTRY,
+  getRegistryParam,
+  getSaveExactParam,
   getCommands,
   normalise,
   transform,
@@ -33,8 +35,10 @@ log('`deps` is awake')
 export const getInstallCommands = (p, c, r, e = false) => {
   log('getInstallCommands')
 
+  const commands = `npm i ${transform(p, c)}`
+
   return normalise(
-    `npm i ${transform(p, c)} ${r ? `--registry ${r}` : ''} ${e ? '--save-exact' : ''}`
+    getRegistryParam(r, getSaveExactParam(e, commands))
   )
 }
 

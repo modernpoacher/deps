@@ -19,6 +19,42 @@ export const REGISTRY = 'https://registry.npmjs.org'
 export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 
 /**
+ *  @function getRegistryParam
+ *
+ *  Get the registry param
+ *
+ *  @param {String} registry
+ *  @param {String} current string value
+ *
+ *  @return {String}
+ */
+export const getRegistryParam = (r, v) => r ? v.concat(` --registry ${r}`) : v
+
+/**
+ *  @function getSaveExactParam
+ *
+ *  Get the registry param
+ *
+ *  @param {Boolean} exact
+ *  @param {String} current string value
+ *
+ *  @return {String}
+ */
+export const getSaveExactParam = (e, v) => e ? v.concat(' --save-exact') : v
+
+/**
+ *  @function getSaveExactParam
+ *
+ *  Get the registry param
+ *
+ *  @param {Boolean} save
+ *  @param {String} current string value
+ *
+ *  @return {String}
+ */
+export const getNoSaveParam = (s, v) => s ? v : v.concat(' --no-save')
+
+/**
  *  @function getProdDependencies
  *
  *  Get the installation shell script

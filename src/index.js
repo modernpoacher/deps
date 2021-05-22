@@ -23,7 +23,7 @@ log('`deps` is awake')
 /**
  *  @function getInstallCommands
  *
- *  Get the `npm install` and `npm install -E` commands as an array containing configuration and parameters as flags
+ *  Get the `npm install` or `npm install -E` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -45,7 +45,7 @@ export const getInstallCommands = (p, c, r, e = false) => {
 /**
  *  @function getInstallSaveBundleCommands
  *
- *  Get the `--save-bundle` commands as an array containing configuration and parameters as flags
+ *  Get the `--save-bundle` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -65,7 +65,7 @@ export function getInstallSaveBundleCommands (p, c, r, e) {
 /**
  *  @function getInstallSaveOptionalCommands
  *
- *  Get the `--save-optional` commands as an array containing configuration and parameters as flags
+ *  Get the `--save-optional` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -85,7 +85,7 @@ export function getInstallSaveOptionalCommands (p, c, r, e) {
 /**
  *  @function getInstallSaveDevCommands
  *
- *  Get the `--save-dev` commands as an array containing configuration and parameters as flags
+ *  Get the `--save-dev` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -105,7 +105,7 @@ export function getInstallSaveDevCommands (p, c, r, e) {
 /**
  *  @function getInstallSaveProdCommands
  *
- *  Get the `--save-prod` commands as an array containing configuration and parameters as flags
+ *  Get the `--save-prod` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration

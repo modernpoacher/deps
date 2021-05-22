@@ -42,7 +42,7 @@ debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
 
-log('`deps` is awake', { VERSION })
+log(`\`deps\` (${VERSION}) is awake`)
 
 async function app () {
   log('Deps')

@@ -43,7 +43,7 @@ debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`execute\` is awake, version ${VERSION}`)
+log(`\`execute\` (${VERSION}) is awake`)
 
 const DIRECTORY = process.cwd()
 const REGISTRY = 'https://registry.npmjs.org'

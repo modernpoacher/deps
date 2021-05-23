@@ -85,7 +85,7 @@ export function installSaveExact (d, p, c, s, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveExactCommands(p, c, s, r, true))
+      const commands = getCommands(d, getInstallSaveExactCommands(p, c, s, r))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)

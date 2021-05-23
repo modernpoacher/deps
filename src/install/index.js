@@ -22,9 +22,32 @@ const log = debug('@modernpoacher/deps:install')
 log('`install` is awake')
 
 /**
+ *  @function getInstallSaveExactCommands
+ *
+ *  Get the `install --save-exact` commands as a string of parameters and arguments
+ *
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {Boolean} s - Save
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
+ */
+export const getInstallSaveExactCommands = (p, c, s, r, e = true) => {
+  log('getInstallSaveExactCommands')
+
+  const commands = `npm i ${transform(p, c)}`
+
+  return normalise(
+    getNoSaveParameter(s, getRegistryParameter(r, getSaveExactParameter(e, commands)))
+  )
+}
+
+/**
  *  @function getInstallCommands
  *
- *  Get the `install` and `install --save-exact` commands as a string of parameters and arguments
+ *  Get the `install` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -45,7 +68,7 @@ export const getInstallCommands = (p, c, s, r, e = false) => {
 }
 
 /**
- *  @function installExact
+ *  @function installSaveExact
  *
  *  Spawn the `install --save-exact` commands
  *
@@ -57,12 +80,12 @@ export const getInstallCommands = (p, c, s, r, e = false) => {
  *
  *  @return {Promise}
  */
-export function installExact (d, p, c, s, r) {
-  log('installExact')
+export function installSaveExact (d, p, c, s, r) {
+  log('installSaveExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallCommands(p, c, s, r, true))
+      const commands = getCommands(d, getInstallSaveExactCommands(p, c, s, r, true))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -116,7 +139,7 @@ export async function execute (directory = DIRECTORY, packages = {}, configurati
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installExact(directory, depsExact, configuration, save, registry)
+  if (depsExact.length) await installSaveExact(directory, depsExact, configuration, save, registry)
 
   const deps = getDeps(packages)
 

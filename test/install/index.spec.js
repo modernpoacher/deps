@@ -3,10 +3,11 @@ import debug from 'debug'
 import { expect } from 'chai'
 
 import {
-  installExact,
+  getInstallSaveExactCommands,
+  getInstallCommands,
+  installSaveExact,
   install,
-  execute,
-  getInstallCommands
+  execute
 } from '@modernpoacher/deps/install'
 
 describe('@modernpoacher/deps/install', () => {
@@ -20,16 +21,9 @@ describe('@modernpoacher/deps/install', () => {
     if (DEBUG) debug.enable(DEBUG)
   })
 
-  describe('`installExact`', () => {
+  describe('`getInstallSaveExactCommands`', () => {
     it('is a function', () => {
-      return expect(installExact)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`install`', () => {
-    it('is a function', () => {
-      return expect(install)
+      return expect(getInstallSaveExactCommands)
         .to.be.a('function')
     })
   })
@@ -37,6 +31,20 @@ describe('@modernpoacher/deps/install', () => {
   describe('`getInstallCommands`', () => {
     it('is a function', () => {
       return expect(getInstallCommands)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`installSaveExact`', () => {
+    it('is a function', () => {
+      return expect(installSaveExact)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`install`', () => {
+    it('is a function', () => {
+      return expect(install)
         .to.be.a('function')
     })
   })

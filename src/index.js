@@ -25,9 +25,31 @@ const log = debug('@modernpoacher/deps')
 log('`deps` is awake')
 
 /**
+ *  @function getInstallSaveExactCommands
+ *
+ *  Get the `npm install --save-exact` commands as a string of parameters and arguments
+ *
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
+ */
+export const getInstallSaveExactCommands = (p, c, r, e = true) => {
+  log('getInstallSaveExactCommands')
+
+  const commands = `npm i ${transform(p, c)}`
+
+  return normalise(
+    getRegistryParameter(r, getSaveExactParameter(e, commands))
+  )
+}
+
+/**
  *  @function getInstallCommands
  *
- *  Get the `npm install` or `npm install --save-exact` commands as a string of parameters and arguments
+ *  Get the `npm install` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -47,9 +69,31 @@ export const getInstallCommands = (p, c, r, e = false) => {
 }
 
 /**
+ *  @function getInstallSaveBundleSaveExactCommands
+ *
+ *  Get the `npm install --save-bundle --save-exact` commands as a string of parameters and arguments
+ *
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
+ */
+export function getInstallSaveBundleSaveExactCommands (p, c, r, e) {
+  log('getInstallSaveBundleSaveExactCommands')
+
+  const commands = getInstallSaveExactCommands(p, c, r, e)
+
+  return normalise(
+    getSaveBundleParameter(commands)
+  )
+}
+
+/**
  *  @function getInstallSaveBundleCommands
  *
- *  Get the "save bundle` commands as a string of parameters and arguments
+ *  Get the `npm install --save-bundle` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -69,9 +113,31 @@ export function getInstallSaveBundleCommands (p, c, r, e) {
 }
 
 /**
+ *  @function getInstallSaveOptionalSaveExactCommands
+ *
+ *  Get the `npm install --save-optional --save-exact` commands as a string of parameters and arguments
+ *
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
+ */
+export function getInstallSaveOptionalSaveExactCommands (p, c, r, e) {
+  log('getInstallSaveOptionalSaveExactCommands')
+
+  const commands = getInstallSaveExactCommands(p, c, r, e)
+
+  return normalise(
+    getSaveOptionalParameter(commands)
+  )
+}
+
+/**
  *  @function getInstallSaveOptionalCommands
  *
- *  Get the "save optional` commands as a string of parameters and arguments
+ *  Get the `npm install --save-optional` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -91,9 +157,31 @@ export function getInstallSaveOptionalCommands (p, c, r, e) {
 }
 
 /**
+ *  @function getInstallSaveDevSaveExactCommands
+ *
+ *  Get the `npm install --save-dev --save-exact` commands as a string of parameters and arguments
+ *
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
+ */
+export function getInstallSaveDevSaveExactCommands (p, c, r, e) {
+  log('getInstallSaveDevSaveExactCommands')
+
+  const commands = getInstallSaveExactCommands(p, c, r, e)
+
+  return normalise(
+    getSaveDevParameter(commands)
+  )
+}
+
+/**
  *  @function getInstallSaveDevCommands
  *
- *  Get the "save dev" commands as a string of parameters and arguments
+ *  Get the `npm install --save-dev` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -113,9 +201,31 @@ export function getInstallSaveDevCommands (p, c, r, e) {
 }
 
 /**
+ *  @function getInstallSaveProdSaveExactCommands
+ *
+ *  Get the `npm install --save-prod --save-exact` commands as a string of parameters and arguments
+ *
+ *  @param {Object} p - Packages
+ *  @param {Object} c - Configuration
+ *  @param {String} r - Registry
+ *  @param {Boolean} e - Exact
+ *
+ *  @return {Array}
+ */
+export function getInstallSaveProdSaveExactCommands (p, c, r, e) {
+  log('getInstallSaveProdSaveExactCommands')
+
+  const commands = getInstallSaveExactCommands(p, c, r, e)
+
+  return normalise(
+    getSaveProdParameter(commands)
+  )
+}
+
+/**
  *  @function getInstallSaveProdCommands
  *
- *  Get the "save prod" commands as a string of parameters and arguments
+ *  Get the `npm install --save-prod` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -135,9 +245,9 @@ export function getInstallSaveProdCommands (p, c, r, e) {
 }
 
 /**
- *  @function installSaveBundleExact
+ *  @function installSaveBundleSaveExact
  *
- *  Spawn the `install --save-bundle --save-exact` commands
+ *  Spawn the `npm install --save-bundle --save-exact` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -146,12 +256,12 @@ export function getInstallSaveProdCommands (p, c, r, e) {
  *
  *  @return {Promise}
  */
-export function installSaveBundleExact (d, p, c, r) {
-  log('installSaveBundleExact')
+export function installSaveBundleSaveExact (d, p, c, r) {
+  log('installSaveBundleSaveExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveBundleCommands(p, c, r, true))
+      const commands = getCommands(d, getInstallSaveBundleSaveExactCommands(p, c, r, true))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -163,7 +273,7 @@ export function installSaveBundleExact (d, p, c, r) {
 /**
  *  @function installSaveBundle
  *
- *  Spawn the `install --save-bundle` commands
+ *  Spawn the `npm install --save-bundle` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -187,9 +297,9 @@ export function installSaveBundle (d, p, c, r) {
 }
 
 /**
- *  @function installSaveOptionalExact
+ *  @function installSaveOptionalSaveExact
  *
- *  Spawn the `install --save-optional --save-exact` commands
+ *  Spawn the `npm install --save-optional --save-exact` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -198,12 +308,12 @@ export function installSaveBundle (d, p, c, r) {
  *
  *  @return {Promise}
  */
-export function installSaveOptionalExact (d, p, c, r) {
-  log('installSaveOptionalExact')
+export function installSaveOptionalSaveExact (d, p, c, r) {
+  log('installSaveOptionalSaveExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveOptionalCommands(p, c, r, true))
+      const commands = getCommands(d, getInstallSaveOptionalSaveExactCommands(p, c, r, true))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -215,7 +325,7 @@ export function installSaveOptionalExact (d, p, c, r) {
 /**
  *  @function installSaveOptional
  *
- *  Spawn the `install --save-optional` commands
+ *  Spawn the `npm install --save-optional` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -239,9 +349,9 @@ export function installSaveOptional (d, p, c, r) {
 }
 
 /**
- *  @function installSaveDevExact
+ *  @function installSaveDevSaveExact
  *
- *  Spawn the `install --save-dev --save-exact` commands
+ *  Spawn the `npm install --save-dev --save-exact` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -250,12 +360,12 @@ export function installSaveOptional (d, p, c, r) {
  *
  *  @return {Promise}
  */
-export function installSaveDevExact (d, p, c, r) {
-  log('installSaveDevExact')
+export function installSaveDevSaveExact (d, p, c, r) {
+  log('installSaveDevSaveExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveDevCommands(p, c, r, true))
+      const commands = getCommands(d, getInstallSaveDevSaveExactCommands(p, c, r, true))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -267,7 +377,7 @@ export function installSaveDevExact (d, p, c, r) {
 /**
  *  @function installSaveDev
  *
- *  Spawn the `install --save-dev` commands
+ *  Spawn the `npm install --save-dev` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -291,9 +401,9 @@ export function installSaveDev (d, p, c, r) {
 }
 
 /**
- *  @function installSaveProdExact
+ *  @function installSaveProdSaveExact
  *
- *  Spawn the `install --save-prod --save-exact` commands
+ *  Spawn the `npm install --save-prod --save-exact` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -302,12 +412,12 @@ export function installSaveDev (d, p, c, r) {
  *
  *  @return {Promise}
  */
-export function installSaveProdExact (d, p, c, r) {
-  log('installSaveProdExact')
+export function installSaveProdSaveExact (d, p, c, r) {
+  log('installSaveProdSaveExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveProdCommands(p, c, r, true))
+      const commands = getCommands(d, getInstallSaveProdSaveExactCommands(p, c, r, true))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -319,7 +429,7 @@ export function installSaveProdExact (d, p, c, r) {
 /**
  *  @function installSaveProd
  *
- *  Spawn the `install --save-prod` commands
+ *  Spawn the `npm install --save-prod` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -345,7 +455,7 @@ export function installSaveProd (d, p, c, r) {
 /**
  *  @function executeBundle
  *
- *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
+ *  Execute the `npm install --save-bundle --save-exact` and `npm install --save-bundle` commands according to configuration and parameters
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -358,9 +468,9 @@ export function installSaveProd (d, p, c, r) {
 export async function executeBundle (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY) {
   log('executeBundle')
 
-  const depsExact = getDepsExact(packages, configuration)
+  const depsSaveExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveBundleExact(directory, depsExact, configuration, registry)
+  if (depsSaveExact.length) await installSaveBundleSaveExact(directory, depsSaveExact, configuration, registry)
 
   const deps = getDeps(packages)
 
@@ -370,7 +480,7 @@ export async function executeBundle (directory = DIRECTORY, packages = {}, confi
 /**
  *  @function executeOptional
  *
- *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
+ *  Execute the `npm install --save-optional --save-exact` and `npm install --save-optional` commands according to configuration and parameters
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -383,9 +493,9 @@ export async function executeBundle (directory = DIRECTORY, packages = {}, confi
 export async function executeOptional (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY) {
   log('executeOptional')
 
-  const depsExact = getDepsExact(packages, configuration)
+  const depsSaveExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveOptionalExact(directory, depsExact, configuration, registry)
+  if (depsSaveExact.length) await installSaveOptionalSaveExact(directory, depsSaveExact, configuration, registry)
 
   const deps = getDeps(packages)
 
@@ -395,7 +505,7 @@ export async function executeOptional (directory = DIRECTORY, packages = {}, con
 /**
  *  @function executeDev
  *
- *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
+ *  Execute the `npm install --save-dev --save-exact` and `npm install --save-dev` commands according to configuration and parameters
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -408,9 +518,9 @@ export async function executeOptional (directory = DIRECTORY, packages = {}, con
 export async function executeDev (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY) {
   log('executeDev')
 
-  const depsExact = getDepsExact(packages, configuration)
+  const depsSaveExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveDevExact(directory, depsExact, configuration, registry)
+  if (depsSaveExact.length) await installSaveDevSaveExact(directory, depsSaveExact, configuration, registry)
 
   const deps = getDeps(packages)
 
@@ -420,7 +530,7 @@ export async function executeDev (directory = DIRECTORY, packages = {}, configur
 /**
  *  @function executeProd
  *
- *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
+ *  Execute the `npm install --save-prod --save-exact` and `npm install --save-prod` commands according to configuration and parameters
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -433,9 +543,9 @@ export async function executeDev (directory = DIRECTORY, packages = {}, configur
 export async function executeProd (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY) {
   log('executeProd')
 
-  const depsExact = getDepsExact(packages, configuration)
+  const depsSaveExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveProdExact(directory, depsExact, configuration, registry)
+  if (depsSaveExact.length) await installSaveProdSaveExact(directory, depsSaveExact, configuration, registry)
 
   const deps = getDeps(packages)
 

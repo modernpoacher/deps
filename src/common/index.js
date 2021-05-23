@@ -33,7 +33,7 @@ export const getRegistryParameter = (r, commands) => r ? commands.concat(` --reg
 /**
  *  @function getSaveExactParameter
  *
- *  Get the "save exact" parameter
+ *  Get the `--save-exact` parameter
  *
  *  @param {Boolean} exact
  *  @param {String} current commands string
@@ -45,7 +45,7 @@ export const getSaveExactParameter = (e, commands) => e ? commands.concat(' --sa
 /**
  *  @function getNoSaveParameter
  *
- *  Get the "no save" parameter
+ *  Get the `--no-save` parameter
  *
  *  @param {Boolean} save
  *  @param {String} current commands string
@@ -68,7 +68,7 @@ export const getSaveBundleParameter = (commands) => commands.concat(' --save-bun
 /**
  *  @function getSaveOptionalParameter
  *
- *  Get the "save optional" parameter
+ *  Get the `--save-optional` parameter
  *
  *  @param {String} current commands string
  *
@@ -79,7 +79,7 @@ export const getSaveOptionalParameter = (commands) => commands.concat(' --save-o
 /**
  *  @function getSaveDevParameter
  *
- *  Get the "save optional" parameter
+ *  Get the `--save-dev` parameter
  *
  *  @param {String} current commands string
  *
@@ -90,7 +90,7 @@ export const getSaveDevParameter = (commands) => commands.concat(' --save-dev')
 /**
  *  @function getSaveProdParameter
  *
- *  Get the "save prod" parameter
+ *  Get the `--save-prod` parameter
  *
  *  @param {String} current commands string
  *
@@ -189,7 +189,7 @@ export const isExact = (v) => /^\d/.test(v)
 /**
  *  @function getDepsExact
  *
- *  Get an array of dependencies to be installed with the "save exact" parameter
+ *  Get an array of dependencies to be installed with the `--save-exact` parameter
  *
  *  @param {Object} values
  *  @param {Object} configuration

@@ -3,6 +3,13 @@ import debug from 'debug'
 import { expect } from 'chai'
 
 import {
+  getRegistryParameter,
+  getNoSaveParameter,
+  getSaveExactParameter,
+  getSaveProdParameter,
+  getSaveDevParameter,
+  getSaveOptionalParameter,
+  getSaveBundleParameter,
   getCommands,
   getDepsExact,
   getDeps,
@@ -25,6 +32,55 @@ describe('@modernpoacher/deps/common', () => {
     } = process
 
     if (DEBUG) debug.enable(DEBUG)
+  })
+
+  describe('`getRegistryParameter`', () => {
+    it('is a function', () => {
+      return expect(getRegistryParameter)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getNoSaveParameter`', () => {
+    it('is a function', () => {
+      return expect(getNoSaveParameter)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getSaveExactParameter`', () => {
+    it('is a function', () => {
+      return expect(getSaveExactParameter)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getSaveProdParameter`', () => {
+    it('is a function', () => {
+      return expect(getSaveProdParameter)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getSaveDevParameter`', () => {
+    it('is a function', () => {
+      return expect(getSaveDevParameter)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getSaveOptionalParameter`', () => {
+    it('is a function', () => {
+      return expect(getSaveOptionalParameter)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getSaveBundleParameter`', () => {
+    it('is a function', () => {
+      return expect(getSaveBundleParameter)
+        .to.be.a('function')
+    })
   })
 
   describe('`getCommands`', () => {
@@ -101,6 +157,73 @@ describe('@modernpoacher/deps/common', () => {
     it('is a function', () => {
       return expect(getPeerDependencies)
         .to.be.a('function')
+    })
+  })
+
+  describe('`getRegistryParameter()`', () => {
+    describe('The "registry" argument is truthy', () => {
+      it('returns a string', () => {
+        return expect(getRegistryParameter('MOCK REGISTRY', 'MOCK COMMANDS'))
+          .to.eql('MOCK COMMANDS --registry MOCK REGISTRY')
+      })
+    })
+
+    describe('The "registry" argument is falsy', () => {
+      it('returns a string', () => {
+        return expect(getRegistryParameter('', 'MOCK COMMANDS'))
+          .to.eql('MOCK COMMANDS')
+      })
+    })
+  })
+
+  describe('`getNoSaveParameter()`', () => {
+    describe('The "save" argument is truthy', () => {
+      it('returns a string', () => {
+        return expect(getNoSaveParameter(true, 'MOCK COMMANDS'))
+          .to.eql('MOCK COMMANDS')
+      })
+    })
+
+    describe('The "save" argument is falsy', () => {
+      it('returns a string', () => {
+        return expect(getNoSaveParameter(null, 'MOCK COMMANDS'))
+          .to.eql('MOCK COMMANDS --no-save')
+      })
+    })
+  })
+
+  describe('`getSaveExactParameter()`', () => {
+    it('is a function', () => {
+      return expect(getSaveExactParameter('MOCK COMMANDS'))
+        .to.eql('MOCK COMMANDS --save-exact')
+    })
+  })
+
+  describe('`getSaveProdParameter()`', () => {
+    it('is a function', () => {
+      return expect(getSaveProdParameter('MOCK COMMANDS'))
+        .to.eql('MOCK COMMANDS --save-prod')
+    })
+  })
+
+  describe('`getSaveDevParameter()`', () => {
+    it('is a function', () => {
+      return expect(getSaveDevParameter('MOCK COMMANDS'))
+        .to.eql('MOCK COMMANDS --save-dev')
+    })
+  })
+
+  describe('`getSaveOptionalParameter()`', () => {
+    it('is a function', () => {
+      return expect(getSaveOptionalParameter('MOCK COMMANDS'))
+        .to.eql('MOCK COMMANDS --save-optional')
+    })
+  })
+
+  describe('`getSaveBundleParameter()`', () => {
+    it('is a function', () => {
+      return expect(getSaveBundleParameter('MOCK COMMANDS'))
+        .to.eql('MOCK COMMANDS --save-bundle')
     })
   })
 

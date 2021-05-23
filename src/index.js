@@ -36,13 +36,13 @@ log('`deps` is awake')
  *
  *  @return {Array}
  */
-export const getInstallSaveExactCommands = (p, c, r, e = true) => {
+export const getInstallSaveExactCommands = (p, c, r) => {
   log('getInstallSaveExactCommands')
 
   const commands = `npm i ${transform(p, c)}`
 
   return normalise(
-    getRegistryParameter(r, getSaveExactParameter(e, commands))
+    getRegistryParameter(r, getSaveExactParameter(commands))
   )
 }
 
@@ -58,13 +58,13 @@ export const getInstallSaveExactCommands = (p, c, r, e = true) => {
  *
  *  @return {Array}
  */
-export const getInstallCommands = (p, c, r, e = false) => {
+export const getInstallCommands = (p, c, r) => {
   log('getInstallCommands')
 
   const commands = `npm i ${transform(p, c)}`
 
   return normalise(
-    getRegistryParameter(r, getSaveExactParameter(e, commands))
+    getRegistryParameter(r, commands)
   )
 }
 
@@ -80,10 +80,10 @@ export const getInstallCommands = (p, c, r, e = false) => {
  *
  *  @return {Array}
  */
-export function getInstallSaveBundleSaveExactCommands (p, c, r, e) {
+export function getInstallSaveBundleSaveExactCommands (p, c, r) {
   log('getInstallSaveBundleSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, c, r, e)
+  const commands = getInstallSaveExactCommands(p, c, r)
 
   return normalise(
     getSaveBundleParameter(commands)
@@ -102,10 +102,10 @@ export function getInstallSaveBundleSaveExactCommands (p, c, r, e) {
  *
  *  @return {Array}
  */
-export function getInstallSaveBundleCommands (p, c, r, e) {
+export function getInstallSaveBundleCommands (p, c, r) {
   log('getInstallSaveBundleCommands')
 
-  const commands = getInstallCommands(p, c, r, e)
+  const commands = getInstallCommands(p, c, r)
 
   return normalise(
     getSaveBundleParameter(commands)
@@ -124,10 +124,10 @@ export function getInstallSaveBundleCommands (p, c, r, e) {
  *
  *  @return {Array}
  */
-export function getInstallSaveOptionalSaveExactCommands (p, c, r, e) {
+export function getInstallSaveOptionalSaveExactCommands (p, c, r) {
   log('getInstallSaveOptionalSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, c, r, e)
+  const commands = getInstallSaveExactCommands(p, c, r)
 
   return normalise(
     getSaveOptionalParameter(commands)
@@ -146,10 +146,10 @@ export function getInstallSaveOptionalSaveExactCommands (p, c, r, e) {
  *
  *  @return {Array}
  */
-export function getInstallSaveOptionalCommands (p, c, r, e) {
+export function getInstallSaveOptionalCommands (p, c, r) {
   log('getInstallSaveOptionalCommands')
 
-  const commands = getInstallCommands(p, c, r, e)
+  const commands = getInstallCommands(p, c, r)
 
   return normalise(
     getSaveOptionalParameter(commands)
@@ -168,10 +168,10 @@ export function getInstallSaveOptionalCommands (p, c, r, e) {
  *
  *  @return {Array}
  */
-export function getInstallSaveDevSaveExactCommands (p, c, r, e) {
+export function getInstallSaveDevSaveExactCommands (p, c, r) {
   log('getInstallSaveDevSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, c, r, e)
+  const commands = getInstallSaveExactCommands(p, c, r)
 
   return normalise(
     getSaveDevParameter(commands)
@@ -190,10 +190,10 @@ export function getInstallSaveDevSaveExactCommands (p, c, r, e) {
  *
  *  @return {Array}
  */
-export function getInstallSaveDevCommands (p, c, r, e) {
+export function getInstallSaveDevCommands (p, c, r) {
   log('getInstallSaveDevCommands')
 
-  const commands = getInstallCommands(p, c, r, e)
+  const commands = getInstallCommands(p, c, r)
 
   return normalise(
     getSaveDevParameter(commands)
@@ -212,10 +212,10 @@ export function getInstallSaveDevCommands (p, c, r, e) {
  *
  *  @return {Array}
  */
-export function getInstallSaveProdSaveExactCommands (p, c, r, e) {
+export function getInstallSaveProdSaveExactCommands (p, c, r) {
   log('getInstallSaveProdSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, c, r, e)
+  const commands = getInstallSaveExactCommands(p, c, r)
 
   return normalise(
     getSaveProdParameter(commands)
@@ -234,10 +234,10 @@ export function getInstallSaveProdSaveExactCommands (p, c, r, e) {
  *
  *  @return {Array}
  */
-export function getInstallSaveProdCommands (p, c, r, e) {
+export function getInstallSaveProdCommands (p, c, r) {
   log('getInstallSaveProdCommands')
 
-  const commands = getInstallCommands(p, c, r, e)
+  const commands = getInstallCommands(p, c, r)
 
   return normalise(
     getSaveProdParameter(commands)
@@ -261,7 +261,7 @@ export function installSaveBundleSaveExact (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveBundleSaveExactCommands(p, c, r, true))
+      const commands = getCommands(d, getInstallSaveBundleSaveExactCommands(p, c, r))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -313,7 +313,7 @@ export function installSaveOptionalSaveExact (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveOptionalSaveExactCommands(p, c, r, true))
+      const commands = getCommands(d, getInstallSaveOptionalSaveExactCommands(p, c, r))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -365,7 +365,7 @@ export function installSaveDevSaveExact (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveDevSaveExactCommands(p, c, r, true))
+      const commands = getCommands(d, getInstallSaveDevSaveExactCommands(p, c, r))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -417,7 +417,7 @@ export function installSaveProdSaveExact (d, p, c, r) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveProdSaveExactCommands(p, c, r, true))
+      const commands = getCommands(d, getInstallSaveProdSaveExactCommands(p, c, r))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)

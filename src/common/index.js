@@ -31,18 +31,6 @@ export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 export const getRegistryParameter = (r, commands) => r ? commands.concat(` --registry ${r}`) : commands
 
 /**
- *  @function getSaveExactParameter
- *
- *  Get the `--save-exact` parameter
- *
- *  @param {Boolean} exact
- *  @param {String} current commands string
- *
- *  @return {String}
- */
-export const getSaveExactParameter = (e, commands) => e ? commands.concat(' --save-exact') : commands
-
-/**
  *  @function getNoSaveParameter
  *
  *  Get the `--no-save` parameter
@@ -53,6 +41,40 @@ export const getSaveExactParameter = (e, commands) => e ? commands.concat(' --sa
  *  @return {String}
  */
 export const getNoSaveParameter = (s, commands) => s ? commands : commands.concat(' --no-save')
+
+/**
+ *  @function getSaveExactParameter
+ *
+ *  Get the `--save-exact` parameter
+ *
+ *  @param {Boolean} exact
+ *  @param {String} current commands string
+ *
+ *  @return {String}
+ */
+export const getSaveExactParameter = (commands) => commands.concat(' --save-exact')
+
+/**
+ *  @function getSaveProdParameter
+ *
+ *  Get the `--save-prod` parameter
+ *
+ *  @param {String} current commands string
+ *
+ *  @return {String}
+ */
+export const getSaveProdParameter = (commands) => commands.concat(' --save-prod')
+
+/**
+ *  @function getSaveDevParameter
+ *
+ *  Get the `--save-dev` parameter
+ *
+ *  @param {String} current commands string
+ *
+ *  @return {String}
+ */
+export const getSaveDevParameter = (commands) => commands.concat(' --save-dev')
 
 /**
  *  @function getSaveBundleParameter
@@ -75,28 +97,6 @@ export const getSaveBundleParameter = (commands) => commands.concat(' --save-bun
  *  @return {String}
  */
 export const getSaveOptionalParameter = (commands) => commands.concat(' --save-optional')
-
-/**
- *  @function getSaveDevParameter
- *
- *  Get the `--save-dev` parameter
- *
- *  @param {String} current commands string
- *
- *  @return {String}
- */
-export const getSaveDevParameter = (commands) => commands.concat(' --save-dev')
-
-/**
- *  @function getSaveProdParameter
- *
- *  Get the `--save-prod` parameter
- *
- *  @param {String} current commands string
- *
- *  @return {String}
- */
-export const getSaveProdParameter = (commands) => commands.concat(' --save-prod')
 
 /**
  *  @function getProdDependencies

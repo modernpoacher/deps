@@ -24,7 +24,7 @@ log('`install` is awake')
 /**
  *  @function getInstallCommands
  *
- *  Get the `install` and `install -E` commands as an array containing configuration and parameters as flags
+ *  Get the `install` and `install --save-exact` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
  *  @param {Object} c - Configuration
@@ -47,7 +47,7 @@ export const getInstallCommands = (p, c, s, r, e = false) => {
 /**
  *  @function installExact
  *
- *  Spawn the `install -E` commands
+ *  Spawn the `install --save-exact` commands
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages
@@ -101,7 +101,7 @@ export function install (d, p, c, s, r) {
 /**
  *  @function execute
  *
- *  Execute the `install -E` and `install` commands according to configuration and parameters
+ *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
  *
  *  @param {String} d - Directory
  *  @param {Object} p - Packages

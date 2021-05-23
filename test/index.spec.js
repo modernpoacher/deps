@@ -11,6 +11,8 @@ import {
   getInstallSaveOptionalCommands,
   getInstallSaveBundleSaveExactCommands,
   getInstallSaveBundleCommands,
+  getInstallSaveExactCommands,
+  getInstallCommands,
   installSaveProdSaveExact,
   installSaveProd,
   installSaveDevSaveExact,
@@ -22,8 +24,7 @@ import {
   executeProd,
   executeDev,
   executeOptional,
-  executeBundle,
-  getInstallCommands
+  executeBundle
 } from '@modernpoacher/deps'
 
 describe('@modernpoacher/deps', () => {
@@ -93,6 +94,20 @@ describe('@modernpoacher/deps', () => {
     })
   })
 
+  describe('`getInstallSaveExactCommands`', () => {
+    it('is a function', () => {
+      return expect(getInstallSaveExactCommands)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getInstallCommands`', () => {
+    it('is a function', () => {
+      return expect(getInstallCommands)
+        .to.be.a('function')
+    })
+  })
+
   describe('`installSaveProdSaveExact`', () => {
     it('is a function', () => {
       return expect(installSaveProdSaveExact)
@@ -145,13 +160,6 @@ describe('@modernpoacher/deps', () => {
   describe('`installSaveBundle`', () => {
     it('is a function', () => {
       return expect(installSaveBundle)
-        .to.be.a('function')
-    })
-  })
-
-  describe('`getInstallCommands`', () => {
-    it('is a function', () => {
-      return expect(getInstallCommands)
         .to.be.a('function')
     })
   })

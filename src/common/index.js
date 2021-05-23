@@ -19,42 +19,6 @@ export const REGISTRY = 'https://registry.npmjs.org'
 export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 
 /**
- *  @function getRegistryParameter
- *
- *  Get the "registry" parameter and argument
- *
- *  @param {String} registry
- *  @param {String} current commands string
- *
- *  @return {String}
- */
-export const getRegistryParameter = (r, commands) => r ? commands.concat(` --registry ${r}`) : commands
-
-/**
- *  @function getNoSaveParameter
- *
- *  Get the `--no-save` parameter
- *
- *  @param {Boolean} save
- *  @param {String} current commands string
- *
- *  @return {String}
- */
-export const getNoSaveParameter = (s, commands) => s ? commands : commands.concat(' --no-save')
-
-/**
- *  @function getSaveExactParameter
- *
- *  Get the `--save-exact` parameter
- *
- *  @param {Boolean} exact
- *  @param {String} current commands string
- *
- *  @return {String}
- */
-export const getSaveExactParameter = (commands) => commands.concat(' --save-exact')
-
-/**
  *  @function getSaveProdParameter
  *
  *  Get the `--save-prod` parameter
@@ -97,6 +61,42 @@ export const getSaveBundleParameter = (commands) => commands.concat(' --save-bun
  *  @return {String}
  */
 export const getSaveOptionalParameter = (commands) => commands.concat(' --save-optional')
+
+/**
+ *  @function getRegistryParameter
+ *
+ *  Get the "registry" parameter and argument
+ *
+ *  @param {String} registry
+ *  @param {String} current commands string
+ *
+ *  @return {String}
+ */
+export const getRegistryParameter = (r, commands) => r ? commands.concat(` --registry ${r}`) : commands
+
+/**
+ *  @function getNoSaveParameter
+ *
+ *  Get the `--no-save` parameter
+ *
+ *  @param {Boolean} save
+ *  @param {String} current commands string
+ *
+ *  @return {String}
+ */
+export const getNoSaveParameter = (s, commands) => s ? commands : commands.concat(' --no-save')
+
+/**
+ *  @function getSaveExactParameter
+ *
+ *  Get the `--save-exact` parameter
+ *
+ *  @param {Boolean} exact
+ *  @param {String} current commands string
+ *
+ *  @return {String}
+ */
+export const getSaveExactParameter = (commands) => commands.concat(' --save-exact')
 
 /**
  *  @function getProdDependencies

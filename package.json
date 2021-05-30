@@ -54,7 +54,7 @@
     "debug": "^4.3.1",
     "glob-all": "^3.2.1",
     "module-alias": "^2.2.2",
-    "supports-color": "^9.0.0"
+    "supports-color": "^9.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.14.3",
@@ -64,7 +64,7 @@
     "@babel/register": "^7.13.16",
     "babel-plugin-module-resolver": "^4.1.0",
     "chai": "^4.3.4",
-    "core-js": "^3.13.0",
+    "core-js": "^3.13.1",
     "cross-env": "^7.0.3",
     "eslint": "^7.27.0",
     "eslint-import-resolver-babel-module": "^5.3.1",

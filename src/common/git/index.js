@@ -272,7 +272,7 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = `cd "${directory}" && git commit -m '${commit}'`
+      const command = `cd "${directory}" && git commit -m "${commit}"`
 
       const {
         stdout,

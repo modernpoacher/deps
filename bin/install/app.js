@@ -7,6 +7,10 @@ const debug = require('debug')
 const commander = require('commander')
 
 const {
+  version: VERSION
+} = require('~/package')
+
+const {
   getProdDependencies,
   getDevDependencies,
   getOptionalDependencies,
@@ -49,7 +53,7 @@ async function app () {
    *  `version` is printed into this file at pre-commit
    */
   commander
-    .version('1.1.5')
+    .version(VERSION)
     .option('-P, --prod [dependencies]', 'Install `dependencies`', false)
     .option('-D, --dev [devDependencies]', 'Install `devDependencies`', false)
     .option('-O, --optional [optionalDependencies]', 'Install `optionalDependencies`', false)

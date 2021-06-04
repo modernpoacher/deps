@@ -38,7 +38,7 @@
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "test": "NODE_ENV=test mocha test --recursive -r @babel/register --verbose --color",
-    "pre-commit": "npm run lint && npm run test && npm run build && git add bin lib"
+    "pre-commit": "npm run lint && npm run test && npm run build && git add lib"
   },
   "bin": {
     "deps": "bin/app.js",

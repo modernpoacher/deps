@@ -109,13 +109,9 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       // eslint-disable-next-line
-      const command = `
-DIR=$(echo "${directory}" | sed 's/\\/\\//g' | sed 's/://')
-
-[[ $(cat "$DIR/.git/refs/remotes/origin/HEAD") 2> /dev/null =~ "[-0-9a-zA-Z]*$" ]]
-
-echo "$\{BASH_REMATCH[0]}"
-`
+      const command = `[[ $(echo "${directory}/.git/refs/remotes/origin/HEAD" | sed "s/\\/\\//g" | sed "s/://" | cat 2> /dev/null) =~ "[-0-9a-zA-Z]*$" ]] && echo "$\{BASH_REMATCH[0]}"` /* `DIR=$(echo "${directory}" | sed "s/\\/\//g" | sed "s/://")
+[[ $(cat "$DIR/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ "[-0-9a-zA-Z]*$" ]]
+echo "$\{BASH_REMATCH[0]}"` */
 
       const {
         stdout,

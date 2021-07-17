@@ -89,7 +89,7 @@ const getErrorMessage = ({ message = '' }) => message
  */
 function getCatGitRefsRemotesOriginHeadCommand (directory = DIRECTORY) { /* eslint-disable no-useless-escape */
   return `
-DIR=$(echo "${directory}/.git/refs/remotes/origin/HEAD" | sed -e "s/\//\\\/g" -e "s/://" | cat 2> /dev/null)
+DIR=$(echo "${directory}/.git/refs/remotes/origin/HEAD" | sed -e "s/\\//\\\\\\/g" -e "s/://" | cat 2> /dev/null)
 [[ $DIR =~ "[-0-9a-zA-Z]*$" ]]
 echo "$\{BASH_REMATCH[0]}"
 ` /* eslint-enable no-useless-escape */

@@ -79,6 +79,23 @@ const getErrorCode = ({ code = 0 }) => code
 const getErrorMessage = ({ message = '' }) => message
 
 /**
+ *  @function getCatGitRefsRemotesOriginHeadCommand
+ *
+ *  Compatible with MacOS and Windows
+ *
+ *  @param {String} directory - A directory configured for Git
+ *
+ *  @return {String}
+ */
+function getCatGitRefsRemotesOriginHeadCommand (directory = DIRECTORY) { /* eslint-disable no-useless-escape */
+  return `
+DIR=$(echo "${directory}/.git/refs/remotes/origin/HEAD" | sed -e "s/\//\\\/g" -e "s/://" | cat 2> /dev/null)
+[[ $DIR =~ "[-0-9a-zA-Z]*$" ]]
+echo "$\{BASH_REMATCH[0]}"
+` /* eslint-enable no-useless-escape */
+}
+
+/**
  *  @function isCommandError
  *
  *  Determine whether an error is a safe non-zero exit from a Git command
@@ -108,10 +125,7 @@ function isCommandError (e) {
 export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
-      // eslint-disable-next-line
-      const command = `[[ $(echo "${directory}/.git/refs/remotes/origin/HEAD" | sed "s/\\/\\//g" | sed "s/://" | cat 2> /dev/null) =~ "[-0-9a-zA-Z]*$" ]] && echo "$\{BASH_REMATCH[0]}"` /* `DIR=$(echo "${directory}" | sed "s/\\/\//g" | sed "s/://")
-[[ $(cat "$DIR/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ "[-0-9a-zA-Z]*$" ]]
-echo "$\{BASH_REMATCH[0]}"` */
+      const command = getCatGitRefsRemotesOriginHeadCommand(directory)
 
       const {
         stdout,

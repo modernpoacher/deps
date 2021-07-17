@@ -35,8 +35,6 @@ log('`common` is awake')
 const normalise = (value) => value.replace(/\n\n/gm, String.fromCharCode(10)).trim()
 
 const getRmrfCommands = (directory = DIRECTORY) => normalise(`
-#!/bin/bash
-
 cd "${directory}"
 
 rm -rf node_modules package-lock.json
@@ -45,8 +43,6 @@ exit 0
 `)
 
 const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY) => normalise(`
-#!/bin/bash
-
 cd "${directory}"
 
 . "${NVM}"
@@ -57,8 +53,6 @@ exit 0
 `)
 
 const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY) => normalise(`
-#!/bin/bash
-
 cd "${directory}"
 
 deps --registry ${registry}

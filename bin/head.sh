@@ -41,7 +41,7 @@ function is_clean {
 }
 
 function get_default_branch {
-  [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ $EXP ]] && default_branch="${BASH_REMATCH[0]}"
+  DIR=$(echo "$PWD" | sed 's/\\/\//g' | sed 's/://') && [[ $(cat "$DIR/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ $EXP ]] && default_branch="${BASH_REMATCH[0]}"
 
   echo $default_branch
 }
@@ -53,7 +53,7 @@ function get_current_branch {
 }
 
 function can_git_remote_set_head {
-  [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ $EXP ]] && default_branch="${BASH_REMATCH[0]}"
+  DIR=$(echo "$PWD" | sed 's/\\/\//g' | sed 's/://') && [[ $(cat "$DIR/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ $EXP ]] && default_branch="${BASH_REMATCH[0]}"
 
   if [ -z "$default_branch" ]
   then

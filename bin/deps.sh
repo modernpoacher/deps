@@ -2,6 +2,8 @@
 #
 # https://google.github.io/styleguide/shellguide.html#s7-naming-conventions
 
+EXP="[-0-9a-zA-Z]*$"
+
 function update {
   git checkout $default_branch
 
@@ -34,7 +36,7 @@ function can_update {
     fi
   fi
 
-  [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ [-0-9a-zA-Z]*$ ]] && default_branch="${BASH_REMATCH[0]}"
+  [[ $(cat "$PWD/.git/refs/remotes/origin/HEAD" 2> /dev/null) =~ $EXP ]] && default_branch="${BASH_REMATCH[0]}"
 
   if [ -z "$default_branch" ]
   then

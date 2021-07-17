@@ -108,7 +108,7 @@ function isCommandError (e) {
 export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
-      const command = `[[ $(cat "${directory}/.git/refs/remotes/origin/HEAD") =~ [-0-9a-zA-Z]*$ ]] && echo "\$\{BASH_REMATCH[0]\}"` // eslint-disable-line
+      const command = `EXP="[-0-9a-zA-Z]*$" && [[ $(cat "${directory}/.git/refs/remotes/origin/HEAD") =~ $EXP ]] && echo "\$\{BASH_REMATCH[0]\}"` // eslint-disable-line
 
       const {
         stdout,

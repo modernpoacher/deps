@@ -10,7 +10,7 @@ const BRANCH = 'master'
 
 const ADD = 'package.json package-lock.json'
 
-const COMMIT = 'Updated \`package.json\` &/ \`package-lock.json\`' /* eslint-disable-line no-useless-escape */
+const COMMIT = 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
 
 const OPTIONS = {
   maxBuffer: 1024 * 2000

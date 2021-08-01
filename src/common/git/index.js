@@ -18,8 +18,6 @@ const OPTIONS = {
 
 const log = debug('@modernpoacher/deps')
 
-const info = debug('@modernpoacher/deps:info')
-
 log('`git` is awake')
 
 function use (key) {
@@ -133,7 +131,9 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = getCatGitRefsRemotesOriginHeadCommand(directory)
 
-      info(command)
+      /**
+       *  log(command)
+       */
 
       const {
         stdout,
@@ -162,7 +162,9 @@ export function gitRevParse (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = 'git rev-parse --show-toplevel'
 
-      info(command)
+      /**
+       *  log(command)
+       */
 
       const {
         stdout,
@@ -191,7 +193,9 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git checkout ${branch}`
 
-      info(command)
+      /**
+       *  log(command)
+       */
 
       const {
         stdout,
@@ -220,7 +224,9 @@ export function gitPull (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git pull`
 
-      info(command)
+      /**
+       *  log(command)
+       */
 
       const {
         stdout,
@@ -249,7 +255,9 @@ export function gitPush (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git push`
 
-      info(command)
+      /**
+       *  log(command)
+       */
 
       const {
         stdout,
@@ -279,7 +287,9 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git add ${add}`
 
-      info(command)
+      /**
+       *  log(command)
+       */
 
       const {
         stdout,
@@ -309,7 +319,9 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git commit -m "${commit}"`
 
-      info(command)
+      /**
+       *  log(command)
+       */
 
       const {
         stdout,

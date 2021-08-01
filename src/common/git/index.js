@@ -88,6 +88,8 @@ const getErrorMessage = ({ message = '' }) => message
  *  @return {String}
  */
 function getCatGitRefsRemotesOriginHeadCommand (directory = DIRECTORY) { /* eslint-disable no-useless-escape */
+  log('getCatGitRefsRemotesOriginHeadCommand')
+
   return `
 DIR=$(echo "${directory}/.git/refs/remotes/origin/HEAD" | sed -e "s/\\//\\\\\\/g" -e "s/://" | cat 2> /dev/null)
 [[ $DIR =~ "[-0-9a-zA-Z]*$" ]]
@@ -123,9 +125,13 @@ function isCommandError (e) {
  *  @return {Promise}
  */
 export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
+  log('catGitRefsRemotesOriginHead')
+
   return (
     new Promise((resolve, reject) => {
       const command = getCatGitRefsRemotesOriginHeadCommand(directory)
+
+      log(command)
 
       const {
         stdout,
@@ -154,6 +160,8 @@ export function gitRevParse (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = 'git rev-parse --show-toplevel'
 
+      log(command)
+
       const {
         stdout,
         stderr
@@ -180,6 +188,8 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
   return (
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git checkout ${branch}`
+
+      log(command)
 
       const {
         stdout,
@@ -208,6 +218,8 @@ export function gitPull (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git pull`
 
+      log(command)
+
       const {
         stdout,
         stderr
@@ -234,6 +246,8 @@ export function gitPush (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git push`
+
+      log(command)
 
       const {
         stdout,
@@ -263,6 +277,8 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git add ${add}`
 
+      log(command)
+
       const {
         stdout,
         stderr
@@ -290,6 +306,8 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
   return (
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git commit -m "${commit}"`
+
+      log(command)
 
       const {
         stdout,

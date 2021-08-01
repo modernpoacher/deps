@@ -14,7 +14,7 @@ function update {
   deps --registry https://registry.npmjs.org
 
   git add package.json package-lock.json
-  git commit -m 'Updated `package.json` &/ `package-lock.json`'
+  git commit -m "Updated \`package.json\` &/ \`package-lock.json\`"
 
   git push
 }

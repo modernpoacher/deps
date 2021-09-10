@@ -20,11 +20,13 @@ const log = debug('@modernpoacher/deps')
 
 log('`git` is awake')
 
+const trim = (v) => v.split('\n').map((v) => v.trim()).join('\n').trim()
+
 function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function use (v) {
-    log(v.trim()) // .replace(/(\s+)$/g, '')
+    log(trim(v)) // log(v.trim()) // .replace(/(\s+)$/g, '')
   }
 }
 
@@ -37,7 +39,7 @@ function out (key, directory) {
     if (directory === s) return
 
     return (
-      log(s)
+      log(trim(v))
     )
   }
 }
@@ -51,7 +53,7 @@ function err (key, directory) {
     if (directory === s || s.toLowerCase().startsWith('fatal: not a git repository')) return
 
     return (
-      log(s)
+      log(trim(v))
     )
   }
 }

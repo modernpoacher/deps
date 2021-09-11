@@ -67,7 +67,7 @@ function err (key, directory) {
  *
  *  @return {Number}
  */
-const getErrorCode = ({ code = 0 }) => code
+const getErrorCode = ({ code = 0 } = {}) => code
 
 /**
  *  @function getErrorMessage
@@ -78,7 +78,7 @@ const getErrorCode = ({ code = 0 }) => code
  *
  *  @return {String}
  */
-const getErrorMessage = ({ message = '' }) => message
+const getErrorMessage = ({ message = '' } = {}) => message
 
 /**
  *  @function getCatGitRefsRemotesOriginHeadCommand
@@ -140,7 +140,7 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
 
       stdout.on('data', out('cat-git-refs-remotes-origin-head', directory))
       stderr.on('data', err('cat-git-refs-remotes-origin-head', directory))
@@ -171,7 +171,7 @@ export function gitRevParse (directory = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(v.trim()) : reject(e))
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
 
       stdout.on('data', out('git-rev-parse', directory))
       stderr.on('data', err('git-rev-parse', directory))

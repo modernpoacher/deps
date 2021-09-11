@@ -20,7 +20,7 @@ const log = debug('@modernpoacher/deps')
 
 log('`git` is awake')
 
-const trim = (v) => v.split('\n').map((v) => v.trim()).join('\n').trim()
+const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
 
 function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)

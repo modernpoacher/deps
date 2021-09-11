@@ -32,7 +32,15 @@ const log = debug('@modernpoacher/deps')
 
 log('`common` is awake')
 
-const normalise = (value) => value.replace(/\n\n/gm, String.fromCharCode(10)).trim()
+const CODE = 0
+
+const MESSAGE = 'Either no error message has been defined or no error has been supplied'
+
+const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
+
+const normalise = (v) => v.replace(/\n\n/gm, String.fromCharCode(10)).trim()
+
+const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
 const getRmrfCommands = (directory = DIRECTORY) => normalise(`
 cd "${directory}"
@@ -60,10 +68,6 @@ deps --registry ${registry}
 exit 0
 `)
 
-const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
-
-const trim = (v) => v.split('\n').map((v) => v.trim()).join('\n').trim()
-
 function use (n) {
   const log = debug(`@modernpoacher/deps:${n}`)
 
@@ -72,14 +76,12 @@ function use (n) {
   }
 }
 
-function handleError ({ code = 'NONE', message = 'No error message defined' }) {
+function handleError ({ code = CODE, message = MESSAGE } = {}) {
   log({
     code,
     message
   })
 }
-
-const MESSAGE = 'Either no error message has been defined or no error has been supplied'
 
 const handlePackageError = ({ message = MESSAGE } = {}) => log(`Package error: "${message}"`)
 

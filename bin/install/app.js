@@ -106,6 +106,8 @@ async function app () {
   })
 
   if (P) {
+    log('Prod')
+
     try {
       await execute(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), save, registry)
     } catch (e) {
@@ -113,6 +115,8 @@ async function app () {
     }
   } else {
     if (D) {
+      log('Dev')
+
       try {
         await execute(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), save, registry)
       } catch (e) {
@@ -120,6 +124,8 @@ async function app () {
       }
     } else {
       if (O) {
+        log('Optional')
+
         try {
           await execute(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), save, registry)
         } catch (e) {
@@ -127,6 +133,8 @@ async function app () {
         }
       } else {
         if (B) {
+          log('Bundle')
+
           try {
             await execute(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), save, registry)
           } catch (e) {
@@ -134,6 +142,8 @@ async function app () {
           }
         } else {
           if (p) {
+            log('Peer')
+
             try {
               await execute(DEPS_PATH, getPeerDependencies(PACKAGE), getPeerDependencies(CONFIGURATION), save, registry)
             } catch (e) {

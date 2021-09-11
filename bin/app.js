@@ -102,14 +102,25 @@ async function app () {
   })
 
   if ((P && D) || (!P && !D && !O && !B)) {
+    log('Prod')
+
     try {
       await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry)
+    } catch (e) {
+      handleError(e)
+    }
+
+    log('Dev')
+
+    try {
       await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry)
     } catch (e) {
       handleError(e)
     }
   } else {
     if (P) {
+      log('Prod')
+
       try {
         await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry)
       } catch (e) {
@@ -117,6 +128,8 @@ async function app () {
       }
     } else {
       if (D) {
+        log('Dev')
+
         try {
           await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry)
         } catch (e) {
@@ -124,6 +137,8 @@ async function app () {
         }
       } else {
         if (O) {
+          log('Optional')
+
           try {
             await executeOptional(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), registry)
           } catch (e) {
@@ -131,6 +146,8 @@ async function app () {
           }
         } else {
           if (B) {
+            log('Bundle')
+
             try {
               await executeBundle(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), registry)
             } catch (e) {

@@ -65,13 +65,9 @@ function handleCommandError (e) {
   }
 }
 
-const filterDeps = (v) => v // de-falsy
+const filterDeps = (v) => !!v // de-falsy
 
-const reduceDeps = (accumulator, v) => ( // de-dupe
-  accumulator.includes(v)
-    ? accumulator
-    : accumulator.concat(v)
-)
+const reduceDeps = (a, v) => a.includes(v) ? a : a.concat(v) // de-dupe
 
 function getPathList (directory) {
   log('getPathList')
@@ -232,6 +228,8 @@ async function app () {
   })
 
   if (P || (!F && !O)) {
+    log('Path')
+
     try {
       await executePath(P, registry)
     } catch (e) {
@@ -239,6 +237,8 @@ async function app () {
     }
   } else {
     if (F) {
+      log('From')
+
       try {
         await executeFrom(P, registry)
       } catch (e) {
@@ -246,6 +246,8 @@ async function app () {
       }
     } else {
       if (O) {
+        log('Only')
+
         try {
           await executeOnly(P, registry)
         } catch (e) {

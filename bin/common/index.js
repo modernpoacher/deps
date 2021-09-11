@@ -62,11 +62,13 @@ exit 0
 
 const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
+const trim = (v) => v.split('\n').map((v) => v.trim()).join('\n').trim()
+
 function use (n) {
   const log = debug(`@modernpoacher/deps:${n}`)
 
   return function use (v) {
-    log(v.trim()) // .replace(/(\s+)$/g, '')
+    log(trim(v)) // .replace(/(\s+)$/g, '')
   }
 }
 
@@ -77,9 +79,11 @@ function handleError ({ code = 'NONE', message = 'No error message defined' }) {
   })
 }
 
-const handlePackageError = ({ message }) => log(`Package error: "${message}"`)
+const MESSAGE = 'Either no error message has been defined or no error has been supplied'
 
-const handleConfigurationError = ({ message }) => log(`Configuration error: "${message}"`)
+const handlePackageError = ({ message = MESSAGE } = {}) => log(`Package error: "${message}"`)
+
+const handleConfigurationError = ({ message = MESSAGE } = {}) => log(`Configuration error: "${message}"`)
 
 const getPackageJsonPath = (directory = DIRECTORY) => resolve(directory, 'package.json')
 
@@ -112,6 +116,8 @@ async function getDepsRcJson (directory = DIRECTORY) {
 }
 
 async function hasPackage (directory = DIRECTORY) {
+  log('hasPackage')
+
   try {
     await access(getPackageJsonPath(directory), constants.R_OK)
 
@@ -124,6 +130,8 @@ async function hasPackage (directory = DIRECTORY) {
 }
 
 async function getPackage (directory = DIRECTORY) {
+  log('getPackage')
+
   try {
     return await getPackageJson(directory)
   } catch (e) {
@@ -132,6 +140,8 @@ async function getPackage (directory = DIRECTORY) {
 }
 
 async function hasConfiguration (directory = DIRECTORY) {
+  log('hasConfiguration')
+
   try {
     await access(getDepsRcPath(directory), constants.R_OK)
 
@@ -167,6 +177,8 @@ async function hasConfiguration (directory = DIRECTORY) {
 }
 
 async function getConfiguration (directory = DIRECTORY) {
+  log('getConfiguration')
+
   try {
     return await getDepsRc(directory)
   } catch (e) {

@@ -39,7 +39,7 @@ function out (key, directory) {
     if (directory === s) return
 
     return (
-      log(trim(v))
+      log(trim(s))
     )
   }
 }
@@ -53,7 +53,7 @@ function err (key, directory) {
     if (directory === s || s.toLowerCase().startsWith('fatal: not a git repository')) return
 
     return (
-      log(trim(v))
+      log(trim(s))
     )
   }
 }

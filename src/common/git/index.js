@@ -24,7 +24,7 @@ const OPTIONS = {
 
 const log = debug('@modernpoacher/deps')
 
-log('`git` is awake')
+log(`\`git\` (${platform}) is awake`)
 
 const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
 

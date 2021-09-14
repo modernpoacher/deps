@@ -1,6 +1,10 @@
 import debug from 'debug'
 
 import {
+  platform
+} from 'os'
+
+import {
   spawn
 } from 'child_process'
 
@@ -22,7 +26,7 @@ import {
 
 const log = debug('@modernpoacher/deps')
 
-log('`deps` is awake')
+log(`\`deps\` (${platform}) is awake`)
 
 /**
  *  @function getInstallSaveExactCommands

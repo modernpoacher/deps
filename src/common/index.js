@@ -1,12 +1,16 @@
 import debug from 'debug'
 
 import {
+  platform
+} from 'os'
+
+import {
   resolve
 } from 'path'
 
 const log = debug('@modernpoacher/deps')
 
-log('`common` is awake')
+log(`\`common\` (${platform}) is awake`)
 
 const {
   path: MODULE_PATH

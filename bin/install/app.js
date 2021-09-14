@@ -4,6 +4,10 @@ require('module-alias/register')
 
 const debug = require('debug')
 
+const {
+  platform
+} = require('os')
+
 const commander = require('commander')
 
 const {
@@ -40,7 +44,7 @@ debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
 
-log('`install` is awake')
+log(`\`install\` (${VERSION} - ${platform}) is awake`)
 
 async function app () {
   log('Deps')

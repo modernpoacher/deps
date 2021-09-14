@@ -5,6 +5,10 @@ require('module-alias/register')
 const debug = require('debug')
 
 const {
+  platform
+} = require('os')
+
+const {
   resolve
 } = require('path')
 
@@ -43,7 +47,7 @@ debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`execute\` (${VERSION}) is awake`)
+log(`\`execute\` (${VERSION} - ${platform}) is awake`)
 
 const DIRECTORY = process.cwd()
 const REGISTRY = 'https://registry.npmjs.org'

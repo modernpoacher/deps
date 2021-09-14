@@ -1,6 +1,10 @@
 import debug from 'debug'
 
 import {
+  platform
+} from 'os'
+
+import {
   exec
 } from 'child_process'
 
@@ -10,7 +14,9 @@ const BRANCH = 'master'
 
 const ADD = 'package.json package-lock.json'
 
-const COMMIT = 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
+const COMMIT = platform !== 'win32'
+  ? 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
+  : 'Updated `package.json` &/ `package-lock.json`'
 
 const OPTIONS = {
   maxBuffer: 1024 * 2000

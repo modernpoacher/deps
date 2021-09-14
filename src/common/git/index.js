@@ -14,9 +14,9 @@ const BRANCH = 'master'
 
 const ADD = 'package.json package-lock.json'
 
-const COMMIT = platform !== 'win32'
-  ? 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
-  : 'Updated `package.json` &/ `package-lock.json`'
+const COMMIT = platform.toLowerCase() === 'win32'
+  ? 'Updated `package.json` &/ `package-lock.json`'
+  : 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
 
 const OPTIONS = {
   maxBuffer: 1024 * 2000
@@ -139,9 +139,7 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = getCatGitRefsRemotesOriginHeadCommand(directory)
 
-      /**
-       *  log(command)
-       */
+      log(command)
 
       const {
         stdout,
@@ -170,9 +168,7 @@ export function gitRevParse (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = 'git rev-parse --show-toplevel'
 
-      /**
-       *  log(command)
-       */
+      log(command)
 
       const {
         stdout,
@@ -201,9 +197,7 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git checkout ${branch}`
 
-      /**
-       *  log(command)
-       */
+      log(command)
 
       const {
         stdout,
@@ -232,9 +226,7 @@ export function gitPull (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git pull`
 
-      /**
-       *  log(command)
-       */
+      log(command)
 
       const {
         stdout,
@@ -263,9 +255,7 @@ export function gitPush (directory = DIRECTORY) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git push`
 
-      /**
-       *  log(command)
-       */
+      log(command)
 
       const {
         stdout,
@@ -295,9 +285,7 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git add ${add}`
 
-      /**
-       *  log(command)
-       */
+      log(command)
 
       const {
         stdout,
@@ -327,9 +315,7 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
     new Promise((resolve, reject) => {
       const command = `cd "${directory}" && git commit -m "${commit}"`
 
-      /**
-       *  log(command)
-       */
+      log(command)
 
       const {
         stdout,

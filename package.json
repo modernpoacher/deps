@@ -54,7 +54,7 @@
     "debug": "^4.3.2",
     "glob-all": "^3.2.1",
     "module-alias": "^2.2.2",
-    "supports-color": "^9.0.2"
+    "supports-color": "^9.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.16.0",

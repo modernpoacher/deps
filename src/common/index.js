@@ -79,6 +79,18 @@ export const getSaveOptionalParameter = (commands) => commands.concat(' --save-o
 export const getRegistryParameter = (r, commands) => r ? commands.concat(` --registry ${r}`) : commands
 
 /**
+ *  @function getForceParameter
+ *
+ *  Get the "force" parameter and argument
+ *
+ *  @param {String} force
+ *  @param {String} current commands string
+ *
+ *  @return {String}
+ */
+export const getForceParameter = (f, commands) => f ? commands.concat(' --force') : commands
+
+/**
  *  @function getNoSaveParameter
  *
  *  Get the `--no-save` parameter

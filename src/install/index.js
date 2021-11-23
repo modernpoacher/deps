@@ -32,17 +32,16 @@ log(`\`install\` (${platform}) is awake`)
  *  Get the `install --save-exact` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
- *  @param {Object} c - Configuration
  *  @param {Boolean} s - Save
  *  @param {String} r - Registry
- *  @param {Boolean} e - Exact
+ *  @param {Boolean} f - Force
  *
  *  @return {Array}
  */
-export const getInstallSaveExactCommands = (p, c, s, r, f) => {
+export const getInstallSaveExactCommands = (p, s, r, f) => {
   log('getInstallSaveExactCommands')
 
-  const commands = `npm i ${transform(p, c)}`
+  const commands = `npm i ${transform(p)}`
 
   return normalise(
     getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(commands))))
@@ -55,17 +54,16 @@ export const getInstallSaveExactCommands = (p, c, s, r, f) => {
  *  Get the `install` commands as a string of parameters and arguments
  *
  *  @param {Object} p - Packages
- *  @param {Object} c - Configuration
  *  @param {Boolean} s - Save
  *  @param {String} r - Registry
- *  @param {Boolean} e - Exact
+ *  @param {Boolean} f - Force
  *
  *  @return {Array}
  */
-export const getInstallCommands = (p, c, s, r, f) => {
+export const getInstallCommands = (p, s, r, f) => {
   log('getInstallCommands')
 
-  const commands = `npm i ${transform(p, c)}`
+  const commands = `npm i ${transform(p)}`
 
   return normalise(
     getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, commands)))
@@ -85,12 +83,12 @@ export const getInstallCommands = (p, c, s, r, f) => {
  *
  *  @return {Promise}
  */
-export function installSaveExact (d, p, c, s, r, f) {
+export function installSaveExact (d, p, s, r, f) {
   log('installSaveExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveExactCommands(p, c, s, r, f))
+      const commands = getCommands(d, getInstallSaveExactCommands(p, s, r, f))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -112,12 +110,12 @@ export function installSaveExact (d, p, c, s, r, f) {
  *
  *  @return {Promise}
  */
-export function install (d, p, c, s, r, f) {
+export function install (d, p, s, r, f) {
   log('install')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallCommands(p, c, s, r, f))
+      const commands = getCommands(d, getInstallCommands(p, s, r, f))
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -144,9 +142,9 @@ export async function execute (directory = DIRECTORY, packages = {}, configurati
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveExact(directory, depsExact, configuration, save, registry, force)
+  if (depsExact.length) await installSaveExact(directory, depsExact, save, registry, force)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await install(directory, deps, configuration, save, registry, force)
+  if (deps.length) await install(directory, deps, save, registry, force)
 }

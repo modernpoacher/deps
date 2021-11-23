@@ -191,4 +191,292 @@ describe('@modernpoacher/deps', () => {
         .to.be.a('function')
     })
   })
+
+  describe('`getInstallSaveProdSaveExactCommands()`', () => {
+    describe('Always', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+
+        return expect(getInstallSaveProdSaveExactCommands(MOCK_PACKAGES))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --save-prod')
+      })
+    })
+
+    describe('Registry is defined', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+        const MOCK_REGISTRY = 'REGISTRY'
+
+        return expect(getInstallSaveProdSaveExactCommands(MOCK_PACKAGES, MOCK_REGISTRY))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --registry REGISTRY --save-prod')
+      })
+
+      describe('Force is true', () => {
+        it('returns a string', () => {
+          const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+          const MOCK_REGISTRY = 'REGISTRY'
+          const MOCK_FORCE = true
+
+          return expect(getInstallSaveProdSaveExactCommands(MOCK_PACKAGES, MOCK_REGISTRY, MOCK_FORCE))
+            .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --registry REGISTRY --save-prod')
+        })
+      })
+    })
+  })
+
+  describe('`getInstallSaveDevSaveExactCommands()`', () => {
+    describe('Always', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+
+        return expect(getInstallSaveDevSaveExactCommands(MOCK_PACKAGES))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --save-dev')
+      })
+    })
+
+    describe('Registry is defined', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+        const MOCK_REGISTRY = 'REGISTRY'
+
+        return expect(getInstallSaveDevSaveExactCommands(MOCK_PACKAGES, MOCK_REGISTRY))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --registry REGISTRY --save-dev')
+      })
+
+      describe('Force is true', () => {
+        it('returns a string', () => {
+          const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+          const MOCK_REGISTRY = 'REGISTRY'
+          const MOCK_FORCE = true
+
+          return expect(getInstallSaveDevSaveExactCommands(MOCK_PACKAGES, MOCK_REGISTRY, MOCK_FORCE))
+            .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --registry REGISTRY --save-dev')
+        })
+      })
+    })
+  })
+
+  describe('`getInstallSaveOptionalSaveExactCommands()`', () => {
+    describe('Always', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+
+        return expect(getInstallSaveOptionalSaveExactCommands(MOCK_PACKAGES))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --save-optional')
+      })
+    })
+
+    describe('Registry is defined', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+        const MOCK_REGISTRY = 'REGISTRY'
+
+        return expect(getInstallSaveOptionalSaveExactCommands(MOCK_PACKAGES, MOCK_REGISTRY))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --registry REGISTRY --save-optional')
+      })
+
+      describe('Force is true', () => {
+        it('returns a string', () => {
+          const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+          const MOCK_REGISTRY = 'REGISTRY'
+          const MOCK_FORCE = true
+
+          return expect(getInstallSaveOptionalSaveExactCommands(MOCK_PACKAGES, MOCK_REGISTRY, MOCK_FORCE))
+            .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --registry REGISTRY --save-optional')
+        })
+      })
+    })
+  })
+
+  describe('`getInstallSaveBundleSaveExactCommands()`', () => {
+    describe('Always', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+
+        return expect(getInstallSaveBundleSaveExactCommands(MOCK_PACKAGES))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --save-bundle')
+      })
+    })
+
+    describe('Registry is defined', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+        const MOCK_REGISTRY = 'REGISTRY'
+
+        return expect(getInstallSaveBundleSaveExactCommands(MOCK_PACKAGES, MOCK_REGISTRY))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --registry REGISTRY --save-bundle')
+      })
+
+      describe('Force is true', () => {
+        it('returns a string', () => {
+          const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+          const MOCK_REGISTRY = 'REGISTRY'
+          const MOCK_FORCE = true
+
+          return expect(getInstallSaveBundleSaveExactCommands(MOCK_PACKAGES, MOCK_REGISTRY, MOCK_FORCE))
+            .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --registry REGISTRY --save-bundle')
+        })
+      })
+    })
+  })
+
+  describe('`getInstallSaveProdCommands()`', () => {
+    describe('Always', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+
+        return expect(getInstallSaveProdCommands(MOCK_PACKAGES))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-prod')
+      })
+    })
+
+    describe('Registry is defined', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+        const MOCK_REGISTRY = 'REGISTRY'
+
+        return expect(getInstallSaveProdCommands(MOCK_PACKAGES, MOCK_REGISTRY))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --registry REGISTRY --save-prod')
+      })
+
+      describe('Force is true', () => {
+        it('returns a string', () => {
+          const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+          const MOCK_REGISTRY = 'REGISTRY'
+          const MOCK_FORCE = true
+
+          return expect(getInstallSaveProdCommands(MOCK_PACKAGES, MOCK_REGISTRY, MOCK_FORCE))
+            .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --registry REGISTRY --save-prod')
+        })
+      })
+    })
+  })
+
+  describe('`getInstallSaveDevCommands()`', () => {
+    describe('Always', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+
+        return expect(getInstallSaveDevCommands(MOCK_PACKAGES))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-dev')
+      })
+    })
+
+    describe('Registry is defined', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+        const MOCK_REGISTRY = 'REGISTRY'
+
+        return expect(getInstallSaveDevCommands(MOCK_PACKAGES, MOCK_REGISTRY))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --registry REGISTRY --save-dev')
+      })
+
+      describe('Force is true', () => {
+        it('returns a string', () => {
+          const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+          const MOCK_REGISTRY = 'REGISTRY'
+          const MOCK_FORCE = true
+
+          return expect(getInstallSaveDevCommands(MOCK_PACKAGES, MOCK_REGISTRY, MOCK_FORCE))
+            .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --registry REGISTRY --save-dev')
+        })
+      })
+    })
+  })
+
+  describe('`getInstallSaveOptionalCommands()`', () => {
+    describe('Always', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+
+        return expect(getInstallSaveOptionalCommands(MOCK_PACKAGES))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-optional')
+      })
+    })
+
+    describe('Registry is defined', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+        const MOCK_REGISTRY = 'REGISTRY'
+
+        return expect(getInstallSaveOptionalCommands(MOCK_PACKAGES, MOCK_REGISTRY))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --registry REGISTRY --save-optional')
+      })
+
+      describe('Force is true', () => {
+        it('returns a string', () => {
+          const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+          const MOCK_REGISTRY = 'REGISTRY'
+          const MOCK_FORCE = true
+
+          return expect(getInstallSaveOptionalCommands(MOCK_PACKAGES, MOCK_REGISTRY, MOCK_FORCE))
+            .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --registry REGISTRY --save-optional')
+        })
+      })
+    })
+  })
+
+  describe('`getInstallSaveBundleCommands()`', () => {
+    describe('Always', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+
+        return expect(getInstallSaveBundleCommands(MOCK_PACKAGES))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-bundle')
+      })
+    })
+
+    describe('Registry is defined', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+        const MOCK_REGISTRY = 'REGISTRY'
+
+        return expect(getInstallSaveBundleCommands(MOCK_PACKAGES, MOCK_REGISTRY))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --registry REGISTRY --save-bundle')
+      })
+
+      describe('Force is true', () => {
+        it('returns a string', () => {
+          const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+          const MOCK_REGISTRY = 'REGISTRY'
+          const MOCK_FORCE = true
+
+          return expect(getInstallSaveBundleCommands(MOCK_PACKAGES, MOCK_REGISTRY, MOCK_FORCE))
+            .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --registry REGISTRY --save-bundle')
+        })
+      })
+    })
+  })
+
+  describe('`getInstallCommands()`', () => {
+    describe('Always', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+
+        return expect(getInstallCommands(MOCK_PACKAGES))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION')
+      })
+    })
+
+    describe('Registry is defined', () => {
+      it('returns a string', () => {
+        const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+        const MOCK_REGISTRY = 'REGISTRY'
+
+        return expect(getInstallCommands(MOCK_PACKAGES, MOCK_REGISTRY))
+          .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --registry REGISTRY')
+      })
+
+      describe('Force is true', () => {
+        it('returns a string', () => {
+          const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+          const MOCK_REGISTRY = 'REGISTRY'
+          const MOCK_FORCE = true
+
+          return expect(getInstallCommands(MOCK_PACKAGES, MOCK_REGISTRY, MOCK_FORCE))
+            .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --registry REGISTRY')
+        })
+      })
+    })
+  })
 })

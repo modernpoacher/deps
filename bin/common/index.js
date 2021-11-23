@@ -33,7 +33,10 @@ const {
 const {
   DIRECTORY,
   REGISTRY,
-  NVM
+  NVM,
+
+  getRegistryParameter,
+  getForceParameter
 } = require('@modernpoacher/deps/common')
 
 const log = debug('@modernpoacher/deps')
@@ -58,20 +61,22 @@ rm -rf node_modules package-lock.json
 exit 0
 `)
 
-const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY) => normalise(`
+const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
 cd "${directory}"
 
 . "${NVM}"
 
-npm i --registry ${registry}
+${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
 
 exit 0
 `)
 
-const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY) => normalise(`
+const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
 cd "${directory}"
 
-deps --registry ${registry}
+. "${NVM}"
+
+${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
 
 exit 0
 `)
@@ -232,12 +237,12 @@ function rmrf (directory = DIRECTORY) {
   )
 }
 
-function npmi (directory = DIRECTORY, registry = REGISTRY) {
+function npmi (directory = DIRECTORY, registry = REGISTRY, force = false) {
   log('npmi')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getNpmiCommands(directory, registry)
+      const commands = getNpmiCommands(directory, registry, force)
 
       const {
         stdout,
@@ -250,12 +255,12 @@ function npmi (directory = DIRECTORY, registry = REGISTRY) {
   )
 }
 
-function deps (directory = DIRECTORY, registry = REGISTRY) {
+function deps (directory = DIRECTORY, registry = REGISTRY, force = false) {
   log('deps')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getDepsCommands(directory, registry)
+      const commands = getDepsCommands(directory, registry, force)
 
       const {
         stdout,

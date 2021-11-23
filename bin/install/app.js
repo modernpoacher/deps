@@ -65,6 +65,7 @@ async function app () {
     .option('-p, --peer [peerDependencies]', 'Install `peerDependencies`', false)
     .option('-s, --save [save]', 'Install `peerDependencies`', false)
     .option('--registry [registry]', 'Installation registry')
+    .option('--force [force]', 'Force installation`', false)
     .parse(argv)
 
   /*
@@ -96,7 +97,8 @@ async function app () {
     bundle: B,
     peer: p,
     save,
-    registry
+    registry,
+    force
   } = commander.opts()
 
   log({
@@ -106,14 +108,15 @@ async function app () {
     bundle: B,
     peer: p,
     save,
-    ...(registry ? { registry } : {})
+    ...(registry ? { registry } : {}),
+    ...(force ? { force } : {})
   })
 
   if (P) {
     log('Prod')
 
     try {
-      await execute(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), save, registry)
+      await execute(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), save, registry, force)
     } catch (e) {
       handleError(e)
     }
@@ -122,7 +125,7 @@ async function app () {
       log('Dev')
 
       try {
-        await execute(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), save, registry)
+        await execute(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), save, registry, force)
       } catch (e) {
         handleError(e)
       }
@@ -131,7 +134,7 @@ async function app () {
         log('Optional')
 
         try {
-          await execute(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), save, registry)
+          await execute(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), save, registry, force)
         } catch (e) {
           handleError(e)
         }
@@ -140,7 +143,7 @@ async function app () {
           log('Bundle')
 
           try {
-            await execute(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), save, registry)
+            await execute(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), save, registry, force)
           } catch (e) {
             handleError(e)
           }
@@ -149,7 +152,7 @@ async function app () {
             log('Peer')
 
             try {
-              await execute(DEPS_PATH, getPeerDependencies(PACKAGE), getPeerDependencies(CONFIGURATION), save, registry)
+              await execute(DEPS_PATH, getPeerDependencies(PACKAGE), getPeerDependencies(CONFIGURATION), save, registry, force)
             } catch (e) {
               handleError(e)
             }

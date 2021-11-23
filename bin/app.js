@@ -65,6 +65,7 @@ async function app () {
     .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`', false)
     .option('-B, --save-bundle [bundleDependencies]', 'Install `bundleDependencies`', false)
     .option('--registry [registry]', 'Installation registry')
+    .option('--force [force]', 'Force installation`', false)
     .parse(argv)
 
   /*
@@ -94,6 +95,7 @@ async function app () {
     saveDev: D,
     saveOptional: O,
     saveBundle: B,
+    force,
     registry
   } = commander.opts()
 
@@ -102,14 +104,15 @@ async function app () {
     saveDev: D,
     saveOptional: O,
     saveBundle: B,
-    ...(registry ? { registry } : {})
+    ...(registry ? { registry } : {}),
+    ...(force ? { force } : {})
   })
 
   if ((P && D) || (!P && !D && !O && !B)) {
     log('Prod')
 
     try {
-      await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry)
+      await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry, force)
     } catch (e) {
       handleError(e)
     }
@@ -117,7 +120,7 @@ async function app () {
     log('Dev')
 
     try {
-      await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry)
+      await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry, force)
     } catch (e) {
       handleError(e)
     }
@@ -126,7 +129,7 @@ async function app () {
       log('Prod')
 
       try {
-        await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry)
+        await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry, force)
       } catch (e) {
         handleError(e)
       }
@@ -135,7 +138,7 @@ async function app () {
         log('Dev')
 
         try {
-          await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry)
+          await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry, force)
         } catch (e) {
           handleError(e)
         }
@@ -144,7 +147,7 @@ async function app () {
           log('Optional')
 
           try {
-            await executeOptional(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), registry)
+            await executeOptional(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), registry, force)
           } catch (e) {
             handleError(e)
           }
@@ -153,7 +156,7 @@ async function app () {
             log('Bundle')
 
             try {
-              await executeBundle(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), registry)
+              await executeBundle(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), registry, force)
             } catch (e) {
               handleError(e)
             }

@@ -112,15 +112,15 @@ async function mapRevParse (directory) {
   }
 }
 
-async function iterate ([directory, ...directories] = [], registry = REGISTRY) {
+async function iterate ([directory, ...directories] = [], registry = REGISTRY, force = false) {
   log('iterate')
 
-  if (directory) await execute(directory, registry)
+  if (directory) await execute(directory, registry, force)
 
-  if (directories.length) await iterate(directories, registry)
+  if (directories.length) await iterate(directories, registry, force)
 }
 
-async function execute (directory = DIRECTORY, registry = REGISTRY) {
+async function execute (directory = DIRECTORY, registry = REGISTRY, force = false) {
   log('execute')
 
   try {
@@ -129,8 +129,8 @@ async function execute (directory = DIRECTORY, registry = REGISTRY) {
     await gitCheckout(directory, await catGitRefsRemotesOriginHead(directory))
     await gitPull(directory)
     await rmrf(directory)
-    await npmi(directory, registry)
-    await deps(directory, registry)
+    await npmi(directory, registry, force)
+    await deps(directory, registry, force)
     await gitAdd(directory)
     await gitCommit(directory)
     await gitPush(directory)
@@ -139,7 +139,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY) {
   }
 }
 
-async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
+async function executeFrom (directory = DIRECTORY, registry = REGISTRY, force = false) {
   log('executeFrom')
 
   const path = resolve(directory)
@@ -147,7 +147,7 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
   try {
     if (path === await gitRevParse(path)) {
       return (
-        await execute(path, registry)
+        await execute(path, registry, force)
       )
     }
   } catch (e) {
@@ -155,7 +155,7 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY) {
   }
 }
 
-async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
+async function executeOnly (directory = DIRECTORY, registry = REGISTRY, force = false) {
   log('executeOnly')
 
   const path = resolve(directory)
@@ -163,7 +163,7 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
   try {
     if (path === await gitRevParse(path)) {
       return (
-        await execute(path, registry)
+        await execute(path, registry, force)
       )
     }
   } catch (e) {
@@ -171,7 +171,7 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY) {
   }
 }
 
-async function executePath (directory = DIRECTORY, registry = REGISTRY) {
+async function executePath (directory = DIRECTORY, registry = REGISTRY, force = false) {
   log('executePath')
 
   const path = resolve(directory)
@@ -179,7 +179,7 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY) {
   try {
     if (path === await gitRevParse(path)) {
       return (
-        await execute(path, registry)
+        await execute(path, registry, force)
       )
     }
   } catch (e) {
@@ -193,7 +193,7 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY) {
 
     if (depsList.length) {
       return (
-        await iterate(depsList, registry)
+        await iterate(depsList, registry, force)
       )
     }
   }
@@ -215,27 +215,30 @@ async function app () {
     .option('-f, --from [from]', 'Update from directory')
     .option('-o, --only [only]', 'Update only directory')
     .option('--registry [registry]', 'Installation registry')
+    .option('--force [force]', 'Force installation`', false)
     .parse(argv)
 
   const {
     path: P,
     from: F,
     only: O,
-    registry
+    registry,
+    force
   } = commander.opts()
 
   log({
     ...(P ? { path: P } : {}),
     ...(F ? { from: F } : {}),
     ...(O ? { only: O } : {}),
-    ...(registry ? { registry } : {})
+    ...(registry ? { registry } : {}),
+    ...(force ? { force } : {})
   })
 
   if (P || (!F && !O)) {
     log('Path')
 
     try {
-      await executePath(P, registry)
+      await executePath(P, registry, force)
     } catch (e) {
       handleError(e)
     }
@@ -244,7 +247,7 @@ async function app () {
       log('From')
 
       try {
-        await executeFrom(P, registry)
+        await executeFrom(P, registry, force)
       } catch (e) {
         handleError(e)
       }
@@ -253,7 +256,7 @@ async function app () {
         log('Only')
 
         try {
-          await executeOnly(P, registry)
+          await executeOnly(P, registry, force)
         } catch (e) {
           handleError(e)
         }

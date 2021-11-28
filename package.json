@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "commander": "^8.3.0",
-    "debug": "^4.3.2",
+    "debug": "^4.3.3",
     "glob-all": "^3.2.1",
     "module-alias": "^2.2.2",
     "supports-color": "^9.2.1"

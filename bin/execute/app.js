@@ -26,6 +26,7 @@ const {
   gitCheckout,
   gitPull,
   gitPush,
+  gitPushTags,
   gitAdd,
   gitCommit
 } = require('@modernpoacher/deps/common/git')
@@ -134,6 +135,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
     await gitAdd(directory)
     await gitCommit(directory)
     await gitPush(directory)
+    await gitPushTags(directory)
   } catch (e) {
     handleError(e)
   }

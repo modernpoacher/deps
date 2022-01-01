@@ -7,6 +7,7 @@ import {
   gitCheckout,
   gitPull,
   gitPush,
+  gitPushTags,
   gitAdd,
   gitCommit
 } from '@modernpoacher/deps/common/git'
@@ -46,6 +47,13 @@ describe('@modernpoacher/deps/common/git', () => {
   describe('`gitPush`', () => {
     it('is a function', () => {
       return expect(gitPush)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`gitPushTags`', () => {
+    it('is a function', () => {
+      return expect(gitPushTags)
         .to.be.a('function')
     })
   })

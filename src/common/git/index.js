@@ -191,6 +191,7 @@ export function gitRevParse (directory = DIRECTORY) {
  *  Switch to the default value if none is supplied
  *
  *  @param {String} directory - A directory configured for Git
+ *  @param {String} branch - The Git branch
  *
  *  @return {Promise}
  */
@@ -274,6 +275,37 @@ export function gitPush (directory = DIRECTORY) {
 
       stdout.on('data', use('git-push'))
       stderr.on('data', use('git-push'))
+    })
+  )
+}
+
+/**
+ *  @function gitPushTags
+ *
+ *  Push tags changes to the Git remote
+ *
+ *  @param {String} directory - A directory configured for Git
+ *
+ *  @return {Promise}
+ */
+export function gitPushTags (directory = DIRECTORY) {
+  log('gitPushTags')
+
+  return (
+    new Promise((resolve, reject) => {
+      const command = `cd "${directory}" && git push --tags`
+
+      /**
+       *  log(command)
+       */
+
+      const {
+        stdout,
+        stderr
+      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+
+      stdout.on('data', use('git-push-tags'))
+      stderr.on('data', use('git-push-tags'))
     })
   )
 }

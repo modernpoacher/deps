@@ -43,7 +43,11 @@ log(`\`deps\` (${platform}) is awake`)
 export const getInstallSaveExactCommands = (p, r, f) => {
   log('getInstallSaveExactCommands')
 
-  const commands = `npm i ${transform(p)}`
+  const c = transform(p)
+
+  log(c)
+
+  const commands = `npm i ${c}`
 
   return normalise(
     getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(commands)))
@@ -64,7 +68,11 @@ export const getInstallSaveExactCommands = (p, r, f) => {
 export const getInstallCommands = (p, r, f) => {
   log('getInstallCommands')
 
-  const commands = `npm i ${transform(p)}`
+  const c = transform(p)
+
+  log(c)
+
+  const commands = `npm i ${c}`
 
   return normalise(
     getRegistryParameter(r, getForceParameter(f, commands))

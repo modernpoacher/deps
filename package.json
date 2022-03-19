@@ -50,7 +50,7 @@
     "deps-head": "bin/head.sh"
   },
   "dependencies": {
-    "commander": "^9.0.0",
+    "commander": "^9.1.0",
     "debug": "^4.3.4",
     "glob-all": "^3.3.0",
     "module-alias": "^2.2.2",
@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
-    "@babel/core": "^7.17.7",
+    "@babel/core": "^7.17.8",
     "@babel/eslint-parser": "^7.17.0",
     "@babel/preset-env": "^7.16.11",
     "@babel/register": "^7.17.7",

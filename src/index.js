@@ -44,9 +44,6 @@ export const getInstallSaveExactCommands = (p, r, f) => {
   log('getInstallSaveExactCommands')
 
   const c = transform(p)
-
-  log(c)
-
   const commands = `npm i ${c}`
 
   return normalise(
@@ -69,9 +66,6 @@ export const getInstallCommands = (p, r, f) => {
   log('getInstallCommands')
 
   const c = transform(p)
-
-  log(c)
-
   const commands = `npm i ${c}`
 
   return normalise(

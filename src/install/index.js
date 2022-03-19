@@ -41,7 +41,8 @@ log(`\`install\` (${platform}) is awake`)
 export const getInstallSaveExactCommands = (p, s, r, f) => {
   log('getInstallSaveExactCommands')
 
-  const commands = `npm i ${transform(p)}`
+  const c = transform(p)
+  const commands = `npm i ${c}`
 
   return normalise(
     getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(commands))))
@@ -63,7 +64,8 @@ export const getInstallSaveExactCommands = (p, s, r, f) => {
 export const getInstallCommands = (p, s, r, f) => {
   log('getInstallCommands')
 
-  const commands = `npm i ${transform(p)}`
+  const c = transform(p)
+  const commands = `npm i ${c}`
 
   return normalise(
     getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, commands)))

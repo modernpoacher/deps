@@ -192,6 +192,17 @@ export const getBundleDependencies = ({ bundleDependencies = [] } = {}) => bundl
 export const getPeerDependencies = ({ peerDependencies } = {}) => peerDependencies
 
 /**
+ *  @function isPreRelease
+ *
+ *  Determine whether the dependency is a pre-release with a Regular Expression
+ *
+ *  @param {String} v
+ *
+ *  @return {Boolean}
+ */
+export const isPreRelease = (v) => /-/.test(v)
+
+/**
  *  @function isExact
  *
  *  Determine whether the dependency is exact with a Regular Expression
@@ -242,7 +253,9 @@ export function getDeps (values) {
       .reduce((accumulator, [name, version]) => (
         isExact(version)
           ? accumulator
-          : accumulator.concat({ name, version: 'latest' })
+          : isPreRelease(version)
+            ? accumulator.concat({ name, version })
+            : accumulator.concat({ name, version: 'latest' })
       ), [])
   )
 }

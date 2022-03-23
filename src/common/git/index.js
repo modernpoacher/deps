@@ -32,7 +32,11 @@ function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function use (v) {
-    log(trim(v)) // log(v.trim()) // .replace(/(\s+)$/g, '')
+    if (v.trim() === '') return
+
+    return (
+      log(trim(v)) // log(v.trim()) // .replace(/(\s+)$/g, '')
+    )
   }
 }
 
@@ -148,8 +152,8 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
         stderr
       } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
 
-      stdout.on('data', out('cat-git-refs-remotes-origin-head', directory))
-      stderr.on('data', err('cat-git-refs-remotes-origin-head', directory))
+      stdout.on('data', out('cat-git-refs-remotes-origin-head', directory.trim()))
+      stderr.on('data', err('cat-git-refs-remotes-origin-head', directory.trim()))
     })
   )
 }
@@ -179,8 +183,8 @@ export function gitRevParse (directory = DIRECTORY) {
         stderr
       } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
 
-      stdout.on('data', out('git-rev-parse', directory))
-      stderr.on('data', err('git-rev-parse', directory))
+      stdout.on('data', out('git-rev-parse', directory.trim()))
+      stderr.on('data', err('git-rev-parse', directory.trim()))
     })
   )
 }

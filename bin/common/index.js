@@ -81,11 +81,15 @@ ${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
 exit 0
 `)
 
-function use (n) {
-  const log = debug(`@modernpoacher/deps:${n}`)
+function use (key) {
+  const log = debug(`@modernpoacher/deps:${key}`)
 
   return function use (v) {
-    log(trim(v)) // .replace(/(\s+)$/g, '')
+    if (v.trim() === '') return
+
+    return (
+      log(trim(v)) // log(v.trim()) // .replace(/(\s+)$/g, '')
+    )
   }
 }
 

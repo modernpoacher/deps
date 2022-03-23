@@ -46,7 +46,7 @@ function out (key, directory) {
   return function out (v) {
     const s = v.trim()
 
-    if (directory === s) return
+    if (s === '' || directory === s) return
 
     return (
       log(trim(s))
@@ -60,7 +60,7 @@ function err (key, directory) {
   return function err (v) {
     const s = v.trim()
 
-    if (directory === s || s.toLowerCase().startsWith('fatal: not a git repository')) return
+    if (s === '' || directory === s || s.toLowerCase().startsWith('fatal: not a git repository')) return
 
     return (
       log(trim(s))

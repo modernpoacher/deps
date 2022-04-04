@@ -58,7 +58,7 @@ cd "${directory}"
 
 rm -rf node_modules package-lock.json
 
-# exit 0
+exit 0
 `)
 
 const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
@@ -68,7 +68,7 @@ cd "${directory}"
 
 ${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
 
-# exit 0
+exit 0
 `)
 
 const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
@@ -78,7 +78,7 @@ cd "${directory}"
 
 ${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
 
-# exit 0
+exit 0
 `)
 
 function use (key) {

@@ -277,25 +277,9 @@ export function installSaveBundleSaveExact (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
-        if (e) {
-          log(e)
-
-          return (
-            reject(e)
-          )
-        }
-
-        return (
-          resolve()
-        )
-      })
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
-        .on('error', function handleError (e) {
-          log(e)
-
-          reject(e)
-        })
+        .on('error', reject)
     })
   )
 }
@@ -322,25 +306,9 @@ export function installSaveBundle (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
-        if (e) {
-          log(e)
-
-          return (
-            reject(e)
-          )
-        }
-
-        return (
-          resolve()
-        )
-      })
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
-        .on('error', function handleError (e) {
-          log(e)
-
-          reject(e)
-        })
+        .on('error', reject)
     })
   )
 }
@@ -367,25 +335,9 @@ export function installSaveOptionalSaveExact (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
-        if (e) {
-          log(e)
-
-          return (
-            reject(e)
-          )
-        }
-
-        return (
-          resolve()
-        )
-      })
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
-        .on('error', function handleError (e) {
-          log(e)
-
-          reject(e)
-        })
+        .on('error', reject)
     })
   )
 }
@@ -412,25 +364,9 @@ export function installSaveOptional (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
-        if (e) {
-          log(e)
-
-          return (
-            reject(e)
-          )
-        }
-
-        return (
-          resolve()
-        )
-      })
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
-        .on('error', function handleError (e) {
-          log(e)
-
-          reject(e)
-        })
+        .on('error', reject)
     })
   )
 }
@@ -457,25 +393,9 @@ export function installSaveDevSaveExact (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
-        if (e) {
-          log(e)
-
-          return (
-            reject(e)
-          )
-        }
-
-        return (
-          resolve()
-        )
-      })
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
-        .on('error', function handleError (e) {
-          log(e)
-
-          reject(e)
-        })
+        .on('error', reject)
     })
   )
 }
@@ -502,25 +422,9 @@ export function installSaveDev (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
-        if (e) {
-          log(e)
-
-          return (
-            reject(e)
-          )
-        }
-
-        return (
-          resolve()
-        )
-      })
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
-        .on('error', function handleError (e) {
-          log(e)
-
-          reject(e)
-        })
+        .on('error', reject)
     })
   )
 }
@@ -547,25 +451,9 @@ export function installSaveProdSaveExact (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
-        if (e) {
-          log(e)
-
-          return (
-            reject(e)
-          )
-        }
-
-        return (
-          resolve()
-        )
-      })
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
-        .on('error', function handleError (e) {
-          log(e)
-
-          reject(e)
-        })
+        .on('error', reject)
     })
   )
 }
@@ -592,25 +480,9 @@ export function installSaveProd (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
-        if (e) {
-          log(e)
-
-          return (
-            reject(e)
-          )
-        }
-
-        return (
-          resolve()
-        )
-      })
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
-        .on('error', function handleError (e) {
-          log(e)
-
-          reject(e)
-        })
+        .on('error', reject)
     })
   )
 }

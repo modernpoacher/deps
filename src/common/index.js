@@ -133,7 +133,7 @@ cd "${directory}"
 
 ${commands}
 
-# exit 0
+exit 0
 `).replace(/\n\n/gm, String.fromCharCode(10)).trim()
 
 /**

@@ -64,7 +64,7 @@ exit 0
 const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
 cd "${directory}"
 
-${platform === 'win32' ? `echo "${NVM}"` : `. "${NVM}"`}
+. "${NVM}" 2> /dev/null
 
 ${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
 
@@ -74,7 +74,7 @@ exit 0
 const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
 cd "${directory}"
 
-${platform === 'win32' ? `echo "${NVM}"` : `. "${NVM}"`}
+. "${NVM}" 2> /dev/null
 
 ${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
 

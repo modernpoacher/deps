@@ -92,9 +92,25 @@ export function installSaveExact (d, p, s, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveExactCommands(p, s, r, f))
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
+        if (e) {
+          log(e)
+
+          return (
+            reject(e)
+          )
+        }
+
+        return (
+          resolve()
+        )
+      })
         .on('close', resolve)
-        .on('error', reject)
+        .on('error', function handleError (e) {
+          log(e)
+
+          reject(e)
+        })
     })
   )
 }
@@ -119,9 +135,25 @@ export function install (d, p, s, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallCommands(p, s, r, f))
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
+      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, function handleComplete (e) {
+        if (e) {
+          log(e)
+
+          return (
+            reject(e)
+          )
+        }
+
+        return (
+          resolve()
+        )
+      })
         .on('close', resolve)
-        .on('error', reject)
+        .on('error', function handleError (e) {
+          log(e)
+
+          reject(e)
+        })
     })
   )
 }

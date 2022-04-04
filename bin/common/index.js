@@ -228,15 +228,18 @@ function rmrf (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('rmrf')
       const commands = getRmrfCommands(directory)
+
+      log(commands)
 
       const {
         stdout,
         stderr
       } = exec(commands, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', use('rmrf'))
-      stderr.on('data', use('rmrf'))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -246,15 +249,18 @@ function npmi (directory = DIRECTORY, registry = REGISTRY, force = false) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('npmi')
       const commands = getNpmiCommands(directory, registry, force)
+
+      log(commands)
 
       const {
         stdout,
         stderr
       } = exec(commands, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', use('npmi'))
-      stderr.on('data', use('npmi'))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -264,15 +270,18 @@ function deps (directory = DIRECTORY, registry = REGISTRY, force = false) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('deps')
       const commands = getDepsCommands(directory, registry, force)
+
+      log(commands)
 
       const {
         stdout,
         stderr
       } = exec(commands, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
-      stdout.on('data', use('deps'))
-      stderr.on('data', use('deps'))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }

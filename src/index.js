@@ -29,6 +29,20 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`deps\` (${platform}) is awake`)
 
+function use (key) {
+  const log = debug(`@modernpoacher/deps:${key}`)
+
+  return function use (v) {
+    const s = v.trim()
+
+    if (s === '') return
+
+    return (
+      log(s)
+    )
+  }
+}
+
 /**
  *  @function getInstallSaveExactCommands
  *
@@ -258,7 +272,10 @@ export function installSaveBundleSaveExact (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('install-save-bundle-save-exact')
       const commands = getCommands(d, getInstallSaveBundleSaveExactCommands(p, r, f))
+
+      log(commands)
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -284,7 +301,10 @@ export function installSaveBundle (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('install-save-bundle')
       const commands = getCommands(d, getInstallSaveBundleCommands(p, r, f))
+
+      log(commands)
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -310,7 +330,10 @@ export function installSaveOptionalSaveExact (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('install-save-otional-save-exact')
       const commands = getCommands(d, getInstallSaveOptionalSaveExactCommands(p, r, f))
+
+      log(commands)
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -336,7 +359,10 @@ export function installSaveOptional (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('install-save-otional')
       const commands = getCommands(d, getInstallSaveOptionalCommands(p, r, f))
+
+      log(commands)
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -362,7 +388,10 @@ export function installSaveDevSaveExact (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('install-save-dev-save-exact')
       const commands = getCommands(d, getInstallSaveDevSaveExactCommands(p, r, f))
+
+      log(commands)
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -388,7 +417,10 @@ export function installSaveDev (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('install-save-dev')
       const commands = getCommands(d, getInstallSaveDevCommands(p, r, f))
+
+      log(commands)
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -414,7 +446,10 @@ export function installSaveProdSaveExact (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('install-save-prod-save-exact')
       const commands = getCommands(d, getInstallSaveProdSaveExactCommands(p, r, f))
+
+      log(commands)
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)
@@ -440,7 +475,10 @@ export function installSaveProd (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('install-save-prod')
       const commands = getCommands(d, getInstallSaveProdCommands(p, r, f))
+
+      log(commands)
 
       spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
         .on('close', resolve)

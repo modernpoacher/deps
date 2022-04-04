@@ -14,7 +14,7 @@ const BRANCH = 'master'
 
 const ADD = 'package.json package-lock.json'
 
-const COMMIT = platform() === 'win32'
+const COMMIT = platform === 'win32'
   ? 'Updated `package.json` &/ `package-lock.json`'
   : 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
 
@@ -35,7 +35,7 @@ function use (key) {
     if (v.trim() === '') return
 
     return (
-      log(trim(v)) // log(v.trim()) // .replace(/(\s+)$/g, '')
+      log(trim(v))
     )
   }
 }

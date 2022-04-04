@@ -129,7 +129,7 @@ export PATH=/usr/local/bin:$PATH &> /dev/null
 
 cd "${directory}"
 
-. "${NVM}"
+. "${NVM}" &> /dev/null # ${platform === 'win32' ? 'echo -' : `. "${NVM}"`}
 
 ${commands}
 

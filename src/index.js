@@ -1,12 +1,12 @@
 import debug from 'debug'
 
 import {
-  platform
-} from 'os'
-
-import {
   spawn
 } from 'child_process'
+
+import {
+  PLATFORM
+} from './common/env'
 
 import {
   DIRECTORY,
@@ -27,7 +27,7 @@ import {
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`deps\` (${platform}) is awake`)
+log(`\`deps\` (${PLATFORM}) is awake`)
 
 function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)

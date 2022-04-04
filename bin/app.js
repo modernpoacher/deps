@@ -4,15 +4,15 @@ require('module-alias/register')
 
 const debug = require('debug')
 
-const {
-  platform
-} = require('os')
-
 const commander = require('commander')
 
 const {
   version: VERSION
 } = require('~/package')
+
+const {
+  PLATFORM
+} = require('@modernpoacher/deps/common/env')
 
 const {
   getProdDependencies,
@@ -46,7 +46,7 @@ debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`deps\` (${VERSION} - ${platform}) is awake`)
+log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
 async function app () {
   log('Deps')

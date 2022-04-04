@@ -1,16 +1,12 @@
 import debug from 'debug'
 
 import {
-  platform
-} from 'os'
-
-import {
   resolve
 } from 'path'
 
-const log = debug('@modernpoacher/deps')
-
-log(`\`common\` (${platform}) is awake`)
+import {
+  PLATFORM
+} from '@modernpoacher/deps/common/env'
 
 const {
   path: MODULE_PATH
@@ -21,6 +17,10 @@ export const DIRECTORY = '.'
 export const REGISTRY = 'https://registry.npmjs.org'
 
 export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
+
+const log = debug('@modernpoacher/deps')
+
+log(`\`common\` (${PLATFORM}) is awake`)
 
 /**
  *  @function getSaveProdParameter

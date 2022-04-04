@@ -5,10 +5,6 @@ require('module-alias/register')
 const debug = require('debug')
 
 const {
-  platform
-} = require('os')
-
-const {
   resolve
 } = require('path')
 
@@ -21,6 +17,10 @@ const {
 } = require('~/package')
 
 const {
+  PLATFORM
+} = require('@modernpoacher/deps/common/env')
+
+const {
   catGitRefsRemotesOriginHead,
   gitRevParse,
   gitCheckout,
@@ -30,6 +30,10 @@ const {
   gitAdd,
   gitCommit
 } = require('@modernpoacher/deps/common/git')
+
+const {
+  REGISTRY
+} = require('@modernpoacher/deps/common')
 
 const {
   handleError,
@@ -48,10 +52,9 @@ debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`execute\` (${VERSION} - ${platform}) is awake`)
+log(`\`execute\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const DIRECTORY = process.cwd()
-const REGISTRY = 'https://registry.npmjs.org'
 
 function handleCommandError (e) {
   const {

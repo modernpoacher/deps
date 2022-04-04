@@ -5,10 +5,6 @@ require('module-alias/register')
 const debug = require('debug')
 
 const {
-  platform
-} = require('os')
-
-const {
   exec
 } = require('child_process')
 
@@ -31,6 +27,10 @@ const {
 } = require('~/package')
 
 const {
+  PLATFORM
+} = require('@modernpoacher/deps/common/env')
+
+const {
   DIRECTORY,
   REGISTRY,
   NVM,
@@ -41,7 +41,7 @@ const {
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`common\` (${VERSION} - ${platform}) is awake`)
+log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const CODE = 0
 

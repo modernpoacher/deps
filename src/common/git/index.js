@@ -1,12 +1,12 @@
 import debug from 'debug'
 
 import {
-  platform
-} from 'os'
-
-import {
   exec
 } from 'child_process'
+
+import {
+  PLATFORM
+} from '@modernpoacher/deps/common/env'
 
 const DIRECTORY = '.'
 
@@ -14,7 +14,7 @@ const BRANCH = 'master'
 
 const ADD = 'package.json package-lock.json'
 
-const COMMIT = platform === 'win32'
+const COMMIT = PLATFORM === 'win32'
   ? 'Updated `package.json` &/ `package-lock.json`'
   : 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
 
@@ -24,7 +24,7 @@ const OPTIONS = {
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`git\` (${platform}) is awake`)
+log(`\`git\` (${PLATFORM}) is awake`)
 
 const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
 
@@ -141,6 +141,7 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
+      // const log = use('cat-git-refs-remotes-origin-head')
       const command = getCatGitRefsRemotesOriginHeadCommand(directory)
 
       /**
@@ -172,6 +173,7 @@ export function gitRevParse (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
+      // const log = out('git-rev-parse')
       const command = 'git rev-parse --show-toplevel'
 
       /**
@@ -204,6 +206,7 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('git-checkout')
       const command = `cd "${directory}" && git checkout ${branch}`
 
       /**
@@ -215,8 +218,8 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
         stderr
       } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
-      stdout.on('data', use('git-checkout'))
-      stderr.on('data', use('git-checkout'))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -235,6 +238,7 @@ export function gitPull (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('git-pull')
       const command = `cd "${directory}" && git pull`
 
       /**
@@ -246,8 +250,8 @@ export function gitPull (directory = DIRECTORY) {
         stderr
       } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
-      stdout.on('data', use('git-pull'))
-      stderr.on('data', use('git-pull'))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -266,6 +270,7 @@ export function gitPush (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('git-push')
       const command = `cd "${directory}" && git push`
 
       /**
@@ -277,8 +282,8 @@ export function gitPush (directory = DIRECTORY) {
         stderr
       } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
-      stdout.on('data', use('git-push'))
-      stderr.on('data', use('git-push'))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -297,6 +302,7 @@ export function gitPushTags (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('git-push-tags')
       const command = `cd "${directory}" && git push --tags`
 
       /**
@@ -308,8 +314,8 @@ export function gitPushTags (directory = DIRECTORY) {
         stderr
       } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
-      stdout.on('data', use('git-push-tags'))
-      stderr.on('data', use('git-push-tags'))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -329,6 +335,7 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('git-add')
       const command = `cd "${directory}" && git add ${add}`
 
       /**
@@ -340,8 +347,8 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
         stderr
       } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
-      stdout.on('data', use('git-add'))
-      stderr.on('data', use('git-add'))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -361,6 +368,7 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
 
   return (
     new Promise((resolve, reject) => {
+      const log = use('git-commit')
       const command = `cd "${directory}" && git commit -m "${commit}"`
 
       /**
@@ -372,8 +380,8 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
         stderr
       } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
-      stdout.on('data', use('git-commit'))
-      stderr.on('data', use('git-commit'))
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }

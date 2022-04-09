@@ -5,7 +5,7 @@ import {
 } from 'os'
 
 import {
-  spawn
+  exec
 } from 'child_process'
 
 import {
@@ -25,6 +25,10 @@ import {
 const log = debug('@modernpoacher/deps:install')
 
 log(`\`install\` (${platform}) is awake`)
+
+const OPTIONS = {
+  maxBuffer: 1024 * 2000
+}
 
 /**
  *  @function getInstallSaveExactCommands
@@ -92,9 +96,13 @@ export function installSaveExact (d, p, s, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallSaveExactCommands(p, s, r, f))
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -119,9 +127,13 @@ export function install (d, p, s, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(d, getInstallCommands(p, s, r, f))
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }

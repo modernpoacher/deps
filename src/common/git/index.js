@@ -1,6 +1,10 @@
 import debug from 'debug'
 
 import {
+  normalize
+} from 'path'
+
+import {
   exec
 } from 'child_process'
 
@@ -91,7 +95,7 @@ const getErrorCode = ({ code = 0 } = {}) => code
 const getErrorMessage = ({ message = '' } = {}) => message
 
 /**
- *  @function getCatGitRefsRemotesOriginHeadCommand
+ *  @function getCatGitRefsRemotesOriginHeadCommands
  *
  *  Compatible with MacOS and Windows
  *
@@ -99,11 +103,11 @@ const getErrorMessage = ({ message = '' } = {}) => message
  *
  *  @return {String}
  */
-function getCatGitRefsRemotesOriginHeadCommand (directory = DIRECTORY) { /* eslint-disable no-useless-escape */
-  log('getCatGitRefsRemotesOriginHeadCommand')
+function getCatGitRefsRemotesOriginHeadCommands (directory = DIRECTORY) { /* eslint-disable no-useless-escape */
+  log('getCatGitRefsRemotesOriginHeadCommands')
 
   return `
-DIR=$(echo "${directory}/.git/refs/remotes/origin/HEAD" | sed -e "s/\\//\\\\\\/g" -e "s/://" | cat 2> /dev/null)
+DIR=$(echo "${normalize(directory.concat('/.git/refs/remotes/origin/HEAD'))}" | sed -e "s/\\//\\\\\\/g" -e "s/://" | cat 2> /dev/null)
 [[ $DIR =~ "[-0-9a-zA-Z]*$" ]]
 echo "$\{BASH_REMATCH[0]}"
 ` /* eslint-enable no-useless-escape */
@@ -142,16 +146,16 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       // const log = use('cat-git-refs-remotes-origin-head')
-      const command = getCatGitRefsRemotesOriginHeadCommand(directory)
+      const commands = getCatGitRefsRemotesOriginHeadCommands(directory)
 
       /**
-       *  log(command)
+       *  log(commands)
        */
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
 
       stdout.on('data', out('cat-git-refs-remotes-origin-head', directory.trim()))
       stderr.on('data', err('cat-git-refs-remotes-origin-head', directory.trim()))
@@ -174,16 +178,16 @@ export function gitRevParse (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       // const log = out('git-rev-parse')
-      const command = 'git rev-parse --show-toplevel'
+      const commands = 'git rev-parse --show-toplevel'
 
       /**
-       *  log(command)
+       *  log(commands)
        */
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
 
       stdout.on('data', out('git-rev-parse', directory.trim()))
       stderr.on('data', err('git-rev-parse', directory.trim()))
@@ -207,16 +211,16 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-checkout')
-      const command = `cd "${directory}" && git checkout ${branch}`
+      const commands = `cd "${normalize(directory)}" && git checkout ${branch}`
 
       /**
-       *  log(command)
+       *  log(commands)
        */
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -239,16 +243,16 @@ export function gitPull (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-pull')
-      const command = `cd "${directory}" && git pull`
+      const commands = `cd "${normalize(directory)}" && git pull`
 
       /**
-       *  log(command)
+       *  log(commands)
        */
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -271,16 +275,16 @@ export function gitPush (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-push')
-      const command = `cd "${directory}" && git push`
+      const commands = `cd "${normalize(directory)}" && git push`
 
       /**
-       *  log(command)
+       *  log(commands)
        */
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -303,16 +307,16 @@ export function gitPushTags (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-push-tags')
-      const command = `cd "${directory}" && git push --tags`
+      const commands = `cd "${normalize(directory)}" && git push --tags`
 
       /**
-       *  log(command)
+       *  log(commands)
        */
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -336,16 +340,16 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-add')
-      const command = `cd "${directory}" && git add ${add}`
+      const commands = `cd "${normalize(directory)}" && git add ${add}`
 
       /**
-       *  log(command)
+       *  log(commands)
        */
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -369,16 +373,16 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-commit')
-      const command = `cd "${directory}" && git commit -m "${commit}"`
+      const commands = `cd "${normalize(directory)}" && git commit -m "${commit}"`
 
       /**
-       *  log(command)
+       *  log(commands)
        */
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)

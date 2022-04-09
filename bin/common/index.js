@@ -10,7 +10,8 @@ const {
 
 const {
   resolve,
-  relative
+  relative,
+  normalize
 } = require('path')
 
 const {
@@ -47,37 +48,43 @@ const CODE = 0
 
 const MESSAGE = 'Either no error message has been defined or no error has been supplied'
 
-const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
+const tidy = (v) => v.replace(/\n\n/gm, String.fromCharCode(10)).trim()
 
-const normalise = (v) => v.replace(/\n\n/gm, String.fromCharCode(10)).trim()
+const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
 
 const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
-const getRmrfCommands = (directory = DIRECTORY) => normalise(`
-export PATH=/usr/local/bin:$PATH &> /dev/null
-
-cd "${directory}"
-
+const getRmrfCommands = PLATFORM === 'win32'
+  ? (directory = DIRECTORY) => tidy(`
+cd "${normalize(directory)}"
+rm -rf node_modules package-lock.json
+`)
+  : (directory = DIRECTORY) => tidy(`
+cd "${normalize(directory)}"
 rm -rf node_modules package-lock.json
 `)
 
-const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
+const getNpmiCommands = PLATFORM === 'win32'
+  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
+cd "${normalize(directory)}"
+${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
+`)
+  : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
-
-cd "${directory}"
-
-. "${NVM}" 2> /dev/null
-
+cd "${normalize(directory)}"
+. "${normalize(NVM)}" 2> /dev/null
 ${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
 `)
 
-const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
+const getDepsCommands = PLATFORM === 'win32'
+  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
+cd "${normalize(directory)}"
+${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
+`)
+  : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
-
-cd "${directory}"
-
-. "${NVM}" 2> /dev/null
-
+cd "${normalize(directory)}"
+. "${normalize(NVM)}" 2> /dev/null
 ${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
 `)
 

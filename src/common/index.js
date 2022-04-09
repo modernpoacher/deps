@@ -1,7 +1,8 @@
 import debug from 'debug'
 
 import {
-  resolve
+  resolve,
+  normalize
 } from 'path'
 
 import {
@@ -21,6 +22,8 @@ export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 const log = debug('@modernpoacher/deps')
 
 log(`\`common\` (${PLATFORM}) is awake`)
+
+const tidy = (v) => v.replace(/\n\n/gm, String.fromCharCode(10)).trim()
 
 /**
  *  @function getSaveProdParameter
@@ -124,15 +127,18 @@ export const getSaveExactParameter = (commands) => commands.concat(' --save-exac
  *
  *  @return {String}
  */
-export const getCommands = (directory = DIRECTORY, commands = 'npm i') => (`
-export PATH=/usr/local/bin:$PATH &> /dev/null
 
-cd "${directory}"
-
-. "${NVM}" 2> /dev/null
-
+export const getCommands = PLATFORM === 'win32'
+  ? (directory = DIRECTORY, commands = 'npm i') => tidy(`
+cd "${normalize(directory)}"
 ${commands}
-`).replace(/\n\n/gm, String.fromCharCode(10)).trim()
+`)
+  : (directory = DIRECTORY, commands = 'npm i') => tidy(`
+export PATH=/usr/local/bin:$PATH &> /dev/null
+cd "${normalize(directory)}"
+. "${normalize(NVM)}" 2> /dev/null
+${commands}
+`)
 
 /**
  *  @function getProdDependencies

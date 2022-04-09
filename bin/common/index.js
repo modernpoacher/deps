@@ -54,31 +54,31 @@ const normalise = (v) => v.replace(/\n\n/gm, String.fromCharCode(10)).trim()
 const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
 const getRmrfCommands = (directory = DIRECTORY) => normalise(`
+export PATH=/usr/local/bin:$PATH &> /dev/null
+
 cd "${directory}"
 
 rm -rf node_modules package-lock.json
-
-exit 0
 `)
 
 const getNpmiCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
+export PATH=/usr/local/bin:$PATH &> /dev/null
+
 cd "${directory}"
 
 . "${NVM}" 2> /dev/null
 
 ${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
-
-exit 0
 `)
 
 const getDepsCommands = (directory = DIRECTORY, registry = REGISTRY, force = false) => normalise(`
+export PATH=/usr/local/bin:$PATH &> /dev/null
+
 cd "${directory}"
 
 . "${NVM}" 2> /dev/null
 
 ${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
-
-exit 0
 `)
 
 function use (key) {

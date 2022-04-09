@@ -1,7 +1,7 @@
 import debug from 'debug'
 
 import {
-  spawn
+  exec
 } from 'child_process'
 
 import {
@@ -28,6 +28,10 @@ import {
 const log = debug('@modernpoacher/deps')
 
 log(`\`deps\` (${PLATFORM}) is awake`)
+
+const OPTIONS = {
+  maxBuffer: 1024 * 2000
+}
 
 function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
@@ -277,9 +281,13 @@ export function installSaveBundleSaveExact (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -306,9 +314,13 @@ export function installSaveBundle (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -335,9 +347,13 @@ export function installSaveOptionalSaveExact (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -364,9 +380,13 @@ export function installSaveOptional (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -393,9 +413,13 @@ export function installSaveDevSaveExact (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -422,9 +446,13 @@ export function installSaveDev (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -451,9 +479,13 @@ export function installSaveProdSaveExact (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }
@@ -480,9 +512,13 @@ export function installSaveProd (d, p, r, f) {
 
       log(commands)
 
-      spawn('/bin/bash', ['-c', commands], { shell: true, stdio: 'inherit' }, (e) => (!e) ? resolve() : reject(e))
-        .on('close', resolve)
-        .on('error', reject)
+      const {
+        stdout,
+        stderr
+      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+
+      stdout.on('data', log)
+      stderr.on('data', log)
     })
   )
 }

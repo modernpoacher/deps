@@ -132,8 +132,6 @@ cd "${directory}"
 . "${NVM}" 2> /dev/null
 
 ${commands}
-
-exit 0
 `).replace(/\n\n/gm, String.fromCharCode(10)).trim()
 
 /**

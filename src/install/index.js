@@ -31,7 +31,9 @@ const log = debug('@modernpoacher/deps:install')
 log(`\`install\` (${platform}) is awake`)
 
 const OPTIONS = {
-  maxBuffer: 1024 * 2000
+  maxBuffer: 1024 * 2000,
+  shell: true,
+  stdio: 'inherit'
 }
 
 /**

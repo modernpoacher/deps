@@ -285,7 +285,9 @@ export function installSaveBundleSaveExact (d, p, r, f) {
       const log = use('install-save-bundle-save-exact')
       const commands = getCommands(d, getInstallSaveBundleSaveExactCommands(p, r, f))
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,
@@ -318,7 +320,9 @@ export function installSaveBundle (d, p, r, f) {
       const log = use('install-save-bundle')
       const commands = getCommands(d, getInstallSaveBundleCommands(p, r, f))
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,
@@ -351,7 +355,9 @@ export function installSaveOptionalSaveExact (d, p, r, f) {
       const log = use('install-save-otional-save-exact')
       const commands = getCommands(d, getInstallSaveOptionalSaveExactCommands(p, r, f))
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,
@@ -384,7 +390,9 @@ export function installSaveOptional (d, p, r, f) {
       const log = use('install-save-otional')
       const commands = getCommands(d, getInstallSaveOptionalCommands(p, r, f))
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,
@@ -417,7 +425,9 @@ export function installSaveDevSaveExact (d, p, r, f) {
       const log = use('install-save-dev-save-exact')
       const commands = getCommands(d, getInstallSaveDevSaveExactCommands(p, r, f))
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,
@@ -450,7 +460,9 @@ export function installSaveDev (d, p, r, f) {
       const log = use('install-save-dev')
       const commands = getCommands(d, getInstallSaveDevCommands(p, r, f))
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,
@@ -483,7 +495,9 @@ export function installSaveProdSaveExact (d, p, r, f) {
       const log = use('install-save-prod-save-exact')
       const commands = getCommands(d, getInstallSaveProdSaveExactCommands(p, r, f))
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,
@@ -516,7 +530,9 @@ export function installSaveProd (d, p, r, f) {
       const log = use('install-save-prod')
       const commands = getCommands(d, getInstallSaveProdCommands(p, r, f))
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,

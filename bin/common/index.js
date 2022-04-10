@@ -79,7 +79,7 @@ const getNpmiCommands = PLATFORM === 'win32'
   : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
 . "${NVM}" 2> /dev/null
-${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
+FORCE_COLOR=3 ${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
 `)
 
 const getDepsCommands = PLATFORM === 'win32'
@@ -87,7 +87,7 @@ const getDepsCommands = PLATFORM === 'win32'
   : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
 . "${NVM}" 2> /dev/null
-${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
+FORCE_COLOR=3 ${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
 `)
 
 function use (key) {

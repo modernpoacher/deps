@@ -35,7 +35,7 @@ const OPTIONS = {
   shell: true,
   stdio: 'inherit',
   env: {
-    FORCE_COLOR: true
+    FORCE_COLOR: 3
   }
 }
 

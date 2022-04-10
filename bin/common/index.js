@@ -54,7 +54,7 @@ const CODE = 0
 
 const MESSAGE = 'Either no error message has been defined or no error has been supplied'
 
-const tidy = (v) => v.replace(/\n\n/gm, String.fromCharCode(10)).trim()
+const tidy = (v) => v.replace(/\n\n/gm, '\n').trim()
 
 const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
 
@@ -62,7 +62,7 @@ const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePa
 
 const getRmrfCommands = PLATFORM === 'win32'
   ? (directory = DIRECTORY) => tidy(`
-rmdir /s /q node_modules 2> nul & \
+rmdir /s /q node_modules 2> nul & \\
 del package-lock.json 2> nul
 `)
   : (directory = DIRECTORY) => tidy(`

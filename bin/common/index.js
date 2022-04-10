@@ -57,7 +57,7 @@ const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePa
 const getRmrfCommands = PLATFORM === 'win32'
   ? (directory = DIRECTORY) => tidy(`
 cd "${normalize(directory)}"
-rm -rf node_modules package-lock.json
+del /q node_modules package-lock.json
 `)
   : (directory = DIRECTORY) => tidy(`
 cd "${normalize(directory)}"

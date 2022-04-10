@@ -51,8 +51,8 @@ const OPTIONS = {
   env: {
     DEBUG_COLORS: 'yes',
     FORCE_COLOR: PLATFORM === 'win32'
-      ? 2
-      : 3
+      ? 3
+      : 2
   }
 }
 
@@ -62,7 +62,7 @@ const MESSAGE = 'Either no error message has been defined or no error has been s
 
 const tidy = (v) => v.replace(/\n\n/gm, '\n').trim()
 
-const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
+const trim = (v) => v.split('\n').map((v) => v.trim()).join('\n').trim()
 
 const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
@@ -95,10 +95,12 @@ function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function use (v) {
-    if (v.trim() === '') return
+    const s = v.trim()
+
+    if (s === '') return
 
     return (
-      log(trim(v)) // log(v.trim()) // .replace(/(\s+)$/g, '')
+      log(trim(s))
     )
   }
 }

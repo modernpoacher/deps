@@ -29,8 +29,8 @@ const OPTIONS = {
   env: {
     DEBUG_COLORS: 'yes',
     FORCE_COLOR: PLATFORM === 'win32'
-      ? 2
-      : 3
+      ? 3
+      : 2
   }
 }
 

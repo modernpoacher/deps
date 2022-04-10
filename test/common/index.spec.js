@@ -14,7 +14,7 @@ import {
   isExact,
   getDepsExact,
   getDeps,
-  normalise,
+  normalizeCommands,
   transformDependency,
   transform,
   getProdDependencies,
@@ -147,9 +147,9 @@ describe('@modernpoacher/deps/common', () => {
     })
   })
 
-  describe('`normalise`', () => {
+  describe('`normalizeCommands`', () => {
     it('is a function', () => {
-      return expect(normalise)
+      return expect(normalizeCommands)
         .to.be.a('function')
     })
   })

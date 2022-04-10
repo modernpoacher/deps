@@ -1,8 +1,7 @@
 import debug from 'debug'
 
 import {
-  resolve,
-  normalize
+  resolve
 } from 'path'
 
 import {
@@ -129,14 +128,10 @@ export const getSaveExactParameter = (commands) => commands.concat(' --save-exac
  */
 
 export const getCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY, commands = 'npm i') => tidy(`
-cd "${normalize(directory)}"
-${commands}
-`)
+  ? (directory = DIRECTORY, commands = 'npm i') => tidy(commands)
   : (directory = DIRECTORY, commands = 'npm i') => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
-cd "${normalize(directory)}"
-. "${normalize(NVM)}" 2> /dev/null
+. "${NVM}" 2> /dev/null
 ${commands}
 `)
 
@@ -265,7 +260,7 @@ export function getDeps (values) {
 }
 
 /**
- *  @function normalise
+ *  @function normalizeCommands
  *
  *  Normalise the commands string
  *
@@ -273,7 +268,7 @@ export function getDeps (values) {
  *
  *  @return {String}
  */
-export function normalise (value) {
+export function normalizeCommands (value) {
   while (/\s\s|\n/.test(value)) {
     value = value.replace(/\s\s/gm, String.fromCharCode(32)).replace(/\n/gm, String.fromCharCode(32))
   }

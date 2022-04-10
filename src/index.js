@@ -1,6 +1,10 @@
 import debug from 'debug'
 
 import {
+  normalize
+} from 'path'
+
+import {
   exec
 } from 'child_process'
 
@@ -19,7 +23,7 @@ import {
   getSaveDevParameter,
   getSaveProdParameter,
   getCommands,
-  normalise,
+  normalizeCommands,
   transform,
   getDepsExact,
   getDeps
@@ -30,7 +34,9 @@ const log = debug('@modernpoacher/deps')
 log(`\`deps\` (${PLATFORM}) is awake`)
 
 const OPTIONS = {
-  maxBuffer: 1024 * 2000
+  maxBuffer: 1024 * 2000,
+  shell: true,
+  stdio: 'inherit'
 }
 
 function use (key) {
@@ -64,7 +70,7 @@ export const getInstallSaveExactCommands = (p, r, f) => {
   const c = transform(p)
   const commands = `npm i ${c}`
 
-  return normalise(
+  return normalizeCommands(
     getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(commands)))
   )
 }
@@ -86,7 +92,7 @@ export const getInstallCommands = (p, r, f) => {
   const c = transform(p)
   const commands = `npm i ${c}`
 
-  return normalise(
+  return normalizeCommands(
     getRegistryParameter(r, getForceParameter(f, commands))
   )
 }
@@ -107,7 +113,7 @@ export function getInstallSaveBundleSaveExactCommands (p, r, f) {
 
   const commands = getInstallSaveExactCommands(p, r, f)
 
-  return normalise(
+  return normalizeCommands(
     getSaveBundleParameter(commands)
   )
 }
@@ -128,7 +134,7 @@ export function getInstallSaveBundleCommands (p, r, f) {
 
   const commands = getInstallCommands(p, r, f)
 
-  return normalise(
+  return normalizeCommands(
     getSaveBundleParameter(commands)
   )
 }
@@ -149,7 +155,7 @@ export function getInstallSaveOptionalSaveExactCommands (p, r, f) {
 
   const commands = getInstallSaveExactCommands(p, r, f)
 
-  return normalise(
+  return normalizeCommands(
     getSaveOptionalParameter(commands)
   )
 }
@@ -170,7 +176,7 @@ export function getInstallSaveOptionalCommands (p, r, f) {
 
   const commands = getInstallCommands(p, r, f)
 
-  return normalise(
+  return normalizeCommands(
     getSaveOptionalParameter(commands)
   )
 }
@@ -191,7 +197,7 @@ export function getInstallSaveDevSaveExactCommands (p, r, f) {
 
   const commands = getInstallSaveExactCommands(p, r, f)
 
-  return normalise(
+  return normalizeCommands(
     getSaveDevParameter(commands)
   )
 }
@@ -212,7 +218,7 @@ export function getInstallSaveDevCommands (p, r, f) {
 
   const commands = getInstallCommands(p, r, f)
 
-  return normalise(
+  return normalizeCommands(
     getSaveDevParameter(commands)
   )
 }
@@ -233,7 +239,7 @@ export function getInstallSaveProdSaveExactCommands (p, r, f) {
 
   const commands = getInstallSaveExactCommands(p, r, f)
 
-  return normalise(
+  return normalizeCommands(
     getSaveProdParameter(commands)
   )
 }
@@ -254,7 +260,7 @@ export function getInstallSaveProdCommands (p, r, f) {
 
   const commands = getInstallCommands(p, r, f)
 
-  return normalise(
+  return normalizeCommands(
     getSaveProdParameter(commands)
   )
 }
@@ -284,7 +290,7 @@ export function installSaveBundleSaveExact (d, p, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -317,7 +323,7 @@ export function installSaveBundle (d, p, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -350,7 +356,7 @@ export function installSaveOptionalSaveExact (d, p, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -383,7 +389,7 @@ export function installSaveOptional (d, p, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -416,7 +422,7 @@ export function installSaveDevSaveExact (d, p, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -449,7 +455,7 @@ export function installSaveDev (d, p, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -482,7 +488,7 @@ export function installSaveProdSaveExact (d, p, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -515,7 +521,7 @@ export function installSaveProd (d, p, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)

@@ -23,7 +23,9 @@ const COMMIT = PLATFORM === 'win32'
   : 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
 
 const OPTIONS = {
-  maxBuffer: 1024 * 2000
+  maxBuffer: 1024 * 2000,
+  shell: true,
+  stdio: 'inherit'
 }
 
 const log = debug('@modernpoacher/deps')
@@ -107,7 +109,7 @@ function getCatGitRefsRemotesOriginHeadCommands (directory = DIRECTORY) { /* esl
   log('getCatGitRefsRemotesOriginHeadCommands')
 
   return `
-DIR=$(echo "${normalize(directory.concat('/.git/refs/remotes/origin/HEAD'))}" | sed -e "s/\\//\\\\\\/g" -e "s/://" | cat 2> /dev/null)
+DIR=$(echo "./.git/refs/remotes/origin/HEAD'" | sed -e "s/\\//\\\\\\/g" -e "s/://" | cat 2> /dev/null)
 [[ $DIR =~ "[-0-9a-zA-Z]*$" ]]
 echo "$\{BASH_REMATCH[0]}"
 ` /* eslint-enable no-useless-escape */
@@ -155,7 +157,7 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
 
       stdout.on('data', out('cat-git-refs-remotes-origin-head', directory.trim()))
       stderr.on('data', err('cat-git-refs-remotes-origin-head', directory.trim()))
@@ -187,7 +189,7 @@ export function gitRevParse (directory = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v = '') => (!e) ? resolve(trim(v)) : reject(e))
 
       stdout.on('data', out('git-rev-parse', directory.trim()))
       stderr.on('data', err('git-rev-parse', directory.trim()))
@@ -211,7 +213,7 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-checkout')
-      const commands = `cd "${normalize(directory)}" && git checkout ${branch}`
+      const commands = `git checkout ${branch}`
 
       /**
        *  log(commands)
@@ -220,7 +222,7 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -243,7 +245,7 @@ export function gitPull (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-pull')
-      const commands = `cd "${normalize(directory)}" && git pull`
+      const commands = 'git pull'
 
       /**
        *  log(commands)
@@ -252,7 +254,7 @@ export function gitPull (directory = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -275,7 +277,7 @@ export function gitPush (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-push')
-      const commands = `cd "${normalize(directory)}" && git push`
+      const commands = 'git push'
 
       /**
        *  log(commands)
@@ -284,7 +286,7 @@ export function gitPush (directory = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -307,7 +309,7 @@ export function gitPushTags (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-push-tags')
-      const commands = `cd "${normalize(directory)}" && git push --tags`
+      const commands = 'git push --tags'
 
       /**
        *  log(commands)
@@ -316,7 +318,7 @@ export function gitPushTags (directory = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -340,7 +342,7 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-add')
-      const commands = `cd "${normalize(directory)}" && git add ${add}`
+      const commands = `git add ${add}`
 
       /**
        *  log(commands)
@@ -349,7 +351,7 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -373,7 +375,7 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
   return (
     new Promise((resolve, reject) => {
       const log = use('git-commit')
-      const commands = `cd "${normalize(directory)}" && git commit -m "${commit}"`
+      const commands = `git commit -m "${commit}"`
 
       /**
        *  log(commands)
@@ -382,7 +384,7 @@ export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (e) ? isCommandError(e) ? resolve(v) : reject(e) : resolve(v))
 
       stdout.on('data', log)
       stderr.on('data', log)

@@ -1,6 +1,10 @@
 import debug from 'debug'
 
 import {
+  normalize
+} from 'path'
+
+import {
   platform
 } from 'os'
 
@@ -16,7 +20,7 @@ import {
   getForceParameter,
   getSaveExactParameter,
   getCommands,
-  normalise,
+  normalizeCommands,
   transform,
   getDepsExact,
   getDeps
@@ -48,7 +52,7 @@ export const getInstallSaveExactCommands = (p, s, r, f) => {
   const c = transform(p)
   const commands = `npm i ${c}`
 
-  return normalise(
+  return normalizeCommands(
     getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(commands))))
   )
 }
@@ -71,7 +75,7 @@ export const getInstallCommands = (p, s, r, f) => {
   const c = transform(p)
   const commands = `npm i ${c}`
 
-  return normalise(
+  return normalizeCommands(
     getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, commands)))
   )
 }
@@ -99,7 +103,7 @@ export function installSaveExact (d, p, s, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -130,7 +134,7 @@ export function install (d, p, s, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: d }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)

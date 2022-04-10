@@ -44,6 +44,12 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
 
+const OPTIONS = {
+  maxBuffer: 1024 * 2000,
+  shell: true,
+  stdio: 'inherit'
+}
+
 const CODE = 0
 
 const MESSAGE = 'Either no error message has been defined or no error has been supplied'
@@ -56,35 +62,26 @@ const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePa
 
 const getRmrfCommands = PLATFORM === 'win32'
   ? (directory = DIRECTORY) => tidy(`
-cd "${normalize(directory)}"
-del /q node_modules package-lock.json
+rmdir /s /q node_modules 2> nul & \
+del package-lock.json 2> nul
 `)
   : (directory = DIRECTORY) => tidy(`
-cd "${normalize(directory)}"
 rm -rf node_modules package-lock.json
 `)
 
 const getNpmiCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
-cd "${normalize(directory)}"
-${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
-`)
+  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i')))
   : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
-cd "${normalize(directory)}"
-. "${normalize(NVM)}" 2> /dev/null
+. "${NVM}" 2> /dev/null
 ${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
 `)
 
 const getDepsCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
-cd "${normalize(directory)}"
-${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
-`)
+  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'deps')))
   : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
-cd "${normalize(directory)}"
-. "${normalize(NVM)}" 2> /dev/null
+. "${NVM}" 2> /dev/null
 ${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
 `)
 
@@ -243,7 +240,7 @@ function rmrf (directory = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -264,7 +261,7 @@ function npmi (directory = DIRECTORY, registry = REGISTRY, force = false) {
       const {
         stdout,
         stderr
-      } = exec(commands, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -285,7 +282,7 @@ function deps (directory = DIRECTORY, registry = REGISTRY, force = false) {
       const {
         stdout,
         stderr
-      } = exec(commands, { cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)

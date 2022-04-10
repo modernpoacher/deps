@@ -11,7 +11,7 @@ function update {
 
   rm -rf node_modules package-lock.json
   npm i --registry https://registry.npmjs.org
-  deps --registry https://registry.npmjs.org
+  FORCE_COLOR=3 deps --registry https://registry.npmjs.org
 
   git add package.json package-lock.json
   git commit -m "Updated \`package.json\` &/ \`package-lock.json\`"

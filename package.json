@@ -25,11 +25,11 @@
     "url": "https://github.com/modernpoacher/deps/issues"
   },
   "scripts": {
-    "prepublishOnly": "cross-env NODE_ENV=production npm run build",
+    "prepublishOnly": "cross-env DEBUG_COLORS=yes NODE_ENV=production npm run build",
     "prebuild": "npm run clean",
-    "start": "cross-env NODE_ENV=production node bin/app",
-    "dev": "cross-env NODE_ENV=development node bin/app",
-    "dev-install": "cross-env NODE_ENV=development node bin/install/app",
+    "start": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app",
+    "dev": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/app",
+    "dev-install": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/install/app",
     "build": "npm run babel",
     "build:watch": "npm run babel:watch",
     "clean": "rimraf lib",
@@ -37,7 +37,7 @@
     "babel:watch": "npm run babel -- -w",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "test": "NODE_ENV=test mocha test --recursive -r @babel/register --verbose --color",
+    "test": " DEBUG_COLORS=yes NODE_ENV=test mocha test --recursive -r @babel/register --verbose --color",
     "pre-commit": "npm run lint && npm run test && npm run build && git add lib"
   },
   "bin": {

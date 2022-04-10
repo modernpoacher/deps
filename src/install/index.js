@@ -13,6 +13,10 @@ import {
 } from 'child_process'
 
 import {
+  PLATFORM
+} from '@modernpoacher/deps/common/env'
+
+import {
   DIRECTORY,
   REGISTRY,
   getNoSaveParameter,
@@ -35,7 +39,9 @@ const OPTIONS = {
   shell: true,
   stdio: 'inherit',
   env: {
-    FORCE_COLOR: 3
+    FORCE_COLOR: PLATFORM === 'win32'
+      ? 2
+      : 3
   }
 }
 

@@ -38,7 +38,9 @@ const OPTIONS = {
   shell: true,
   stdio: 'inherit',
   env: {
-    FORCE_COLOR: 3
+    FORCE_COLOR: PLATFORM === 'win32'
+      ? 2
+      : 3
   }
 }
 

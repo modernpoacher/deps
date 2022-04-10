@@ -25,7 +25,10 @@ const COMMIT = PLATFORM === 'win32'
 const OPTIONS = {
   maxBuffer: 1024 * 2000,
   shell: true,
-  stdio: 'inherit'
+  stdio: 'inherit',
+  env: {
+    FORCE_COLOR: true
+  }
 }
 
 const log = debug('@modernpoacher/deps')

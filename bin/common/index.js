@@ -47,7 +47,10 @@ log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
 const OPTIONS = {
   maxBuffer: 1024 * 2000,
   shell: true,
-  stdio: 'inherit'
+  stdio: 'inherit',
+  env: {
+    FORCE_COLOR: true
+  }
 }
 
 const CODE = 0

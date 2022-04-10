@@ -33,7 +33,10 @@ log(`\`install\` (${platform}) is awake`)
 const OPTIONS = {
   maxBuffer: 1024 * 2000,
   shell: true,
-  stdio: 'inherit'
+  stdio: 'inherit',
+  env: {
+    FORCE_COLOR: true
+  }
 }
 
 /**

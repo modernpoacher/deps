@@ -235,7 +235,9 @@ function rmrf (directory = DIRECTORY) {
       const log = use('rmrf')
       const commands = getRmrfCommands(directory)
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,
@@ -256,7 +258,9 @@ function npmi (directory = DIRECTORY, registry = REGISTRY, force = false) {
       const log = use('npmi')
       const commands = getNpmiCommands(directory, registry, force)
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,
@@ -277,7 +281,9 @@ function deps (directory = DIRECTORY, registry = REGISTRY, force = false) {
       const log = use('deps')
       const commands = getDepsCommands(directory, registry, force)
 
-      log(commands)
+      /**
+       *  log(commands)
+       */
 
       const {
         stdout,

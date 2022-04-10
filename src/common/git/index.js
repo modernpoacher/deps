@@ -105,7 +105,7 @@ const getErrorMessage = ({ message = '' } = {}) => message
  *
  *  @return {String}
  */
-function getCatGitRefsRemotesOriginHeadCommands (directory = DIRECTORY) { /* eslint-disable no-useless-escape */
+function getCatGitRefsRemotesOriginHeadCommands () { /* eslint-disable no-useless-escape */
   log('getCatGitRefsRemotesOriginHeadCommands')
 
   return `
@@ -148,7 +148,7 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       // const log = use('cat-git-refs-remotes-origin-head')
-      const commands = getCatGitRefsRemotesOriginHeadCommands(directory)
+      const commands = getCatGitRefsRemotesOriginHeadCommands()
 
       /**
        *  log(commands)

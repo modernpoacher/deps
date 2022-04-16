@@ -32,7 +32,8 @@ const {
 } = require('@modernpoacher/deps/common/git')
 
 const {
-  REGISTRY
+  REGISTRY,
+  AUTHOR
 } = require('@modernpoacher/deps/common')
 
 const {
@@ -116,15 +117,15 @@ async function mapRevParse (directory) {
   }
 }
 
-async function iterate ([directory, ...directories] = [], registry = REGISTRY, force = false) {
+async function iterate ([directory, ...directories] = [], registry = REGISTRY, force = false, author = AUTHOR) {
   log('iterate')
 
-  if (directory) await execute(directory, registry, force)
+  if (directory) await execute(directory, registry, force, author)
 
-  if (directories.length) await iterate(directories, registry, force)
+  if (directories.length) await iterate(directories, registry, force, author)
 }
 
-async function execute (directory = DIRECTORY, registry = REGISTRY, force = false) {
+async function execute (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) {
   log('execute')
 
   try {
@@ -133,8 +134,8 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
     await gitCheckout(directory, await catGitRefsRemotesOriginHead(directory))
     await gitPull(directory)
     await rmrf(directory)
-    await npmi(directory, registry, force)
-    await deps(directory, registry, force)
+    await npmi(directory, registry, force, author)
+    await deps(directory, registry, force, author)
     await gitAdd(directory)
     await gitCommit(directory)
     await gitPush(directory)
@@ -144,7 +145,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
   }
 }
 
-async function executeFrom (directory = DIRECTORY, registry = REGISTRY, force = false) {
+async function executeFrom (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) {
   log('executeFrom')
 
   const path = resolve(directory)
@@ -152,7 +153,7 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY, force = 
   try {
     if (path === await gitRevParse(path)) {
       return (
-        await execute(path, registry, force)
+        await execute(path, registry, force, author)
       )
     }
   } catch (e) {
@@ -160,7 +161,7 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY, force = 
   }
 }
 
-async function executeOnly (directory = DIRECTORY, registry = REGISTRY, force = false) {
+async function executeOnly (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) {
   log('executeOnly')
 
   const path = resolve(directory)
@@ -168,7 +169,7 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY, force = 
   try {
     if (path === await gitRevParse(path)) {
       return (
-        await execute(path, registry, force)
+        await execute(path, registry, force, author)
       )
     }
   } catch (e) {
@@ -176,7 +177,7 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY, force = 
   }
 }
 
-async function executePath (directory = DIRECTORY, registry = REGISTRY, force = false) {
+async function executePath (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) {
   log('executePath')
 
   const path = resolve(directory)
@@ -184,7 +185,7 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY, force = 
   try {
     if (path === await gitRevParse(path)) {
       return (
-        await execute(path, registry, force)
+        await execute(path, registry, force, author)
       )
     }
   } catch (e) {
@@ -198,7 +199,7 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY, force = 
 
     if (depsList.length) {
       return (
-        await iterate(depsList, registry, force)
+        await iterate(depsList, registry, force, author)
       )
     }
   }
@@ -221,6 +222,7 @@ async function app () {
     .option('-o, --only [only]', 'Update only directory')
     .option('--registry [registry]', 'Installation registry')
     .option('--force [force]', 'Force installation`', false)
+    .option('--author [author]', 'Git commit author')
     .parse(argv)
 
   const {
@@ -228,7 +230,8 @@ async function app () {
     from: F,
     only: O,
     registry,
-    force
+    force,
+    author
   } = commander.opts()
 
   log({
@@ -243,7 +246,7 @@ async function app () {
     log('Path')
 
     try {
-      await executePath(P, registry, force)
+      await executePath(P, registry, force, author)
     } catch (e) {
       handleError(e)
     }
@@ -252,7 +255,7 @@ async function app () {
       log('From')
 
       try {
-        await executeFrom(P, registry, force)
+        await executeFrom(P, registry, force, author)
       } catch (e) {
         handleError(e)
       }
@@ -261,7 +264,7 @@ async function app () {
         log('Only')
 
         try {
-          await executeOnly(P, registry, force)
+          await executeOnly(P, registry, force, author)
         } catch (e) {
           handleError(e)
         }

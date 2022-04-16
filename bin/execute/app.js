@@ -130,7 +130,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
   log('execute')
 
   try {
-    log({ directory, registry })
+    log({ directory, registry, force, message, author })
 
     await gitCheckout(directory, await catGitRefsRemotesOriginHead(directory))
     await gitPull(directory)

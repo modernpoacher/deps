@@ -16,6 +16,8 @@ export const DIRECTORY = '.'
 
 export const REGISTRY = 'https://registry.npmjs.org'
 
+export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
+
 export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
 
 const log = debug('@modernpoacher/deps')
@@ -91,6 +93,18 @@ export const getRegistryParameter = (r, commands) => r ? commands.concat(` --reg
  *  @return {String}
  */
 export const getForceParameter = (f, commands) => f ? commands.concat(' --force') : commands
+
+/**
+ *  @function getAuthorParameter
+ *
+ *  Get the "author" parameter and argument
+ *
+ *  @param {String} author
+ *  @param {String} current commands string
+ *
+ *  @return {String}
+ */
+export const getAuthorParameter = (a, commands) => a ? commands.concat(` --author ${a}`) : commands
 
 /**
  *  @function getNoSaveParameter

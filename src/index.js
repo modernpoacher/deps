@@ -15,8 +15,10 @@ import {
 import {
   DIRECTORY,
   REGISTRY,
+  AUTHOR,
   getRegistryParameter,
   getForceParameter,
+  getAuthorParameter,
   getSaveExactParameter,
   getSaveBundleParameter,
   getSaveOptionalParameter,
@@ -70,14 +72,14 @@ function use (key) {
  *
  *  @return {Array}
  */
-export const getInstallSaveExactCommands = (p, r, f) => {
+export const getInstallSaveExactCommands = (p, r, f, a) => {
   log('getInstallSaveExactCommands')
 
   const c = transform(p)
   const commands = `npm i ${c}`
 
   return normalizeCommands(
-    getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(commands)))
+    getRegistryParameter(r, getForceParameter(f, getAuthorParameter(a, getSaveExactParameter(commands))))
   )
 }
 
@@ -92,14 +94,14 @@ export const getInstallSaveExactCommands = (p, r, f) => {
  *
  *  @return {Array}
  */
-export const getInstallCommands = (p, r, f) => {
+export const getInstallCommands = (p, r, f, a) => {
   log('getInstallCommands')
 
   const c = transform(p)
   const commands = `npm i ${c}`
 
   return normalizeCommands(
-    getRegistryParameter(r, getForceParameter(f, commands))
+    getRegistryParameter(r, getForceParameter(f, getAuthorParameter(a, commands)))
   )
 }
 
@@ -114,10 +116,10 @@ export const getInstallCommands = (p, r, f) => {
  *
  *  @return {Array}
  */
-export function getInstallSaveBundleSaveExactCommands (p, r, f) {
+export function getInstallSaveBundleSaveExactCommands (p, r, f, a) {
   log('getInstallSaveBundleSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, r, f)
+  const commands = getInstallSaveExactCommands(p, r, f, a)
 
   return normalizeCommands(
     getSaveBundleParameter(commands)
@@ -135,10 +137,10 @@ export function getInstallSaveBundleSaveExactCommands (p, r, f) {
  *
  *  @return {Array}
  */
-export function getInstallSaveBundleCommands (p, r, f) {
+export function getInstallSaveBundleCommands (p, r, f, a) {
   log('getInstallSaveBundleCommands')
 
-  const commands = getInstallCommands(p, r, f)
+  const commands = getInstallCommands(p, r, f, a)
 
   return normalizeCommands(
     getSaveBundleParameter(commands)
@@ -156,10 +158,10 @@ export function getInstallSaveBundleCommands (p, r, f) {
  *
  *  @return {Array}
  */
-export function getInstallSaveOptionalSaveExactCommands (p, r, f) {
+export function getInstallSaveOptionalSaveExactCommands (p, r, f, a) {
   log('getInstallSaveOptionalSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, r, f)
+  const commands = getInstallSaveExactCommands(p, r, f, a)
 
   return normalizeCommands(
     getSaveOptionalParameter(commands)
@@ -177,10 +179,10 @@ export function getInstallSaveOptionalSaveExactCommands (p, r, f) {
  *
  *  @return {Array}
  */
-export function getInstallSaveOptionalCommands (p, r, f) {
+export function getInstallSaveOptionalCommands (p, r, f, a) {
   log('getInstallSaveOptionalCommands')
 
-  const commands = getInstallCommands(p, r, f)
+  const commands = getInstallCommands(p, r, f, a)
 
   return normalizeCommands(
     getSaveOptionalParameter(commands)
@@ -198,10 +200,10 @@ export function getInstallSaveOptionalCommands (p, r, f) {
  *
  *  @return {Array}
  */
-export function getInstallSaveDevSaveExactCommands (p, r, f) {
+export function getInstallSaveDevSaveExactCommands (p, r, f, a) {
   log('getInstallSaveDevSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, r, f)
+  const commands = getInstallSaveExactCommands(p, r, f, a)
 
   return normalizeCommands(
     getSaveDevParameter(commands)
@@ -219,10 +221,10 @@ export function getInstallSaveDevSaveExactCommands (p, r, f) {
  *
  *  @return {Array}
  */
-export function getInstallSaveDevCommands (p, r, f) {
+export function getInstallSaveDevCommands (p, r, f, a) {
   log('getInstallSaveDevCommands')
 
-  const commands = getInstallCommands(p, r, f)
+  const commands = getInstallCommands(p, r, f, a)
 
   return normalizeCommands(
     getSaveDevParameter(commands)
@@ -240,10 +242,10 @@ export function getInstallSaveDevCommands (p, r, f) {
  *
  *  @return {Array}
  */
-export function getInstallSaveProdSaveExactCommands (p, r, f) {
+export function getInstallSaveProdSaveExactCommands (p, r, f, a) {
   log('getInstallSaveProdSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, r, f)
+  const commands = getInstallSaveExactCommands(p, r, f, a)
 
   return normalizeCommands(
     getSaveProdParameter(commands)
@@ -261,10 +263,10 @@ export function getInstallSaveProdSaveExactCommands (p, r, f) {
  *
  *  @return {Array}
  */
-export function getInstallSaveProdCommands (p, r, f) {
+export function getInstallSaveProdCommands (p, r, f, a) {
   log('getInstallSaveProdCommands')
 
-  const commands = getInstallCommands(p, r, f)
+  const commands = getInstallCommands(p, r, f, a)
 
   return normalizeCommands(
     getSaveProdParameter(commands)
@@ -283,13 +285,13 @@ export function getInstallSaveProdCommands (p, r, f) {
  *
  *  @return {Promise}
  */
-export function installSaveBundleSaveExact (d, p, r, f) {
+export function installSaveBundleSaveExact (d, p, r, f, a) {
   log('installSaveBundleSaveExact')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('install-save-bundle-save-exact')
-      const commands = getCommands(d, getInstallSaveBundleSaveExactCommands(p, r, f))
+      const commands = getCommands(d, getInstallSaveBundleSaveExactCommands(p, r, f, a))
 
       /**
        *  log(commands)
@@ -318,13 +320,13 @@ export function installSaveBundleSaveExact (d, p, r, f) {
  *
  *  @return {Promise}
  */
-export function installSaveBundle (d, p, r, f) {
+export function installSaveBundle (d, p, r, f, a) {
   log('installSaveBundle')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('install-save-bundle')
-      const commands = getCommands(d, getInstallSaveBundleCommands(p, r, f))
+      const commands = getCommands(d, getInstallSaveBundleCommands(p, r, f, a))
 
       /**
        *  log(commands)
@@ -353,13 +355,13 @@ export function installSaveBundle (d, p, r, f) {
  *
  *  @return {Promise}
  */
-export function installSaveOptionalSaveExact (d, p, r, f) {
+export function installSaveOptionalSaveExact (d, p, r, f, a) {
   log('installSaveOptionalSaveExact')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('install-save-otional-save-exact')
-      const commands = getCommands(d, getInstallSaveOptionalSaveExactCommands(p, r, f))
+      const commands = getCommands(d, getInstallSaveOptionalSaveExactCommands(p, r, f, a))
 
       /**
        *  log(commands)
@@ -388,13 +390,13 @@ export function installSaveOptionalSaveExact (d, p, r, f) {
  *
  *  @return {Promise}
  */
-export function installSaveOptional (d, p, r, f) {
+export function installSaveOptional (d, p, r, f, a) {
   log('installSaveOptional')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('install-save-otional')
-      const commands = getCommands(d, getInstallSaveOptionalCommands(p, r, f))
+      const commands = getCommands(d, getInstallSaveOptionalCommands(p, r, f, a))
 
       /**
        *  log(commands)
@@ -423,13 +425,13 @@ export function installSaveOptional (d, p, r, f) {
  *
  *  @return {Promise}
  */
-export function installSaveDevSaveExact (d, p, r, f) {
+export function installSaveDevSaveExact (d, p, r, f, a) {
   log('installSaveDevSaveExact')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('install-save-dev-save-exact')
-      const commands = getCommands(d, getInstallSaveDevSaveExactCommands(p, r, f))
+      const commands = getCommands(d, getInstallSaveDevSaveExactCommands(p, r, f, a))
 
       /**
        *  log(commands)
@@ -458,13 +460,13 @@ export function installSaveDevSaveExact (d, p, r, f) {
  *
  *  @return {Promise}
  */
-export function installSaveDev (d, p, r, f) {
+export function installSaveDev (d, p, r, f, a) {
   log('installSaveDev')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('install-save-dev')
-      const commands = getCommands(d, getInstallSaveDevCommands(p, r, f))
+      const commands = getCommands(d, getInstallSaveDevCommands(p, r, f, a))
 
       /**
        *  log(commands)
@@ -493,13 +495,13 @@ export function installSaveDev (d, p, r, f) {
  *
  *  @return {Promise}
  */
-export function installSaveProdSaveExact (d, p, r, f) {
+export function installSaveProdSaveExact (d, p, r, f, a) {
   log('installSaveProdSaveExact')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('install-save-prod-save-exact')
-      const commands = getCommands(d, getInstallSaveProdSaveExactCommands(p, r, f))
+      const commands = getCommands(d, getInstallSaveProdSaveExactCommands(p, r, f, a))
 
       /**
        *  log(commands)
@@ -528,13 +530,13 @@ export function installSaveProdSaveExact (d, p, r, f) {
  *
  *  @return {Promise}
  */
-export function installSaveProd (d, p, r, f) {
+export function installSaveProd (d, p, r, f, a) {
   log('installSaveProd')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('install-save-prod')
-      const commands = getCommands(d, getInstallSaveProdCommands(p, r, f))
+      const commands = getCommands(d, getInstallSaveProdCommands(p, r, f, a))
 
       /**
        *  log(commands)
@@ -564,16 +566,16 @@ export function installSaveProd (d, p, r, f) {
  *
  *  @return {Promise}
  */
-export async function executeBundle (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false) {
+export async function executeBundle (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false, author = AUTHOR) {
   log('executeBundle')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveBundleSaveExact(directory, depsExact, registry, force)
+  if (depsExact.length) await installSaveBundleSaveExact(directory, depsExact, registry, force, author)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await installSaveBundle(directory, deps, registry, force)
+  if (deps.length) await installSaveBundle(directory, deps, registry, force, author)
 }
 
 /**
@@ -589,16 +591,16 @@ export async function executeBundle (directory = DIRECTORY, packages = {}, confi
  *
  *  @return {Promise}
  */
-export async function executeOptional (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false) {
+export async function executeOptional (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false, author = AUTHOR) {
   log('executeOptional')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveOptionalSaveExact(directory, depsExact, registry)
+  if (depsExact.length) await installSaveOptionalSaveExact(directory, depsExact, registry, force, author)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await installSaveOptional(directory, deps, registry)
+  if (deps.length) await installSaveOptional(directory, deps, registry, force, author)
 }
 
 /**
@@ -614,16 +616,16 @@ export async function executeOptional (directory = DIRECTORY, packages = {}, con
  *
  *  @return {Promise}
  */
-export async function executeDev (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false) {
+export async function executeDev (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false, author = AUTHOR) {
   log('executeDev')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveDevSaveExact(directory, depsExact, registry, force)
+  if (depsExact.length) await installSaveDevSaveExact(directory, depsExact, registry, force, author)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await installSaveDev(directory, deps, registry, force)
+  if (deps.length) await installSaveDev(directory, deps, registry, force, author)
 }
 
 /**
@@ -639,14 +641,14 @@ export async function executeDev (directory = DIRECTORY, packages = {}, configur
  *
  *  @return {Promise}
  */
-export async function executeProd (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false) {
+export async function executeProd (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false, author = AUTHOR) {
   log('executeProd')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveProdSaveExact(directory, depsExact, registry, force)
+  if (depsExact.length) await installSaveProdSaveExact(directory, depsExact, registry, force, author)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await installSaveProd(directory, deps, registry, force)
+  if (deps.length) await installSaveProd(directory, deps, registry, force, author)
 }

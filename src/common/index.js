@@ -95,18 +95,6 @@ export const getRegistryParameter = (r, commands) => r ? commands.concat(` --reg
 export const getForceParameter = (f, commands) => f ? commands.concat(' --force') : commands
 
 /**
- *  @function getAuthorParameter
- *
- *  Get the "author" parameter and argument
- *
- *  @param {String} author
- *  @param {String} current commands string
- *
- *  @return {String}
- */
-export const getAuthorParameter = (a, commands) => a ? commands.concat(` --author ${a}`) : commands
-
-/**
  *  @function getNoSaveParameter
  *
  *  Get the `--no-save` parameter

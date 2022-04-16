@@ -12,15 +12,17 @@ import {
   PLATFORM
 } from '@modernpoacher/deps/common/env'
 
-const DIRECTORY = '.'
+export const DIRECTORY = '.'
 
 const BRANCH = 'master'
 
 const ADD = 'package.json package-lock.json'
 
-const COMMIT = PLATFORM === 'win32'
+export const MESSAGE = PLATFORM === 'win32'
   ? 'Updated `package.json` &/ `package-lock.json`'
   : 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
+
+export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
 
 const OPTIONS = {
   maxBuffer: 1024 * 2000,
@@ -371,17 +373,17 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
  *  Commit changes to Git with a default value if none is supplied
  *
  *  @param {String} directory - A directory configured for Git
- *  @param {String} commit - A commit message
+ *  @param {String} message - A commit message
  *
  *  @return {Promise}
  */
-export function gitCommit (directory = DIRECTORY, commit = COMMIT) {
+export function gitCommit (directory = DIRECTORY, message = MESSAGE, author = AUTHOR) {
   log('gitCommit')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('git-commit')
-      const commands = `git commit -m "${commit}"`
+      const commands = `git commit -m "${message}" --author "${author}"`
 
       /**
        *  log(commands)

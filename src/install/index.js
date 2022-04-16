@@ -19,11 +19,9 @@ import {
 import {
   DIRECTORY,
   REGISTRY,
-  AUTHOR,
   getNoSaveParameter,
   getRegistryParameter,
   getForceParameter,
-  getAuthorParameter,
   getSaveExactParameter,
   getCommands,
   normalizeCommands,
@@ -60,14 +58,14 @@ const OPTIONS = {
  *
  *  @return {Array}
  */
-export const getInstallSaveExactCommands = (p, s, r, f, a) => {
+export const getInstallSaveExactCommands = (p, s, r, f) => {
   log('getInstallSaveExactCommands')
 
   const c = transform(p)
   const commands = `npm i ${c}`
 
   return normalizeCommands(
-    getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getAuthorParameter(a, getSaveExactParameter(commands)))))
+    getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(commands))))
   )
 }
 
@@ -83,14 +81,14 @@ export const getInstallSaveExactCommands = (p, s, r, f, a) => {
  *
  *  @return {Array}
  */
-export const getInstallCommands = (p, s, r, f, a) => {
+export const getInstallCommands = (p, s, r, f) => {
   log('getInstallCommands')
 
   const c = transform(p)
   const commands = `npm i ${c}`
 
   return normalizeCommands(
-    getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getAuthorParameter(a, commands))))
+    getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, commands)))
   )
 }
 
@@ -107,12 +105,12 @@ export const getInstallCommands = (p, s, r, f, a) => {
  *
  *  @return {Promise}
  */
-export function installSaveExact (d, p, s, r, f, a) {
+export function installSaveExact (d, p, s, r, f) {
   log('installSaveExact')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveExactCommands(p, s, r, f, a))
+      const commands = getCommands(d, getInstallSaveExactCommands(p, s, r, f))
 
       const {
         stdout,
@@ -138,12 +136,12 @@ export function installSaveExact (d, p, s, r, f, a) {
  *
  *  @return {Promise}
  */
-export function install (d, p, s, r, f, a) {
+export function install (d, p, s, r, f) {
   log('install')
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallCommands(p, s, r, f, a))
+      const commands = getCommands(d, getInstallCommands(p, s, r, f))
 
       const {
         stdout,
@@ -169,14 +167,14 @@ export function install (d, p, s, r, f, a) {
  *
  *  @return {Promise}
  */
-export async function execute (directory = DIRECTORY, packages = {}, configuration = {}, save = false, registry = REGISTRY, force = false, author = AUTHOR) {
+export async function execute (directory = DIRECTORY, packages = {}, configuration = {}, save = false, registry = REGISTRY, force = false) {
   log('execute')
 
   const depsExact = getDepsExact(packages, configuration)
 
-  if (depsExact.length) await installSaveExact(directory, depsExact, save, registry, force, author)
+  if (depsExact.length) await installSaveExact(directory, depsExact, save, registry, force)
 
   const deps = getDeps(packages)
 
-  if (deps.length) await install(directory, deps, save, registry, force, author)
+  if (deps.length) await install(directory, deps, save, registry, force)
 }

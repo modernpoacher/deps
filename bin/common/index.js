@@ -39,8 +39,7 @@ const {
   NVM,
 
   getRegistryParameter,
-  getForceParameter,
-  getAuthorParameter
+  getForceParameter
 } = require('@modernpoacher/deps/common')
 
 const log = debug('@modernpoacher/deps')
@@ -79,19 +78,19 @@ rm -rf node_modules package-lock.json
 `)
 
 const getNpmiCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) => tidy(getRegistryParameter(registry, getForceParameter(force, getAuthorParameter(author, 'npm i'))))
-  : (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) => tidy(`
+  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i')))
+  : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
 . "${NVM}" 2> /dev/null
-${getRegistryParameter(registry, getForceParameter(force, getAuthorParameter(author, 'npm i')))}
+${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
 `)
 
 const getDepsCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) => tidy(getRegistryParameter(registry, getForceParameter(force, getAuthorParameter(author, 'deps'))))
-  : (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) => tidy(`
+  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'deps')))
+  : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
 . "${NVM}" 2> /dev/null
-${getRegistryParameter(registry, getForceParameter(force, getAuthorParameter(author, 'deps')))}
+${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
 `)
 
 function use (key) {
@@ -261,13 +260,13 @@ function rmrf (directory = DIRECTORY) {
   )
 }
 
-function npmi (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) {
+function npmi (directory = DIRECTORY, registry = REGISTRY, force = false) {
   log('npmi')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('npmi')
-      const commands = getNpmiCommands(directory, registry, force, author)
+      const commands = getNpmiCommands(directory, registry, force)
 
       /**
        *  log(commands)
@@ -284,13 +283,13 @@ function npmi (directory = DIRECTORY, registry = REGISTRY, force = false, author
   )
 }
 
-function deps (directory = DIRECTORY, registry = REGISTRY, force = false, author = AUTHOR) {
+function deps (directory = DIRECTORY, registry = REGISTRY, force = false) {
   log('deps')
 
   return (
     new Promise((resolve, reject) => {
       const log = use('deps')
-      const commands = getDepsCommands(directory, registry, force, author)
+      const commands = getDepsCommands(directory, registry, force)
 
       /**
        *  log(commands)
@@ -310,6 +309,7 @@ function deps (directory = DIRECTORY, registry = REGISTRY, force = false, author
 module.exports = {
   DIRECTORY,
   REGISTRY,
+  AUTHOR,
   NVM,
   handleError,
   handlePackageError,

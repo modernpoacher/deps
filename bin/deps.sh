@@ -2,11 +2,14 @@
 #
 # https://google.github.io/styleguide/shellguide.html#s7-naming-conventions
 
+export PATH=/usr/local/bin:$PATH
+
+eval \`ssh-agent\`
+
 EXP="[-0-9a-zA-Z]*$"
 
 function update {
   git checkout $default_branch
-
   git pull
 
   rm -rf node_modules package-lock.json
@@ -15,8 +18,8 @@ function update {
 
   git add package.json package-lock.json
   git commit -m "Updated \`package.json\` &/ \`package-lock.json\`"
-
   git push
+  git push --tags
 }
 
 function can_update {

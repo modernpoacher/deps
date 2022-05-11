@@ -1,12 +1,15 @@
-**/node_modules/**/*
+# Node
+node_modules
 
+# Mac
 .DS_Store
 
 # User-defined NPM configuration
 .npmrc
+.npmignore
 
 # User-defined NVM configuration
 .nvmrc
 
-# Local NPM configuration
-.npm
+# Deps
+.depsrc

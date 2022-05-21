@@ -63,7 +63,7 @@ const DIRECTORY = process.cwd()
 
 function handleCommandError (e) {
   const {
-    code = 'NONE'
+    code = 0
   } = e
 
   if (code !== 128) {
@@ -71,10 +71,10 @@ function handleCommandError (e) {
       message
     } = e
 
-    log({
-      code,
-      message
-    })
+    const log = debug('@modernpoacher/deps:error')
+
+    if (code > 1) log(code)
+    log(message)
   }
 }
 

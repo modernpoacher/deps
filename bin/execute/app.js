@@ -34,14 +34,17 @@ const {
 } = require('@modernpoacher/deps/common/git')
 
 const {
-  REGISTRY
+  REGISTRY,
+  getAuthor
 } = require('@modernpoacher/deps/common')
 
 const {
   handleError,
   rmrf,
   npmi,
-  deps
+  deps,
+  hasConfiguration,
+  getConfiguration
 } = require('~/bin/common')
 
 const {
@@ -73,6 +76,18 @@ function handleCommandError (e) {
       message
     })
   }
+}
+
+async function getAuthorFromConfiguration (path) {
+  log('getAuthorFromConfiguration')
+
+  const CONFIGURATION = await hasConfiguration(path)
+    ? await getConfiguration(path)
+    : {}
+
+  return (
+    getAuthor(CONFIGURATION)
+  )
 }
 
 const filterDeps = (v) => !!v // de-falsy
@@ -118,12 +133,28 @@ async function mapRevParse (directory) {
   }
 }
 
-async function iterate ([directory, ...directories] = [], registry = REGISTRY, force = false, message = MESSAGE, author = AUTHOR) {
+async function iterate ([directory, ...directories] = [], registry, force, message, author) {
   log('iterate')
 
-  if (directory) await execute(directory, registry, force, message, author)
+  if (directory) {
+    const path = resolve(directory)
 
-  if (directories.length) await iterate(directories, registry, force, message, author)
+    try {
+      if (path === await gitRevParse(path)) {
+        return (
+          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+        )
+      }
+    } catch (e) {
+      handleCommandError(e)
+    }
+  }
+
+  if (directories.length) {
+    return (
+      await iterate(directories, registry, force, message, author)
+    )
+  }
 }
 
 async function execute (directory = DIRECTORY, registry = REGISTRY, force = false, message = MESSAGE, author = AUTHOR) {
@@ -146,7 +177,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
   }
 }
 
-async function executeFrom (directory = DIRECTORY, registry = REGISTRY, force = false, message = MESSAGE, author = AUTHOR) {
+async function executeFrom (directory, registry, force, message, author) {
   log('executeFrom')
 
   const path = resolve(directory)
@@ -154,7 +185,7 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY, force = 
   try {
     if (path === await gitRevParse(path)) {
       return (
-        await execute(path, registry, force, message, author)
+        await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
       )
     }
   } catch (e) {
@@ -162,7 +193,7 @@ async function executeFrom (directory = DIRECTORY, registry = REGISTRY, force = 
   }
 }
 
-async function executeOnly (directory = DIRECTORY, registry = REGISTRY, force = false, message = MESSAGE, author = AUTHOR) {
+async function executeOnly (directory, registry, force, message, author) {
   log('executeOnly')
 
   const path = resolve(directory)
@@ -170,7 +201,7 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY, force = 
   try {
     if (path === await gitRevParse(path)) {
       return (
-        await execute(path, registry, force, message, author)
+        await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
       )
     }
   } catch (e) {
@@ -178,7 +209,7 @@ async function executeOnly (directory = DIRECTORY, registry = REGISTRY, force = 
   }
 }
 
-async function executePath (directory = DIRECTORY, registry = REGISTRY, force = false, message = MESSAGE, author = AUTHOR) {
+async function executePath (directory, registry, force, message, author) {
   log('executePath')
 
   const path = resolve(directory)
@@ -186,7 +217,7 @@ async function executePath (directory = DIRECTORY, registry = REGISTRY, force = 
   try {
     if (path === await gitRevParse(path)) {
       return (
-        await execute(path, registry, force, message, author)
+        await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
       )
     }
   } catch (e) {

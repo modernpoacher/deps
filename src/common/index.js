@@ -119,7 +119,7 @@ export const getNoSaveParameter = (s, commands) => s ? commands : commands.conca
 export const getSaveExactParameter = (commands) => commands.concat(' --save-exact')
 
 /**
- *  @function getProdDependencies
+ *  @function getCommands
  *
  *  Get the installation shell script
  *
@@ -140,7 +140,7 @@ ${commands}
 /**
  *  @function getProdDependencies
  *
- *  Get the production dependencies by destructuring the package
+ *  Get the production dependencies by destructuring the package or configuration
  *
  *  @param {Object} package
  *
@@ -151,7 +151,7 @@ export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
 /**
  *  @function getDevDependencies
  *
- *  Get the development dependencies by destructuring the package
+ *  Get the development dependencies by destructuring the package or configuration
  *
  *  @param {Object} package
  *
@@ -162,7 +162,7 @@ export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependen
 /**
  *  @function getOptionalDependencies
  *
- *  Get the optional dependencies by destructuring the package
+ *  Get the optional dependencies by destructuring the package or configuration
  *
  *  @param {Object} package
  *
@@ -173,7 +173,7 @@ export const getOptionalDependencies = ({ optionalDependencies = {} } = {}) => o
 /**
  *  @function getBundleDependencies
  *
- *  Get the bundle dependencies by destructuring the package
+ *  Get the bundle dependencies by destructuring the package or configuration
  *
  *  @param {Object} package
  *
@@ -184,13 +184,24 @@ export const getBundleDependencies = ({ bundleDependencies = [] } = {}) => bundl
 /**
  *  @function getPeerDependencies
  *
- *  Get the peer dependencies by destructuring the package
+ *  Get the peer dependencies by destructuring the package or configuration
  *
  *  @param {Object} package
  *
  *  @return {Object}
  */
 export const getPeerDependencies = ({ peerDependencies } = {}) => peerDependencies
+
+/**
+ *  @function getAuthor
+ *
+ *  Get the author by destructuring the package or configuration
+ *
+ *  @param {Object} package
+ *
+ *  @return {Object}
+ */
+export const getAuthor = ({ author } = {}) => author
 
 /**
  *  @function isPreRelease

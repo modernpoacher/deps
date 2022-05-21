@@ -141,9 +141,7 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
 
     try {
       if (path === await gitRevParse(path)) {
-        return (
-          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
-        )
+        await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
       }
     } catch (e) {
       handleCommandError(e)
@@ -151,9 +149,7 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
   }
 
   if (directories.length) {
-    return (
-      await iterate(directories, registry, force, message, author)
-    )
+    await iterate(directories, registry, force, message, author)
   }
 }
 

@@ -139,6 +139,8 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
     const path = resolve(directory)
 
     try {
+      log({ path })
+
       if (path === await gitRevParse(path)) {
         await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
       }
@@ -178,6 +180,8 @@ async function executeFrom (directory, registry, force, message, author) {
   const path = resolve(directory)
 
   try {
+    log({ path })
+
     if (path === await gitRevParse(path)) {
       return (
         await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
@@ -194,6 +198,8 @@ async function executeOnly (directory, registry, force, message, author) {
   const path = resolve(directory)
 
   try {
+    log({ path })
+
     if (path === await gitRevParse(path)) {
       return (
         await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
@@ -210,6 +216,8 @@ async function executePath (directory, registry, force, message, author) {
   const path = resolve(directory)
 
   try {
+    log({ path })
+
     if (path === await gitRevParse(path)) {
       return (
         await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))

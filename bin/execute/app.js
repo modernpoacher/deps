@@ -244,7 +244,7 @@ async function app () {
    */
   commander
     .version(VERSION)
-    .option('-p, --path [path]', 'Update path')
+    .option('-p, --path [path]', 'Update path', '.')
     .option('-f, --from [from]', 'Update from directory')
     .option('-o, --only [only]', 'Update only directory')
     .option('--registry [registry]', 'Installation registry')

@@ -4,7 +4,7 @@
 
 export PATH=/usr/local/bin:$PATH
 
-eval \`ssh-agent\`
+eval `ssh-agent`
 
 EXP="[-0-9a-zA-Z]*$"
 

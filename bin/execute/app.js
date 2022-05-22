@@ -72,7 +72,6 @@ function handleCommandError (e) {
     } = e
 
     const log = debug('@modernpoacher/deps:error')
-
     if (code > 1) log(code)
     log(message)
   }

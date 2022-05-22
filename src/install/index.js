@@ -58,7 +58,7 @@ const OPTIONS = {
  *
  *  @return {Array}
  */
-export const getInstallSaveExactCommands = (p, s, r, f) => {
+export function getInstallSaveExactCommands (p, s, r, f) {
   log('getInstallSaveExactCommands')
 
   const c = transform(p)
@@ -81,7 +81,7 @@ export const getInstallSaveExactCommands = (p, s, r, f) => {
  *
  *  @return {Array}
  */
-export const getInstallCommands = (p, s, r, f) => {
+export function getInstallCommands (p, s, r, f) {
   log('getInstallCommands')
 
   const c = transform(p)

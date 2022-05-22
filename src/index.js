@@ -70,7 +70,7 @@ function use (key) {
  *
  *  @return {Array}
  */
-export const getInstallSaveExactCommands = (p, r, f) => {
+export function getInstallSaveExactCommands (p, r, f) {
   log('getInstallSaveExactCommands')
 
   const c = transform(p)
@@ -92,7 +92,7 @@ export const getInstallSaveExactCommands = (p, r, f) => {
  *
  *  @return {Array}
  */
-export const getInstallCommands = (p, r, f) => {
+export function getInstallCommands (p, r, f) {
   log('getInstallCommands')
 
   const c = transform(p)

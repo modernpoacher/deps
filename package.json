@@ -50,7 +50,7 @@
     "deps-head": "bin/head.sh"
   },
   "dependencies": {
-    "commander": "^9.2.0",
+    "commander": "^9.3.0",
     "debug": "^4.3.4",
     "glob-all": "^3.3.0",
     "module-alias": "^2.2.2",

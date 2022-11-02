@@ -52,7 +52,7 @@
   "dependencies": {
     "commander": "^9.4.1",
     "debug": "^4.3.4",
-    "glob-all": "^3.3.0",
+    "glob-all": "^3.3.1",
     "module-alias": "^2.2.2",
     "supports-color": "8.1.1"
   },

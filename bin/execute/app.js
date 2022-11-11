@@ -35,6 +35,7 @@ const {
 
 const {
   REGISTRY,
+  getIgnore,
   getAuthor
 } = require('@modernpoacher/deps/common')
 
@@ -75,6 +76,18 @@ function handleCommandError (e) {
     if (code > 1) log(code)
     log(message)
   }
+}
+
+async function getIgnoreFromConfiguration (path) {
+  log('getIgnoreFromConfiguration')
+
+  const CONFIGURATION = await hasConfiguration(path)
+    ? await getConfiguration(path)
+    : {}
+
+  return (
+    getIgnore(CONFIGURATION)
+  )
 }
 
 async function getAuthorFromConfiguration (path) {
@@ -142,7 +155,10 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
       log({ path })
 
       if (path === await gitRevParse(path)) {
-        await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+        const ignore = await getIgnoreFromConfiguration(path)
+        if (!ignore) {
+          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+        }
       }
     } catch (e) {
       handleCommandError(e)
@@ -183,9 +199,12 @@ async function executeFrom (directory, registry, force, message, author) {
     log({ path })
 
     if (path === await gitRevParse(path)) {
-      return (
-        await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
-      )
+      const ignore = await getIgnoreFromConfiguration(path)
+      if (!ignore) {
+        return (
+          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+        )
+      }
     }
   } catch (e) {
     handleCommandError(e)
@@ -201,9 +220,12 @@ async function executeOnly (directory, registry, force, message, author) {
     log({ path })
 
     if (path === await gitRevParse(path)) {
-      return (
-        await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
-      )
+      const ignore = await getIgnoreFromConfiguration(path)
+      if (!ignore) {
+        return (
+          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+        )
+      }
     }
   } catch (e) {
     handleCommandError(e)
@@ -219,9 +241,12 @@ async function executePath (directory, registry, force, message, author) {
     log({ path })
 
     if (path === await gitRevParse(path)) {
-      return (
-        await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
-      )
+      const ignore = await getIgnoreFromConfiguration(path)
+      if (!ignore) {
+        return (
+          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+        )
+      }
     }
   } catch (e) {
     handleCommandError(e)

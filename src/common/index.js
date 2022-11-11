@@ -193,15 +193,26 @@ export const getBundleDependencies = ({ bundleDependencies = [] } = {}) => bundl
 export const getPeerDependencies = ({ peerDependencies } = {}) => peerDependencies
 
 /**
+ *  @function getIgnore
+ *
+ *  Get the ignore flag by destructuring the package or configuration
+ *
+ *  @param {Object} package
+ *
+ *  @return {Boolean}
+ */
+export const getIgnore = ({ ignore = false } = {}) => ignore === true
+
+/**
  *  @function getAuthor
  *
  *  Get the author by destructuring the package or configuration
  *
  *  @param {Object} package
  *
- *  @return {Object}
+ *  @return {String}
  */
-export const getAuthor = ({ author } = {}) => author
+export const getAuthor = ({ author } = {}) => String(author)
 
 /**
  *  @function isPreRelease

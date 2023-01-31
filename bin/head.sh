@@ -2,7 +2,12 @@
 
 export PATH=/usr/local/bin:$PATH
 
-eval `ssh-agent`
+# eval `ssh-agent`
+
+if [ $(ps ax | grep ssh-agent | wc -l) -eq 0 ] ; then
+  eval $(ssh-agent -s)
+  trap "ssh-agent -k" exit
+fi
 
 EXP="[-0-9a-zA-Z]*$"
 

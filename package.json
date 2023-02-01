@@ -1,5 +1,6 @@
 {
   "name": "@modernpoacher/deps",
+  "type": "module",
   "version": "1.6.26",
   "description": "Update NPM package dependencies from the command line",
   "keywords": [
@@ -10,7 +11,7 @@
     "bundleDependencies",
     "peerDependencies"
   ],
-  "main": "./index.js",
+  "main": "./index.mjs",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "license": "MIT",
   "engines": {
@@ -25,25 +26,18 @@
     "url": "https://github.com/modernpoacher/deps/issues"
   },
   "scripts": {
-    "prepublishOnly": "cross-env DEBUG_COLORS=yes NODE_ENV=production npm run build",
-    "prebuild": "npm run clean",
-    "start": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app",
-    "dev": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/app",
-    "dev-install": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/install/app",
-    "build": "npm run babel",
-    "build:watch": "npm run babel:watch",
-    "clean": "rimraf lib",
-    "babel": "babel src -d lib",
-    "babel:watch": "npm run babel -- -w",
-    "lint": "eslint .",
+    "start": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app.mjs",
+    "dev": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/app.mjs",
+    "dev-install": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/install/app.mjs",
+    "lint": "eslint . --ext .cjs --ext .mjs",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env DEBUG_COLORS=yes NODE_ENV=test mocha test --recursive -r @babel/register --verbose --color",
-    "pre-commit": "npm run lint && npm run test && npm run build && git add lib"
+    "pre-commit": "npm run lint && npm run test"
   },
   "bin": {
-    "deps": "bin/app.js",
-    "deps-execute": "bin/execute/app.js",
-    "deps-install": "bin/install/app.js",
+    "deps": "bin/app.mjs",
+    "deps-execute": "bin/execute/app.mjs",
+    "deps-install": "bin/install/app.mjs",
     "deps-deps": "bin/deps.sh",
     "deps-wipe": "bin/wipe.sh",
     "deps-push": "bin/push.sh",
@@ -53,7 +47,6 @@
     "commander": "^10.0.0",
     "debug": "^4.3.4",
     "glob-all": "^3.3.1",
-    "module-alias": "^2.2.2",
     "supports-color": "8.1.1"
   },
   "devDependencies": {
@@ -62,22 +55,27 @@
     "@babel/eslint-parser": "^7.19.1",
     "@babel/preset-env": "^7.20.2",
     "@babel/register": "^7.18.9",
-    "babel-plugin-module-resolver": "^5.0.0",
     "chai": "^4.3.7",
     "core-js": "^3.27.2",
     "cross-env": "^7.0.3",
     "eslint": "^8.33.0",
     "eslint-config-standard": "^17.0.0",
-    "eslint-import-resolver-babel-module": "^5.3.2",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "husky": "^8.0.3",
-    "mocha": "^10.2.0",
-    "rimraf": "^4.1.2"
+    "mocha": "^10.2.0"
   },
-  "_moduleAliases": {
-    "@modernpoacher/deps": "./lib",
-    "~": "."
+  "imports": {
+    "#where-am-i": "./where-am-i.mjs",
+    "#deps/src/common/env": "./src/common/env/index.mjs",
+    "#deps/src/common/git": "./src/common/git/index.mjs",
+    "#deps/src/common": "./src/common/index.mjs",
+    "#deps/src/install": "./src/install/index.mjs",
+    "#deps/src/*": "./src/*.mjs",
+    "#deps/src": "./src/index.mjs",
+    "#deps/bin/common": "./bin/common/index.mjs",
+    "#deps/bin/*": "./bin/*.mjs",
+    "#deps/bin": "./bin/index.mjs"
   }
 }

@@ -1,6 +1,8 @@
 import debug from 'debug'
 
-import { expect } from 'chai'
+import {
+  expect
+} from 'chai'
 
 import {
   getSaveProdParameter,
@@ -22,9 +24,9 @@ import {
   getOptionalDependencies,
   getBundleDependencies,
   getPeerDependencies
-} from '@modernpoacher/deps/common'
+} from '#deps/src/common'
 
-describe('@modernpoacher/deps/common', () => {
+describe('#deps/src/common', () => {
   before(() => {
     const {
       env: {

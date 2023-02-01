@@ -1,6 +1,8 @@
 import debug from 'debug'
 
-import { expect } from 'chai'
+import {
+  expect
+} from 'chai'
 
 import {
   gitRevParse,
@@ -10,9 +12,9 @@ import {
   gitPushTags,
   gitAdd,
   gitCommit
-} from '@modernpoacher/deps/common/git'
+} from '#deps/src/common/git'
 
-describe('@modernpoacher/deps/common/git', () => {
+describe('#deps/src/common/git', () => {
   before(() => {
     const {
       env: {

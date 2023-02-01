@@ -14,7 +14,7 @@ import {
 
 import {
   PLATFORM
-} from '@modernpoacher/deps/common/env'
+} from '#deps/src/common/env'
 
 import {
   DIRECTORY,
@@ -28,7 +28,7 @@ import {
   transform,
   getDepsExact,
   getDeps
-} from '@modernpoacher/deps/common'
+} from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps:install')
 

@@ -1,6 +1,8 @@
 import debug from 'debug'
 
-import { expect } from 'chai'
+import {
+  expect
+} from 'chai'
 
 import {
   getInstallSaveExactCommands,
@@ -8,9 +10,9 @@ import {
   installSaveExact,
   install,
   execute
-} from '@modernpoacher/deps/install'
+} from '#deps/src/install'
 
-describe('@modernpoacher/deps/install', () => {
+describe('#deps/src/install', () => {
   before(() => {
     const {
       env: {

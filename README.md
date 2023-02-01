@@ -129,13 +129,3 @@ Again, with the `.depsrc` configuration file as the example above:
 - If `package.json` defines `gulp` at version `4.0.2` then *Deps* will update to the latest version
 
 There is no other behaviour! *Deps* will update to the latest version.
-
-### Etc
-
-*Deps* is written in *ES* and is transpiled to *JS* with Babel.
-
-*ES* functions can be found in `src`.
-
-*JS* functions can be found in `lib`.
-
-To build *Deps*, change into its root directory and at the command line execute `npm i && npm run build`.

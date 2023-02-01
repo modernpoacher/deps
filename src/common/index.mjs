@@ -16,7 +16,7 @@ export const REGISTRY = 'https://registry.npmjs.org'
 
 export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
 
-export const NVM = resolve(PATH, '../../nvm.sh')
+export const NVM = resolve(PATH, 'nvm.sh')
 
 const log = debug('@modernpoacher/deps')
 

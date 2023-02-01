@@ -100,10 +100,15 @@ function use (key) {
   }
 }
 
-function handleError ({ code = CODE, message = MESSAGE } = {}) {
+function handleError (e = {}) {
+  const {
+    code = CODE,
+    message = MESSAGE
+  } = e
   const log = debug('@modernpoacher/deps:error')
   if (code > 1) log(code)
   log(message)
+  log(e)
 }
 
 const handlePackageError = ({ message = MESSAGE } = {}) => log(`Package error: "${message}"`)

@@ -1,46 +1,39 @@
 #!/usr/bin/env node
 
-require('module-alias/register')
+import debug from 'debug'
 
-const debug = require('debug')
-
-const {
+import {
   exec
-} = require('child_process')
+} from 'child_process'
 
-const {
+import {
   resolve,
   relative,
   normalize
-} = require('path')
+} from 'path'
 
-const {
+import {
   constants
-} = require('fs')
+} from 'fs'
 
-const {
+import {
   access,
   readFile
-} = require('fs/promises')
+} from 'fs/promises'
 
-const {
-  version: VERSION
-} = require('~/package')
-
-const {
+import {
+  VERSION,
   PLATFORM
-} = require('@modernpoacher/deps/common/env')
+} from '#deps/src/common/env'
 
-const {
+import {
   DIRECTORY,
   REGISTRY,
   AUTHOR,
-
   NVM,
-
   getRegistryParameter,
   getForceParameter
-} = require('@modernpoacher/deps/common')
+} from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')
 
@@ -107,10 +100,15 @@ function use (key) {
   }
 }
 
-function handleError ({ code = CODE, message = MESSAGE } = {}) {
+function handleError (e = {}) {
+  const {
+    code = CODE,
+    message = MESSAGE
+  } = e
   const log = debug('@modernpoacher/deps:error')
   if (code > 1) log(code)
   log(message)
+  log(e)
 }
 
 const handlePackageError = ({ message = MESSAGE } = {}) => log(`Package error: "${message}"`)
@@ -305,7 +303,7 @@ function deps (directory = DIRECTORY, registry = REGISTRY, force = false) {
   )
 }
 
-module.exports = {
+export {
   DIRECTORY,
   REGISTRY,
   AUTHOR,

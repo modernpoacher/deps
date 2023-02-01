@@ -10,7 +10,7 @@ import {
 
 import {
   PLATFORM
-} from './common/env'
+} from '#deps/src/common/env'
 
 import {
   DIRECTORY,
@@ -27,7 +27,7 @@ import {
   transform,
   getDepsExact,
   getDeps
-} from './common'
+} from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')
 

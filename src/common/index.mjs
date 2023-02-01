@@ -1,16 +1,14 @@
 import debug from 'debug'
 
+import PATH from '#where-am-i'
+
 import {
   resolve
 } from 'path'
 
 import {
   PLATFORM
-} from '@modernpoacher/deps/common/env'
-
-const {
-  path: MODULE_PATH
-} = module
+} from '#deps/src/common/env'
 
 export const DIRECTORY = '.'
 
@@ -18,7 +16,7 @@ export const REGISTRY = 'https://registry.npmjs.org'
 
 export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
 
-export const NVM = resolve(MODULE_PATH, '../../nvm.sh')
+export const NVM = resolve(PATH, 'nvm.sh')
 
 const log = debug('@modernpoacher/deps')
 

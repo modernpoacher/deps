@@ -1,26 +1,23 @@
 #!/usr/bin/env node
 
-require('module-alias/register')
+import debug from 'debug'
 
-const debug = require('debug')
-
-const {
+import {
   resolve
-} = require('path')
+} from 'path'
 
-const glob = require('glob-all')
+import glob from 'glob-all'
 
-const commander = require('commander')
+import {
+  Command
+} from 'commander'
 
-const {
-  version: VERSION
-} = require('~/package')
-
-const {
+import {
+  VERSION,
   PLATFORM
-} = require('@modernpoacher/deps/common/env')
+} from '#deps/src/common/env'
 
-const {
+import {
   MESSAGE,
   AUTHOR,
   catGitRefsRemotesOriginHead,
@@ -31,22 +28,22 @@ const {
   gitPushTags,
   gitAdd,
   gitCommit
-} = require('@modernpoacher/deps/common/git')
+} from '#deps/src/common/git'
 
-const {
+import {
   REGISTRY,
   getIgnore,
   getAuthor
-} = require('@modernpoacher/deps/common')
+} from '#deps/src/common'
 
-const {
+import {
   handleError,
   rmrf,
   npmi,
   deps,
   hasConfiguration,
   getConfiguration
-} = require('~/bin/common')
+} from '#deps/bin/common'
 
 const {
   env: {
@@ -75,6 +72,7 @@ function handleCommandError (e) {
     const log = debug('@modernpoacher/deps:error')
     if (code > 1) log(code)
     log(message)
+    log(e)
   }
 }
 
@@ -152,7 +150,7 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
     const path = resolve(directory)
 
     try {
-      log({ path })
+      log(path)
 
       if (path === await gitRevParse(path)) {
         const ignore = await getIgnoreFromConfiguration(path)
@@ -196,7 +194,7 @@ async function executeFrom (directory, registry, force, message, author) {
   const path = resolve(directory)
 
   try {
-    log({ path })
+    log(path)
 
     if (path === await gitRevParse(path)) {
       const ignore = await getIgnoreFromConfiguration(path)
@@ -217,7 +215,7 @@ async function executeOnly (directory, registry, force, message, author) {
   const path = resolve(directory)
 
   try {
-    log({ path })
+    log(path)
 
     if (path === await gitRevParse(path)) {
       const ignore = await getIgnoreFromConfiguration(path)
@@ -238,7 +236,7 @@ async function executePath (directory, registry, force, message, author) {
   const path = resolve(directory)
 
   try {
-    log({ path })
+    log(path)
 
     if (path === await gitRevParse(path)) {
       const ignore = await getIgnoreFromConfiguration(path)
@@ -267,6 +265,8 @@ async function executePath (directory, registry, force, message, author) {
 
 async function app () {
   log('Deps')
+
+  const commander = new Command()
 
   const {
     argv
@@ -337,4 +337,4 @@ async function app () {
   log('Done.')
 }
 
-module.exports = app()
+export default app()

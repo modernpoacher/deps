@@ -16,3 +16,9 @@
 .npmignore
 .npmrc
 .npm
+
+# Deps
+.depsrc
+
+# Test
+/test

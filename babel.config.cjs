@@ -31,19 +31,7 @@ const presets = [
   ]
 ]
 
-const plugins = [
-  [
-    'module-resolver',
-    {
-      root: ['./src'],
-      cwd: 'babelrc',
-      alias: {
-        '~': '.',
-        '@modernpoacher/deps': './src'
-      }
-    }
-  ]
-]
+const plugins = []
 
 module.exports = (api) => {
   if (api) api.cache.using(env)

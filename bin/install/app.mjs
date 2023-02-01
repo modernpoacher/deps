@@ -1,38 +1,35 @@
 #!/usr/bin/env node
 
-require('module-alias/register')
+import debug from 'debug'
 
-const debug = require('debug')
+import {
+  Command
+} from 'commander'
 
-const commander = require('commander')
-
-const {
-  version: VERSION
-} = require('~/package')
-
-const {
+import {
+  VERSION,
   PLATFORM
-} = require('@modernpoacher/deps/common/env')
+} from '#deps/src/common/env'
 
-const {
+import {
   getProdDependencies,
   getDevDependencies,
   getOptionalDependencies,
   getBundleDependencies,
   getPeerDependencies
-} = require('@modernpoacher/deps/common')
+} from '#deps/src/common'
 
-const {
+import {
   handleError,
   hasPackage,
   getPackage,
   hasConfiguration,
   getConfiguration
-} = require('~/bin/common')
+} from '#deps/bin/common'
 
-const {
+import {
   execute
-} = require('@modernpoacher/deps/install')
+} from '#deps/src/install'
 
 const {
   env: {
@@ -48,6 +45,8 @@ log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
 
 async function app () {
   log('Deps')
+
+  const commander = new Command()
 
   const {
     argv
@@ -165,4 +164,4 @@ async function app () {
   log('Done.')
 }
 
-module.exports = app()
+export default app()

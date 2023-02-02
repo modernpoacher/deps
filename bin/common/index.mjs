@@ -62,25 +62,25 @@ const trim = (v) => v.split('\n').map((v) => v.trim()).join('\n').trim()
 const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
 const getRmrfCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY) => tidy(`
+  ? () => tidy(`
 rmdir /s /q node_modules 2> nul & \
 del package-lock.json 2> nul
 `)
-  : (directory = DIRECTORY) => tidy(`
+  : () => tidy(`
 rm -rf node_modules package-lock.json
 `)
 
 const getNpmiCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i')))
-  : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
+  ? (registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i')))
+  : (registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
 . "${NVM}" 2> /dev/null
 ${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
 `)
 
 const getDepsCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'deps')))
-  : (directory = DIRECTORY, registry = REGISTRY, force = false) => tidy(`
+  ? (registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'deps')))
+  : (registry = REGISTRY, force = false) => tidy(`
 export PATH=/usr/local/bin:$PATH &> /dev/null
 . "${NVM}" 2> /dev/null
 ${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
@@ -92,11 +92,7 @@ function use (key) {
   return function use (v) {
     const s = v.trim()
 
-    if (s === '') return
-
-    return (
-      log(trim(s))
-    )
+    if (s !== '') log(trim(s))
   }
 }
 
@@ -105,15 +101,15 @@ function handleError (e = {}) {
     code = CODE,
     message = MESSAGE
   } = e
+
   const log = debug('@modernpoacher/deps:error')
   if (code > 1) log(code)
   log(message)
-  log(e)
 }
 
-const handlePackageError = ({ message = MESSAGE } = {}) => log(`Package error: "${message}"`)
+const handlePackageError = ({ message = MESSAGE } = {}) => { log(`Package error: "${message}"`) }
 
-const handleConfigurationError = ({ message = MESSAGE } = {}) => log(`Configuration error: "${message}"`)
+const handleConfigurationError = ({ message = MESSAGE } = {}) => { log(`Configuration error: "${message}"`) }
 
 const getPackageJsonPath = (directory = DIRECTORY) => resolve(directory, 'package.json')
 
@@ -153,7 +149,7 @@ async function hasPackage (directory = DIRECTORY) {
 
     log(`Package at "${toRelativePath(getPackageJsonPath(directory))}"`)
     return true
-  } catch (e) {
+  } catch {
     log(`No package at "${toRelativePath(getPackageJsonPath(directory))}"`)
     return false
   }
@@ -239,17 +235,18 @@ function rmrf (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('rmrf')
-      const commands = getRmrfCommands(directory)
-
-      /**
-       *  log(commands)
-       */
+      const commands = getRmrfCommands()
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('rmrf')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -262,17 +259,18 @@ function npmi (directory = DIRECTORY, registry = REGISTRY, force = false) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('npmi')
-      const commands = getNpmiCommands(directory, registry, force)
-
-      /**
-       *  log(commands)
-       */
+      const commands = getNpmiCommands(registry, force)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('npmi')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -285,17 +283,18 @@ function deps (directory = DIRECTORY, registry = REGISTRY, force = false) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('deps')
-      const commands = getDepsCommands(directory, registry, force)
-
-      /**
-       *  log(commands)
-       */
+      const commands = getDepsCommands(registry, force)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('deps')
 
       stdout.on('data', log)
       stderr.on('data', log)

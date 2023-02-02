@@ -288,17 +288,19 @@ export function installSaveBundleSaveExact (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('install-save-bundle-save-exact')
-      const commands = getCommands(d, getInstallSaveBundleSaveExactCommands(p, r, f))
-
-      /**
-       *  log(commands)
-       */
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallSaveBundleSaveExactCommands(p, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('install-save-bundle-save-exact')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -323,17 +325,19 @@ export function installSaveBundle (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('install-save-bundle')
-      const commands = getCommands(d, getInstallSaveBundleCommands(p, r, f))
-
-      /**
-       *  log(commands)
-       */
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallSaveBundleCommands(p, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('install-save-bundle')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -358,17 +362,19 @@ export function installSaveOptionalSaveExact (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('install-save-otional-save-exact')
-      const commands = getCommands(d, getInstallSaveOptionalSaveExactCommands(p, r, f))
-
-      /**
-       *  log(commands)
-       */
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallSaveOptionalSaveExactCommands(p, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('install-save-otional-save-exact')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -393,17 +399,19 @@ export function installSaveOptional (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('install-save-otional')
-      const commands = getCommands(d, getInstallSaveOptionalCommands(p, r, f))
-
-      /**
-       *  log(commands)
-       */
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallSaveOptionalCommands(p, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('install-save-otional')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -428,17 +436,19 @@ export function installSaveDevSaveExact (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('install-save-dev-save-exact')
-      const commands = getCommands(d, getInstallSaveDevSaveExactCommands(p, r, f))
-
-      /**
-       *  log(commands)
-       */
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallSaveDevSaveExactCommands(p, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('install-save-dev-save-exact')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -463,17 +473,19 @@ export function installSaveDev (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('install-save-dev')
-      const commands = getCommands(d, getInstallSaveDevCommands(p, r, f))
-
-      /**
-       *  log(commands)
-       */
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallSaveDevCommands(p, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('install-save-dev')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -498,17 +510,19 @@ export function installSaveProdSaveExact (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('install-save-prod-save-exact')
-      const commands = getCommands(d, getInstallSaveProdSaveExactCommands(p, r, f))
-
-      /**
-       *  log(commands)
-       */
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallSaveProdSaveExactCommands(p, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('install-save-prod-save-exact')
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -533,17 +547,19 @@ export function installSaveProd (d, p, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const log = use('install-save-prod')
-      const commands = getCommands(d, getInstallSaveProdCommands(p, r, f))
-
-      /**
-       *  log(commands)
-       */
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallSaveProdCommands(p, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+        (!e)
+          ? resolve(v)
+          : reject(e)
+      })
+
+      const log = use('install-save-prod')
 
       stdout.on('data', log)
       stderr.on('data', log)

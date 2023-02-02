@@ -110,12 +110,13 @@ export function installSaveExact (d, p, s, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallSaveExactCommands(p, s, r, f))
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallSaveExactCommands(p, s, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -141,12 +142,13 @@ export function install (d, p, s, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(d, getInstallCommands(p, s, r, f))
+      const D = normalize(d)
+      const commands = getCommands(D, getInstallCommands(p, s, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(d) }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)

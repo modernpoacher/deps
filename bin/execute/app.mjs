@@ -75,24 +75,28 @@ function handleCommandError (e) {
   }
 }
 
-async function getIgnoreFromConfiguration (path) {
+async function getIgnoreFromConfiguration (directory) {
   log('getIgnoreFromConfiguration')
 
-  const CONFIGURATION = await hasConfiguration(path)
-    ? await getConfiguration(path)
-    : {}
+  const CONFIGURATION = (
+    await hasConfiguration(directory)
+      ? await getConfiguration(directory)
+      : {}
+  )
 
   return (
     getIgnore(CONFIGURATION)
   )
 }
 
-async function getAuthorFromConfiguration (path) {
+async function getAuthorFromConfiguration (directory) {
   log('getAuthorFromConfiguration')
 
-  const CONFIGURATION = await hasConfiguration(path)
-    ? await getConfiguration(path)
-    : {}
+  const CONFIGURATION = (
+    await hasConfiguration(directory)
+      ? await getConfiguration(directory)
+      : {}
+  )
 
   return (
     getAuthor(CONFIGURATION)
@@ -108,7 +112,11 @@ function getPathList (directory) {
 
   return (
     new Promise((resolve, reject) => {
-      glob(`${directory}/*/`, (error, array) => (!error) ? resolve(array) : reject(error))
+      glob(`${directory}/*/`, (error, array) => {
+        (!error)
+          ? resolve(array)
+          : reject(error)
+      })
     })
   )
 }
@@ -146,15 +154,13 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
   log('iterate')
 
   if (directory) {
-    const path = resolve(directory)
+    const D = resolve(directory)
 
     try {
-      log(path)
-
-      if (path === await gitRevParse(path)) {
-        const ignore = await getIgnoreFromConfiguration(path)
+      if (D === await gitRevParse(D)) {
+        const ignore = await getIgnoreFromConfiguration(D)
         if (!ignore) {
-          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D))
         }
       }
     } catch (e) {
@@ -190,16 +196,14 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
 async function executeFrom (directory, registry, force, message, author) {
   log('executeFrom')
 
-  const path = resolve(directory)
+  const D = resolve(directory)
 
   try {
-    log(path)
-
-    if (path === await gitRevParse(path)) {
-      const ignore = await getIgnoreFromConfiguration(path)
+    if (D === await gitRevParse(D)) {
+      const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D))
         )
       }
     }
@@ -211,16 +215,14 @@ async function executeFrom (directory, registry, force, message, author) {
 async function executeOnly (directory, registry, force, message, author) {
   log('executeOnly')
 
-  const path = resolve(directory)
+  const D = resolve(directory)
 
   try {
-    log(path)
-
-    if (path === await gitRevParse(path)) {
-      const ignore = await getIgnoreFromConfiguration(path)
+    if (D === await gitRevParse(D)) {
+      const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D))
         )
       }
     }
@@ -232,16 +234,14 @@ async function executeOnly (directory, registry, force, message, author) {
 async function executePath (directory, registry, force, message, author) {
   log('executePath')
 
-  const path = resolve(directory)
+  const D = resolve(directory)
 
   try {
-    log(path)
-
-    if (path === await gitRevParse(path)) {
-      const ignore = await getIgnoreFromConfiguration(path)
+    if (D === await gitRevParse(D)) {
+      const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(path, registry, force, message, author || await getAuthorFromConfiguration(path))
+          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D))
         )
       }
     }
@@ -249,7 +249,7 @@ async function executePath (directory, registry, force, message, author) {
     handleCommandError(e)
   }
 
-  const pathList = await getPathList(path)
+  const pathList = await getPathList(D)
 
   if (pathList.length) {
     const depsList = await getDepsList(pathList)

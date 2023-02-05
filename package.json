@@ -32,7 +32,14 @@
     "lint": "eslint . --ext .cjs --ext .mjs",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env DEBUG_COLORS=yes NODE_ENV=test mocha test --recursive -r @babel/register --verbose --color",
-    "pre-commit": "npm run lint && npm run test"
+    "pre-commit": "npm run lint && npm run test",
+    "deps": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app.mjs",
+    "deps-execute": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/execute/app.mjs",
+    "deps-install": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/install/app.mjs",
+    "deps-deps": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/deps.sh",
+    "deps-wipe": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/wipe.sh",
+    "deps-push": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/push.sh",
+    "deps-head": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/head.sh"
   },
   "bin": {
     "deps": "bin/app.mjs",

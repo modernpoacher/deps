@@ -9,6 +9,7 @@ import {
 } from 'child_process'
 
 import {
+  VERSION,
   PLATFORM
 } from '#deps/src/common/env'
 
@@ -38,7 +39,7 @@ const OPTIONS = {
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`git\` (${PLATFORM}) is awake`)
+log(`\`git\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
 

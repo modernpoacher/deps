@@ -8,7 +8,7 @@ import {
   fileURLToPath
 } from 'node:url'
 
-const log = debug('@modernpoacher/deps')
+const log = debug('@modernpoacher/deps:where-am-i')
 
 const PATH = dirname(fileURLToPath(import.meta.url))
 

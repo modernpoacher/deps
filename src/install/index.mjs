@@ -5,14 +5,11 @@ import {
 } from 'path'
 
 import {
-  platform
-} from 'os'
-
-import {
   exec
 } from 'child_process'
 
 import {
+  VERSION,
   PLATFORM
 } from '#deps/src/common/env'
 
@@ -32,7 +29,7 @@ import {
 
 const log = debug('@modernpoacher/deps:install')
 
-log(`\`install\` (${platform}) is awake`)
+log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const OPTIONS = {
   maxBuffer: 1024 * 2000,

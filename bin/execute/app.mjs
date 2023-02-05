@@ -281,7 +281,7 @@ async function app () {
     .option('-o, --only [only]', 'Update only directory')
     .option('--registry [registry]', 'Installation registry')
     .option('--force [force]', 'Force installation`', false)
-    .option('-m, --message [author]', 'Git commit message')
+    .option('-m, --message [message]', 'Git commit message')
     .option('-a, --author [author]', 'Git commit author')
     .parse(argv)
 

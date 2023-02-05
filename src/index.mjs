@@ -9,6 +9,7 @@ import {
 } from 'child_process'
 
 import {
+  VERSION,
   PLATFORM
 } from '#deps/src/common/env'
 
@@ -31,7 +32,7 @@ import {
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`deps\` (${PLATFORM}) is awake`)
+log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const OPTIONS = {
   maxBuffer: 1024 * 2000,

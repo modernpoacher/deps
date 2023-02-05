@@ -32,7 +32,8 @@ When installed locally, or not installed, use `npx`:
 ```sh
 npx @modernpoacher/deps
 ```
-Or when installed locally, use `npm` with script targets in `package.json`:
+
+Alternatively, use `npm` with a script target in your project's `package.json`:
 
 ```json
 {
@@ -41,10 +42,13 @@ Or when installed locally, use `npm` with script targets in `package.json`:
   }
 }
 ```
+
 Then:
+
 ```sh
 npm run deps
 ```
+
 ### Updating only production dependencies
 
 To update only _production_ dependencies (on the `dependencies` field):
@@ -102,6 +106,26 @@ It should contain *JSON* and be structured as `package.json`:
 }
 ```
 
+### Author
+
+Add an `author` field to `.depsrc`:
+
+```json
+{
+  "author": "Jonathan Perry <jonathanperry@modernpoacher.com>"
+}
+```
+
+### Ignore
+
+Instruct *Deps* not to execute with an `ignore` field in `.depsrc`:
+
+```json
+{
+  "ignore": true
+}
+```
+
 Without a `.depsrc` configuration file, whenever *Deps* encounters an _exact_ version, it will assume that _an exact version should not be updated_.
 
 The `.depsrc` configuration file enables this behaviour to be changed.
@@ -128,4 +152,82 @@ Again, with the `.depsrc` configuration file as the example above:
 
 - If `package.json` defines `gulp` at version `4.0.2` then *Deps* will update to the latest version
 
-There is no other behaviour! *Deps* will update to the latest version.
+## *Deps* with the shell
+
+```bash
+deps \
+  --save-prod \ # Boolean
+  --save-dev \ # Boolean
+  --save-optional \ # Boolean
+  --save-bundle \ # Boolean
+  --registry '<REGISTRY>' \
+  --force # Boolean
+
+deps-execute \
+  --path '<PATH>' \
+  --from '<FROM>' \
+  --only '<ONLY>' \
+  --registry '<REGISTRY>' \
+  --force \ # Boolean
+  --message '<MESSAGE>' \
+  --author '<AUTHOR>'
+
+deps-install \
+  --prod \ # Boolean
+  --dev \ # Boolean
+  --optional \ # Boolean
+  --bundle \ # Boolean
+  --peer \ # Boolean
+  --save \ # Boolean
+  '--registry '<REGISTRY>' \
+  --force # Boolean
+
+deps-deps \
+  --path=. \
+  --from=. \
+  --only=.
+
+deps-wipe --path=.
+deps-push --path=.
+deps-head --path=.
+```
+
+## *Deps* with its own script targets
+
+```bash
+npm run deps -- \
+  --save-prod \ # Boolean
+  --save-dev \ # Boolean
+  --save-optional \ # Boolean
+  --save-bundle \ # Boolean
+  --registry '<REGISTRY>' \
+  --force # Boolean
+
+npm run deps-execute -- \
+  --path '<PATH>' \
+  --from '<FROM>' \
+  --only '<ONLY>' \
+  --registry '<REGISTRY>' \
+  --force \ # Boolean
+  --message '<MESSAGE>' \
+  --author '<AUTHOR>'
+
+npm run deps-install -- \
+  --prod \ # Boolean
+  --dev \ # Boolean
+  --optional \ # Boolean
+  --bundle \ # Boolean
+  --peer \ # Boolean
+  --save \ # Boolean
+  '--registry '<REGISTRY>' \
+  --force # Boolean
+
+npm run deps-deps -- \
+  --path=. \
+  --from=. \
+  --only=.
+
+npm run deps-wipe -- --path=.
+npm run deps-push -- --path=.
+npm run deps-head -- --path=.
+```

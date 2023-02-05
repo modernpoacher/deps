@@ -8,6 +8,14 @@ import {
   fileURLToPath
 } from 'node:url'
 
+const {
+  env: {
+    DEBUG = '@modernpoacher/deps*'
+  }
+} = process
+
+debug.enable(DEBUG)
+
 const log = debug('@modernpoacher/deps:where-am-i')
 
 const PATH = dirname(fileURLToPath(import.meta.url))

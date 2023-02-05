@@ -81,13 +81,17 @@ async function app () {
     }
   } = process
 
-  const PACKAGE = await hasPackage(DEPS_PATH)
-    ? await getPackage(DEPS_PATH)
-    : {}
+  const PACKAGE = (
+    await hasPackage(DEPS_PATH)
+      ? await getPackage(DEPS_PATH)
+      : {}
+  )
 
-  const CONFIGURATION = await hasConfiguration(DEPS_PATH)
-    ? await getConfiguration(DEPS_PATH)
-    : {}
+  const CONFIGURATION = (
+    await hasConfiguration(DEPS_PATH)
+      ? await getConfiguration(DEPS_PATH)
+      : {}
+  )
 
   const {
     saveProd: P,

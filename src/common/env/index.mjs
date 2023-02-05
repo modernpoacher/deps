@@ -23,7 +23,7 @@ const PLATFORM = platform()
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`env\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
+log(`\`env\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake at "${PATH}"`)
 
 export {
   NAME,

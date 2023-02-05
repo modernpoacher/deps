@@ -21,7 +21,7 @@ export const NVM = resolve(PATH, 'nvm.sh')
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
+log(`\`common\` (${VERSION} - ${PLATFORM}) is awake at "${PATH}"`)
 
 const tidy = (v) => v.replace(/\n\n/gm, String.fromCharCode(10)).trim()
 

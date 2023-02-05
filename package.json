@@ -1,6 +1,5 @@
 {
   "name": "@modernpoacher/deps",
-  "type": "module",
   "version": "2.0.2",
   "description": "Update NPM package dependencies from the command line",
   "keywords": [
@@ -12,6 +11,7 @@
     "peerDependencies"
   ],
   "main": "./index.mjs",
+  "type": "module",
   "author": "Jonathan Perry for Modern Poacher Limited <modernpoacher@modernpoacher.com>",
   "license": "MIT",
   "engines": {

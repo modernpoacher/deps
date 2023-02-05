@@ -118,6 +118,34 @@ export const getNoSaveParameter = (s, commands) => s ? commands : commands.conca
 export const getSaveExactParameter = (commands) => commands.concat(' --save-exact')
 
 /**
+ *  @function getExportPath
+ *
+ *  Get the export PATH shell script
+ *
+ *  @param {String} commands
+ *
+ *  @return {String}
+ */
+export const getExportPath = (commands) => `
+export PATH=/usr/local/bin:$PATH &> /dev/null
+${commands}
+`
+
+/**
+ *  @function getNvm
+ *
+ *  Get the NVM shell script
+ *
+ *  @param {String} commands
+ *
+ *  @return {String}
+ */
+export const getNvm = (commands) => `
+. "${NVM}" 2> /dev/null
+${commands}
+`
+
+/**
  *  @function getCommands
  *
  *  Get the installation shell script
@@ -129,11 +157,13 @@ export const getSaveExactParameter = (commands) => commands.concat(' --save-exac
  */
 
 export const getCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY, commands = 'npm i') => tidy(commands)
-  : (directory = DIRECTORY, commands = 'npm i') => tidy(`
-export PATH=/usr/local/bin:$PATH &> /dev/null
-. "${NVM}" 2> /dev/null
+  ? (directory = DIRECTORY, commands = 'npm i') => tidy(`
+echo Directory is \\"${directory}\\"
 ${commands}
+`)
+  : (directory = DIRECTORY, commands = 'npm i') => tidy(`
+echo Directory is \\"${directory}\\"
+${getExportPath(getNvm(commands))}
 `)
 
 /**

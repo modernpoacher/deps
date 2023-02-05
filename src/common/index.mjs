@@ -158,11 +158,11 @@ ${commands}
 
 export const getCommands = PLATFORM === 'win32'
   ? (directory = DIRECTORY, commands = 'npm i') => tidy(`
-echo Directory is \\"${directory}\\"
+echo Directory is \\"${directory}\\ (\\"%cd%\\")"
 ${commands}
 `)
   : (directory = DIRECTORY, commands = 'npm i') => tidy(`
-echo Directory is \\"${directory}\\"
+echo Directory is \\"${directory}\\ (\\"$PWD\\")"
 ${getExportPath(getNvm(commands))}
 `)
 

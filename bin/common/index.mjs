@@ -32,7 +32,9 @@ import {
   AUTHOR,
   NVM,
   getRegistryParameter,
-  getForceParameter
+  getForceParameter,
+  getExportPath,
+  getNvm
 } from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')
@@ -67,23 +69,20 @@ rmdir /s /q node_modules 2> nul & \
 del package-lock.json 2> nul
 `)
   : () => tidy(`
-rm -rf node_modules package-lock.json
+rm -rf node_modules \
+  package-lock.json
 `)
 
 const getNpmiCommands = PLATFORM === 'win32'
   ? (registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i')))
   : (registry = REGISTRY, force = false) => tidy(`
-export PATH=/usr/local/bin:$PATH &> /dev/null
-. "${NVM}" 2> /dev/null
-${getRegistryParameter(registry, getForceParameter(force, 'npm i'))}
+${getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'npm i'))))}
 `)
 
 const getDepsCommands = PLATFORM === 'win32'
   ? (registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'deps')))
   : (registry = REGISTRY, force = false) => tidy(`
-export PATH=/usr/local/bin:$PATH &> /dev/null
-. "${NVM}" 2> /dev/null
-${getRegistryParameter(registry, getForceParameter(force, 'deps'))}
+${getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'deps'))))}
 `)
 
 function use (key) {

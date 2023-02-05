@@ -10,11 +10,11 @@ import {
 
 const {
   env: {
-    DEBUG = '@modernpoacher/deps*'
+    DEBUG // = '@modernpoacher/deps*'
   }
 } = process
 
-debug.enable(DEBUG)
+if (DEBUG) debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps:where-am-i')
 

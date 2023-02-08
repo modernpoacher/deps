@@ -42,7 +42,9 @@ import {
   npmi,
   deps,
   hasConfiguration,
-  getConfiguration
+  getConfiguration,
+  hasPackage,
+  getPackage
 } from '#deps/bin/common'
 
 const {
@@ -103,6 +105,20 @@ async function getAuthorFromConfiguration (directory) {
   )
 }
 
+async function getAuthorFromPackage (directory) {
+  log('getAuthorFromPackage')
+
+  const PACKAGE = (
+    await hasPackage(directory)
+      ? await getPackage(directory)
+      : {}
+  )
+
+  return (
+    getAuthor(PACKAGE)
+  )
+}
+
 const filterDeps = (v) => !!v // de-falsy
 
 const reduceDeps = (a, v) => a.includes(v) ? a : a.concat(v) // de-dupe
@@ -160,7 +176,7 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
       if (D === await gitRevParse(D)) {
         const ignore = await getIgnoreFromConfiguration(D)
         if (!ignore) {
-          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D))
+          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D) || await getAuthorFromPackage(D))
         }
       }
     } catch (e) {
@@ -203,7 +219,7 @@ async function executeFrom (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D))
+          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D) || await getAuthorFromPackage(D))
         )
       }
     }
@@ -222,7 +238,7 @@ async function executeOnly (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D))
+          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D) || await getAuthorFromPackage(D))
         )
       }
     }
@@ -241,7 +257,7 @@ async function executePath (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D))
+          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D) || await getAuthorFromPackage(D))
         )
       }
     }

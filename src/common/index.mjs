@@ -241,7 +241,7 @@ export const getIgnore = ({ ignore = false } = {}) => ignore === true
  *
  *  @return {String}
  */
-export const getAuthor = ({ author } = {}) => String(author)
+export const getAuthor = ({ author } = {}) => author
 
 /**
  *  @function isPreRelease

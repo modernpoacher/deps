@@ -241,7 +241,18 @@ export const getIgnore = ({ ignore = false } = {}) => ignore === true
  *
  *  @return {String}
  */
-export const getAuthor = ({ author } = {}) => author
+export const getAuthor = ({ author } = {}) => {
+  if ((author || false) instanceof Object) {
+    const {
+      name = '',
+      email = ''
+    } = author
+
+    return `${name} ${email}`.trim() || null
+  }
+
+  return author || null
+}
 
 /**
  *  @function isPreRelease

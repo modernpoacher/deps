@@ -248,7 +248,11 @@ export const getAuthor = ({ author } = {}) => {
       email = ''
     } = author
 
-    return `${name} ${email}`.trim() || null
+    return (
+      name && email
+        ? `${name} <${email}>`.trim()
+        : null
+    )
   }
 
   return author || null

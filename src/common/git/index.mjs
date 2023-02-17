@@ -252,7 +252,11 @@ export function gitPull (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = 'git pull'
+      const commands = `
+        eval $(ssh-agent)
+        git pull
+        eval $(ssh-agent -k)
+      `.trim()
 
       const {
         stdout,
@@ -287,7 +291,11 @@ export function gitPush (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = 'git push'
+      const commands = `
+        eval $(ssh-agent)
+        git push
+        eval $(ssh-agent -k)
+      `.trim()
 
       const {
         stdout,
@@ -322,7 +330,11 @@ export function gitPushTags (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = 'git push --tags'
+      const commands = `
+        eval $(ssh-agent)
+        git push --tags
+        eval $(ssh-agent -k)
+      `.trim()
 
       const {
         stdout,

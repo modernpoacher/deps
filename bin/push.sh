@@ -44,9 +44,11 @@ function checkout_default_branch {
 }
 
 function update {
+  eval $(ssh-agent)
   git pull
   git push
   git push --tags
+  eval $(ssh-agent -k)
 }
 
 function execute {

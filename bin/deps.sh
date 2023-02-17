@@ -14,6 +14,7 @@ fi
 EXP="[-0-9a-zA-Z]*$"
 
 function update {
+  eval $(ssh-agent)
   git checkout $default_branch
   git pull
 
@@ -25,6 +26,7 @@ function update {
   git commit -m "Updated \`package.json\` &/ \`package-lock.json\`"
   git push
   git push --tags
+  eval $(ssh-agent -k)
 }
 
 function can_update {

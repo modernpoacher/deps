@@ -37,11 +37,11 @@ function checkout_default_branch {
 }
 
 function update {
-  eval $(ssh-agent)
+  eval $(ssh-agent 1> /dev/null)
   git pull
   git push
   git push --tags
-  eval $(ssh-agent -k)
+  eval $(ssh-agent -k 1> /dev/null)
 }
 
 function execute {

@@ -118,7 +118,7 @@ function getCatGitRefsRemotesOriginHeadCommands () { /* eslint-disable no-useles
   return `
 DIR=$(echo "./.git/refs/remotes/origin/HEAD'" | sed -e "s/\\//\\\\\\/g" -e "s/://" | cat 2> /dev/null)
 [[ $DIR =~ "[-0-9a-zA-Z]*$" ]]
-echo "$\{BASH_REMATCH[0]}"
+echo "\${BASH_REMATCH[0]}"
 ` /* eslint-enable no-useless-escape */
 }
 

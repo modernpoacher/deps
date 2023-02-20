@@ -253,9 +253,9 @@ export function gitPull (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const commands = `
-        eval $(ssh-agent 1> /dev/null)
+        eval $(ssh-agent) 1> /dev/null
         git pull
-        eval $(ssh-agent -k 1> /dev/null)
+        eval $(ssh-agent -k) 1> /dev/null
       `.trim()
 
       const {
@@ -292,9 +292,9 @@ export function gitPush (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const commands = `
-        eval $(ssh-agent 1> /dev/null)
+        eval $(ssh-agent) 1> /dev/null
         git push
-        eval $(ssh-agent -k 1> /dev/null)
+        eval $(ssh-agent -k) 1> /dev/null
       `.trim()
 
       const {
@@ -331,9 +331,9 @@ export function gitPushTags (directory = DIRECTORY) {
   return (
     new Promise((resolve, reject) => {
       const commands = `
-        eval $(ssh-agent 1> /dev/null)
+        eval $(ssh-agent) 1> /dev/null
         git push --tags
-        eval $(ssh-agent -k 1> /dev/null)
+        eval $(ssh-agent -k) 1> /dev/null
       `.trim()
 
       const {

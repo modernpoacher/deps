@@ -1,3 +1,13 @@
+/**
+ * A package
+ * @typedef {import('../common/index.mjs').Package} Package
+ */
+
+/**
+ * A configuration
+ * @typedef {import('../common/index.mjs').Configuration} Configuration
+ */
+
 import debug from 'debug'
 
 import {
@@ -48,12 +58,12 @@ const OPTIONS = {
  *
  *  Get the `install --save-exact` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {Boolean} s - Save
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {Package} p - Package
+ *  @param {boolean} s - Save
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
 export function getInstallSaveExactCommands (p, s, r, f) {
   log('getInstallSaveExactCommands')
@@ -71,12 +81,12 @@ export function getInstallSaveExactCommands (p, s, r, f) {
  *
  *  Get the `install` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {Boolean} s - Save
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {Package} p - Package
+ *  @param {boolean} s - Save
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
 export function getInstallCommands (p, s, r, f) {
   log('getInstallCommands')
@@ -94,26 +104,29 @@ export function getInstallCommands (p, s, r, f) {
  *
  *  Spawn the `install --save-exact` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {Object} c - Configuration
- *  @param {Boolean} s - Save
- *  @param {String} r - Registry
+ *  @param {string} d - Directory
+ *  @param {Package} p - Package
+ *  @param {Configuration} c - Configuration
+ *  @param {boolean} s - Save
+ *  @param {string} r - Registry
  *
  *  @return {Promise}
  */
 export function installSaveExact (d, p, s, r, f) {
   log('installSaveExact')
 
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
+
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallSaveExactCommands(p, s, r, f))
+      const commands = getCommands(getInstallSaveExactCommands(p, s, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -126,26 +139,29 @@ export function installSaveExact (d, p, s, r, f) {
  *
  *  Spawn the `install` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {Object} c - Configuration
- *  @param {Boolean} s - Save
- *  @param {String} r - Registry
+ *  @param {string} d - Directory
+ *  @param {Package} p - Package
+ *  @param {Configuration} c - Configuration
+ *  @param {boolean} s - Save
+ *  @param {string} r - Registry
  *
  *  @return {Promise}
  */
 export function install (d, p, s, r, f) {
   log('install')
 
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
+
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallCommands(p, s, r, f))
+      const commands = getCommands(getInstallCommands(p, s, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => (!e) ? resolve(v) : reject(e))
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => (!e) ? resolve(v) : reject(e))
 
       stdout.on('data', log)
       stderr.on('data', log)
@@ -158,11 +174,11 @@ export function install (d, p, s, r, f) {
  *
  *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {Object} c - Configuration
- *  @param {Boolean} s - Save
- *  @param {String} r - Registry
+ *  @param {string} d - Directory
+ *  @param {Package} p - Package
+ *  @param {Configuration} c - Configuration
+ *  @param {boolean} s - Save
+ *  @param {string} r - Registry
  *
  *  @return {Promise}
  */

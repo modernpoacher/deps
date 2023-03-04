@@ -1,3 +1,38 @@
+/**
+ * Package or configuration dependencies
+ * @typedef {Object.<string, string>} Dependencies
+ */
+
+/**
+ * A dependency descriptor
+ * @typedef {Object} DependencyDescriptor
+ * @property {string} name - Dependency name in NPM.
+ * @property {string} version - Dependency version or "latest".
+ */
+
+/**
+ * A package
+ * @typedef {Object} Package
+ * @property {string|{name: string, email: string}} author
+ * @property {Dependencies} dependencies - Production dependencies.
+ * @property {Dependencies} devDependencies - Development dependencies.
+ * @property {Dependencies} optionalDependencies - Optional dependencies.
+ * @property {Dependencies} bundleDependencies - Bundle dependencies.
+ * @property {Dependencies} peerDependencies - Peer dependencies
+ */
+
+/**
+ * A configuration
+ * @typedef {Object} Configuration
+ * @property {string|{name: string, email: string}} author
+ * @property {boolean} ignore
+ * @property {Dependencies} dependencies - Production dependencies.
+ * @property {Dependencies} devDependencies - Development dependencies.
+ * @property {Dependencies} optionalDependencies - Optional dependencies.
+ * @property {Dependencies} bundleDependencies - Bundle dependencies.
+ * @property {Dependencies} peerDependencies - Peer dependencies
+ */
+
 import debug from 'debug'
 
 import PATH from '#where-am-i'
@@ -30,9 +65,9 @@ const tidy = (v) => v.replace(/\n\n/gm, String.fromCharCode(10)).trim()
  *
  *  Get the `--save-prod` parameter
  *
- *  @param {String} current commands string
+ *  @param {string} current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getSaveProdParameter = (commands) => commands.concat(' --save-prod')
 
@@ -41,9 +76,9 @@ export const getSaveProdParameter = (commands) => commands.concat(' --save-prod'
  *
  *  Get the `--save-dev` parameter
  *
- *  @param {String} current commands string
+ *  @param {string} current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getSaveDevParameter = (commands) => commands.concat(' --save-dev')
 
@@ -52,9 +87,9 @@ export const getSaveDevParameter = (commands) => commands.concat(' --save-dev')
  *
  *  Get the "save bundle" parameter
  *
- *  @param {String} current commands string
+ *  @param {string} commands - Current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getSaveBundleParameter = (commands) => commands.concat(' --save-bundle')
 
@@ -63,9 +98,9 @@ export const getSaveBundleParameter = (commands) => commands.concat(' --save-bun
  *
  *  Get the `--save-optional` parameter
  *
- *  @param {String} current commands string
+ *  @param {string} commands - Current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getSaveOptionalParameter = (commands) => commands.concat(' --save-optional')
 
@@ -74,10 +109,10 @@ export const getSaveOptionalParameter = (commands) => commands.concat(' --save-o
  *
  *  Get the "registry" parameter and argument
  *
- *  @param {String} registry
- *  @param {String} current commands string
+ *  @param {string} r - Registry
+ *  @param {string} commands - Current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getRegistryParameter = (r, commands) => r ? commands.concat(` --registry ${r}`) : commands
 
@@ -86,10 +121,10 @@ export const getRegistryParameter = (r, commands) => r ? commands.concat(` --reg
  *
  *  Get the "force" parameter and argument
  *
- *  @param {String} force
- *  @param {String} current commands string
+ *  @param {boolean} f - Force
+ *  @param {string} commands - Current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getForceParameter = (f, commands) => f ? commands.concat(' --force') : commands
 
@@ -98,10 +133,10 @@ export const getForceParameter = (f, commands) => f ? commands.concat(' --force'
  *
  *  Get the `--no-save` parameter
  *
- *  @param {Boolean} save
- *  @param {String} current commands string
+ *  @param {boolean} s - Save
+ *  @param {string} commands - Current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getNoSaveParameter = (s, commands) => s ? commands : commands.concat(' --no-save')
 
@@ -110,10 +145,9 @@ export const getNoSaveParameter = (s, commands) => s ? commands : commands.conca
  *
  *  Get the `--save-exact` parameter
  *
- *  @param {Boolean} exact
- *  @param {String} current commands string
+ *  @param {string} commands - Current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getSaveExactParameter = (commands) => commands.concat(' --save-exact')
 
@@ -122,9 +156,9 @@ export const getSaveExactParameter = (commands) => commands.concat(' --save-exac
  *
  *  Get the export PATH shell script
  *
- *  @param {String} commands
+ *  @param {string} commands - Current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getExportPath = (commands) => `
 export PATH=/usr/local/bin:$PATH &> /dev/null
@@ -136,9 +170,9 @@ ${commands}
  *
  *  Get the NVM shell script
  *
- *  @param {String} commands
+ *  @param {string} commands - Current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 export const getNvm = (commands) => `
 . "${NVM}" 2> /dev/null
@@ -150,30 +184,23 @@ ${commands}
  *
  *  Get the installation shell script
  *
- *  @param {String} directory
- *  @param {String} commands
+ *  @param {string} commands - Current commands string
  *
- *  @return {String}
+ *  @return {string}
  */
 
 export const getCommands = PLATFORM === 'win32'
-  ? (directory = DIRECTORY, commands = 'npm i') => tidy(`
-echo Directory is \\"${directory}\\"
-${commands}
-`)
-  : (directory = DIRECTORY, commands = 'npm i') => tidy(`
-echo Directory is \\"${directory}\\"
-${getExportPath(getNvm(commands))}
-`)
+  ? (commands = 'npm i') => tidy(commands)
+  : (commands = 'npm i') => tidy(getExportPath(getNvm(commands)))
 
 /**
  *  @function getProdDependencies
  *
  *  Get the production dependencies by destructuring the package or configuration
  *
- *  @param {Object} package
+ *  @param {Package|Configuration}
  *
- *  @return {Object}
+ *  @return {Dependencies}
  */
 export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
 
@@ -182,9 +209,9 @@ export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
  *
  *  Get the development dependencies by destructuring the package or configuration
  *
- *  @param {Object} package
+ *  @param {Package|Configuration}
  *
- *  @return {Object}
+ *  @return {Dependencies}
  */
 export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependencies
 
@@ -193,9 +220,9 @@ export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependen
  *
  *  Get the optional dependencies by destructuring the package or configuration
  *
- *  @param {Object} package
+ *  @param {Package|Configuration}
  *
- *  @return {Object}
+ *  @return {Dependencies}
  */
 export const getOptionalDependencies = ({ optionalDependencies = {} } = {}) => optionalDependencies
 
@@ -204,20 +231,20 @@ export const getOptionalDependencies = ({ optionalDependencies = {} } = {}) => o
  *
  *  Get the bundle dependencies by destructuring the package or configuration
  *
- *  @param {Object} package
+ *  @param {Package|Configuration}
  *
- *  @return {Object}
+ *  @return {Dependencies}
  */
-export const getBundleDependencies = ({ bundleDependencies = [] } = {}) => bundleDependencies
+export const getBundleDependencies = ({ bundleDependencies = {} } = {}) => bundleDependencies
 
 /**
  *  @function getPeerDependencies
  *
  *  Get the peer dependencies by destructuring the package or configuration
  *
- *  @param {Object} package
+ *  @param {Package|Configuration}
  *
- *  @return {Object}
+ *  @return {Dependencies}
  */
 export const getPeerDependencies = ({ peerDependencies } = {}) => peerDependencies
 
@@ -226,9 +253,9 @@ export const getPeerDependencies = ({ peerDependencies } = {}) => peerDependenci
  *
  *  Get the ignore flag by destructuring the package or configuration
  *
- *  @param {Object} package
+ *  @param {Package|Configuration}
  *
- *  @return {Boolean}
+ *  @return {boolean}
  */
 export const getIgnore = ({ ignore = false } = {}) => ignore === true
 
@@ -237,20 +264,23 @@ export const getIgnore = ({ ignore = false } = {}) => ignore === true
  *
  *  Get the author by destructuring the package or configuration
  *
- *  @param {Object} package
+ *  @param {Package|Configuration}
  *
- *  @return {String}
+ *  @return {string|null}
  */
-export const getAuthor = ({ author } = {}) => {
+export const getAuthor = ({ author = '' } = {}) => {
   if ((author || false) instanceof Object) {
     const {
-      name = '',
-      email = ''
+      name: NAME = '',
+      email: EMAIL = ''
     } = author
+
+    const name = String(NAME).trim()
+    const email = String(EMAIL).trim()
 
     return (
       name && email
-        ? `${name} <${email}>`.trim()
+        ? `${name} <${email}>`
         : null
     )
   }
@@ -263,9 +293,9 @@ export const getAuthor = ({ author } = {}) => {
  *
  *  Determine whether the dependency is a pre-release with a Regular Expression
  *
- *  @param {String} v
+ *  @param {string} v
  *
- *  @return {Boolean}
+ *  @return {boolean}
  */
 export const isPreRelease = (v) => /-/.test(v)
 
@@ -274,9 +304,9 @@ export const isPreRelease = (v) => /-/.test(v)
  *
  *  Determine whether the dependency is exact with a Regular Expression
  *
- *  @param {String} v
+ *  @param {string} v
  *
- *  @return {Boolean}
+ *  @return {boolean}
  */
 export const isExact = (v) => /^\d/.test(v)
 
@@ -285,19 +315,19 @@ export const isExact = (v) => /^\d/.test(v)
  *
  *  Get an array of dependencies to be installed with the `--save-exact` parameter
  *
- *  @param {Object} values
- *  @param {Object} configuration
+ *  @param {Dependencies} packageDependencies - Package dependencies
+ *  @param {Dependencies} configurationDependencies - Configuration dependencies
  *
- *  @return {Array}
+ *  @return {DependencyDescriptor[]}
  */
-export function getDepsExact (values, configuration) {
+export function getDepsExact (packageDependencies, configurationDependencies) {
   log('getDepsExact')
 
   return (
-    Object.entries(values)
+    Object.entries(packageDependencies)
       .reduce((accumulator, [name, version]) => (
         isExact(version)
-          ? accumulator.concat({ name, version: Reflect.has(configuration, name) ? Reflect.get(configuration, name) : version })
+          ? accumulator.concat({ name, version: Reflect.has(configurationDependencies, name) ? Reflect.get(configurationDependencies, name) : version })
           : accumulator
       ), [])
   )
@@ -308,15 +338,15 @@ export function getDepsExact (values, configuration) {
  *
  *  Get an array of dependencies to be installed
  *
- *  @param {Object} values
+ *  @param {Dependencies} packageDependencies - Package dependencies
  *
- *  @return {Array}
+ *  @return {DependencyDescriptor[]}
  */
-export function getDeps (values) {
+export function getDeps (packageDependencies) {
   log('getDeps')
 
   return (
-    Object.entries(values)
+    Object.entries(packageDependencies)
       .reduce((accumulator, [name, version]) => (
         isExact(version)
           ? accumulator
@@ -332,9 +362,9 @@ export function getDeps (values) {
  *
  *  Normalise the commands string
  *
- *  @param {String} value
+ *  @param {string} value
  *
- *  @return {String}
+ *  @return {string}
  */
 export function normalizeCommands (value) {
   while (/\s\s|\n/.test(value)) {
@@ -351,9 +381,9 @@ export function normalizeCommands (value) {
  *
  *  Transform by destructuring the value
  *
- *  @param {Object}
+ *  @param {DependencyDescriptor}
  *
- *  @return {String}
+ *  @return {string}
  */
 export const transformDependency = ({ name = '@modernpoacher/deps', version = 'latest' } = {}) => `${name}@${version}`
 
@@ -362,9 +392,9 @@ export const transformDependency = ({ name = '@modernpoacher/deps', version = 'l
  *
  *  Transform the parameter to a string
  *
- *  @param {(Array|Object)} value
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} value
  *
- *  @return {String}
+ *  @return {string}
  */
 export function transform (value) {
   log('transform')

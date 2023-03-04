@@ -25,6 +25,30 @@ export const MESSAGE = PLATFORM === 'win32'
 
 export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
 
+const CAT_GIT_REFS_REMOTES_ORIGIN_HEAD = `
+DIR=$(echo "./.git/refs/remotes/origin/HEAD'" | sed -e "s/\\//\\\\\\/g" -e "s/://" | cat 2> /dev/null)
+[[ $DIR =~ "[-0-9a-zA-Z]*$" ]]
+echo "\${BASH_REMATCH[0]}"
+`
+
+const GIT_PULL = `
+eval $(ssh-agent) 1> /dev/null
+git pull
+eval $(ssh-agent -k) 1> /dev/null
+`
+
+const GIT_PUSH = `
+eval $(ssh-agent) 1> /dev/null
+git push
+eval $(ssh-agent -k) 1> /dev/null
+`
+
+const GIT_PUSH_TAGS = `
+eval $(ssh-agent) 1> /dev/null
+git push --tags
+eval $(ssh-agent -k) 1> /dev/null
+`
+
 const OPTIONS = {
   maxBuffer: 1024 * 2000,
   shell: true,
@@ -90,7 +114,7 @@ function err (key, directory) {
  *
  *  @param {Error}
  *
- *  @return {Number}
+ *  @return {number}
  */
 const getErrorCode = ({ code = 0 } = {}) => code
 
@@ -101,26 +125,9 @@ const getErrorCode = ({ code = 0 } = {}) => code
  *
  *  @param {Error}
  *
- *  @return {String}
+ *  @return {string}
  */
 const getErrorMessage = ({ message = '' } = {}) => message
-
-/**
- *  @function getCatGitRefsRemotesOriginHeadCommands
- *
- *  Compatible with MacOS and Windows
- *
- *  @return {String}
- */
-function getCatGitRefsRemotesOriginHeadCommands () { /* eslint-disable no-useless-escape */
-  log('getCatGitRefsRemotesOriginHeadCommands')
-
-  return `
-DIR=$(echo "./.git/refs/remotes/origin/HEAD'" | sed -e "s/\\//\\\\\\/g" -e "s/://" | cat 2> /dev/null)
-[[ $DIR =~ "[-0-9a-zA-Z]*$" ]]
-echo "\${BASH_REMATCH[0]}"
-` /* eslint-enable no-useless-escape */
-}
 
 /**
  *  @function isCommandError
@@ -129,7 +136,7 @@ echo "\${BASH_REMATCH[0]}"
  *
  *  @param {Error}
  *
- *  @return {Boolean}
+ *  @return {boolean}
  */
 function isCommandError (e) {
   log('isCommandError')
@@ -145,7 +152,7 @@ function isCommandError (e) {
  *
  *  Get the default branch from `.git/refs/remotes/origin/HEAD`
  *
- *  @param {String} directory - A directory configured for Git
+ *  @param {string} directory - A directory configured for Git
  *
  *  @return {Promise}
  */
@@ -154,7 +161,7 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCatGitRefsRemotesOriginHeadCommands()
+      const commands = CAT_GIT_REFS_REMOTES_ORIGIN_HEAD.trim()
 
       const {
         stdout,
@@ -176,7 +183,7 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
  *
  *  Determine whether a directory is configured for Git
  *
- *  @param {String} directory - A directory
+ *  @param {string} directory - A directory
  *
  *  @return {Promise}
  */
@@ -207,8 +214,8 @@ export function gitRevParse (directory = DIRECTORY) {
  *
  *  Switch to the default value if none is supplied
  *
- *  @param {String} directory - A directory configured for Git
- *  @param {String} branch - The Git branch
+ *  @param {string} directory - A directory configured for Git
+ *  @param {string} branch - The Git branch
  *
  *  @return {Promise}
  */
@@ -243,7 +250,7 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
  *
  *  Pull changes from the Git remote
  *
- *  @param {String} directory - A directory configured for Git
+ *  @param {string} directory - A directory configured for Git
  *
  *  @return {Promise}
  */
@@ -252,11 +259,7 @@ export function gitPull (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = `
-        eval $(ssh-agent) 1> /dev/null
-        git pull
-        eval $(ssh-agent -k) 1> /dev/null
-      `.trim()
+      const commands = GIT_PULL.trim()
 
       const {
         stdout,
@@ -282,7 +285,7 @@ export function gitPull (directory = DIRECTORY) {
  *
  *  Push changes to the Git remote
  *
- *  @param {String} directory - A directory configured for Git
+ *  @param {string} directory - A directory configured for Git
  *
  *  @return {Promise}
  */
@@ -291,11 +294,7 @@ export function gitPush (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = `
-        eval $(ssh-agent) 1> /dev/null
-        git push
-        eval $(ssh-agent -k) 1> /dev/null
-      `.trim()
+      const commands = GIT_PUSH.trim()
 
       const {
         stdout,
@@ -321,7 +320,7 @@ export function gitPush (directory = DIRECTORY) {
  *
  *  Push tags changes to the Git remote
  *
- *  @param {String} directory - A directory configured for Git
+ *  @param {string} directory - A directory configured for Git
  *
  *  @return {Promise}
  */
@@ -330,11 +329,7 @@ export function gitPushTags (directory = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = `
-        eval $(ssh-agent) 1> /dev/null
-        git push --tags
-        eval $(ssh-agent -k) 1> /dev/null
-      `.trim()
+      const commands = GIT_PUSH_TAGS.trim()
 
       const {
         stdout,
@@ -360,8 +355,8 @@ export function gitPushTags (directory = DIRECTORY) {
  *
  *  Add changes to Git with a default value if none is supplied
  *
- *  @param {String} directory - A directory configured for Git
- *  @param {String} add - An add parameter
+ *  @param {string} directory - A directory configured for Git
+ *  @param {string} add - An add parameter
  *
  *  @return {Promise}
  */
@@ -396,8 +391,8 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
  *
  *  Commit changes to Git with a default value if none is supplied
  *
- *  @param {String} directory - A directory configured for Git
- *  @param {String} message - A commit message
+ *  @param {string} directory - A directory configured for Git
+ *  @param {string} message - A commit message
  *
  *  @return {Promise}
  */

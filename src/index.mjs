@@ -1,3 +1,13 @@
+/**
+ * Package or configuration dependencies
+ * @typedef {import('./common/index.mjs').Dependencies} Dependencies
+ */
+
+/**
+ * Dependency descriptor
+ * @typedef {import('./common/index.mjs').DependencyDescriptor} DependencyDescriptor
+ */
+
 import debug from 'debug'
 
 import {
@@ -65,16 +75,16 @@ function use (key) {
  *
  *  Get the `npm install --save-exact` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallSaveExactCommands (p, r, f) {
+export function getInstallSaveExactCommands (deps, r, f) {
   log('getInstallSaveExactCommands')
 
-  const c = transform(p)
+  const c = transform(deps)
   const commands = `npm i ${c}`
 
   return normalizeCommands(
@@ -87,16 +97,16 @@ export function getInstallSaveExactCommands (p, r, f) {
  *
  *  Get the `npm install` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallCommands (p, r, f) {
+export function getInstallCommands (deps, r, f) {
   log('getInstallCommands')
 
-  const c = transform(p)
+  const c = transform(deps)
   const commands = `npm i ${c}`
 
   return normalizeCommands(
@@ -109,16 +119,16 @@ export function getInstallCommands (p, r, f) {
  *
  *  Get the `npm install --save-bundle --save-exact` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallSaveBundleSaveExactCommands (p, r, f) {
+export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
   log('getInstallSaveBundleSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, r, f)
+  const commands = getInstallSaveExactCommands(deps, r, f)
 
   return normalizeCommands(
     getSaveBundleParameter(commands)
@@ -130,16 +140,16 @@ export function getInstallSaveBundleSaveExactCommands (p, r, f) {
  *
  *  Get the `npm install --save-bundle` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallSaveBundleCommands (p, r, f) {
+export function getInstallSaveBundleCommands (deps, r, f) {
   log('getInstallSaveBundleCommands')
 
-  const commands = getInstallCommands(p, r, f)
+  const commands = getInstallCommands(deps, r, f)
 
   return normalizeCommands(
     getSaveBundleParameter(commands)
@@ -151,16 +161,16 @@ export function getInstallSaveBundleCommands (p, r, f) {
  *
  *  Get the `npm install --save-optional --save-exact` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallSaveOptionalSaveExactCommands (p, r, f) {
+export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
   log('getInstallSaveOptionalSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, r, f)
+  const commands = getInstallSaveExactCommands(deps, r, f)
 
   return normalizeCommands(
     getSaveOptionalParameter(commands)
@@ -172,16 +182,16 @@ export function getInstallSaveOptionalSaveExactCommands (p, r, f) {
  *
  *  Get the `npm install --save-optional` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallSaveOptionalCommands (p, r, f) {
+export function getInstallSaveOptionalCommands (deps, r, f) {
   log('getInstallSaveOptionalCommands')
 
-  const commands = getInstallCommands(p, r, f)
+  const commands = getInstallCommands(deps, r, f)
 
   return normalizeCommands(
     getSaveOptionalParameter(commands)
@@ -193,16 +203,16 @@ export function getInstallSaveOptionalCommands (p, r, f) {
  *
  *  Get the `npm install --save-dev --save-exact` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallSaveDevSaveExactCommands (p, r, f) {
+export function getInstallSaveDevSaveExactCommands (deps, r, f) {
   log('getInstallSaveDevSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, r, f)
+  const commands = getInstallSaveExactCommands(deps, r, f)
 
   return normalizeCommands(
     getSaveDevParameter(commands)
@@ -214,16 +224,16 @@ export function getInstallSaveDevSaveExactCommands (p, r, f) {
  *
  *  Get the `npm install --save-dev` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallSaveDevCommands (p, r, f) {
+export function getInstallSaveDevCommands (deps, r, f) {
   log('getInstallSaveDevCommands')
 
-  const commands = getInstallCommands(p, r, f)
+  const commands = getInstallCommands(deps, r, f)
 
   return normalizeCommands(
     getSaveDevParameter(commands)
@@ -235,16 +245,16 @@ export function getInstallSaveDevCommands (p, r, f) {
  *
  *  Get the `npm install --save-prod --save-exact` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallSaveProdSaveExactCommands (p, r, f) {
+export function getInstallSaveProdSaveExactCommands (deps, r, f) {
   log('getInstallSaveProdSaveExactCommands')
 
-  const commands = getInstallSaveExactCommands(p, r, f)
+  const commands = getInstallSaveExactCommands(deps, r, f)
 
   return normalizeCommands(
     getSaveProdParameter(commands)
@@ -256,16 +266,16 @@ export function getInstallSaveProdSaveExactCommands (p, r, f) {
  *
  *  Get the `npm install --save-prod` commands as a string of parameters and arguments
  *
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Array}
+ *  @return {string}
  */
-export function getInstallSaveProdCommands (p, r, f) {
+export function getInstallSaveProdCommands (deps, r, f) {
   log('getInstallSaveProdCommands')
 
-  const commands = getInstallCommands(p, r, f)
+  const commands = getInstallCommands(deps, r, f)
 
   return normalizeCommands(
     getSaveProdParameter(commands)
@@ -277,25 +287,28 @@ export function getInstallSaveProdCommands (p, r, f) {
  *
  *  Spawn the `npm install --save-bundle --save-exact` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export function installSaveBundleSaveExact (d, p, r, f) {
+export function installSaveBundleSaveExact (d, deps, r, f) {
   log('installSaveBundleSaveExact')
+
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallSaveBundleSaveExactCommands(p, r, f))
+      const commands = getCommands(getInstallSaveBundleSaveExactCommands(deps, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -314,25 +327,28 @@ export function installSaveBundleSaveExact (d, p, r, f) {
  *
  *  Spawn the `npm install --save-bundle` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export function installSaveBundle (d, p, r, f) {
+export function installSaveBundle (d, deps, r, f) {
   log('installSaveBundle')
+
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallSaveBundleCommands(p, r, f))
+      const commands = getCommands(getInstallSaveBundleCommands(deps, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -351,25 +367,28 @@ export function installSaveBundle (d, p, r, f) {
  *
  *  Spawn the `npm install --save-optional --save-exact` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export function installSaveOptionalSaveExact (d, p, r, f) {
+export function installSaveOptionalSaveExact (d, deps, r, f) {
   log('installSaveOptionalSaveExact')
+
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallSaveOptionalSaveExactCommands(p, r, f))
+      const commands = getCommands(getInstallSaveOptionalSaveExactCommands(deps, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -388,25 +407,28 @@ export function installSaveOptionalSaveExact (d, p, r, f) {
  *
  *  Spawn the `npm install --save-optional` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {Dependencies} dependencies - Dependencies
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export function installSaveOptional (d, p, r, f) {
+export function installSaveOptional (d, dependencies, r, f) {
   log('installSaveOptional')
+
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallSaveOptionalCommands(p, r, f))
+      const commands = getCommands(getInstallSaveOptionalCommands(dependencies, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -425,25 +447,28 @@ export function installSaveOptional (d, p, r, f) {
  *
  *  Spawn the `npm install --save-dev --save-exact` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export function installSaveDevSaveExact (d, p, r, f) {
+export function installSaveDevSaveExact (d, deps, r, f) {
   log('installSaveDevSaveExact')
+
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallSaveDevSaveExactCommands(p, r, f))
+      const commands = getCommands(getInstallSaveDevSaveExactCommands(deps, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -462,25 +487,28 @@ export function installSaveDevSaveExact (d, p, r, f) {
  *
  *  Spawn the `npm install --save-dev` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export function installSaveDev (d, p, r, f) {
+export function installSaveDev (d, deps, r, f) {
   log('installSaveDev')
+
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallSaveDevCommands(p, r, f))
+      const commands = getCommands(getInstallSaveDevCommands(deps, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -499,25 +527,28 @@ export function installSaveDev (d, p, r, f) {
  *
  *  Spawn the `npm install --save-prod --save-exact` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export function installSaveProdSaveExact (d, p, r, f) {
+export function installSaveProdSaveExact (d, deps, r, f) {
   log('installSaveProdSaveExact')
+
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallSaveProdSaveExactCommands(p, r, f))
+      const commands = getCommands(getInstallSaveProdSaveExactCommands(deps, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -536,25 +567,28 @@ export function installSaveProdSaveExact (d, p, r, f) {
  *
  *  Spawn the `npm install --save-prod` commands
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export function installSaveProd (d, p, r, f) {
+export function installSaveProd (d, deps, r, f) {
   log('installSaveProd')
+
+  const directory = normalize(d)
+
+  log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
-      const D = normalize(d)
-      const commands = getCommands(D, getInstallSaveProdCommands(p, r, f))
+      const commands = getCommands(getInstallSaveProdCommands(deps, r, f))
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: D }, (e, v) => {
+      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -573,24 +607,24 @@ export function installSaveProd (d, p, r, f) {
  *
  *  Execute the `npm install --save-bundle --save-exact` and `npm install --save-bundle` commands according to configuration and parameters
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {Object} c - Configuration
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {Dependencies} packageDependencies - Package dependencies
+ *  @param {Dependencies} configurationDependencies - Configuration dependencies
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export async function executeBundle (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false) {
+export async function executeBundle (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeBundle')
 
-  const depsExact = getDepsExact(packages, configuration)
+  const depsExact = getDepsExact(packageDependencies, configurationDependencies)
 
-  if (depsExact.length) await installSaveBundleSaveExact(directory, depsExact, registry, force)
+  if (depsExact.length) await installSaveBundleSaveExact(d, depsExact, r, f)
 
-  const deps = getDeps(packages)
+  const deps = getDeps(packageDependencies)
 
-  if (deps.length) await installSaveBundle(directory, deps, registry, force)
+  if (deps.length) await installSaveBundle(d, deps, r, f)
 }
 
 /**
@@ -598,24 +632,24 @@ export async function executeBundle (directory = DIRECTORY, packages = {}, confi
  *
  *  Execute the `npm install --save-optional --save-exact` and `npm install --save-optional` commands according to configuration and parameters
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {Object} c - Configuration
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {Dependencies} packageDependencies - Package dependencies
+ *  @param {Dependencies} configurationDependencies - Configuration dependencies
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export async function executeOptional (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false) {
+export async function executeOptional (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeOptional')
 
-  const depsExact = getDepsExact(packages, configuration)
+  const depsExact = getDepsExact(packageDependencies, configurationDependencies)
 
-  if (depsExact.length) await installSaveOptionalSaveExact(directory, depsExact, registry, force)
+  if (depsExact.length) await installSaveOptionalSaveExact(d, depsExact, r, f)
 
-  const deps = getDeps(packages)
+  const deps = getDeps(packageDependencies)
 
-  if (deps.length) await installSaveOptional(directory, deps, registry, force)
+  if (deps.length) await installSaveOptional(d, deps, r, f)
 }
 
 /**
@@ -623,24 +657,24 @@ export async function executeOptional (directory = DIRECTORY, packages = {}, con
  *
  *  Execute the `npm install --save-dev --save-exact` and `npm install --save-dev` commands according to configuration and parameters
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {Object} c - Configuration
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {Dependencies} packageDependencies - Package dependencies
+ *  @param {Dependencies} configurationDependencies - Configuration dependencies
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export async function executeDev (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false) {
+export async function executeDev (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeDev')
 
-  const depsExact = getDepsExact(packages, configuration)
+  const depsExact = getDepsExact(packageDependencies, configurationDependencies)
 
-  if (depsExact.length) await installSaveDevSaveExact(directory, depsExact, registry, force)
+  if (depsExact.length) await installSaveDevSaveExact(d, depsExact, r, f)
 
-  const deps = getDeps(packages)
+  const deps = getDeps(packageDependencies)
 
-  if (deps.length) await installSaveDev(directory, deps, registry, force)
+  if (deps.length) await installSaveDev(d, deps, r, f)
 }
 
 /**
@@ -648,22 +682,22 @@ export async function executeDev (directory = DIRECTORY, packages = {}, configur
  *
  *  Execute the `npm install --save-prod --save-exact` and `npm install --save-prod` commands according to configuration and parameters
  *
- *  @param {String} d - Directory
- *  @param {Object} p - Packages
- *  @param {Object} c - Configuration
- *  @param {String} r - Registry
- *  @param {Boolean} f - Force
+ *  @param {string} d - Directory
+ *  @param {Dependencies} packageDependencies - Package dependencies
+ *  @param {Dependencies} configurationDependencies - Configuration dependencies
+ *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
  *  @return {Promise}
  */
-export async function executeProd (directory = DIRECTORY, packages = {}, configuration = {}, registry = REGISTRY, force = false) {
+export async function executeProd (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeProd')
 
-  const depsExact = getDepsExact(packages, configuration)
+  const depsExact = getDepsExact(packageDependencies, configurationDependencies)
 
-  if (depsExact.length) await installSaveProdSaveExact(directory, depsExact, registry, force)
+  if (depsExact.length) await installSaveProdSaveExact(d, depsExact, r, f)
 
-  const deps = getDeps(packages)
+  const deps = getDeps(packageDependencies)
 
-  if (deps.length) await installSaveProd(directory, deps, registry, force)
+  if (deps.length) await installSaveProd(d, deps, r, f)
 }

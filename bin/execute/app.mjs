@@ -77,6 +77,14 @@ function handleCommandError (e) {
   }
 }
 
+/**
+ * @function getIgnoreFromConfiguration
+ *
+ * Interrogates `.depsrc` or `.depsrc.json` for an `ignore` value
+ *
+ * @param {string} directory
+ * @returns {Promise<boolean>}
+ */
 async function getIgnoreFromConfiguration (directory) {
   log('getIgnoreFromConfiguration')
 
@@ -91,6 +99,14 @@ async function getIgnoreFromConfiguration (directory) {
   )
 }
 
+/**
+ * @function getAuthorFromConfiguration
+ *
+ * Interrogates `.depsrc` or `.depsrc.json` for an `author` value
+ *
+ * @param {string} directory
+ * @returns {Promise<string|null>}
+ */
 async function getAuthorFromConfiguration (directory) {
   log('getAuthorFromConfiguration')
 
@@ -105,6 +121,14 @@ async function getAuthorFromConfiguration (directory) {
   )
 }
 
+/**
+ * @function getAuthorFromPackage
+ *
+ * Interrogates `package.json` for an `author` value
+ *
+ * @param {string} directory
+ * @returns {Promise<string|null>}
+ */
 async function getAuthorFromPackage (directory) {
   log('getAuthorFromPackage')
 
@@ -117,6 +141,22 @@ async function getAuthorFromPackage (directory) {
   return (
     getAuthor(PACKAGE)
   )
+}
+
+/**
+ * @function toAuthor
+ *
+ * Ensures that the `author` is set either from the command line,
+ * configuration, package, or a default
+ *
+ * Since it can be null `author` may not default in function arguments
+ *
+ * @param {string|null} author
+ * @param {string} directory
+ * @returns {Promise<string>}
+ */
+async function toAuthor (author, directory) {
+  return author || await getAuthorFromConfiguration(directory) || await getAuthorFromPackage(directory) || AUTHOR
 }
 
 const filterDeps = (v) => !!v // de-falsy
@@ -176,7 +216,7 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
       if (D === await gitRevParse(D)) {
         const ignore = await getIgnoreFromConfiguration(D)
         if (!ignore) {
-          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D) || await getAuthorFromPackage(D))
+          await execute(D, registry, force, message, toAuthor(author, D))
         }
       }
     } catch (e) {
@@ -219,7 +259,7 @@ async function executeFrom (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D) || await getAuthorFromPackage(D))
+          await execute(D, registry, force, message, toAuthor(author, D))
         )
       }
     }
@@ -238,7 +278,7 @@ async function executeOnly (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D) || await getAuthorFromPackage(D))
+          await execute(D, registry, force, message, toAuthor(author, D))
         )
       }
     }
@@ -257,7 +297,7 @@ async function executePath (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, author || await getAuthorFromConfiguration(D) || await getAuthorFromPackage(D))
+          await execute(D, registry, force, message, toAuthor(author, D))
         )
       }
     }
@@ -316,7 +356,9 @@ async function app () {
     ...(F ? { from: F } : {}),
     ...(O ? { only: O } : {}),
     ...(registry ? { registry } : {}),
-    ...(force ? { force } : {})
+    ...(force ? { force } : {}),
+    ...(message ? { message } : {}),
+    ...(author ? { author } : {})
   })
 
   if (P || (!F && !O)) {

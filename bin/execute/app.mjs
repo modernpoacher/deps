@@ -33,7 +33,8 @@ import {
 import {
   REGISTRY,
   getIgnore,
-  getAuthor
+  getAuthor,
+  getMessage
 } from '#deps/src/common'
 
 import {
@@ -144,6 +145,28 @@ async function getAuthorFromPackage (directory) {
 }
 
 /**
+ * @function getMessageFromConfiguration
+ *
+ * Interrogates `.depsrc` or `.depsrc.json` for a `message` value
+ *
+ * @param {string} directory
+ * @returns {Promise<string|null>}
+ */
+async function getMessageFromConfiguration (directory) {
+  log('getMessageFromConfiguration')
+
+  const CONFIGURATION = (
+    await hasConfiguration(directory)
+      ? await getConfiguration(directory)
+      : {}
+  )
+
+  return (
+    getMessage(CONFIGURATION)
+  )
+}
+
+/**
  * @function toAuthor
  *
  * Ensures that the `author` is set either from the command line,
@@ -157,6 +180,22 @@ async function getAuthorFromPackage (directory) {
  */
 async function toAuthor (author, directory) {
   return author || await getAuthorFromConfiguration(directory) || await getAuthorFromPackage(directory) || AUTHOR
+}
+
+/**
+ * @function toMessage
+ *
+ * Ensures that the `message` is set either from the command line,
+ * configuration, or a default
+ *
+ * Since it can be null `message` may not default in function arguments
+ *
+ * @param {string|null} message
+ * @param {string} directory
+ * @returns {Promise<string>}
+ */
+async function toMessage (message, directory) {
+  return message || await getMessageFromConfiguration(directory) || MESSAGE
 }
 
 const filterDeps = (v) => !!v // de-falsy
@@ -216,7 +255,7 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
       if (D === await gitRevParse(D)) {
         const ignore = await getIgnoreFromConfiguration(D)
         if (!ignore) {
-          await execute(D, registry, force, message, await toAuthor(author, D))
+          await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
         }
       }
     } catch (e) {
@@ -259,7 +298,7 @@ async function executeFrom (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, await toAuthor(author, D))
+          await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
         )
       }
     }
@@ -278,7 +317,7 @@ async function executeOnly (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, await toAuthor(author, D))
+          await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
         )
       }
     }
@@ -297,7 +336,7 @@ async function executePath (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, await toAuthor(author, D))
+          await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
         )
       }
     }

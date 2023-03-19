@@ -250,9 +250,9 @@ export const getPeerDependencies = ({ peerDependencies } = {}) => peerDependenci
 /**
  *  @function getIgnore
  *
- *  Get the ignore flag by destructuring the package or configuration
+ *  Get the ignore flag by destructuring the configuration
  *
- *  @param {Package|Configuration}
+ *  @param {Configuration}
  *
  *  @return {boolean}
  */
@@ -286,6 +286,17 @@ export const getAuthor = ({ author = '' } = {}) => {
 
   return author || null
 }
+
+/**
+ *  @function getMessage
+ *
+ *  Get the message by destructuring the configuration
+ *
+ *  @param {Configuration}
+ *
+ *  @return {string|null}
+ */
+export const getMessage = ({ message = '' } = {}) => message || null
 
 /**
  *  @function isPreRelease

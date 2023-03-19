@@ -383,7 +383,7 @@ describe('#deps/src/common', () => {
   })
 
   describe('`normalizeCommands()`', () => {
-    describe('Leading and trailing whitespace', () => {
+    describe('Leading and trailing whitespace around commands', () => {
       describe('A single line', () => {
         it('returns a string without leading or trailing whitespce', () => {
           return expect(normalizeCommands('   commands   '))
@@ -395,6 +395,22 @@ describe('#deps/src/common', () => {
         it('returns a string without leading or trailing whitespce', () => {
           return expect(normalizeCommands('   \n   \n\n\n \n\n\n commands\n\n\n   \n\n\n commands \n   \n\n\n \n\n\n   '))
             .to.equal('commands commands')
+        })
+      })
+    })
+
+    describe('Whitespace between commands', () => {
+      describe('A single line', () => {
+        it('returns a string with single whitespace characters between commands', () => {
+          return expect(normalizeCommands('commands   commands commands   commands'))
+            .to.equal('commands commands commands commands')
+        })
+      })
+
+      describe('Multiple lines', () => {
+        it('returns a string without leading or trailing whitespce', () => {
+          return expect(normalizeCommands('   \n   \n\n\n \n\n\n commands   commands commands   commands\n\n\n   \n\n\n commands   commands commands   commands \n   \n\n\n \n\n\n   '))
+            .to.equal('commands commands commands commands commands commands commands commands')
         })
       })
     })

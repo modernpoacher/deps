@@ -292,7 +292,7 @@ export function getInstallSaveProdCommands (deps, r, f) {
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function installSaveBundleSaveExact (d, deps, r, f) {
   log('installSaveBundleSaveExact')
@@ -332,7 +332,7 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function installSaveBundle (d, deps, r, f) {
   log('installSaveBundle')
@@ -372,7 +372,7 @@ export function installSaveBundle (d, deps, r, f) {
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function installSaveOptionalSaveExact (d, deps, r, f) {
   log('installSaveOptionalSaveExact')
@@ -412,7 +412,7 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function installSaveOptional (d, dependencies, r, f) {
   log('installSaveOptional')
@@ -452,7 +452,7 @@ export function installSaveOptional (d, dependencies, r, f) {
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function installSaveDevSaveExact (d, deps, r, f) {
   log('installSaveDevSaveExact')
@@ -492,7 +492,7 @@ export function installSaveDevSaveExact (d, deps, r, f) {
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function installSaveDev (d, deps, r, f) {
   log('installSaveDev')
@@ -532,7 +532,7 @@ export function installSaveDev (d, deps, r, f) {
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function installSaveProdSaveExact (d, deps, r, f) {
   log('installSaveProdSaveExact')
@@ -572,7 +572,7 @@ export function installSaveProdSaveExact (d, deps, r, f) {
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function installSaveProd (d, deps, r, f) {
   log('installSaveProd')
@@ -613,7 +613,7 @@ export function installSaveProd (d, deps, r, f) {
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<void>}
  */
 export async function executeBundle (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeBundle')
@@ -638,7 +638,7 @@ export async function executeBundle (d = DIRECTORY, packageDependencies = {}, co
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<void>}
  */
 export async function executeOptional (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeOptional')
@@ -663,7 +663,7 @@ export async function executeOptional (d = DIRECTORY, packageDependencies = {}, 
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<void>}
  */
 export async function executeDev (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeDev')
@@ -688,7 +688,7 @@ export async function executeDev (d = DIRECTORY, packageDependencies = {}, confi
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<void>}
  */
 export async function executeProd (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeProd')

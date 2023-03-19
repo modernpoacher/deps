@@ -110,7 +110,7 @@ export function getInstallCommands (p, s, r, f) {
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function installSaveExact (d, p, s, r, f) {
   log('installSaveExact')
@@ -145,7 +145,7 @@ export function installSaveExact (d, p, s, r, f) {
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function install (d, p, s, r, f) {
   log('install')
@@ -179,17 +179,18 @@ export function install (d, p, s, r, f) {
  *  @param {Configuration} c - Configuration
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *
- *  @return {Promise}
+ *  @return {Promise<void>}
  */
-export async function execute (directory = DIRECTORY, packages = {}, configuration = {}, save = false, registry = REGISTRY, force = false) {
+export async function execute (d = DIRECTORY, p = {}, c = {}, s = false, r = REGISTRY, f = false) {
   log('execute')
 
-  const depsExact = getDepsExact(packages, configuration)
+  const depsExact = getDepsExact(p, c)
 
-  if (depsExact.length) await installSaveExact(directory, depsExact, save, registry, force)
+  if (depsExact.length) await installSaveExact(d, depsExact, s, r, f)
 
-  const deps = getDeps(packages)
+  const deps = getDeps(p)
 
-  if (deps.length) await install(directory, deps, save, registry, force)
+  if (deps.length) await install(d, deps, s, r, f)
 }

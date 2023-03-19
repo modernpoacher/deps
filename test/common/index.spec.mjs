@@ -381,4 +381,22 @@ describe('#deps/src/common', () => {
       })
     })
   })
+
+  describe('`normalizeCommands()`', () => {
+    describe('Leading and trailing whitespace', () => {
+      describe('A single line', () => {
+        it('returns a string without leading or trailing whitespce', () => {
+          return expect(normalizeCommands('   commands   '))
+            .to.equal('commands')
+        })
+      })
+
+      describe('Multiple lines', () => {
+        it('returns a string without leading or trailing whitespce', () => {
+          return expect(normalizeCommands('   \n   \n\n\n \n\n\n commands\n\n\n   \n\n\n commands \n   \n\n\n \n\n\n   '))
+            .to.equal('commands commands')
+        })
+      })
+    })
+  })
 })

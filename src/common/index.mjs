@@ -58,7 +58,7 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake at "${PATH}"`)
 
-const tidy = (v) => v.replace(/\n\n/gm, String.fromCharCode(10)).trim()
+const tidy = (v) => v.replace(/\n{2,}}/gm, String.fromCharCode(10)).trim()
 
 /**
  *  @function getSaveProdParameter
@@ -365,13 +365,15 @@ export function getDeps (packageDependencies) {
  *
  *  @return {string}
  */
-export function normalizeCommands (value) {
-  while (/\s\s|\n/.test(value)) {
-    value = value.replace(/\s\s/gm, String.fromCharCode(32)).replace(/\n/gm, String.fromCharCode(32))
+export function normalizeCommands (commands) {
+  const s = String.fromCharCode(32)
+
+  while (/\s{2,}|\n+/.test(commands)) {
+    commands = commands.replace(/\s{2,}/gm, s).replace(/\n+/gm, s)
   }
 
   return (
-    value.trim()
+    commands.trim()
   )
 }
 

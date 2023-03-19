@@ -216,7 +216,7 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
       if (D === await gitRevParse(D)) {
         const ignore = await getIgnoreFromConfiguration(D)
         if (!ignore) {
-          await execute(D, registry, force, message, toAuthor(author, D))
+          await execute(D, registry, force, message, await toAuthor(author, D))
         }
       }
     } catch (e) {
@@ -259,7 +259,7 @@ async function executeFrom (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, toAuthor(author, D))
+          await execute(D, registry, force, message, await toAuthor(author, D))
         )
       }
     }
@@ -278,7 +278,7 @@ async function executeOnly (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, toAuthor(author, D))
+          await execute(D, registry, force, message, await toAuthor(author, D))
         )
       }
     }
@@ -297,7 +297,7 @@ async function executePath (directory, registry, force, message, author) {
       const ignore = await getIgnoreFromConfiguration(D)
       if (!ignore) {
         return (
-          await execute(D, registry, force, message, toAuthor(author, D))
+          await execute(D, registry, force, message, await toAuthor(author, D))
         )
       }
     }

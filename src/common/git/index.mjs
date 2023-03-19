@@ -154,7 +154,7 @@ function isCommandError (e) {
  *
  *  @param {string} directory - A directory configured for Git
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
   log('catGitRefsRemotesOriginHead')
@@ -185,7 +185,7 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
  *
  *  @param {string} directory - A directory
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function gitRevParse (directory = DIRECTORY) {
   log('gitRevParse')
@@ -217,7 +217,7 @@ export function gitRevParse (directory = DIRECTORY) {
  *  @param {string} directory - A directory configured for Git
  *  @param {string} branch - The Git branch
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
   log('gitCheckout')
@@ -252,7 +252,7 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
  *
  *  @param {string} directory - A directory configured for Git
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function gitPull (directory = DIRECTORY) {
   log('gitPull')
@@ -287,7 +287,7 @@ export function gitPull (directory = DIRECTORY) {
  *
  *  @param {string} directory - A directory configured for Git
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function gitPush (directory = DIRECTORY) {
   log('gitPush')
@@ -322,7 +322,7 @@ export function gitPush (directory = DIRECTORY) {
  *
  *  @param {string} directory - A directory configured for Git
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function gitPushTags (directory = DIRECTORY) {
   log('gitPushTags')
@@ -358,7 +358,7 @@ export function gitPushTags (directory = DIRECTORY) {
  *  @param {string} directory - A directory configured for Git
  *  @param {string} add - An add parameter
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function gitAdd (directory = DIRECTORY, add = ADD) {
   log('gitAdd')
@@ -394,7 +394,7 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
  *  @param {string} directory - A directory configured for Git
  *  @param {string} message - A commit message
  *
- *  @return {Promise}
+ *  @return {Promise<string>}
  */
 export function gitCommit (directory = DIRECTORY, message = MESSAGE, author = AUTHOR) {
   log('gitCommit')

@@ -188,7 +188,6 @@ ${commands}
  *
  *  @return {string}
  */
-
 export const getCommands = PLATFORM === 'win32'
   ? (commands = 'npm i') => tidy(commands)
   : (commands = 'npm i') => tidy(getExportPath(getNvm(commands)))

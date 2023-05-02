@@ -79,21 +79,49 @@ HOME=$PWD
 echo
 echo -e "\033[0;32mStarting ...\033[0m" # "Starting ..."
 
-for i in "$@"
+for flag in "$@";
 do
-  case $i in
-    path=*|-p=*|--path=*)
-    path="${i#*=}"
-    ;;
-    from=*|-f=*|--from=*)
-    from="${i#*=}"
-    ;;
-    only=*|-o=*|--only=*)
-    only="${i#*=}"
-    ;;
+  shift
+  case "$flag" in
+    --path=*|-p=*)
+      set -- "$@" '-p' "${flag#*=}"
+      ;;
+    --path|-p)
+      set -- "$@" '-p' "${1}"
+      ;;
+    --from=*|-f=*)
+      set -- "$@" '-f' "${flag#*=}"
+      ;;
+    --from|-f)
+      set -- "$@" '-f' "${1}"
+      ;;
+    --only=*|-o=*)
+      set -- "$@" '-o' "${flag#*=}"
+      ;;
+    --only|-o)
+      set -- "$@" '-o' "${1}"
+      ;;
     *)
-    # unknown option
-    ;;
+      set -- "$@" "$flag"
+      ;;
+  esac
+done
+
+while getopts "p:f:o:" flag;
+do
+  case "${flag}" in
+    p)
+      path="$OPTARG"
+      ;;
+    f)
+      from="$OPTARG"
+      ;;
+    o)
+      only="$OPTARG"
+      ;;
+    *)
+      # Ignoring "$flag"
+      ;;
   esac
 done
 
@@ -105,7 +133,7 @@ then
     then
       cd "$d"
 
-      execute "$d"
+      execute "$PWD"
 
       cd ..
     fi
@@ -115,17 +143,22 @@ else
   then
     cd "$path"
 
-    for d in *
-    do
-      if [ -d "$d" ]
-      then
-        cd "$d"
+    if [ -d "$PWD/.git" ];
+    then
+      execute "$PWD"
+    else
+      for d in *
+      do
+        if [ -d "$d" ]
+        then
+          cd "$d"
 
-        execute "$d"
+          execute "$PWD"
 
-        cd ..
-      fi
-    done
+          cd ..
+        fi
+      done
+    fi
 
     cd "$HOME"
   else
@@ -141,7 +174,7 @@ else
           then
             cd "$d"
 
-            execute "$d"
+            execute "$PWD"
 
             cd ..
           fi
@@ -158,7 +191,7 @@ else
             then
               cd "$d"
 
-              execute "$d"
+              execute "$PWD"
 
               cd ..
             fi

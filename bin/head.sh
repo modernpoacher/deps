@@ -76,7 +76,7 @@ function git_remote_set_head {
 }
 
 function execute {
-  report "$1"
+  report "${1##*/}"
 
   has_git "$1"
 
@@ -123,15 +123,31 @@ HOME=$PWD
 echo
 echo -e "\033[0;32mStarting ...\033[0m" # "Starting ..."
 
-for i in "$@"
+for flag in "$@";
 do
-  case $i in
-    path=*|-p=*|--path=*)
-    path="${i#*=}"
-    ;;
+  shift
+  case "$flag" in
+    --path=*|-p=*)
+      set -- "$@" '-p' "${flag#*=}"
+      ;;
+    --path|-p)
+      set -- "$@" '-p' "${1}"
+      ;;
     *)
-    # unknown option
-    ;;
+      set -- "$@" "$flag"
+      ;;
+  esac
+done
+
+while getopts "p:" flag;
+do
+  case "${flag}" in
+    p)
+      path="$OPTARG"
+      ;;
+    *)
+      # Ignoring "$flag"
+      ;;
   esac
 done
 
@@ -143,7 +159,7 @@ then
     then
       cd "$d"
 
-      execute "$d"
+      execute "$PWD"
 
       cd ..
     fi
@@ -153,17 +169,22 @@ else
   then
     cd "$path"
 
-    for d in *
-    do
-      if [ -d "$d" ]
-      then
-        cd "$d"
+    if [ -d "$PWD/.git" ];
+    then
+      execute "$PWD"
+    else
+      for d in *
+      do
+        if [ -d "$d" ]
+        then
+          cd "$d"
 
-        execute "$d"
+          execute "$PWD"
 
-        cd ..
-      fi
-    done
+          cd ..
+        fi
+      done
+    fi
 
     cd "$HOME"
   fi

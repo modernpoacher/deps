@@ -2,11 +2,11 @@ import debug from 'debug'
 
 import {
   normalize
-} from 'path'
+} from 'node:path'
 
 import {
   exec
-} from 'child_process'
+} from 'node:child_process'
 
 import {
   VERSION,

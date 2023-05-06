@@ -4,22 +4,22 @@ import debug from 'debug'
 
 import {
   exec
-} from 'child_process'
+} from 'node:child_process'
 
 import {
   resolve,
   relative,
   normalize
-} from 'path'
+} from 'node:path'
 
 import {
   constants
-} from 'fs'
+} from 'node:fs'
 
 import {
   access,
   readFile
-} from 'fs/promises'
+} from 'node:fs/promises'
 
 import {
   VERSION,

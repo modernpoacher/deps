@@ -39,7 +39,7 @@ import PATH from '#where-am-i'
 
 import {
   resolve
-} from 'path'
+} from 'node:path'
 
 import {
   VERSION,

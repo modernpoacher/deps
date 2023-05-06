@@ -23,17 +23,21 @@ function update {
 }
 
 function can_update {
+  local directory_name
+
+  directory_name="${1##*/}" # directory_name="$(basename "$(git rev-parse --show-toplevel)")"
+
   git_status=$(git status 2> /dev/null)
 
   if [[ $? != 0 ]]
   then
-    echo -e "\033[0;35m$1\033[0m is not configured for Git" # "$1 is not configured for Git"
+    echo -e "\033[0;35m$directory_name\033[0m is not configured for Git" # "$1 is not configured for Git"
 
     return 1
   else
     if [[ ! "$git_status" =~ "nothing to commit" ]]
     then
-      echo -e "\033[0;35m$1\033[0m has changes to commit" # "$1 has changes to commit"
+      echo -e "\033[0;35m$directory_name\033[0m has changes to commit" # "$1 has changes to commit"
 
       return 1
     fi
@@ -43,20 +47,24 @@ function can_update {
 
   if [ -z "$default_branch" ]
   then
-    echo -e "Failed to identify the default branch for \033[0;35m$1\033[0m"
+    echo -e "Failed to identify the default branch for \033[0;35m$directory_name\033[0m"
 
     return 1
   else
-    echo -e "The default branch for \033[0;35m$1\033[0m is '$default_branch'"
+    echo -e "The default branch for \033[0;35m$directory_name\033[0m is '$default_branch'"
 
     return 0
   fi
 }
 
 function report {
+  local directory_name
+
+  directory_name="${1##*/}" # directory_name="$(basename "$(git rev-parse --show-toplevel)")"
+
   echo
   echo "==========================="
-  echo -e "\033[0;35m$1\033[0m" # $1
+  echo -e "\033[0;35m$directory_name\033[0m" # $1
   echo "==========================="
   echo
 }

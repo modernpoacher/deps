@@ -4,7 +4,7 @@ import debug from 'debug'
 
 import {
   resolve
-} from 'path'
+} from 'node:path'
 
 import glob from 'glob-all'
 

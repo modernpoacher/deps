@@ -4,15 +4,15 @@ import PATH from '#where-am-i'
 
 import {
   join
-} from 'path'
+} from 'node:path'
 
 import {
   readFileSync
-} from 'fs'
+} from 'node:fs'
 
 import {
   platform
-} from 'os'
+} from 'node:os'
 
 const {
   name: NAME,

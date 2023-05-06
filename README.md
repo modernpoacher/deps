@@ -179,17 +179,17 @@ deps-install \
   --bundle \ # Boolean
   --peer \ # Boolean
   --save \ # Boolean
-  '--registry '<REGISTRY>' \
+  --registry '<REGISTRY>' \
   --force # Boolean
 
 deps-deps \
-  --path=. \
-  --from=. \
-  --only=.
+  --path . \
+  --from . \
+  --only .
 
-deps-wipe --path=.
-deps-push --path=.
-deps-head --path=.
+deps-wipe --path .
+deps-push --path .
+deps-head --path .
 ```
 
 ## *Deps* with its own script targets
@@ -219,15 +219,15 @@ npm run deps-install -- \
   --bundle \ # Boolean
   --peer \ # Boolean
   --save \ # Boolean
-  '--registry '<REGISTRY>' \
+  --registry '<REGISTRY>' \
   --force # Boolean
 
 npm run deps-deps -- \
-  --path=. \
-  --from=. \
-  --only=.
+  --path . \
+  --from . \
+  --only .
 
-npm run deps-wipe -- --path=.
-npm run deps-push -- --path=.
-npm run deps-head -- --path=.
+npm run deps-wipe -- --path .
+npm run deps-push -- --path .
+npm run deps-head -- --path .
 ```

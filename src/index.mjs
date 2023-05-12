@@ -46,7 +46,6 @@ log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const OPTIONS = {
   maxBuffer: 1024 * 2000,
-  // shell: true,
   stdio: 'inherit',
   env: {
     DEBUG_COLORS: 'yes',

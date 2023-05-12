@@ -30,8 +30,6 @@ then
 else
   echo Environment has NVM version $VERSION installed
 
-  set -e
-
   nvm use
 
   if [[ $? != 0 ]];
@@ -41,3 +39,5 @@ else
     echo Environment has NVM version $VERSION configured
   fi
 fi
+
+exit 0

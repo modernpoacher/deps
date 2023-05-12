@@ -43,13 +43,13 @@ log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const OPTIONS = {
   maxBuffer: 1024 * 2000,
-  shell: true,
   stdio: 'inherit',
   env: {
     DEBUG_COLORS: 'yes',
     FORCE_COLOR: PLATFORM === 'win32'
       ? 3
-      : 2
+      : 2,
+    PATH: process.env.PATH
   }
 }
 

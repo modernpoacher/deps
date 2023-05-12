@@ -47,9 +47,18 @@ function can_update {
 
   if [ -z "$default_branch" ]
   then
-    echo -e "Failed to identify the default branch for \033[0;35m$directory_name\033[0m"
+    default_branch=$(git remote show origin | awk '/HEAD branch/ {print $NF}')
 
-    return 1
+    if [ -z "$default_branch" ]
+    then
+      echo -e "Failed to identify the default branch for \033[0;35m$directory_name\033[0m"
+
+      return 1
+    else
+      echo -e "The default branch for \033[0;35m$directory_name\033[0m is '$default_branch'"
+
+      return 0
+    fi
   else
     echo -e "The default branch for \033[0;35m$directory_name\033[0m is '$default_branch'"
 

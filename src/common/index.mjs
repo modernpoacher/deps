@@ -175,7 +175,7 @@ ${commands}
  *  @return {string}
  */
 export const getNvm = (commands) => `
-. "${NVM}" 2> /dev/null
+bash "${NVM}" 2> /dev/null
 ${commands}
 `
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash +e
 
 NVM=~/.nvm
 
@@ -30,9 +30,9 @@ then
 else
   echo Environment has NVM version $VERSION installed
 
-  nvm use
+  nvm use 2> /dev/null
 
-  if [[ $? != 0 ]];
+  if [[ $WUT != 0 ]];
   then
     echo Environment does not have NVM configured
   else

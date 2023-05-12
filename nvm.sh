@@ -32,7 +32,7 @@ else
 
   nvm use 2> /dev/null
 
-  if [[ $WUT != 0 ]];
+  if [[ $? != 0 ]];
   then
     echo Environment does not have NVM configured
   else

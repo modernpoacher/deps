@@ -179,7 +179,38 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
 }
 
 /**
- *  @function gitRevParse
+ *  @function awkGitRemoteShowOriginHead
+ *
+ *  Get the remote default branch
+ *
+ *  @param {string} directory - A directory configured for Git
+ *
+ *  @return {Promise<string>}
+ */
+export function awkGitRemoteShowOriginHead (directory = DIRECTORY) {
+  log('awkGitRemoteShowOriginHead')
+
+  return (
+    new Promise((resolve, reject) => {
+      const command = 'git remote show origin | awk \'/HEAD branch/ {print $NF}\''
+
+      const {
+        stdout,
+        stderr
+      } = exec(command, { ...OPTIONS, cwd: normalize(directory) }, (e, v = '') => {
+        (!e)
+          ? resolve(trim(v))
+          : reject(e)
+      })
+
+      stdout.on('data', out('git-remote-show-origin-head', directory.trim()))
+      stderr.on('data', err('git-remote-show-origin-head', directory.trim()))
+    })
+  )
+}
+
+/**
+ *  @function gitRevParseShowTopLevel
  *
  *  Determine whether a directory is configured for Git
  *
@@ -187,8 +218,8 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
  *
  *  @return {Promise<string>}
  */
-export function gitRevParse (directory = DIRECTORY) {
-  log('gitRevParse')
+export function gitRevParseShowTopLevel (directory = DIRECTORY) {
+  log('gitRevParseShowTopLevel')
 
   return (
     new Promise((resolve, reject) => {
@@ -203,8 +234,39 @@ export function gitRevParse (directory = DIRECTORY) {
           : reject(e)
       })
 
-      stdout.on('data', out('git-rev-parse', directory.trim()))
-      stderr.on('data', err('git-rev-parse', directory.trim()))
+      stdout.on('data', out('git-rev-parse-show-toplevel', directory.trim()))
+      stderr.on('data', err('git-rev-parse-show-toplevel', directory.trim()))
+    })
+  )
+}
+
+/**
+ *  @function gitRevParseAbbrevRefHead
+ *
+ *  Determine which branch is HEAD
+ *
+ *  @param {string} directory - A directory
+ *
+ *  @return {Promise<string>}
+ */
+export function gitRevParseAbbrevRefHead (directory = DIRECTORY) {
+  log('gitRevParseAbbrevRefHead')
+
+  return (
+    new Promise((resolve, reject) => {
+      const command = 'git rev-parse --abbrev-ref HEAD'
+
+      const {
+        stdout,
+        stderr
+      } = exec(command, { ...OPTIONS, cwd: normalize(directory) }, (e, v = '') => {
+        (!e)
+          ? resolve(trim(v))
+          : reject(e)
+      })
+
+      stdout.on('data', out('git-rev-parse-abbrev-ref-head', directory.trim()))
+      stderr.on('data', err('git-rev-parse-abbrev-ref-head', directory.trim()))
     })
   )
 }

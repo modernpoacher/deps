@@ -21,8 +21,9 @@ import {
   MESSAGE,
   AUTHOR,
   catGitRefsRemotesOriginHead,
-  gitRevParse,
-  gitCheckout,
+  awkGitRemoteShowOriginHead,
+  gitRevParseShowTopLevel,
+  gitRevParseAbbrevRefHead,
   gitPull,
   gitPush,
   gitPushTags,
@@ -76,6 +77,28 @@ function handleCommandError (e) {
     if (code > 1) log(code)
     log(message)
   }
+}
+
+async function getDefaultBranch (directory) {
+  const branch = await catGitRefsRemotesOriginHead(directory)
+  if (branch) return branch
+  return (
+    await awkGitRemoteShowOriginHead(directory)
+  )
+}
+
+async function getCurrentBranch (directory) {
+  return (
+    await gitRevParseAbbrevRefHead(directory)
+  )
+}
+
+async function isHeadDefaultBranch (directory) {
+  const defaultBranch = await getDefaultBranch(directory)
+  const currentBranch = await getCurrentBranch(directory)
+  return (
+    defaultBranch === currentBranch
+  )
 }
 
 /**
@@ -220,7 +243,7 @@ async function getDepsList (directories) {
   log('getDepsList')
 
   try {
-    const array = await Promise.all(directories.map(mapRevParse))
+    const array = await Promise.all(directories.map(mapRevParseShowTopLevel))
 
     return (
       array
@@ -233,12 +256,12 @@ async function getDepsList (directories) {
   }
 }
 
-async function mapRevParse (directory) {
-  log('mapRevParse')
+async function mapRevParseShowTopLevel (directory) {
+  log('mapRevParseShowTopLevel')
 
   try {
     return (
-      await gitRevParse(directory)
+      await gitRevParseShowTopLevel(directory)
     )
   } catch (e) {
     handleCommandError(e)
@@ -252,10 +275,13 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
     const D = resolve(directory)
 
     try {
-      if (D === await gitRevParse(D)) {
-        const ignore = await getIgnoreFromConfiguration(D)
-        if (!ignore) {
-          await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+      if (D === await gitRevParseShowTopLevel(D)) {
+        const B = await isHeadDefaultBranch(D)
+        if (B) {
+          const ignore = await getIgnoreFromConfiguration(D)
+          if (!ignore) {
+            await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+          }
         }
       }
     } catch (e) {
@@ -274,7 +300,6 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
   try {
     log({ directory, registry, force, message, author })
 
-    await gitCheckout(directory, await catGitRefsRemotesOriginHead(directory))
     await gitPull(directory)
     await rmrf(directory)
     await npmi(directory, registry, force)
@@ -291,68 +316,77 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
 async function executeFrom (directory, registry, force, message, author) {
   log('executeFrom')
 
-  const D = resolve(directory)
+  if (directory) {
+    const D = resolve(directory)
 
-  try {
-    if (D === await gitRevParse(D)) {
-      const ignore = await getIgnoreFromConfiguration(D)
-      if (!ignore) {
-        return (
-          await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
-        )
+    try {
+      if (D === await gitRevParseShowTopLevel(D)) {
+        const B = await isHeadDefaultBranch(D)
+        if (B) {
+          const ignore = await getIgnoreFromConfiguration(D)
+          if (!ignore) {
+            await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+          }
+        }
       }
+    } catch (e) {
+      handleCommandError(e)
     }
-  } catch (e) {
-    handleCommandError(e)
   }
 }
 
 async function executeOnly (directory, registry, force, message, author) {
   log('executeOnly')
 
-  const D = resolve(directory)
+  if (directory) {
+    const D = resolve(directory)
 
-  try {
-    if (D === await gitRevParse(D)) {
-      const ignore = await getIgnoreFromConfiguration(D)
-      if (!ignore) {
-        return (
-          await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
-        )
+    try {
+      if (D === await gitRevParseShowTopLevel(D)) {
+        const B = await isHeadDefaultBranch(D)
+        if (B) {
+          const ignore = await getIgnoreFromConfiguration(D)
+          if (!ignore) {
+            await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+          }
+        }
       }
+    } catch (e) {
+      handleCommandError(e)
     }
-  } catch (e) {
-    handleCommandError(e)
   }
 }
 
 async function executePath (directory, registry, force, message, author) {
   log('executePath')
 
-  const D = resolve(directory)
+  if (directory) {
+    const D = resolve(directory)
 
-  try {
-    if (D === await gitRevParse(D)) {
-      const ignore = await getIgnoreFromConfiguration(D)
-      if (!ignore) {
+    try {
+      if (D === await gitRevParseShowTopLevel(D)) {
+        const B = await isHeadDefaultBranch(D)
+        if (B) {
+          const ignore = await getIgnoreFromConfiguration(D)
+          if (!ignore) {
+            await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+          }
+        }
+      }
+    } catch (e) {
+      handleCommandError(e)
+    }
+
+    const pathList = await getPathList(D)
+
+    if (pathList.length) {
+      const depsList = await getDepsList(pathList)
+
+      if (depsList.length) {
         return (
-          await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+          await iterate(depsList, registry, force, message, author)
         )
       }
-    }
-  } catch (e) {
-    handleCommandError(e)
-  }
-
-  const pathList = await getPathList(D)
-
-  if (pathList.length) {
-    const depsList = await getDepsList(pathList)
-
-    if (depsList.length) {
-      return (
-        await iterate(depsList, registry, force, message, author)
-      )
     }
   }
 }

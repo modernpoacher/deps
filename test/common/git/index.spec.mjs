@@ -5,7 +5,10 @@ import {
 } from 'chai'
 
 import {
-  gitRevParse,
+  catGitRefsRemotesOriginHead,
+  awkGitRemoteShowOriginHead,
+  gitRevParseShowTopLevel,
+  gitRevParseAbbrevRefHead,
   gitCheckout,
   gitPull,
   gitPush,
@@ -25,9 +28,30 @@ describe('#deps/src/common/git', () => {
     if (DEBUG) debug.enable(DEBUG)
   })
 
-  describe('`gitRevParse`', () => {
+  describe('`catGitRefsRemotesOriginHead`', () => {
     it('is a function', () => {
-      return expect(gitRevParse)
+      return expect(catGitRefsRemotesOriginHead)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`awkGitRemoteShowOriginHead`', () => {
+    it('is a function', () => {
+      return expect(awkGitRemoteShowOriginHead)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`gitRevParseShowTopLevel`', () => {
+    it('is a function', () => {
+      return expect(gitRevParseShowTopLevel)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`gitRevParseAbbrevRefHead`', () => {
+    it('is a function', () => {
+      return expect(gitRevParseAbbrevRefHead)
         .to.be.a('function')
     })
   })

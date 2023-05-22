@@ -32,6 +32,7 @@ import {
 } from '#deps/src/common/git'
 
 import {
+  DIRECTORY,
   REGISTRY,
   getIgnore,
   getAuthor,
@@ -60,8 +61,6 @@ debug.enable(DEBUG)
 const log = debug('@modernpoacher/deps')
 
 log(`\`execute\` (${VERSION} - ${PLATFORM}) is awake`)
-
-const DIRECTORY = process.cwd()
 
 function handleCommandError (e) {
   const {
@@ -239,14 +238,21 @@ function getPathList (directory) {
   )
 }
 
-async function getDepsList (directories) {
+async function getDepsList (directories = []) {
   log('getDepsList')
 
+  const alpha = (
+    directories
+      .filter(filterDeps)
+      .reduce(reduceDeps, [])
+      .sort()
+  )
+
   try {
-    const array = await Promise.all(directories.map(mapRevParseShowTopLevel))
+    const omega = await Promise.all(alpha.map(mapRevParseShowTopLevel))
 
     return (
-      array
+      omega
         .filter(filterDeps)
         .reduce(reduceDeps, [])
         .sort()

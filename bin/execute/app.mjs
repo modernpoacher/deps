@@ -232,7 +232,7 @@ function getPathList (directory) {
     new Promise((resolve, reject) => {
       glob(`${directory}/*/`, (error, array) => {
         (!error)
-          ? resolve(array)
+          ? resolve(array.sort())
           : reject(error)
       })
     })

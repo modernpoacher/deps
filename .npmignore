@@ -17,6 +17,9 @@
 .npmrc
 .npm
 
+# NVM
+.nvmrc
+
 # Deps
 .depsrc
 

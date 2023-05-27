@@ -300,6 +300,26 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
   }
 }
 
+async function iteratePath (directory, registry, force, message, author) {
+  log('iteratePath')
+
+  if (directory) {
+    const D = resolve(directory)
+
+    const pathList = await getPathList(D)
+
+    if (pathList.length) {
+      const depsList = await getDepsList(pathList)
+
+      if (depsList.length) {
+        return (
+          await iterate(depsList, registry, force, message, author)
+        )
+      }
+    }
+  }
+}
+
 async function execute (directory = DIRECTORY, registry = REGISTRY, force = false, message = MESSAGE, author = AUTHOR) {
   log('execute')
 
@@ -380,19 +400,17 @@ async function executePath (directory, registry, force, message, author) {
         }
       }
     } catch (e) {
-      handleCommandError(e)
-    }
+      const {
+        code
+      } = e
 
-    const pathList = await getPathList(D)
-
-    if (pathList.length) {
-      const depsList = await getDepsList(pathList)
-
-      if (depsList.length) {
+      if (code === 128) {
         return (
-          await iterate(depsList, registry, force, message, author)
+          await iteratePath(directory, registry, force, message, author)
         )
       }
+
+      handleCommandError(e)
     }
   }
 }

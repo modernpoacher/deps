@@ -1,35 +1,36 @@
 # @modernpoacher/deps
 
-*Deps* updates each of your `package.json` dependencies to their latest version.
+*Deps* updates your `package.json` dependencies to their latest version.
 
-*Deps* updates both `dependencies` and `devDependencies` by default. You can choose to update only _production_ or _development_ dependencies. See *Using Deps*, below.
+*Deps* updates both `dependencies` and `devDependencies` by default. You can [choose to update only _production_ or _development_ dependencies](#using-deps).
 
-Where a dependency has an _exact_ version, *Deps* will not update that dependency by default. *Deps* can be configured to update to an _exact_ version or to `latest` as an _exact_ version. See *Using `.depsrc`*, below.
+Where a dependency has an _exact_ version, *Deps* does not update that dependency by default. *Deps* can be configured to [update to an _exact_ version or to `latest` as an _exact_ version](#using-depsrc).
 
 ## Installing Deps
 
 Globally:
 
-```sh
+```bash
 npm i -g @modernpoacher/deps
 ```
 
-Locally, to your project:
+To your project:
 
-```sh
+```bash
 npm i -D @modernpoacher/deps
 ```
 
 ## Using Deps
 
 When installed globally, change into the root directory of the package you want to update and execute the command:
-```sh
+
+```bash
 deps
 ```
 
 When installed locally, or not installed, use `npx`:
 
-```sh
+```bash
 npx @modernpoacher/deps
 ```
 
@@ -45,7 +46,7 @@ Alternatively, use `npm` with a script target in your project's `package.json`:
 
 Then:
 
-```sh
+```bash
 npm run deps
 ```
 
@@ -53,19 +54,19 @@ npm run deps
 
 To update only _production_ dependencies (on the `dependencies` field):
 
-```sh
+```bash
 deps --save-prod # or -P
 ```
 
 Or:
 
-```sh
+```bash
 npx @modernpoacher/deps --save-prod # or -P
 ```
 
 Or:
 
-```sh
+```bash
 npm run deps -- --save-prod # or -P
 ```
 
@@ -73,19 +74,19 @@ npm run deps -- --save-prod # or -P
 
 To update only _development_ dependencies (dependencies on the `devDependencies` field):
 
-```sh
+```bash
 deps --save-dev # or -D
 ```
 
 Or:
 
-```sh
+```bash
 npx @modernpoacher/deps --save-dev # or -D
 ```
 
 Or:
 
-```sh
+```bash
 npm run deps -- --save-dev # or -D
 ```
 
@@ -118,7 +119,7 @@ Add an `author` field to `.depsrc`:
 
 ### Ignore
 
-Instruct *Deps* not to execute with an `ignore` field in `.depsrc`:
+Instruct *Deps* not to update your package with an `ignore` field in `.depsrc`:
 
 ```json
 {
@@ -142,7 +143,7 @@ With the `.depsrc` configuration file as the example above:
 
 *Deps* only refers to the `.depsrc` configuration file when it encounters an _exact_ version in `package.json`. If there is no entry for that dependency in the `.depsrc` configuration file then *Deps* will not upgrade, downgrade or otherwise modify it.
 
-You need not duplicate an _exact_ version in `.depsrc`. Let `package.json` be the source of truth.
+You need not duplicate an _exact_ version in `.depsrc`. (Let `package.json` be the source of truth.)
 
 Typically, an entry in the `.depsrc` configuration file will contain `latest`.
 

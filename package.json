@@ -51,7 +51,7 @@
     "deps-head": "bin/head.sh"
   },
   "dependencies": {
-    "commander": "^10.0.1",
+    "commander": "^11.0.0",
     "debug": "^4.3.4",
     "glob-all": "^3.3.1",
     "supports-color": "8.1.1"

@@ -29,10 +29,9 @@
     "start": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app.mjs",
     "dev": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/app.mjs",
     "dev-install": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/install/app.mjs",
-    "lint": "eslint . --ext .cjs --ext .mjs",
+    "lint": "eslint . --ext .mjs,.cjs",
     "lint:fix": "npm run lint -- --fix",
     "test": "cross-env DEBUG_COLORS=yes NODE_ENV=test mocha test --recursive -r @babel/register --verbose --color",
-    "pre-commit": "npm run lint && npm run test",
     "deps": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app.mjs",
     "deps-execute": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/execute/app.mjs",
     "deps-install": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/install/app.mjs",
@@ -54,7 +53,7 @@
     "commander": "^11.0.0",
     "debug": "^4.3.4",
     "glob-all": "^3.3.1",
-    "supports-color": "8.1.1"
+    "supports-color": "^9.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.22.5",
@@ -66,9 +65,6 @@
     "cross-env": "^7.0.3",
     "eslint": "^8.43.0",
     "eslint-config-standard": "^17.1.0",
-    "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.1",
     "husky": "^8.0.3",
     "mocha": "^10.2.0"
   },

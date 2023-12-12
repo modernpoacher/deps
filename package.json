@@ -60,9 +60,9 @@
     "supports-color": "^9.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.5",
+    "@babel/core": "^7.23.6",
     "@babel/eslint-parser": "^7.23.3",
-    "@babel/preset-env": "^7.23.5",
+    "@babel/preset-env": "^7.23.6",
     "@babel/register": "^7.22.15",
     "chai": "^4.3.10",
     "core-js": "^3.34.0",

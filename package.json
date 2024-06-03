@@ -30,28 +30,28 @@
     "url": "https://github.com/modernpoacher/deps/issues"
   },
   "scripts": {
-    "start": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app.mjs",
+    "deps": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app.mjs",
+    "deps-deps": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/deps.sh",
+    "deps-execute": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/execute/app.mjs",
+    "deps-head": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/head.sh",
+    "deps-install": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/install/app.mjs",
+    "deps-push": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/push.sh",
+    "deps-wipe": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/wipe.sh",
     "dev": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/app.mjs",
     "dev-install": "cross-env DEBUG_COLORS=yes NODE_ENV=development node bin/install/app.mjs",
     "lint": "eslint . --ext .mjs,.cjs",
     "lint:fix": "npm run lint -- --fix",
-    "test": "cross-env DEBUG_COLORS=yes NODE_ENV=test mocha test --recursive --verbose --color",
-    "deps": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app.mjs",
-    "deps-execute": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/execute/app.mjs",
-    "deps-install": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/install/app.mjs",
-    "deps-deps": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/deps.sh",
-    "deps-wipe": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/wipe.sh",
-    "deps-push": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/push.sh",
-    "deps-head": "cross-env DEBUG_COLORS=yes NODE_ENV=production bash bin/head.sh"
+    "start": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/app.mjs",
+    "test": "cross-env DEBUG_COLORS=yes NODE_ENV=test mocha test --recursive --verbose --color"
   },
   "bin": {
     "deps": "bin/app.mjs",
-    "deps-execute": "bin/execute/app.mjs",
-    "deps-install": "bin/install/app.mjs",
     "deps-deps": "bin/deps.sh",
-    "deps-wipe": "bin/wipe.sh",
+    "deps-execute": "bin/execute/app.mjs",
+    "deps-head": "bin/head.sh",
+    "deps-install": "bin/install/app.mjs",
     "deps-push": "bin/push.sh",
-    "deps-head": "bin/head.sh"
+    "deps-wipe": "bin/wipe.sh"
   },
   "dependencies": {
     "commander": "^12.1.0",
@@ -73,15 +73,15 @@
     "mocha": "^10.4.0"
   },
   "imports": {
-    "#where-am-i": "./where-am-i.mjs",
+    "#deps/bin": "./bin/index.mjs",
+    "#deps/bin/*": "./bin/*.mjs",
+    "#deps/bin/common": "./bin/common/index.mjs",
+    "#deps/src": "./src/index.mjs",
+    "#deps/src/*": "./src/*.mjs",
+    "#deps/src/common": "./src/common/index.mjs",
     "#deps/src/common/env": "./src/common/env/index.mjs",
     "#deps/src/common/git": "./src/common/git/index.mjs",
-    "#deps/src/common": "./src/common/index.mjs",
     "#deps/src/install": "./src/install/index.mjs",
-    "#deps/src/*": "./src/*.mjs",
-    "#deps/src": "./src/index.mjs",
-    "#deps/bin/common": "./bin/common/index.mjs",
-    "#deps/bin/*": "./bin/*.mjs",
-    "#deps/bin": "./bin/index.mjs"
+    "#where-am-i": "./where-am-i.mjs"
   }
 }

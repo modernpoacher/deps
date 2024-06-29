@@ -51,8 +51,8 @@ describe('#deps/src/install', () => {
     })
   })
 
-  xdescribe('`execute`', () => {
-    it('is an function', () => {
+  describe('`execute`', () => {
+    it('is a function', () => {
       return expect(execute)
         .to.be.a('function')
     })

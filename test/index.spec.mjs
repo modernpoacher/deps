@@ -166,29 +166,29 @@ describe('#deps/src', () => {
     })
   })
 
-  xdescribe('`executeProd`', () => {
+  describe('`executeProd`', () => {
     it('is a function', () => {
       return expect(executeProd)
         .to.be.a('function')
     })
   })
 
-  xdescribe('`executeDev`', () => {
+  describe('`executeDev`', () => {
     it('is a function', () => {
       return expect(executeDev)
         .to.be.a('function')
     })
   })
 
-  xdescribe('`executeOptional`', () => {
-    it('is an function', () => {
+  describe('`executeOptional`', () => {
+    it('is a function', () => {
       return expect(executeOptional)
         .to.be.a('function')
     })
   })
 
-  xdescribe('`executeBundle`', () => {
-    it('is an function', () => {
+  describe('`executeBundle`', () => {
+    it('is a function', () => {
       return expect(executeBundle)
         .to.be.a('function')
     })

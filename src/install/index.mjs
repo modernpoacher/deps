@@ -31,6 +31,7 @@ import {
   getForceParameter,
   getSaveExactParameter,
   getCommands,
+  getOptions,
   normalizeCommands,
   transform,
   getDepsExact,
@@ -41,22 +42,10 @@ const log = debug('@modernpoacher/deps:install')
 
 log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
 
-const OPTIONS = {
-  maxBuffer: 1024 * 2000,
-  stdio: 'inherit',
-  env: {
-    DEBUG_COLORS: 'yes',
-    FORCE_COLOR: PLATFORM === 'win32'
-      ? 3
-      : 2,
-    PATH: process.env.PATH
-  }
-}
-
 /**
  *  @function getInstallSaveExactCommands
  *
- *  Get the `install --save-exact` commands as a string of parameters and arguments
+ *  Get the `install --save-exact` commands as a string
  *
  *  @param {Package} p - Package
  *  @param {boolean} s - Save
@@ -79,7 +68,7 @@ export function getInstallSaveExactCommands (p, s, r, f) {
 /**
  *  @function getInstallCommands
  *
- *  Get the `install` commands as a string of parameters and arguments
+ *  Get the `install` commands as a string
  *
  *  @param {Package} p - Package
  *  @param {boolean} s - Save
@@ -115,18 +104,19 @@ export function getInstallCommands (p, s, r, f) {
 export function installSaveExact (d, p, s, r, f) {
   log('installSaveExact')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveExactCommands(p, s, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -154,18 +144,19 @@ export function installSaveExact (d, p, s, r, f) {
 export function install (d, p, s, r, f) {
   log('install')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallCommands(p, s, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)

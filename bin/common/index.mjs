@@ -34,24 +34,13 @@ import {
   getRegistryParameter,
   getForceParameter,
   getExportPath,
-  getNvm
+  getNvm,
+  getOptions
 } from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
-
-const OPTIONS = {
-  maxBuffer: 1024 * 2000,
-  stdio: 'inherit',
-  env: {
-    DEBUG_COLORS: 'yes',
-    FORCE_COLOR: PLATFORM === 'win32'
-      ? 3
-      : 2,
-    PATH: process.env.PATH
-  }
-}
 
 const CODE = 0
 
@@ -229,17 +218,20 @@ async function getConfiguration (directory = DIRECTORY) {
   }
 }
 
-function rmrf (directory = DIRECTORY) {
+function rmrf (d = DIRECTORY) {
   log('rmrf')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = getRmrfCommands()
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -253,17 +245,20 @@ function rmrf (directory = DIRECTORY) {
   )
 }
 
-function npmi (directory = DIRECTORY, registry = REGISTRY, force = false) {
+function npmi (d = DIRECTORY, registry = REGISTRY, force = false) {
   log('npmi')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = getNpmiCommands(registry, force)
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -277,17 +272,20 @@ function npmi (directory = DIRECTORY, registry = REGISTRY, force = false) {
   )
 }
 
-function deps (directory = DIRECTORY, registry = REGISTRY, force = false) {
+function deps (d = DIRECTORY, registry = REGISTRY, force = false) {
   log('deps')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = getDepsCommands(registry, force)
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)

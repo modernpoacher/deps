@@ -13,6 +13,10 @@ import {
   PLATFORM
 } from '#deps/src/common/env'
 
+import {
+  getOptions
+} from '#deps/src/common'
+
 export const DIRECTORY = '.'
 
 const BRANCH = 'master'
@@ -48,18 +52,6 @@ eval $(ssh-agent) 1> /dev/null
 git push --tags
 eval $(ssh-agent -k) 1> /dev/null
 `
-
-const OPTIONS = {
-  maxBuffer: 1024 * 2000,
-  stdio: 'inherit',
-  env: {
-    DEBUG_COLORS: 'yes',
-    FORCE_COLOR: PLATFORM === 'win32'
-      ? 3
-      : 2,
-    PATH: process.env.PATH
-  }
-}
 
 const log = debug('@modernpoacher/deps')
 
@@ -152,28 +144,31 @@ function isCommandError (e) {
  *
  *  Get the default branch from `.git/refs/remotes/origin/HEAD`
  *
- *  @param {string} directory - A directory configured for Git
+ *  @param {string} d - A directory configured for Git
  *
  *  @return {Promise<string>}
  */
-export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
+export function catGitRefsRemotesOriginHead (d = DIRECTORY) {
   log('catGitRefsRemotesOriginHead')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = CAT_GIT_REFS_REMOTES_ORIGIN_HEAD.trim()
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v = '') => {
+      } = exec(commands, options, (e, v = '') => {
         (!e)
           ? resolve(trim(v))
           : reject(e)
       })
 
-      stdout.on('data', out('cat-git-refs-remotes-origin-head', directory.trim()))
-      stderr.on('data', err('cat-git-refs-remotes-origin-head', directory.trim()))
+      stdout.on('data', out('cat-git-refs-remotes-origin-head', directory))
+      stderr.on('data', err('cat-git-refs-remotes-origin-head', directory))
     })
   )
 }
@@ -183,28 +178,31 @@ export function catGitRefsRemotesOriginHead (directory = DIRECTORY) {
  *
  *  Get the remote default branch
  *
- *  @param {string} directory - A directory configured for Git
+ *  @param {string} d - A directory configured for Git
  *
  *  @return {Promise<string>}
  */
-export function awkGitRemoteShowOriginHead (directory = DIRECTORY) {
+export function awkGitRemoteShowOriginHead (d = DIRECTORY) {
   log('awkGitRemoteShowOriginHead')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const command = 'git remote show origin | awk \'/HEAD branch/ {print $NF}\''
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: normalize(directory) }, (e, v = '') => {
+      } = exec(command, options, (e, v = '') => {
         (!e)
           ? resolve(trim(v))
           : reject(e)
       })
 
-      stdout.on('data', out('git-remote-show-origin-head', directory.trim()))
-      stderr.on('data', err('git-remote-show-origin-head', directory.trim()))
+      stdout.on('data', out('git-remote-show-origin-head', directory))
+      stderr.on('data', err('git-remote-show-origin-head', directory))
     })
   )
 }
@@ -214,28 +212,31 @@ export function awkGitRemoteShowOriginHead (directory = DIRECTORY) {
  *
  *  Determine whether a directory is configured for Git
  *
- *  @param {string} directory - A directory
+ *  @param {string} d - A directory
  *
  *  @return {Promise<string>}
  */
-export function gitRevParseShowTopLevel (directory = DIRECTORY) {
+export function gitRevParseShowTopLevel (d = DIRECTORY) {
   log('gitRevParseShowTopLevel')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = 'git rev-parse --show-toplevel'
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v = '') => {
+      } = exec(commands, options, (e, v = '') => {
         (!e)
           ? resolve(trim(v))
           : reject(e)
       })
 
-      stdout.on('data', out('git-rev-parse-show-toplevel', directory.trim()))
-      stderr.on('data', err('git-rev-parse-show-toplevel', directory.trim()))
+      stdout.on('data', out('git-rev-parse-show-toplevel', directory))
+      stderr.on('data', err('git-rev-parse-show-toplevel', directory))
     })
   )
 }
@@ -245,28 +246,31 @@ export function gitRevParseShowTopLevel (directory = DIRECTORY) {
  *
  *  Determine which branch is HEAD
  *
- *  @param {string} directory - A directory
+ *  @param {string} d - A directory
  *
  *  @return {Promise<string>}
  */
-export function gitRevParseAbbrevRefHead (directory = DIRECTORY) {
+export function gitRevParseAbbrevRefHead (d = DIRECTORY) {
   log('gitRevParseAbbrevRefHead')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const command = 'git rev-parse --abbrev-ref HEAD'
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(command, { ...OPTIONS, cwd: normalize(directory) }, (e, v = '') => {
+      } = exec(command, options, (e, v = '') => {
         (!e)
           ? resolve(trim(v))
           : reject(e)
       })
 
-      stdout.on('data', out('git-rev-parse-abbrev-ref-head', directory.trim()))
-      stderr.on('data', err('git-rev-parse-abbrev-ref-head', directory.trim()))
+      stdout.on('data', out('git-rev-parse-abbrev-ref-head', directory))
+      stderr.on('data', err('git-rev-parse-abbrev-ref-head', directory))
     })
   )
 }
@@ -276,22 +280,25 @@ export function gitRevParseAbbrevRefHead (directory = DIRECTORY) {
  *
  *  Switch to the default value if none is supplied
  *
- *  @param {string} directory - A directory configured for Git
+ *  @param {string} d - A directory configured for Git
  *  @param {string} branch - The Git branch
  *
  *  @return {Promise<string>}
  */
-export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
+export function gitCheckout (d = DIRECTORY, branch = BRANCH) {
   log('gitCheckout')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = `git checkout ${branch}`
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : isCommandError(e)
@@ -312,21 +319,24 @@ export function gitCheckout (directory = DIRECTORY, branch = BRANCH) {
  *
  *  Pull changes from the Git remote
  *
- *  @param {string} directory - A directory configured for Git
+ *  @param {string} d - A directory configured for Git
  *
  *  @return {Promise<string>}
  */
-export function gitPull (directory = DIRECTORY) {
+export function gitPull (d = DIRECTORY) {
   log('gitPull')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = GIT_PULL.trim()
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : isCommandError(e)
@@ -347,21 +357,24 @@ export function gitPull (directory = DIRECTORY) {
  *
  *  Push changes to the Git remote
  *
- *  @param {string} directory - A directory configured for Git
+ *  @param {string} d - A directory configured for Git
  *
  *  @return {Promise<string>}
  */
-export function gitPush (directory = DIRECTORY) {
+export function gitPush (d = DIRECTORY) {
   log('gitPush')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = GIT_PUSH.trim()
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : isCommandError(e)
@@ -382,21 +395,24 @@ export function gitPush (directory = DIRECTORY) {
  *
  *  Push tags changes to the Git remote
  *
- *  @param {string} directory - A directory configured for Git
+ *  @param {string} d - A directory configured for Git
  *
  *  @return {Promise<string>}
  */
-export function gitPushTags (directory = DIRECTORY) {
+export function gitPushTags (d = DIRECTORY) {
   log('gitPushTags')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = GIT_PUSH_TAGS.trim()
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : isCommandError(e)
@@ -417,22 +433,25 @@ export function gitPushTags (directory = DIRECTORY) {
  *
  *  Add changes to Git with a default value if none is supplied
  *
- *  @param {string} directory - A directory configured for Git
+ *  @param {string} d - A directory configured for Git
  *  @param {string} add - An add parameter
  *
  *  @return {Promise<string>}
  */
-export function gitAdd (directory = DIRECTORY, add = ADD) {
+export function gitAdd (d = DIRECTORY, add = ADD) {
   log('gitAdd')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = `git add ${add}`
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : isCommandError(e)
@@ -453,22 +472,26 @@ export function gitAdd (directory = DIRECTORY, add = ADD) {
  *
  *  Commit changes to Git with a default value if none is supplied
  *
- *  @param {string} directory - A directory configured for Git
+ *  @param {string} c - A directory configured for Git
  *  @param {string} message - A commit message
+ *  @param {string} author - The commit author
  *
  *  @return {Promise<string>}
  */
-export function gitCommit (directory = DIRECTORY, message = MESSAGE, author = AUTHOR) {
+export function gitCommit (d = DIRECTORY, message = MESSAGE, author = AUTHOR) {
   log('gitCommit')
+
+  const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
       const commands = `git commit -m "${message}" --author "${author}"`
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: normalize(directory) }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : isCommandError(e)

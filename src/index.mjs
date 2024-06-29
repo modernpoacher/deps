@@ -34,6 +34,7 @@ import {
   getSaveDevParameter,
   getSaveProdParameter,
   getCommands,
+  getOptions,
   normalizeCommands,
   transform,
   getDepsExact,
@@ -43,18 +44,6 @@ import {
 const log = debug('@modernpoacher/deps')
 
 log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
-
-const OPTIONS = {
-  maxBuffer: 1024 * 2000,
-  stdio: 'inherit',
-  env: {
-    DEBUG_COLORS: 'yes',
-    FORCE_COLOR: PLATFORM === 'win32'
-      ? 3
-      : 2,
-    PATH: process.env.PATH
-  }
-}
 
 function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
@@ -73,7 +62,7 @@ function use (key) {
 /**
  *  @function getInstallSaveExactCommands
  *
- *  Get the `npm install --save-exact` commands as a string of parameters and arguments
+ *  Get the `npm install --save-exact` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -95,7 +84,7 @@ export function getInstallSaveExactCommands (deps, r, f) {
 /**
  *  @function getInstallCommands
  *
- *  Get the `npm install` commands as a string of parameters and arguments
+ *  Get the `npm install` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -117,7 +106,7 @@ export function getInstallCommands (deps, r, f) {
 /**
  *  @function getInstallSaveBundleSaveExactCommands
  *
- *  Get the `npm install --save-bundle --save-exact` commands as a string of parameters and arguments
+ *  Get the `npm install --save-bundle --save-exact` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -138,7 +127,7 @@ export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
 /**
  *  @function getInstallSaveBundleCommands
  *
- *  Get the `npm install --save-bundle` commands as a string of parameters and arguments
+ *  Get the `npm install --save-bundle` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -159,7 +148,7 @@ export function getInstallSaveBundleCommands (deps, r, f) {
 /**
  *  @function getInstallSaveOptionalSaveExactCommands
  *
- *  Get the `npm install --save-optional --save-exact` commands as a string of parameters and arguments
+ *  Get the `npm install --save-optional --save-exact` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -180,7 +169,7 @@ export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
 /**
  *  @function getInstallSaveOptionalCommands
  *
- *  Get the `npm install --save-optional` commands as a string of parameters and arguments
+ *  Get the `npm install --save-optional` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -201,7 +190,7 @@ export function getInstallSaveOptionalCommands (deps, r, f) {
 /**
  *  @function getInstallSaveDevSaveExactCommands
  *
- *  Get the `npm install --save-dev --save-exact` commands as a string of parameters and arguments
+ *  Get the `npm install --save-dev --save-exact` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -222,7 +211,7 @@ export function getInstallSaveDevSaveExactCommands (deps, r, f) {
 /**
  *  @function getInstallSaveDevCommands
  *
- *  Get the `npm install --save-dev` commands as a string of parameters and arguments
+ *  Get the `npm install --save-dev` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -243,7 +232,7 @@ export function getInstallSaveDevCommands (deps, r, f) {
 /**
  *  @function getInstallSaveProdSaveExactCommands
  *
- *  Get the `npm install --save-prod --save-exact` commands as a string of parameters and arguments
+ *  Get the `npm install --save-prod --save-exact` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -264,7 +253,7 @@ export function getInstallSaveProdSaveExactCommands (deps, r, f) {
 /**
  *  @function getInstallSaveProdCommands
  *
- *  Get the `npm install --save-prod` commands as a string of parameters and arguments
+ *  Get the `npm install --save-prod` commands as a string
  *
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -297,18 +286,19 @@ export function getInstallSaveProdCommands (deps, r, f) {
 export function installSaveBundleSaveExact (d, deps, r, f) {
   log('installSaveBundleSaveExact')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveBundleSaveExactCommands(deps, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -337,18 +327,19 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
 export function installSaveBundle (d, deps, r, f) {
   log('installSaveBundle')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveBundleCommands(deps, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -377,18 +368,19 @@ export function installSaveBundle (d, deps, r, f) {
 export function installSaveOptionalSaveExact (d, deps, r, f) {
   log('installSaveOptionalSaveExact')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveOptionalSaveExactCommands(deps, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -417,18 +409,19 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
 export function installSaveOptional (d, dependencies, r, f) {
   log('installSaveOptional')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveOptionalCommands(dependencies, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -457,18 +450,19 @@ export function installSaveOptional (d, dependencies, r, f) {
 export function installSaveDevSaveExact (d, deps, r, f) {
   log('installSaveDevSaveExact')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveDevSaveExactCommands(deps, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -497,18 +491,19 @@ export function installSaveDevSaveExact (d, deps, r, f) {
 export function installSaveDev (d, deps, r, f) {
   log('installSaveDev')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveDevCommands(deps, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -537,18 +532,19 @@ export function installSaveDev (d, deps, r, f) {
 export function installSaveProdSaveExact (d, deps, r, f) {
   log('installSaveProdSaveExact')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveProdSaveExactCommands(deps, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)
@@ -577,18 +573,19 @@ export function installSaveProdSaveExact (d, deps, r, f) {
 export function installSaveProd (d, deps, r, f) {
   log('installSaveProd')
 
-  const directory = normalize(d)
+  const directory = normalize(d.trim())
 
   log(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveProdCommands(deps, r, f))
+      const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(commands, { ...OPTIONS, cwd: directory }, (e, v) => {
+      } = exec(commands, options, (e, v) => {
         (!e)
           ? resolve(v)
           : reject(e)

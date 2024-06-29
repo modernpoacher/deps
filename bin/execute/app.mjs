@@ -106,7 +106,8 @@ async function isHeadDefaultBranch (directory) {
  * Interrogates `.depsrc` or `.depsrc.json` for an `ignore` value
  *
  * @param {string} directory
- * @returns {Promise<boolean>}
+ *
+ * @return {Promise<boolean>}
  */
 async function getIgnoreFromConfiguration (directory) {
   log('getIgnoreFromConfiguration')
@@ -128,7 +129,8 @@ async function getIgnoreFromConfiguration (directory) {
  * Interrogates `.depsrc` or `.depsrc.json` for an `author` value
  *
  * @param {string} directory
- * @returns {Promise<string|null>}
+ *
+ * @return {Promise<string|null>}
  */
 async function getAuthorFromConfiguration (directory) {
   log('getAuthorFromConfiguration')
@@ -150,7 +152,8 @@ async function getAuthorFromConfiguration (directory) {
  * Interrogates `package.json` for an `author` value
  *
  * @param {string} directory
- * @returns {Promise<string|null>}
+ *
+ * @return {Promise<string|null>}
  */
 async function getAuthorFromPackage (directory) {
   log('getAuthorFromPackage')
@@ -172,7 +175,8 @@ async function getAuthorFromPackage (directory) {
  * Interrogates `.depsrc` or `.depsrc.json` for a `message` value
  *
  * @param {string} directory
- * @returns {Promise<string|null>}
+ *
+ * @return {Promise<string|null>}
  */
 async function getMessageFromConfiguration (directory) {
   log('getMessageFromConfiguration')
@@ -198,7 +202,8 @@ async function getMessageFromConfiguration (directory) {
  *
  * @param {string|null} author
  * @param {string} directory
- * @returns {Promise<string>}
+ *
+ * @return {Promise<string>}
  */
 async function toAuthor (author, directory) {
   return author || await getAuthorFromConfiguration(directory) || await getAuthorFromPackage(directory) || AUTHOR
@@ -214,7 +219,8 @@ async function toAuthor (author, directory) {
  *
  * @param {string|null} message
  * @param {string} directory
- * @returns {Promise<string>}
+ *
+ * @return {Promise<string>}
  */
 async function toMessage (message, directory) {
   return message || await getMessageFromConfiguration(directory) || MESSAGE

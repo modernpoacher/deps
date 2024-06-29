@@ -602,7 +602,7 @@ export function installSaveProd (d, deps, r, f) {
 /**
  *  @function executeBundle
  *
- *  Execute the `npm install --save-bundle --save-exact` and `npm install --save-bundle` commands according to configuration and parameters
+ *  Execute the `npm install --save-bundle --save-exact` and `npm install --save-bundle` commands
  *
  *  @param {string} d - Directory
  *  @param {Dependencies} packageDependencies - Package dependencies
@@ -627,7 +627,7 @@ export async function executeBundle (d = DIRECTORY, packageDependencies = {}, co
 /**
  *  @function executeOptional
  *
- *  Execute the `npm install --save-optional --save-exact` and `npm install --save-optional` commands according to configuration and parameters
+ *  Execute the `npm install --save-optional --save-exact` and `npm install --save-optional` commands
  *
  *  @param {string} d - Directory
  *  @param {Dependencies} packageDependencies - Package dependencies
@@ -652,7 +652,7 @@ export async function executeOptional (d = DIRECTORY, packageDependencies = {}, 
 /**
  *  @function executeDev
  *
- *  Execute the `npm install --save-dev --save-exact` and `npm install --save-dev` commands according to configuration and parameters
+ *  Execute the `npm install --save-dev --save-exact` and `npm install --save-dev` commands
  *
  *  @param {string} d - Directory
  *  @param {Dependencies} packageDependencies - Package dependencies
@@ -677,7 +677,7 @@ export async function executeDev (d = DIRECTORY, packageDependencies = {}, confi
 /**
  *  @function executeProd
  *
- *  Execute the `npm install --save-prod --save-exact` and `npm install --save-prod` commands according to configuration and parameters
+ *  Execute the `npm install --save-prod --save-exact` and `npm install --save-prod` commands
  *
  *  @param {string} d - Directory
  *  @param {Dependencies} packageDependencies - Package dependencies

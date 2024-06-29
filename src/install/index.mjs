@@ -171,7 +171,7 @@ export function install (d, p, s, r, f) {
 /**
  *  @function execute
  *
- *  Execute the `install --save-exact` and `install` commands according to configuration and parameters
+ *  Execute the `install --save-exact` and `install` commands
  *
  *  @param {string} d - Directory
  *  @param {Package} p - Package

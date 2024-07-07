@@ -70,7 +70,7 @@
     "eslint": "8.57.0",
     "eslint-config-standard": "^17.1.0",
     "husky": "^9.0.11",
-    "mocha": "^10.5.2"
+    "mocha": "^10.6.0"
   },
   "imports": {
     "#deps/bin": "./bin/index.mjs",

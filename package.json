@@ -64,12 +64,12 @@
     "@babel/eslint-parser": "^7.24.8",
     "@babel/preset-env": "^7.24.8",
     "@babel/register": "^7.24.6",
-    "chai": "^5.1.1",
+    "chai": "^4.5.0",
     "core-js": "^3.37.1",
     "cross-env": "^7.0.3",
     "eslint": "8.57.0",
     "eslint-config-standard": "^17.1.0",
-    "husky": "^9.1.1",
+    "husky": "^9.1.2",
     "mocha": "^10.7.0"
   },
   "imports": {

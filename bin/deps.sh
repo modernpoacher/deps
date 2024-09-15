@@ -94,7 +94,7 @@ function execute {
 HOME=$PWD
 
 echo
-echo -e "\033[0;32mStarting ...\033[0m" # "Starting ..."
+echo -e "\033[0;32mStarting `deps` ...\033[0m" # "Starting ..."
 
 for flag in "$@";
 do

@@ -19,6 +19,14 @@ import {
   PLATFORM
 } from '#deps/src/common/env'
 
+const {
+  env: {
+    DEBUG = '@modernpoacher/deps*'
+  }
+} = process
+
+debug.enable(DEBUG)
+
 const log = debug('@modernpoacher/deps')
 const error = debug('@modernpoacher/deps:error')
 

@@ -32,8 +32,8 @@ const error = debug('@modernpoacher/deps:error')
 
 const command = (
   PLATFORM === 'win32'
-    ? 'bash .\\bin\\bash\\wipe.sh'
-    : 'bash ./bin/bash/wipe.sh'
+    ? 'bash .\\bin\\bash\\head.sh'
+    : 'bash ./bin/bash/head.sh'
 )
 
 const args = getArgs()

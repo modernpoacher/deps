@@ -3,6 +3,10 @@
 import debug from 'debug'
 
 import {
+  argv
+} from 'node:process'
+
+import {
   exec
 } from 'node:child_process'
 
@@ -42,6 +46,8 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
 
+const ARGV = argv.slice(2)
+
 const CODE = 0
 
 const MESSAGE = 'Either no error message has been defined or no error has been supplied'
@@ -74,7 +80,16 @@ const getDepsCommands = PLATFORM === 'win32'
 ${getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'deps'))))}
 `)
 
-function use (key) {
+export function getArgs () {
+  return (
+    ARGV
+      .join(
+        String.fromCodePoint(32)
+      )
+  )
+}
+
+export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function use (v) {

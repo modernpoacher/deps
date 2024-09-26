@@ -82,10 +82,11 @@ ${getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, '
 
 export function getArgs () {
   return (
-    ARGV
-      .join(
-        String.fromCodePoint(32)
-      )
+    PLATFORM === 'win32'
+      ? ARGV.map((v) => v.startsWith('-') ? v : `"${v}"`)
+      : ARGV.map((v) => v.startsWith('-') ? v : `'${v}'`)
+  ).join(
+    String.fromCodePoint(32)
   )
 }
 

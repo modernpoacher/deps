@@ -59,6 +59,7 @@ const {
 debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
+const error = debug('@modernpoacher/deps:error')
 
 log(`\`execute\` (${VERSION} - ${PLATFORM}) is awake`)
 
@@ -67,15 +68,7 @@ function handleCommandError (e) {
     code = 0
   } = e
 
-  if (code !== 128) {
-    const {
-      message
-    } = e
-
-    const log = debug('@modernpoacher/deps:error')
-    if (code > 1) log(code)
-    log(message)
-  }
+  if (code !== 128) handleError(e)
 }
 
 async function getDefaultBranch (directory) {

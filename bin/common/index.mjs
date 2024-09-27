@@ -95,19 +95,24 @@ export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function use (v) {
-    const s = v.trim()
-
-    if (s !== '') log(trim(s))
+    if (v.includes('\n')) v.split('\n').map((s) => trim(s)).filter(Boolean).forEach((s) => log(s))
+    else {
+      const s = v.trim()
+      if (s !== '') log(trim(s))
+    }
   }
 }
 
 export function handleError (e = {}) {
   const {
     code = CODE,
-    message = MESSAGE
   } = e
 
   if (code > 1) error(code)
+  const {
+    message = MESSAGE
+  } = e
+
   error(message)
 }
 

@@ -81,7 +81,7 @@ export function use (key) {
   function write (v) {
     const s = v.trimEnd()
 
-    log(s)
+    if (s) log(s)
   }
 
   return function use (value) {
@@ -107,7 +107,7 @@ export function out (key, directory) {
   function write (v) {
     const s = v.trimEnd()
 
-    log(s)
+    if (s) log(s)
   }
 
   return function out (value) {
@@ -133,7 +133,7 @@ export function err (key, directory) {
   function write (v) {
     const s = v.trimEnd()
 
-    log(s)
+    if (s) log(s)
   }
 
   return function err (value) {

@@ -57,7 +57,7 @@ export function use (key) {
   function write (v) {
     const s = v.trimEnd()
 
-    log(s)
+    if (s) log(s)
   }
 
   return function use (value) {

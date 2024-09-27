@@ -98,7 +98,6 @@ export function out (key, directory) {
 export function err (key, directory) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
-
   const isDirectory = getIsDirectory(directory)
 
   return function err (v) {

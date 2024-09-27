@@ -60,9 +60,7 @@ log(`\`git\` (${VERSION} - ${PLATFORM}) is awake`)
 const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
 function filter (v) {
-  const s = v.trim()
-
-  return Boolean(s)
+  return Boolean(v.trim())
 }
 
 export function getIsDirectory (directory) {
@@ -79,9 +77,7 @@ export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   function write (v) {
-    const s = v.trimEnd()
-
-    if (s) log(s)
+    if (v.trim()) log(v.trimEnd())
   }
 
   return function use (value) {
@@ -105,9 +101,7 @@ export function out (key, directory) {
   }
 
   function write (v) {
-    const s = v.trimEnd()
-
-    if (s) log(s)
+    if (v.trim()) log(v.trimEnd())
   }
 
   return function out (value) {
@@ -131,9 +125,7 @@ export function err (key, directory) {
   }
 
   function write (v) {
-    const s = v.trimEnd()
-
-    if (s) log(s)
+    if (v.trim()) log(v.trimEnd())
   }
 
   return function err (value) {

@@ -46,9 +46,7 @@ const log = debug('@modernpoacher/deps')
 log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
 function filter (v) {
-  const s = v.trim()
-
-  return Boolean(s)
+  return Boolean(v.trim())
 }
 
 export function use (key) {

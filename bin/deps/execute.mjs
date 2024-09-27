@@ -59,7 +59,6 @@ const {
 debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
-const error = debug('@modernpoacher/deps:error')
 
 log(`\`execute\` (${VERSION} - ${PLATFORM}) is awake`)
 

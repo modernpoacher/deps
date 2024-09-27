@@ -105,7 +105,7 @@ export function use (key) {
 
 export function handleError (e = {}) {
   const {
-    code = CODE,
+    code = CODE
   } = e
 
   if (code > 1) error(code)

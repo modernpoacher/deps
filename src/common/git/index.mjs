@@ -59,8 +59,10 @@ log(`\`git\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
-export function isFatal (s) {
-  return s.toLowerCase().startsWith('fatal: not a git repository')
+function filter (v) {
+  const s = v.trim()
+
+  return Boolean(s)
 }
 
 export function getIsDirectory (directory) {
@@ -69,15 +71,23 @@ export function getIsDirectory (directory) {
   }
 }
 
+export function isFatal (s) {
+  return s.toLowerCase().startsWith('fatal: not a git repository')
+}
+
 export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
-  return function use (v) {
-    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).forEach((s) => { log(s) })
-    else {
-      const s = v.trim()
-      if (s !== '') log(v.trimEnd())
-    }
+  function write (v) {
+    const s = v.trimEnd()
+
+    log(s)
+  }
+
+  return function use (value) {
+    value.split(String.fromCharCode(10))
+      .filter(filter)
+      .forEach(write)
   }
 }
 
@@ -86,12 +96,24 @@ export function out (key, directory) {
 
   const isDirectory = getIsDirectory(directory)
 
-  return function out (v) {
-    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).filter((s) => !isDirectory(s)).forEach((s) => { log(s) })
-    else {
-      const s = v.trim()
-      if (s !== '' && !isDirectory(s)) log(v.trimEnd())
-    }
+  function filterOut (v) {
+    const s = v.trim()
+
+    return (
+      !isDirectory(s)
+    )
+  }
+
+  function write (v) {
+    const s = v.trimEnd()
+
+    log(s)
+  }
+
+  return function out (value) {
+    value.split(String.fromCharCode(10))
+      .filter(filter).filter(filterOut)
+      .forEach(write)
   }
 }
 
@@ -100,12 +122,24 @@ export function err (key, directory) {
 
   const isDirectory = getIsDirectory(directory)
 
-  return function err (v) {
-    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).filter((s) => !isDirectory(s)).filter((s) => !isFatal(s)).forEach((s) => { log(s) })
-    else {
-      const s = v.trim()
-      if (s !== '' && !isDirectory(s) && !isFatal(s)) log(v.trimEnd())
-    }
+  function filterErr (v) {
+    const s = v.trim()
+
+    return (
+      !isDirectory(s) && !isFatal(s)
+    )
+  }
+
+  function write (v) {
+    const s = v.trimEnd()
+
+    log(s)
+  }
+
+  return function err (value) {
+    value.split(String.fromCharCode(10))
+      .filter(filter).filter(filterErr)
+      .forEach(write)
   }
 }
 

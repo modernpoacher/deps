@@ -1,6 +1,6 @@
 {
   "name": "@modernpoacher/deps",
-  "version": "2.1.16",
+  "version": "2.1.17",
   "description": "Update NPM package dependencies from the command line",
   "keywords": [
     "deps",

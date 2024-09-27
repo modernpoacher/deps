@@ -111,7 +111,7 @@ export function handleError (e = {}) {
   error(message)
 }
 
-export function handleComplete (e) {
+export function handleComplete (e = null) {
   if (!e) return log('👍')
   error('👎')
 }

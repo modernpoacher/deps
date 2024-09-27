@@ -222,6 +222,10 @@ const filterDeps = (v) => !!v // de-falsy
 
 const reduceDeps = (a, v) => a.includes(v) ? a : a.concat(v) // de-dupe
 
+function * genDirsList (directories = []) {
+  while (directories.length) yield directories.shift()
+}
+
 function getPathList (directory) {
   log('getPathList')
 
@@ -272,7 +276,7 @@ async function mapRevParseShowTopLevel (directory) {
   }
 }
 
-async function iterate ([directory, ...directories] = [], registry, force, message, author) {
+async function iterate (directory, registry, force, message, author) {
   log('iterate')
 
   if (directory) {
@@ -292,10 +296,6 @@ async function iterate ([directory, ...directories] = [], registry, force, messa
       handleCommandError(e)
     }
   }
-
-  if (directories.length) {
-    await iterate(directories, registry, force, message, author)
-  }
 }
 
 async function iteratePath (directory, registry, force, message, author) {
@@ -309,11 +309,7 @@ async function iteratePath (directory, registry, force, message, author) {
     if (pathList.length) {
       const depsList = await getDepsList(pathList)
 
-      if (depsList.length) {
-        return (
-          await iterate(depsList, registry, force, message, author)
-        )
-      }
+      for (const d of genDirsList(depsList)) await iterate(d, registry, force, message, author)
     }
   }
 }

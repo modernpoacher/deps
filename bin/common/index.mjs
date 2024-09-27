@@ -43,6 +43,7 @@ import {
 } from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')
+const error = debug('@modernpoacher/deps:error')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
 
@@ -100,15 +101,19 @@ export function use (key) {
   }
 }
 
-function handleError (e = {}) {
+export function handleError (e = {}) {
   const {
     code = CODE,
     message = MESSAGE
   } = e
 
-  const log = debug('@modernpoacher/deps:error')
-  if (code > 1) log(code)
-  log(message)
+  if (code > 1) error(code)
+  error(message)
+}
+
+export function handleComplete (e) {
+  if (!e) return log('👍')
+  error('👎')
 }
 
 const handlePackageError = ({ message = MESSAGE } = {}) => { log(`Package error: "${message}"`) }
@@ -320,7 +325,6 @@ export {
   REGISTRY,
   AUTHOR,
   NVM,
-  handleError,
   handlePackageError,
   handleConfigurationError,
   getPackageJsonPath,

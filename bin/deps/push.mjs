@@ -12,7 +12,8 @@ import {
 
 import {
   getArgs,
-  use
+  use,
+  handleComplete
 } from '#deps/bin/common'
 
 import {
@@ -33,9 +34,6 @@ const {
 
 debug.enable(DEBUG)
 
-const log = debug('@modernpoacher/deps')
-const error = debug('@modernpoacher/deps:error')
-
 const command = (
   PLATFORM === 'win32'
     ? `bash "${resolve(PATH, '.\\bin\\bash\\push.sh')}"`
@@ -47,10 +45,7 @@ const args = getArgs()
 const {
   stdout,
   stderr
-} = exec(`${command} ${args}`, getOptions(), (e, v) => {
-  if (!e) return log('👍')
-  error('👎')
-})
+} = exec(`${command} ${args}`, getOptions(), handleComplete)
 
-stdout.on('data', use('deps-deps'))
-stderr.on('data', use('deps-deps:error'))
+stdout.on('data', use('deps-push'))
+stderr.on('data', use('deps-push:error'))

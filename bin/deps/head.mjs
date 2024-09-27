@@ -7,6 +7,10 @@ import {
 } from 'node:child_process'
 
 import {
+  resolve
+} from 'node:path'
+
+import {
   getArgs,
   use
 } from '#deps/bin/common'
@@ -18,6 +22,8 @@ import {
 import {
   PLATFORM
 } from '#deps/src/common/env'
+
+import PATH from '#where-am-i'
 
 const {
   env: {
@@ -32,8 +38,8 @@ const error = debug('@modernpoacher/deps:error')
 
 const command = (
   PLATFORM === 'win32'
-    ? 'bash .\\bin\\bash\\head.sh'
-    : 'bash ./bin/bash/head.sh'
+    ? `bash "${resolve(PATH, '.\\bin\\bash\\head.sh')}"`
+    : `bash '${resolve(PATH, './bin/bash/head.sh')}'`
 )
 
 const args = getArgs()

@@ -1,5 +1,7 @@
 import debug from 'debug'
 
+import stripAnsi from 'strip-ansi'
+
 import {
   normalize
 } from 'node:path'
@@ -60,7 +62,7 @@ log(`\`git\` (${VERSION} - ${PLATFORM}) is awake`)
 const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
 function filter (v) {
-  return Boolean(v.trim())
+  return Boolean(stripAnsi(v).trim())
 }
 
 export function getIsDirectory (directory) {
@@ -77,7 +79,7 @@ export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   function write (v) {
-    if (v.trim()) log(v.trimEnd())
+    log(v.trimEnd())
   }
 
   return function use (value) {

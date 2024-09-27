@@ -2,6 +2,8 @@
 
 import debug from 'debug'
 
+import stripAnsi from 'strip-ansi'
+
 import {
   argv
 } from 'node:process'
@@ -92,16 +94,14 @@ export function getArgs () {
 }
 
 function filter (v) {
-  return Boolean(v.trim())
+  return Boolean(stripAnsi(v).trim())
 }
 
 export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   function write (v) {
-    const s = v.trimEnd()
-
-    if (s) log(s)
+    log(v.trimEnd())
   }
 
   return function use (value) {

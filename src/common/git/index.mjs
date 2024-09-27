@@ -59,8 +59,14 @@ log(`\`git\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
-function isFatal (s) {
+export function isFatal (s) {
   return s.toLowerCase().startsWith('fatal: not a git repository')
+}
+
+export function getIsDirectory (directory) {
+  return function isDirectory (s) {
+    return directory === s
+  }
 }
 
 export function use (key) {
@@ -78,11 +84,13 @@ export function use (key) {
 export function out (key, directory) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
+  const isDirectory = getIsDirectory(directory)
+
   return function out (v) {
-    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).filter((s) => directory !== s).forEach((s) => { log(s) })
+    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).filter((s) => !isDirectory(s)).forEach((s) => { log(s) })
     else {
       const s = v.trim()
-      if (s !== '' && directory !== s) log(v.trimEnd())
+      if (s !== '' && !isDirectory(s)) log(v.trimEnd())
     }
   }
 }
@@ -90,11 +98,14 @@ export function out (key, directory) {
 export function err (key, directory) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
+
+  const isDirectory = getIsDirectory(directory)
+
   return function err (v) {
-    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).filter((s) => directory !== s).filter((s) => !isFatal(s)).forEach((s) => { log(s) })
+    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).filter((s) => !isDirectory(s)).filter((s) => !isFatal(s)).forEach((s) => { log(s) })
     else {
       const s = v.trim()
-      if (s !== '' && directory !== s && !isFatal(s)) log(v.trimEnd())
+      if (s !== '' && !isDirectory(s) && !isFatal(s)) log(v.trimEnd())
     }
   }
 }

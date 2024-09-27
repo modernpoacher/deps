@@ -57,45 +57,45 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`git\` (${VERSION} - ${PLATFORM}) is awake`)
 
-const trim = (v) => v.split('\n').map((v) => v.trimEnd()).join('\n').trim()
+const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
-function use (key) {
+function isFatal (s) {
+  return s.toLowerCase().startsWith('fatal: not a git repository')
+}
+
+export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function use (v) {
-    if (v.trim() === '') return
-
-    return (
-      log(trim(v))
-    )
+    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).forEach((s) => { log(s) })
+    else {
+      const s = v.trim()
+      if (s !== '') log(v.trimEnd())
+    }
   }
 }
 
-function out (key, directory) {
+export function out (key, directory) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function out (v) {
-    const s = v.trim()
-
-    if (s === '' || directory === s) return
-
-    return (
-      log(trim(s))
-    )
+    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).filter((s) => directory !== s).forEach((s) => { log(s) })
+    else {
+      const s = v.trim()
+      if (s !== '' && directory !== s) log(v.trimEnd())
+    }
   }
 }
 
-function err (key, directory) {
+export function err (key, directory) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function err (v) {
-    const s = v.trim()
-
-    if (s === '' || directory === s || s.toLowerCase().startsWith('fatal: not a git repository')) return
-
-    return (
-      log(trim(s))
-    )
+    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).filter((s) => directory !== s).filter((s) => !isFatal(s)).forEach((s) => { log(s) })
+    else {
+      const s = v.trim()
+      if (s !== '' && directory !== s && !isFatal(s)) log(s)
+    }
   }
 }
 

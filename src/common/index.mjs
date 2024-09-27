@@ -70,7 +70,9 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake at "${PATH}"`)
 
-const tidy = (v) => v.replace(/\n{2,}}/gm, String.fromCharCode(10)).trim()
+export const tidy = (v) => v.replace(/\n{2,}}/gm, String.fromCharCode(10)).trim()
+
+export const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
 /**
  *  @function getSaveProdParameter

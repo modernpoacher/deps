@@ -45,17 +45,15 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
-function use (key) {
+export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function use (v) {
-    const s = v.trim()
-
-    if (s === '') return
-
-    return (
-      log(s)
-    )
+    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).forEach((s) => { log(s) })
+    else {
+      const s = v.trim()
+      if (s !== '') log(v.trimEnd())
+    }
   }
 }
 

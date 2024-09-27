@@ -53,9 +53,9 @@ const CODE = 0
 
 const MESSAGE = 'Either no error message has been defined or no error has been supplied'
 
-const tidy = (v) => v.replace(/\n\n/gm, '\n').trim()
+export const tidy = (v) => v.replace(/\n{2,}}/gm, String.fromCharCode(10)).trim()
 
-const trim = (v) => v.split('\n').map((v) => v.trim()).join('\n').trim()
+export const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
 const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
@@ -95,10 +95,10 @@ export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   return function use (v) {
-    if (v.includes('\n')) v.split('\n').map((s) => trim(s)).filter(Boolean).forEach((s) => log(s))
+    if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).forEach((s) => { log(s) })
     else {
       const s = v.trim()
-      if (s !== '') log(trim(s))
+      if (s !== '') log(v.trimEnd())
     }
   }
 }

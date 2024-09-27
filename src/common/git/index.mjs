@@ -94,7 +94,7 @@ export function err (key, directory) {
     if (v.includes(String.fromCharCode(10))) v.split(String.fromCharCode(10)).map((s) => s.trimEnd()).filter(Boolean).filter((s) => directory !== s).filter((s) => !isFatal(s)).forEach((s) => { log(s) })
     else {
       const s = v.trim()
-      if (s !== '' && directory !== s && !isFatal(s)) log(s)
+      if (s !== '' && directory !== s && !isFatal(s)) log(v.trimEnd())
     }
   }
 }

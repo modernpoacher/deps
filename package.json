@@ -79,8 +79,7 @@
     "#deps/src": "./src/index.mjs",
     "#deps/src/*": "./src/*.mjs",
     "#deps/src/common": "./src/common/index.mjs",
-    "#deps/src/common/env": "./src/common/env/index.mjs",
-    "#deps/src/common/git": "./src/common/git/index.mjs",
+    "#deps/src/common/*": "./src/common/*/index.mjs",
     "#deps/src/install": "./src/install/index.mjs",
     "#where-am-i": "./where-am-i.mjs"
   }

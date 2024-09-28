@@ -26,6 +26,10 @@ import {
 } from '#deps/src/common/env'
 
 import {
+  getOptions
+} from '#deps/src/common/options'
+
+import {
   DIRECTORY,
   REGISTRY,
   getRegistryParameter,
@@ -36,7 +40,6 @@ import {
   getSaveDevParameter,
   getSaveProdParameter,
   getCommands,
-  getOptions,
   normalizeCommands,
   transform,
   getDepsExact,

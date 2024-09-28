@@ -2,6 +2,8 @@
 
 import debug from 'debug'
 
+import PATH from '#where-am-i'
+
 import {
   exec
 } from 'node:child_process'
@@ -17,14 +19,12 @@ import {
 } from '#deps/bin/common'
 
 import {
-  getOptions
-} from '#deps/src/common'
-
-import {
   PLATFORM
 } from '#deps/src/common/env'
 
-import PATH from '#where-am-i'
+import {
+  getOptions
+} from '#deps/src/common/options'
 
 const {
   env: {

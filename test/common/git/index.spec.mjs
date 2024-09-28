@@ -5,6 +5,11 @@ import {
 } from 'chai'
 
 import {
+  MESSAGE,
+  AUTHOR,
+  use,
+  out,
+  err,
   catGitRefsRemotesOriginHead,
   awkGitRemoteShowOriginHead,
   gitRevParseShowTopLevel,
@@ -26,6 +31,41 @@ describe('#deps/src/common/git', () => {
     } = process
 
     if (DEBUG) debug.enable(DEBUG)
+  })
+
+  describe('`MESSAGE`', () => {
+    it('is a string', () => {
+      return expect(MESSAGE)
+        .to.be.a('string')
+    })
+  })
+
+  describe('`AUTHOR`', () => {
+    it('is a string', () => {
+      return expect(AUTHOR)
+        .to.be.a('string')
+    })
+  })
+
+  describe('`use`', () => {
+    it('is a function', () => {
+      return expect(use)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`out`', () => {
+    it('is a function', () => {
+      return expect(out)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`err`', () => {
+    it('is a function', () => {
+      return expect(err)
+        .to.be.a('function')
+    })
   })
 
   describe('`catGitRefsRemotesOriginHead`', () => {

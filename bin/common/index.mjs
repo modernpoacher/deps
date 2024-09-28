@@ -33,6 +33,10 @@ import {
 } from '#deps/src/common/env'
 
 import {
+  getOptions
+} from '#deps/src/common/options'
+
+import {
   DIRECTORY,
   REGISTRY,
   AUTHOR,
@@ -40,8 +44,7 @@ import {
   getRegistryParameter,
   getForceParameter,
   getExportPath,
-  getNvm,
-  getOptions
+  getNvm
 } from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')

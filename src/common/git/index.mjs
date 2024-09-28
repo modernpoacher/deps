@@ -17,7 +17,7 @@ import {
 
 import {
   getOptions
-} from '#deps/src/common'
+} from '#deps/src/common/options'
 
 export const DIRECTORY = '.'
 
@@ -57,7 +57,7 @@ eval $(ssh-agent -k) 1> /dev/null
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`git\` (${VERSION} - ${PLATFORM}) is awake`)
+log(`\`common/git\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
@@ -65,13 +65,13 @@ function filter (v) {
   return Boolean(stripAnsi(v).trim())
 }
 
-export function getIsDirectory (directory) {
+function getIsDirectory (directory) {
   return function isDirectory (s) {
     return directory === s
   }
 }
 
-export function isFatal (s) {
+function isFatal (s) {
   return s.toLowerCase().startsWith('fatal: not a git repository')
 }
 

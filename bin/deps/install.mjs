@@ -75,25 +75,6 @@ async function app () {
    */
 
   const {
-    env: {
-      PWD,
-      DEPS_PATH = PWD
-    }
-  } = process
-
-  const PACKAGE = (
-    await hasPackage(DEPS_PATH)
-      ? await getPackage(DEPS_PATH)
-      : {}
-  )
-
-  const CONFIGURATION = (
-    await hasConfiguration(DEPS_PATH)
-      ? await getConfiguration(DEPS_PATH)
-      : {}
-  )
-
-  const {
     prod: P,
     dev: D,
     optional: O,
@@ -114,6 +95,25 @@ async function app () {
     ...(registry ? { registry } : {}),
     ...(force ? { force } : {})
   })
+
+  const {
+    env: {
+      PWD,
+      DEPS_PATH = PWD
+    }
+  } = process
+
+  const PACKAGE = (
+    await hasPackage(DEPS_PATH)
+      ? await getPackage(DEPS_PATH)
+      : {}
+  )
+
+  const CONFIGURATION = (
+    await hasConfiguration(DEPS_PATH)
+      ? await getConfiguration(DEPS_PATH)
+      : {}
+  )
 
   if (P) {
     log('Prod')

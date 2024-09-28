@@ -75,6 +75,24 @@ async function app () {
    */
 
   const {
+    saveProd: P,
+    saveDev: D,
+    saveOptional: O,
+    saveBundle: B,
+    force,
+    registry
+  } = commander.opts()
+
+  log({
+    saveProd: P,
+    saveDev: D,
+    saveOptional: O,
+    saveBundle: B,
+    ...(registry ? { registry } : {}),
+    ...(force ? { force } : {})
+  })
+
+  const {
     env: {
       PWD,
       DEPS_PATH = PWD
@@ -92,24 +110,6 @@ async function app () {
       ? await getConfiguration(DEPS_PATH)
       : {}
   )
-
-  const {
-    saveProd: P,
-    saveDev: D,
-    saveOptional: O,
-    saveBundle: B,
-    force,
-    registry
-  } = commander.opts()
-
-  log({
-    saveProd: P,
-    saveDev: D,
-    saveOptional: O,
-    saveBundle: B,
-    ...(registry ? { registry } : {}),
-    ...(force ? { force } : {})
-  })
 
   if ((P && D) || (!P && !D && !O && !B)) {
     log('Prod')

@@ -3,7 +3,8 @@
 import debug from 'debug'
 
 import {
-  resolve
+  resolve,
+  dirname
 } from 'node:path'
 
 import glob from 'glob-all'
@@ -231,9 +232,9 @@ function getPathList (directory) {
 
   return (
     new Promise((resolve, reject) => {
-      glob(`${directory}/*/`, (error, array) => {
+      glob(`${directory}/*/package.json`, (error, array) => {
         (!error)
-          ? resolve(array.sort())
+          ? resolve(array.map(dirname).sort())
           : reject(error)
       })
     })

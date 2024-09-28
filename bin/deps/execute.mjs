@@ -310,7 +310,9 @@ async function iteratePath (directory, registry, force, message, author) {
     if (pathList.length) {
       const depsList = await getDepsList(pathList)
 
-      for (const d of genDirsList(depsList)) await iterate(d, registry, force, message, author)
+      if (depsList.length) {
+        for (const d of genDirsList(depsList)) await iterate(d, registry, force, message, author)
+      }
     }
   }
 }

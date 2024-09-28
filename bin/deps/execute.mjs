@@ -7,7 +7,9 @@ import {
   dirname
 } from 'node:path'
 
-import glob from 'glob-all'
+import {
+  glob
+} from 'glob'
 
 import {
   Command
@@ -227,17 +229,15 @@ function * genDirsList (directories = []) {
   while (directories.length) yield directories.shift()
 }
 
-function getPathList (directory) {
+async function getPathList (directory) {
   log('getPathList')
 
+  const array = await glob(`${directory}/*/package.json`)
+
   return (
-    new Promise((resolve, reject) => {
-      glob(`${directory}/*/package.json`, (error, array) => {
-        (!error)
-          ? resolve(array.map(dirname).sort())
-          : reject(error)
-      })
-    })
+    array
+      .map(dirname)
+      .sort()
   )
 }
 

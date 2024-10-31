@@ -65,12 +65,12 @@
     "@babel/preset-env": "^7.26.0",
     "@babel/register": "^7.25.9",
     "chai": "^5.1.2",
-    "core-js": "^3.38.1",
+    "core-js": "^3.39.0",
     "cross-env": "^7.0.3",
     "eslint": "8.57.0",
     "eslint-config-standard": "^17.1.0",
     "husky": "^9.1.6",
-    "mocha": "^10.8.1"
+    "mocha": "^10.8.2"
   },
   "imports": {
     "#deps/bin": "./bin/index.mjs",

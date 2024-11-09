@@ -1,6 +1,20 @@
 #!/bin/bash
 
-export PATH=/usr/local/bin:$PATH
+DIR="$(dirname "$0")"
+
+if [ -f "$HOME/.zshrc" ];
+then
+  zsh "$DIR/z.sh"
+else
+  if [ -f "$HOME/.bashrc" ];
+  then
+    bash "$DIR/b.sh"
+  fi
+fi
+
+echo SSH auth sock is $SSH_AUTH_SOCK
+echo Home is $HOME
+echo Path is $PATH
 
 EXP="[-0-9a-zA-Z]*$"
 
@@ -54,12 +68,9 @@ function checkout_default_branch {
 }
 
 function update {
-  eval "$(ssh-agent -s)" 1> /dev/null # eval $(ssh-agent) 1> /dev/null
-  ssh -vT git@github.com
   git pull
   git push
   git push --tags
-  eval "$(ssh-agent -k)" 1> /dev/null
 }
 
 function execute {

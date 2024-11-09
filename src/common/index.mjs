@@ -38,7 +38,7 @@ import debug from 'debug'
 import PATH from '#where-am-i'
 
 import {
-  resolve
+  join
 } from 'node:path'
 
 import {
@@ -52,7 +52,7 @@ export const REGISTRY = 'https://registry.npmjs.org'
 
 export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
 
-export const NVM = resolve(PATH, 'nvm.sh')
+export const NVM = join(PATH, 'nvm.sh')
 
 const log = debug('@modernpoacher/deps')
 

@@ -7,6 +7,8 @@ import {
 
 const {
   env: {
+    SSH_AUTH_SOCK,
+    HOME,
     PATH
   }
 } = process
@@ -19,6 +21,8 @@ export const OPTIONS = {
     FORCE_COLOR: PLATFORM === 'win32'
       ? 3
       : 2,
+    SSH_AUTH_SOCK,
+    HOME,
     PATH
   }
 }

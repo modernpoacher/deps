@@ -11,6 +11,8 @@ import {
 } from 'node:child_process'
 
 import {
+  HOME,
+  BASH,
   VERSION,
   PLATFORM
 } from '#deps/src/common/env'
@@ -38,24 +40,45 @@ echo "\${BASH_REMATCH[0]}"
 `
 
 const GIT_PULL = `
-eval "$(ssh-agent -s)" 1> /dev/null # eval $(ssh-agent) 1> /dev/null
-ssh -vT git@github.com
+if [ -f "${HOME}/.zshrc" ];
+then
+  zsh "${BASH}/z.sh"
+else
+  if [ -f "${HOME}/.bashrc" ];
+  then
+    bash "${BASH}/b.sh"
+  fi
+fi
+
 git pull
-eval "$(ssh-agent -k)" 1> /dev/null
 `
 
 const GIT_PUSH = `
-eval "$(ssh-agent -s)" 1> /dev/null # eval $(ssh-agent) 1> /dev/null
-ssh -vT git@github.com
+if [ -f "${HOME}/.zshrc" ];
+then
+  zsh "${BASH}/z.sh"
+else
+  if [ -f "${HOME}/.bashrc" ];
+  then
+    bash "${BASH}/b.sh"
+  fi
+fi
+
 git push
-eval "$(ssh-agent -k)" 1> /dev/null
 `
 
 const GIT_PUSH_TAGS = `
-eval "$(ssh-agent -s)" 1> /dev/null # eval $(ssh-agent) 1> /dev/null
-ssh -vT git@github.com
+if [ -f "${HOME}/.zshrc" ];
+then
+  zsh "${BASH}/z.sh"
+else
+  if [ -f "${HOME}/.bashrc" ];
+  then
+    bash "${BASH}/b.sh"
+  fi
+fi
+
 git push --tags
-eval "$(ssh-agent -k)" 1> /dev/null
 `
 
 const log = debug('@modernpoacher/deps')

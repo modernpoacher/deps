@@ -54,17 +54,13 @@ function checkout_default_branch {
 }
 
 function update {
-  if [ $(ps ax | grep ssh-agent | wc -l) -eq 0 ];
-then
-  eval $(ssh-agent -s)
-  trap "ssh-agent -k" exit
-fi # eval "$(ssh-agent -s)" # eval $(ssh-agent) 1> /dev/null
+  eval "$(ssh-agent -s)" 1> /dev/null # eval $(ssh-agent) 1> /dev/null
   ssh -vT git@github.com
   git pull
   git branch --merged | egrep -v "(^\*|$default_branch)" | xargs git branch -d
   git remote prune origin
   git gc --aggressive --prune=now
-  # eval $(ssh-agent -k) 1> /dev/null
+  eval "$(ssh-agent -k)" 1> /dev/null
 }
 
 function execute {

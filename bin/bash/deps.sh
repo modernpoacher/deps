@@ -7,11 +7,7 @@ export PATH=/usr/local/bin:$PATH
 EXP="[-0-9a-zA-Z]*$"
 
 function update {
-  if [ $(ps ax | grep ssh-agent | wc -l) -eq 0 ];
-then
-  eval $(ssh-agent -s)
-  trap "ssh-agent -k" exit
-fi # eval "$(ssh-agent -s)" # eval $(ssh-agent) 1> /dev/null
+  eval "$(ssh-agent -s)" 1> /dev/null # eval $(ssh-agent) 1> /dev/null
   ssh -vT git@github.com
   git checkout $default_branch
   git pull
@@ -24,7 +20,7 @@ fi # eval "$(ssh-agent -s)" # eval $(ssh-agent) 1> /dev/null
   git commit -m "Updated \`package.json\` &/ \`package-lock.json\`"
   git push
   git push --tags
-  # eval $(ssh-agent -k) 1> /dev/null
+  eval "$(ssh-agent -k)" 1> /dev/null
 }
 
 function can_update {

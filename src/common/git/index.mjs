@@ -39,18 +39,21 @@ echo "\${BASH_REMATCH[0]}"
 
 const GIT_PULL = `
 eval $(ssh-agent) 1> /dev/null
+ssh -vT git@github.com
 git pull
 eval $(ssh-agent -k) 1> /dev/null
 `
 
 const GIT_PUSH = `
 eval $(ssh-agent) 1> /dev/null
+ssh -vT git@github.com
 git push
 eval $(ssh-agent -k) 1> /dev/null
 `
 
 const GIT_PUSH_TAGS = `
 eval $(ssh-agent) 1> /dev/null
+ssh -vT git@github.com
 git push --tags
 eval $(ssh-agent -k) 1> /dev/null
 `

@@ -7,7 +7,7 @@ export PATH=/usr/local/bin:$PATH
 EXP="[-0-9a-zA-Z]*$"
 
 function update {
-  eval $(ssh-agent) 1> /dev/null
+  # eval $(ssh-agent) 1> /dev/null
   ssh -vT git@github.com
   git checkout $default_branch
   git pull
@@ -20,7 +20,7 @@ function update {
   git commit -m "Updated \`package.json\` &/ \`package-lock.json\`"
   git push
   git push --tags
-  eval $(ssh-agent -k) 1> /dev/null
+  # eval $(ssh-agent -k) 1> /dev/null
 }
 
 function can_update {

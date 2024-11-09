@@ -7,7 +7,11 @@ export PATH=/usr/local/bin:$PATH
 EXP="[-0-9a-zA-Z]*$"
 
 function update {
-  eval "$(ssh-agent -s)" # eval $(ssh-agent) 1> /dev/null
+  if [ $(ps ax | grep ssh-agent | wc -l) -eq 0 ];
+then
+  eval $(ssh-agent -s)
+  trap "ssh-agent -k" exit
+fi # eval "$(ssh-agent -s)" # eval $(ssh-agent) 1> /dev/null
   ssh -vT git@github.com
   git checkout $default_branch
   git pull

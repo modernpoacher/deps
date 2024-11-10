@@ -9,7 +9,7 @@ import {
 } from 'node:child_process'
 
 import {
-  resolve
+  join
 } from 'node:path'
 
 import {
@@ -36,8 +36,8 @@ debug.enable(DEBUG)
 
 const command = (
   PLATFORM === 'win32'
-    ? `bash "${resolve(PATH, '.\\bin\\bash\\deps.sh')}"`
-    : `bash '${resolve(PATH, './bin/bash/deps.sh')}'`
+    ? `bash "${join(PATH, '.\\bin\\bash\\deps.sh')}"`
+    : `bash '${join(PATH, './bin/bash/deps.sh')}'`
 )
 
 const args = getArgs()

@@ -14,6 +14,7 @@ import {
 
 import {
   resolve,
+  join,
   relative,
   normalize
 } from 'node:path'
@@ -136,11 +137,11 @@ const handlePackageError = ({ message = MESSAGE } = {}) => { log(`Package error:
 
 const handleConfigurationError = ({ message = MESSAGE } = {}) => { log(`Configuration error: "${message}"`) }
 
-const getPackageJsonPath = (directory = DIRECTORY) => resolve(directory, 'package.json')
+const getPackageJsonPath = (directory = DIRECTORY) => resolve(join(directory, 'package.json'))
 
-const getDepsRcPath = (directory = DIRECTORY) => resolve(directory, '.depsrc')
+const getDepsRcPath = (directory = DIRECTORY) => resolve(join(directory, '.depsrc'))
 
-const getDepsRcJsonPath = (directory = DIRECTORY) => resolve(directory, '.depsrc.json')
+const getDepsRcJsonPath = (directory = DIRECTORY) => resolve(join(directory, '.depsrc.json'))
 
 async function getPackageJson (directory = DIRECTORY) {
   log('getPackageJson')

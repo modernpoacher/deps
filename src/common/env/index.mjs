@@ -15,28 +15,30 @@ import {
 } from 'node:os'
 
 const {
-  env: {
-    HOME
-  }
-} = process
-
-const BASH = join(PATH, 'bin/bash')
-
-const {
   name: NAME,
   version: VERSION
 } = JSON.parse(readFileSync(join(PATH, 'package.json')))
 
 const PLATFORM = platform()
 
+const {
+  env: {
+    HOME
+  }
+} = process
+
+const BASH = PLATFORM === 'win32'
+  ? join(PATH, '.\\bin\\bash')
+  : join(PATH, './bin/bash')
+
 const log = debug('@modernpoacher/deps')
 
 log(`\`common/env\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
 
 export {
-  HOME,
-  BASH,
   NAME,
   VERSION,
-  PLATFORM
+  PLATFORM,
+  HOME,
+  BASH
 }

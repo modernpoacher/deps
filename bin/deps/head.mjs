@@ -9,7 +9,7 @@ import {
 } from 'node:child_process'
 
 import {
-  resolve
+  join
 } from 'node:path'
 
 import {
@@ -36,8 +36,8 @@ debug.enable(DEBUG)
 
 const command = (
   PLATFORM === 'win32'
-    ? `bash "${resolve(PATH, '.\\bin\\bash\\head.sh')}"`
-    : `bash '${resolve(PATH, './bin/bash/head.sh')}'`
+    ? `bash "${join(PATH, '.\\bin\\bash\\head.sh')}"`
+    : `bash '${join(PATH, './bin/bash/head.sh')}'`
 )
 
 const args = getArgs()

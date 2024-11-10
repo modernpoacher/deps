@@ -103,7 +103,7 @@ function execute {
   return 0
 }
 
-HOME=$PWD
+TOP=$PWD
 
 echo
 echo -e "\033[0;32mStarting \`deps\` ...\033[0m" # "Starting ..."
@@ -189,7 +189,7 @@ else
       done
     fi
 
-    cd "$HOME"
+    cd "$TOP"
   else
     if [ ! -z "$from" ]
     then

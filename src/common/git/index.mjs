@@ -253,13 +253,13 @@ export function awkGitRemoteShowOriginHead (d = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = 'git remote show origin | awk \'/HEAD branch/ {print $NF}\''
+      const commands = 'git remote show origin | awk \'/HEAD branch/ {print $NF}\''
       const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(command, options, (e, v = '') => {
+      } = exec(commands, options, (e, v = '') => {
         (!e)
           ? resolve(trim(v))
           : reject(e)
@@ -321,13 +321,13 @@ export function gitRevParseAbbrevRefHead (d = DIRECTORY) {
 
   return (
     new Promise((resolve, reject) => {
-      const command = 'git rev-parse --abbrev-ref HEAD'
+      const commands = 'git rev-parse --abbrev-ref HEAD'
       const options = getOptions(directory)
 
       const {
         stdout,
         stderr
-      } = exec(command, options, (e, v = '') => {
+      } = exec(commands, options, (e, v = '') => {
         (!e)
           ? resolve(trim(v))
           : reject(e)

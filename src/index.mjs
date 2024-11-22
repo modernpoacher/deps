@@ -133,8 +133,6 @@ export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
 
   const commands = getInstallSaveExactCommands(deps, r, f)
 
-  info(commands)
-
   return normalizeCommands(
     getSaveBundleParameter(commands)
   )
@@ -309,14 +307,13 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveBundleSaveExactCommands(deps, r, f))
-      const options = getOptions(directory)
 
-      info(commands) // , options)
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
+      } = exec(commands, getOptions(directory), function handleComplete (e, v) {
         if (!e) {
           resolve(v)
           return
@@ -355,14 +352,13 @@ export function installSaveBundle (d, deps, r, f) {
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveBundleCommands(deps, r, f))
-      const options = getOptions(directory)
 
       info(commands) // , options)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
+      } = exec(commands, getOptions(directory), function handleComplete (e, v) {
         if (!e) {
           resolve(v)
           return
@@ -401,14 +397,13 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveOptionalSaveExactCommands(deps, r, f))
-      const options = getOptions(directory)
 
-      info(commands) // , options)
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
+      } = exec(commands, getOptions(directory), function handleComplete (e, v) {
         if (!e) {
           resolve(v)
           return
@@ -447,14 +442,13 @@ export function installSaveOptional (d, dependencies, r, f) {
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveOptionalCommands(dependencies, r, f))
-      const options = getOptions(directory)
 
-      info(commands) // , options)
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
+      } = exec(commands, getOptions(directory), function handleComplete (e, v) {
         if (!e) {
           resolve(v)
           return
@@ -493,14 +487,13 @@ export function installSaveDevSaveExact (d, deps, r, f) {
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveDevSaveExactCommands(deps, r, f))
-      const options = getOptions(directory)
 
-      info(commands) // , options)
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
+      } = exec(commands, getOptions(directory), function handleComplete (e, v) {
         if (!e) {
           resolve(v)
           return
@@ -539,14 +532,13 @@ export function installSaveDev (d, deps, r, f) {
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveDevCommands(deps, r, f))
-      const options = getOptions(directory)
 
-      info(commands) // , options)
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
+      } = exec(commands, getOptions(directory), function handleComplete (e, v) {
         if (!e) {
           resolve(v)
           return
@@ -585,14 +577,13 @@ export function installSaveProdSaveExact (d, deps, r, f) {
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveProdSaveExactCommands(deps, r, f))
-      const options = getOptions(directory)
 
-      info(commands) // , options)
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
+      } = exec(commands, getOptions(directory), function handleComplete (e, v) {
         if (!e) {
           resolve(v)
           return
@@ -631,14 +622,13 @@ export function installSaveProd (d, deps, r, f) {
   return (
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveProdCommands(deps, r, f))
-      const options = getOptions(directory)
 
-      info(commands) // , options)
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
+      } = exec(commands, getOptions(directory), function handleComplete (e, v) {
         if (!e) {
           resolve(v)
           return

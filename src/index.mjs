@@ -47,6 +47,7 @@ import {
 } from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')
+const info = debug('@modernpoacher/deps:info')
 
 log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
@@ -85,6 +86,8 @@ export function getInstallSaveExactCommands (deps, r, f) {
   const c = transform(deps)
   const commands = `npm i ${c}`
 
+  info(commands)
+
   return normalizeCommands(
     getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(commands)))
   )
@@ -107,6 +110,8 @@ export function getInstallCommands (deps, r, f) {
   const c = transform(deps)
   const commands = `npm i ${c}`
 
+  info(commands)
+
   return normalizeCommands(
     getRegistryParameter(r, getForceParameter(f, commands))
   )
@@ -127,6 +132,8 @@ export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
   log('getInstallSaveBundleSaveExactCommands')
 
   const commands = getInstallSaveExactCommands(deps, r, f)
+
+  info(commands)
 
   return normalizeCommands(
     getSaveBundleParameter(commands)
@@ -149,6 +156,8 @@ export function getInstallSaveBundleCommands (deps, r, f) {
 
   const commands = getInstallCommands(deps, r, f)
 
+  info(commands)
+
   return normalizeCommands(
     getSaveBundleParameter(commands)
   )
@@ -169,6 +178,8 @@ export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
   log('getInstallSaveOptionalSaveExactCommands')
 
   const commands = getInstallSaveExactCommands(deps, r, f)
+
+  info(commands)
 
   return normalizeCommands(
     getSaveOptionalParameter(commands)
@@ -191,6 +202,8 @@ export function getInstallSaveOptionalCommands (deps, r, f) {
 
   const commands = getInstallCommands(deps, r, f)
 
+  info(commands)
+
   return normalizeCommands(
     getSaveOptionalParameter(commands)
   )
@@ -211,6 +224,8 @@ export function getInstallSaveDevSaveExactCommands (deps, r, f) {
   log('getInstallSaveDevSaveExactCommands')
 
   const commands = getInstallSaveExactCommands(deps, r, f)
+
+  info(commands)
 
   return normalizeCommands(
     getSaveDevParameter(commands)
@@ -233,6 +248,8 @@ export function getInstallSaveDevCommands (deps, r, f) {
 
   const commands = getInstallCommands(deps, r, f)
 
+  info(commands)
+
   return normalizeCommands(
     getSaveDevParameter(commands)
   )
@@ -254,6 +271,8 @@ export function getInstallSaveProdSaveExactCommands (deps, r, f) {
 
   const commands = getInstallSaveExactCommands(deps, r, f)
 
+  info(commands)
+
   return normalizeCommands(
     getSaveProdParameter(commands)
   )
@@ -274,6 +293,8 @@ export function getInstallSaveProdCommands (deps, r, f) {
   log('getInstallSaveProdCommands')
 
   const commands = getInstallCommands(deps, r, f)
+
+  info(commands)
 
   return normalizeCommands(
     getSaveProdParameter(commands)
@@ -303,6 +324,8 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveBundleSaveExactCommands(deps, r, f))
       const options = getOptions(directory)
+
+      info(commands, options)
 
       const {
         stdout,
@@ -345,6 +368,8 @@ export function installSaveBundle (d, deps, r, f) {
       const commands = getCommands(getInstallSaveBundleCommands(deps, r, f))
       const options = getOptions(directory)
 
+      info(commands, options)
+
       const {
         stdout,
         stderr
@@ -385,6 +410,8 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveOptionalSaveExactCommands(deps, r, f))
       const options = getOptions(directory)
+
+      info(commands, options)
 
       const {
         stdout,
@@ -427,6 +454,8 @@ export function installSaveOptional (d, dependencies, r, f) {
       const commands = getCommands(getInstallSaveOptionalCommands(dependencies, r, f))
       const options = getOptions(directory)
 
+      info(commands, options)
+
       const {
         stdout,
         stderr
@@ -467,6 +496,8 @@ export function installSaveDevSaveExact (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveDevSaveExactCommands(deps, r, f))
       const options = getOptions(directory)
+
+      info(commands, options)
 
       const {
         stdout,
@@ -509,6 +540,8 @@ export function installSaveDev (d, deps, r, f) {
       const commands = getCommands(getInstallSaveDevCommands(deps, r, f))
       const options = getOptions(directory)
 
+      info(commands, options)
+
       const {
         stdout,
         stderr
@@ -550,6 +583,8 @@ export function installSaveProdSaveExact (d, deps, r, f) {
       const commands = getCommands(getInstallSaveProdSaveExactCommands(deps, r, f))
       const options = getOptions(directory)
 
+      info(commands, options)
+
       const {
         stdout,
         stderr
@@ -590,6 +625,8 @@ export function installSaveProd (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveProdCommands(deps, r, f))
       const options = getOptions(directory)
+
+      info(commands, options)
 
       const {
         stdout,

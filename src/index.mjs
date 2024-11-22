@@ -312,13 +312,8 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('install-save-bundle-save-exact')
@@ -356,13 +351,8 @@ export function installSaveBundle (d, deps, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('install-save-bundle')
@@ -400,13 +390,8 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('install-save-otional-save-exact')
@@ -444,13 +429,8 @@ export function installSaveOptional (d, dependencies, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('install-save-otional')
@@ -488,13 +468,8 @@ export function installSaveDevSaveExact (d, deps, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('install-save-dev-save-exact')
@@ -532,13 +507,8 @@ export function installSaveDev (d, deps, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('install-save-dev')
@@ -576,13 +546,8 @@ export function installSaveProdSaveExact (d, deps, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('install-save-prod-save-exact')
@@ -620,13 +585,8 @@ export function installSaveProd (d, deps, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('install-save-prod')

@@ -269,13 +269,8 @@ function rmrf (d = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('rmrf')
@@ -299,13 +294,8 @@ function npmi (d = DIRECTORY, registry = REGISTRY, force = false) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('npmi')
@@ -329,13 +319,8 @@ function deps (d = DIRECTORY, registry = REGISTRY, force = false) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, function handleComplete (e, v) {
-        if (!e) {
-          resolve(v)
-          return
-        }
-
-        reject(e)
+      } = exec(commands, options, (e, v) => {
+        return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('deps')

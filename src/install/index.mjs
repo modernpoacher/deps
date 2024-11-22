@@ -119,10 +119,13 @@ export function installSaveExact (d, p, s, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        (!e)
-          ? resolve(v)
-          : reject(e)
+      } = exec(commands, options, function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+          return
+        }
+
+        reject(e)
       })
 
       stdout.on('data', log)
@@ -159,10 +162,13 @@ export function install (d, p, s, r, f) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        (!e)
-          ? resolve(v)
-          : reject(e)
+      } = exec(commands, options, function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+          return
+        }
+
+        reject(e)
       })
 
       stdout.on('data', log)

@@ -20,6 +20,9 @@
 # NVM
 .nvmrc
 
+# Babel
+babel.config.*
+
 # Deps
 .depsrc
 

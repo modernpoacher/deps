@@ -46,7 +46,10 @@ log(`\`common/options\` (${VERSION} - ${PLATFORM}) is awake`)
 *    env: {
 *      DEBUG_COLORS: string,
 *      FORCE_COLOR: number,
-*      PROCESS: string
+*      NODE_OPTIONS: string,
+*      SSH_AUTH_SOCK?: string,
+*      HOME?: string,
+*      PATH?: string
 *    }
 *    cwd: string
 *  }}

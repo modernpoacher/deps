@@ -17,4 +17,4 @@ else
 fi
 
 BIN="$(realpath "$DIR/..")"
-node "$BIN/node/deps.mjs"
+node "$BIN/node/deps.mjs" "$@"

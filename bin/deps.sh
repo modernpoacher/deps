@@ -16,4 +16,4 @@ else
   fi
 fi
 
-node "$DIR/deps.mjs"
+node "$DIR/deps.mjs" "$@"

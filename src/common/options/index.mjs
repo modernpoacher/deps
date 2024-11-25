@@ -7,6 +7,7 @@ import {
 
 const {
   env: {
+    NODE_OPTIONS = '--disable-warning=ExperimentalWarning',
     SSH_AUTH_SOCK,
     HOME,
     PATH
@@ -21,6 +22,7 @@ export const OPTIONS = {
     FORCE_COLOR: PLATFORM === 'win32'
       ? 3
       : 2,
+    NODE_OPTIONS,
     SSH_AUTH_SOCK,
     HOME,
     PATH
@@ -50,6 +52,8 @@ log(`\`common/options\` (${VERSION} - ${PLATFORM}) is awake`)
 *  }}
 */
 export function getOptions (cwd) {
+  log('getOptions')
+
   return {
     ...OPTIONS,
     cwd

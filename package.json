@@ -30,18 +30,18 @@
     "url": "https://github.com/modernpoacher/deps/issues"
   },
   "scripts": {
-    "deps": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/deps.mjs",
-    "deps-deps": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/deps/deps.mjs",
-    "deps-execute": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/deps/execute.mjs",
-    "deps-head": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/deps/head.mjs",
-    "deps-install": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/deps/install.mjs",
-    "deps-push": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/deps/push.mjs",
-    "deps-wipe": "cross-env DEBUG_COLORS=yes NODE_ENV=production node bin/deps/wipe.mjs",
-    "lint": "eslint . --ext .mjs,.cjs",
+    "deps": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps.mjs",
+    "deps-deps": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/deps.mjs",
+    "deps-execute": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/execute.mjs",
+    "deps-head": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/head.mjs",
+    "deps-install": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/install.mjs",
+    "deps-push": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/push.mjs",
+    "deps-wipe": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/wipe.mjs",
+    "lint": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning eslint . --ext .mjs,.cjs",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky",
     "start": "npm run deps",
-    "test": "cross-env DEBUG_COLORS=yes NODE_ENV=test mocha test --recursive --verbose --color"
+    "test": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=test mocha test --recursive --verbose --color"
   },
   "bin": {
     "deps": "bin/deps.mjs",

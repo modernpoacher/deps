@@ -3,9 +3,6 @@
 DIR="$(dirname "$0")"
 BIN="$(realpath "$DIR/..")"
 
-echo DIR is $DIR
-echo BIN is $BIN
-
 NODE_OPTIONS="${NODE_OPTIONS:---disable-warning=ExperimentalWarning}"
 
 export NODE_OPTIONS=$NODE_OPTIONS # export NODE_OPTIONS='--disable-warning=ExperimentalWarning'
@@ -23,6 +20,9 @@ fi
 echo SSH auth sock is $SSH_AUTH_SOCK
 echo Home is $HOME
 echo Path is $PATH
+
+echo DIR is $DIR
+echo BIN is $BIN
 
 EXP="[-0-9a-zA-Z]*$"
 

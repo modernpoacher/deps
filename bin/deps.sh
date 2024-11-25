@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DIR="$(dirname "$0")"
+DIR="$(dirname $(readlink -f "$0"))"
 
 NODE_OPTIONS="${NODE_OPTIONS:---disable-warning=ExperimentalWarning}"
 
@@ -16,4 +16,6 @@ else
   fi
 fi
 
-node "$DIR/deps.mjs"
+BIN="$(realpath "$DIR")"
+
+node "$BIN/node/deps.mjs"

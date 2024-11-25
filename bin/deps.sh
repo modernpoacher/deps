@@ -16,6 +16,4 @@ else
   fi
 fi
 
-BIN="$(realpath "$DIR")"
-
-node "$BIN/node/deps.mjs"
+node "$DIR/deps.mjs"

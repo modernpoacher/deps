@@ -59,6 +59,6 @@ export function getOptions (cwd) {
 
   return {
     ...OPTIONS,
-    cwd
+    ...(cwd ? { cwd } : {})
   }
 }

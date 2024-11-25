@@ -55,9 +55,12 @@ import {
 
 const {
   env: {
+    NODE_OPTIONS = '--disable-warning=ExperimentalWarning',
     DEBUG = '@modernpoacher/deps*'
   }
 } = process
+
+process.env.NODE_OPTIONS = NODE_OPTIONS
 
 debug.enable(DEBUG)
 

@@ -27,9 +27,9 @@ const {
   }
 } = process
 
-const BASH = PLATFORM === 'win32'
-  ? join(PATH, '.\\bin\\bash')
-  : join(PATH, './bin/bash')
+const BIN = PLATFORM === 'win32'
+  ? join(PATH, '.\\bin') // \\bash')
+  : join(PATH, './bin') // /bash')
 
 const log = debug('@modernpoacher/deps')
 
@@ -40,5 +40,5 @@ export {
   VERSION,
   PLATFORM,
   HOME,
-  BASH
+  BIN
 }

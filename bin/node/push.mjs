@@ -2,8 +2,6 @@
 
 import debug from 'debug'
 
-import PATH from '#where-am-i'
-
 import {
   exec
 } from 'node:child_process'
@@ -19,7 +17,8 @@ import {
 } from '#deps/bin/common'
 
 import {
-  PLATFORM
+  PLATFORM,
+  BIN
 } from '#deps/src/common/env'
 
 import {
@@ -36,8 +35,8 @@ debug.enable(DEBUG)
 
 const command = (
   PLATFORM === 'win32'
-    ? `bash "${join(PATH, '.\\bin\\bash\\push.sh')}"`
-    : `bash '${join(PATH, './bin/bash/push.sh')}'`
+    ? `bash "${join(BIN, '.\\bash\\push.sh')}"`
+    : `bash '${join(BIN, './bash/push.sh')}'`
 )
 
 const args = getArgs()

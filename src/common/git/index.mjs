@@ -12,7 +12,7 @@ import {
 
 import {
   HOME,
-  BASH,
+  BIN,
   VERSION,
   PLATFORM
 } from '#deps/src/common/env'
@@ -42,11 +42,11 @@ echo "\${BASH_REMATCH[0]}"
 const GIT_PULL = `
 if [ -f "${HOME}/.zshrc" ];
 then
-  zsh "${BASH}/z.sh"
+  zsh "${BIN}/z.sh"
 else
   if [ -f "${HOME}/.bashrc" ];
   then
-    bash "${BASH}/b.sh"
+    bash "${BIN}/b.sh"
   fi
 fi
 
@@ -56,11 +56,11 @@ git pull
 const GIT_PUSH = `
 if [ -f "${HOME}/.zshrc" ];
 then
-  zsh "${BASH}/z.sh"
+  zsh "${BIN}/z.sh"
 else
   if [ -f "${HOME}/.bashrc" ];
   then
-    bash "${BASH}/b.sh"
+    bash "${BIN}/b.sh"
   fi
 fi
 
@@ -70,11 +70,11 @@ git push
 const GIT_PUSH_TAGS = `
 if [ -f "${HOME}/.zshrc" ];
 then
-  zsh "${BASH}/z.sh"
+  zsh "${BIN}/z.sh"
 else
   if [ -f "${HOME}/.bashrc" ];
   then
-    bash "${BASH}/b.sh"
+    bash "${BIN}/b.sh"
   fi
 fi
 

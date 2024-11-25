@@ -1,21 +1,19 @@
 #!/bin/bash
 
-DIR="$(dirname $(readlink -f "$0"))"
+# [ -L "$0" ] && DIR="$(realpath "$(dirname "$(readlink -f "$0")")")" || DIR="$(realpath "$(dirname "$0")")"
 
-NODE_OPTIONS="${NODE_OPTIONS:---disable-warning=ExperimentalWarning}"
+DIR="$(realpath "$(dirname "$(readlink -f "$0")")")"
+BIN="$DIR"
 
-export NODE_OPTIONS=$NODE_OPTIONS # export NODE_OPTIONS='--disable-warning=ExperimentalWarning'
+source "$DIR/common.sh"
 
-echo "$DIR/z.sh"
+source_home "$DIR"
 
-if [ -f "$HOME/.zshrc" ];
-then
-  zsh "$DIR/z.sh"
-else
-  if [ -f "$HOME/.bashrc" ];
-  then
-    bash "$DIR/b.sh"
-  fi
-fi
+# echo SSH auth sock is $SSH_AUTH_SOCK
+# echo Home is $HOME
+# echo Path is $PATH
+
+# echo DIR is $DIR
+# echo BIN is $BIN
 
 node "$DIR/deps.mjs" "$@"

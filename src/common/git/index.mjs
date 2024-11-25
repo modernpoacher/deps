@@ -11,7 +11,6 @@ import {
 } from 'node:child_process'
 
 import {
-  HOME,
   BIN,
   VERSION,
   PLATFORM
@@ -40,43 +39,25 @@ echo "\${BASH_REMATCH[0]}"
 `
 
 const GIT_PULL = `
-if [ -f "${HOME}/.zshrc" ];
-then
-  zsh "${BIN}/z.sh"
-else
-  if [ -f "${HOME}/.bashrc" ];
-  then
-    bash "${BIN}/b.sh"
-  fi
-fi
+source "${BIN}/common.sh"
+
+source_home "${BIN}"
 
 git pull
 `
 
 const GIT_PUSH = `
-if [ -f "${HOME}/.zshrc" ];
-then
-  zsh "${BIN}/z.sh"
-else
-  if [ -f "${HOME}/.bashrc" ];
-  then
-    bash "${BIN}/b.sh"
-  fi
-fi
+source "${BIN}/common.sh"
+
+source_home "${BIN}"
 
 git push
 `
 
 const GIT_PUSH_TAGS = `
-if [ -f "${HOME}/.zshrc" ];
-then
-  zsh "${BIN}/z.sh"
-else
-  if [ -f "${HOME}/.bashrc" ];
-  then
-    bash "${BIN}/b.sh"
-  fi
-fi
+source "${BIN}/common.sh"
+
+source_home "${BIN}"
 
 git push --tags
 `

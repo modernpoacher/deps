@@ -1,23 +1,17 @@
 #!/bin/bash
 
-DIR="$(dirname $(readlink -f "$0"))"
+DIR="$(realpath "$(dirname "$(readlink -f "$0")")")"
 BIN="$(realpath "$DIR/..")"
 
-echo DIR is $DIR
-echo BIN is $BIN
+source "$BIN/common.sh"
 
-NODE_OPTIONS="${NODE_OPTIONS:---disable-warning=ExperimentalWarning}"
+source_home "$BIN"
 
-export NODE_OPTIONS=$NODE_OPTIONS # export NODE_OPTIONS='--disable-warning=ExperimentalWarning'
+# echo SSH auth sock is $SSH_AUTH_SOCK
+# echo Home is $HOME
+# echo Path is $PATH
 
-if [ -f "$HOME/.zshrc" ];
-then
-  zsh "$BIN/z.sh"
-else
-  if [ -f "$HOME/.bashrc" ];
-  then
-    bash "$BIN/b.sh"
-  fi
-fi
+# echo DIR is $DIR
+# echo BIN is $BIN
 
 node "$BIN/node/execute.mjs" "$@"

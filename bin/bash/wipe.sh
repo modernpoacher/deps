@@ -1,28 +1,18 @@
 #!/bin/bash
 
-DIR="$(dirname "$0")"
+DIR="$(realpath "$(dirname "$0")")"
 BIN="$(realpath "$DIR/..")"
 
-NODE_OPTIONS="${NODE_OPTIONS:---disable-warning=ExperimentalWarning}"
+source "$BIN/common.sh"
 
-export NODE_OPTIONS=$NODE_OPTIONS # export NODE_OPTIONS='--disable-warning=ExperimentalWarning'
+source_home "$BIN"
 
-if [ -f "$HOME/.zshrc" ];
-then
-  zsh "$BIN/z.sh"
-else
-  if [ -f "$HOME/.bashrc" ];
-  then
-    bash "$BIN/b.sh"
-  fi
-fi
+# echo SSH auth sock is $SSH_AUTH_SOCK
+# echo Home is $HOME
+# echo Path is $PATH
 
-echo SSH auth sock is $SSH_AUTH_SOCK
-echo Home is $HOME
-echo Path is $PATH
-
-echo DIR is $DIR
-echo BIN is $BIN
+# echo DIR is $DIR
+# echo BIN is $BIN
 
 EXP="[-0-9a-zA-Z]*$"
 

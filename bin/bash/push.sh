@@ -2,7 +2,9 @@
 
 DIR="$(dirname "$0")"
 
-export NODE_OPTIONS='--disable-warning=ExperimentalWarning'
+NODE_OPTIONS="${NODE_OPTIONS:---disable-warning=ExperimentalWarning}"
+
+export NODE_OPTIONS=$NODE_OPTIONS # export NODE_OPTIONS='--disable-warning=ExperimentalWarning'
 
 if [ -f "$HOME/.zshrc" ];
 then

@@ -4,6 +4,8 @@
 
 DIR="$(dirname "$0")"
 
+export NODE_OPTIONS='--disable-warning=ExperimentalWarning'
+
 if [ -f "$HOME/.zshrc" ];
 then
   zsh "$DIR/z.sh"

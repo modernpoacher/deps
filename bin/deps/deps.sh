@@ -16,4 +16,5 @@ else
   fi
 fi
 
-node ./bin/node/deps.mjs
+BIN="$(dirname "$DIR/../..")"
+node "$BIN/node/deps.mjs"

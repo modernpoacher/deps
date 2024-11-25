@@ -16,4 +16,5 @@ else
   fi
 fi
 
-node ./bin/node/wipe.mjs
+BIN="$(dirname "$DIR/../..")"
+node "$BIN/node/wipe.mjs"

@@ -5,9 +5,9 @@
 DIR="$(realpath "$(dirname "$(readlink -f "$0")")")"
 BIN="$DIR"
 
-source "$DIR/common.sh"
+source "$BIN/common.sh"
 
-source_home "$DIR"
+source_home "$BIN"
 
 # echo SSH auth sock is $SSH_AUTH_SOCK
 # echo Home is $HOME
@@ -16,4 +16,4 @@ source_home "$DIR"
 # echo DIR is $DIR
 # echo BIN is $BIN
 
-node "$DIR/deps.mjs" "$@"
+node "$BIN/deps.mjs" "$@"

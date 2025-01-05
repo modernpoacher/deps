@@ -15,7 +15,7 @@ import {
 import {
   resolve,
   join,
-  relative,
+  // relative,
   normalize
 } from 'node:path'
 
@@ -63,7 +63,7 @@ export const tidy = (v) => v.replace(/\n{2,}}/gm, String.fromCharCode(10)).trim(
 
 export const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
-const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
+// const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
 const getRmrfCommands = PLATFORM === 'win32'
   ? () => tidy(`
@@ -170,13 +170,15 @@ async function getDepsRcJson (directory = DIRECTORY) {
 async function hasPackage (directory = DIRECTORY) {
   log('hasPackage')
 
+  log(`Directory is "${directory}"`)
+
   try {
     await access(getPackageJsonPath(directory), constants.R_OK)
 
-    log(`Package at "${toRelativePath(getPackageJsonPath(directory))}"`)
+    log('Package at "package.json"')
     return true
   } catch {
-    log(`No package at "${toRelativePath(getPackageJsonPath(directory))}"`)
+    log('No package at "package.json"')
     return false
   }
 }
@@ -194,10 +196,12 @@ async function getPackage (directory = DIRECTORY) {
 async function hasConfiguration (directory = DIRECTORY) {
   log('hasConfiguration')
 
+  log(`Directory is "${directory}"`)
+
   try {
     await access(getDepsRcPath(directory), constants.R_OK)
 
-    log(`Configuration at "${toRelativePath(getDepsRcPath(directory))}"`)
+    log('Configuration at ".depsrc"')
     return true
   } catch (e) {
     const {
@@ -210,7 +214,7 @@ async function hasConfiguration (directory = DIRECTORY) {
       try {
         await access(getDepsRcJsonPath(directory), constants.R_OK)
 
-        log(`Configuration at "${toRelativePath(getDepsRcJsonPath(directory))}"`)
+        log('Configuration at ".depsrc.json"')
         return true
       } catch (e) {
         const {
@@ -224,7 +228,7 @@ async function hasConfiguration (directory = DIRECTORY) {
     }
   }
 
-  log(`No configuration at "${toRelativePath(getDepsRcPath(directory))}" or "${toRelativePath(getDepsRcJsonPath(directory))}"`)
+  log('No configuration at ".depsrc" nor ".depsrc.json"') //  at "${toRelativePath(getDepsRcPath(directory))}" or "${toRelativePath(getDepsRcJsonPath(directory))}"`)
   return false
 }
 

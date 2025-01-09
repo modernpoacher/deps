@@ -16,6 +16,10 @@ source_home "$BIN"
 
 EXP="[-0-9a-zA-Z]*$"
 
+function has_git {
+  [ ! -z $(git status 2> /dev/null) ]
+}
+
 function report {
   local directory_name
 
@@ -37,7 +41,7 @@ function checkout_default_branch {
 
   if [ -z "$default_branch" ]
   then
-    default_branch=$(git remote show origin | awk '/HEAD branch/ {print $NF}')
+    default_branch=$(git remote show origin 2> /dev/null | awk '/HEAD branch/ {print $NF}')
 
     if [ -z "$default_branch" ]
     then

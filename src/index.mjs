@@ -83,13 +83,9 @@ export function use (key) {
 export function getInstallSaveExactCommands (deps, r, f) {
   log('getInstallSaveExactCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(`npm i ${transform(deps)}`)))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -106,13 +102,9 @@ export function getInstallSaveExactCommands (deps, r, f) {
 export function getInstallCommands (deps, r, f) {
   log('getInstallCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getRegistryParameter(r, getForceParameter(f, `npm i ${transform(deps)}`))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**

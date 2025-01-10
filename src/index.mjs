@@ -83,13 +83,11 @@ export function use (key) {
 export function getInstallSaveExactCommands (deps, r, f) {
   log('getInstallSaveExactCommands')
 
-  const commands = getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(`npm i ${transform(deps)}`)))
+  const commands = normalizeCommands(getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(`npm i ${transform(deps)}`))))
 
   info(commands)
 
-  return (
-    normalizeCommands(commands)
-  )
+  return commands
 }
 
 /**
@@ -106,13 +104,11 @@ export function getInstallSaveExactCommands (deps, r, f) {
 export function getInstallCommands (deps, r, f) {
   log('getInstallCommands')
 
-  const commands = getRegistryParameter(r, getForceParameter(f, `npm i ${transform(deps)}`))
+  const commands = normalizeCommands(getRegistryParameter(r, getForceParameter(f, `npm i ${transform(deps)}`)))
 
   info(commands)
 
-  return (
-    normalizeCommands(commands)
-  )
+  return commands
 }
 
 /**
@@ -129,11 +125,11 @@ export function getInstallCommands (deps, r, f) {
 export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
   log('getInstallSaveBundleSaveExactCommands')
 
-  const commands = getSaveBundleParameter(getInstallSaveExactCommands(deps, r, f))
+  const commands = normalizeCommands(getSaveBundleParameter(getInstallSaveExactCommands(deps, r, f)))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**
@@ -150,11 +146,11 @@ export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
 export function getInstallSaveBundleCommands (deps, r, f) {
   log('getInstallSaveBundleCommands')
 
-  const commands = getSaveBundleParameter(getInstallCommands(deps, r, f))
+  const commands = normalizeCommands(getSaveBundleParameter(getInstallCommands(deps, r, f)))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**
@@ -171,11 +167,11 @@ export function getInstallSaveBundleCommands (deps, r, f) {
 export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
   log('getInstallSaveOptionalSaveExactCommands')
 
-  const commands = getSaveOptionalParameter(getInstallSaveExactCommands(deps, r, f))
+  const commands = normalizeCommands(getSaveOptionalParameter(getInstallSaveExactCommands(deps, r, f)))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**
@@ -192,11 +188,11 @@ export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
 export function getInstallSaveOptionalCommands (deps, r, f) {
   log('getInstallSaveOptionalCommands')
 
-  const commands = getSaveOptionalParameter(getInstallCommands(deps, r, f))
+  const commands = normalizeCommands(getSaveOptionalParameter(getInstallCommands(deps, r, f)))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**
@@ -213,11 +209,11 @@ export function getInstallSaveOptionalCommands (deps, r, f) {
 export function getInstallSaveDevSaveExactCommands (deps, r, f) {
   log('getInstallSaveDevSaveExactCommands')
 
-  const commands = getSaveDevParameter(getInstallSaveExactCommands(deps, r, f))
+  const commands = normalizeCommands(getSaveDevParameter(getInstallSaveExactCommands(deps, r, f)))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**
@@ -234,11 +230,11 @@ export function getInstallSaveDevSaveExactCommands (deps, r, f) {
 export function getInstallSaveDevCommands (deps, r, f) {
   log('getInstallSaveDevCommands')
 
-  const commands = getSaveDevParameter(getInstallCommands(deps, r, f))
+  const commands = normalizeCommands(getSaveDevParameter(getInstallCommands(deps, r, f)))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**
@@ -255,11 +251,11 @@ export function getInstallSaveDevCommands (deps, r, f) {
 export function getInstallSaveProdSaveExactCommands (deps, r, f) {
   log('getInstallSaveProdSaveExactCommands')
 
-  const commands = getSaveProdParameter(getInstallSaveExactCommands(deps, r, f))
+  const commands = normalizeCommands(getSaveProdParameter(getInstallSaveExactCommands(deps, r, f)))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**
@@ -276,11 +272,11 @@ export function getInstallSaveProdSaveExactCommands (deps, r, f) {
 export function getInstallSaveProdCommands (deps, r, f) {
   log('getInstallSaveProdCommands')
 
-  const commands = getSaveProdParameter(getInstallCommands(deps, r, f))
+  const commands = normalizeCommands(getSaveProdParameter(getInstallCommands(deps, r, f)))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**

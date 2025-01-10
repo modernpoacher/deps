@@ -41,7 +41,8 @@ import {
   getDeps
 } from '#deps/src/common'
 
-const log = debug('@modernpoacher/deps:install')
+const log = debug('@modernpoacher/deps')
+const info = debug('@modernpoacher/deps:info')
 
 log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
 
@@ -60,11 +61,11 @@ log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
 export function getInstallSaveExactCommands (p, s, r, f) {
   log('getInstallSaveExactCommands')
 
-  const commands = getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(`npm i ${transform(p)}`))))
+  const commands = normalizeCommands(getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(`npm i ${transform(p)}`)))))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**
@@ -82,11 +83,11 @@ export function getInstallSaveExactCommands (p, s, r, f) {
 export function getInstallCommands (p, s, r, f) {
   log('getInstallCommands')
 
-  const commands = getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, `npm i ${transform(p)}`)))
+  const commands = normalizeCommands(getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, `npm i ${transform(p)}`))))
 
-  return (
-    normalizeCommands(commands)
-  )
+  info(commands)
+
+  return commands
 }
 
 /**

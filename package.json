@@ -53,16 +53,16 @@
     "deps-wipe": "bin/deps/wipe.sh"
   },
   "dependencies": {
-    "commander": "^13.0.0",
+    "commander": "^13.1.0",
     "debug": "^4.4.0",
     "glob": "^11.0.1",
     "strip-ansi": "^7.1.0",
     "supports-color": "^10.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.0",
+    "@babel/core": "^7.26.7",
     "@babel/eslint-parser": "^7.26.5",
-    "@babel/preset-env": "^7.26.0",
+    "@babel/preset-env": "^7.26.7",
     "@babel/register": "^7.25.9",
     "chai": "^5.1.2",
     "core-js": "^3.40.0",
@@ -70,7 +70,7 @@
     "eslint": "8.57.1",
     "eslint-config-standard": "^17.1.0",
     "husky": "^9.1.7",
-    "mocha": "^11.0.1"
+    "mocha": "^11.1.0"
   },
   "imports": {
     "#deps/bin": "./bin/index.mjs",

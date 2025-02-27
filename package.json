@@ -19,7 +19,7 @@
   },
   "license": "ISC",
   "engines": {
-    "node": ">=23.0.0"
+    "node": ">=22.11.0"
   },
   "repository": {
     "type": "git",

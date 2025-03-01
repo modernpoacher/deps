@@ -1,5 +1,3 @@
-import debug from 'debug'
-
 import {
   expect
 } from 'chai'
@@ -30,16 +28,6 @@ import {
 } from '#deps/src'
 
 describe('#deps/src', () => {
-  before(() => {
-    const {
-      env: {
-        DEBUG
-      }
-    } = process
-
-    if (DEBUG) debug.enable(DEBUG)
-  })
-
   describe('`getInstallSaveProdSaveExactCommands`', () => {
     it('is a function', () => {
       return expect(getInstallSaveProdSaveExactCommands)

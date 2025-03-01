@@ -1,5 +1,3 @@
-import debug from 'debug'
-
 import {
   expect
 } from 'chai'
@@ -11,16 +9,6 @@ import {
 } from '#deps/src/common/env'
 
 describe('#deps/src/common/env', () => {
-  before(() => {
-    const {
-      env: {
-        DEBUG
-      }
-    } = process
-
-    if (DEBUG) debug.enable(DEBUG)
-  })
-
   describe('`NAME`', () => {
     it('is a string', () => {
       return expect(NAME)

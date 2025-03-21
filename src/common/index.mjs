@@ -305,21 +305,42 @@ export const isPreRelease = (v) => /-/.test(v)
  */
 export const isExact = (v) => /^\d/.test(v)
 
-function includeExact ([name, version]) {
+/**
+ *  @param {[name: string, version: string]} entry
+ *  @returns {boolean}
+ */
+function includeVersionIsExact ([name, version]) {
   return isExact(version)
 }
 
-function excludeExact ([name, version]) {
+/**
+ *  @param {[name: string, version: string]} entry
+ *  @returns {boolean}
+ */
+function excludeVersionIsExact ([name, version]) {
   return !isExact(version)
 }
 
-function getMapConfigurationDependencies (configurationDependencies) {
+/**
+ *  @param {Record<string, string>} configurationDependencies
+ *  @returns {(entry: [name: string, version: string]) => {
+ *    name: string,
+ *    version: string
+ *  }}
+ */
+function getMapToDepsExactVersionFromConfiguration (configurationDependencies) {
   /**
    *  We are producing an array of objects from the entries of the `packageDependencies`
    *
    *  Each object in the array represents an entry (key and value) from `packageDependencies`
+   *
+   *  @param {[name: string, version: string]} entry
+   *  @returns {{
+   *    name: string,
+   *    version: string
+   *  }}
    */
-  return function mapConfigurationDependencies (entry) {
+  return function mapToDepsExactVersionFromConfiguration (entry) {
     const [
       name,
       version
@@ -336,7 +357,14 @@ function getMapConfigurationDependencies (configurationDependencies) {
   }
 }
 
-function mapPackageDependencies (entry) {
+/**
+ *  @param {[name: string, version: string]} entry
+ *  @returns {{
+ *    name: string,
+ *    version: string
+ *  }}
+ */
+function mapToDepsVersion (entry) {
   const [
     name,
     version
@@ -369,8 +397,8 @@ export function getDepsExact (packageDependencies, configurationDependencies) {
 
   return (
     Object.entries(packageDependencies)
-      .filter(includeExact)
-      .map(getMapConfigurationDependencies(configurationDependencies))
+      .filter(includeVersionIsExact)
+      .map(getMapToDepsExactVersionFromConfiguration(configurationDependencies))
   )
 }
 
@@ -387,8 +415,8 @@ export function getDeps (packageDependencies) {
 
   return (
     Object.entries(packageDependencies)
-      .filter(excludeExact)
-      .map(mapPackageDependencies)
+      .filter(excludeVersionIsExact)
+      .map(mapToDepsVersion)
   )
 }
 

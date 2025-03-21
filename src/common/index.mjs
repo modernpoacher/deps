@@ -322,6 +322,16 @@ function excludeVersionIsExact ([name, version]) {
 }
 
 /**
+ *  @function getMapToDepsExactVersionFromConfiguration
+ *
+ *  Produces an array of objects from the entries of `packageDependencies` which have
+ *  exact versions
+ *
+ *  Entries have already been filtered to exclude non-exact versions
+ *
+ *  Each entry is mapped to the same package name in `configurationDependencies` if it
+ *  appears there. Otherwise, the `packageDependencies` version is used
+ *
  *  @param {Record<string, string>} configurationDependencies
  *  @returns {(entry: [name: string, version: string]) => {
  *    name: string,
@@ -330,10 +340,6 @@ function excludeVersionIsExact ([name, version]) {
  */
 function getMapToDepsExactVersionFromConfiguration (configurationDependencies) {
   /**
-   *  We are producing an array of objects from the entries of the `packageDependencies`
-   *
-   *  Each object in the array represents an entry (key and value) from `packageDependencies`
-   *
    *  @param {[name: string, version: string]} entry
    *  @returns {{
    *    name: string,
@@ -358,6 +364,14 @@ function getMapToDepsExactVersionFromConfiguration (configurationDependencies) {
 }
 
 /**
+ *  @function mapToDepsVersion
+ *
+ *  Produces an array of objects from the entries of `packageDependencies` which do not have
+ *  exact versions
+ *
+ *  Where the version is a pre-release, that version is used. Otherwise the version is
+ *  set to `latest` to ensure that package is updated
+ *
  *  @param {[name: string, version: string]} entry
  *  @returns {{
  *    name: string,

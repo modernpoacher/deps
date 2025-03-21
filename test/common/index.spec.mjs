@@ -287,6 +287,8 @@ describe('#deps/src/common', () => {
               'mock-package': '1.2.3'
             }
 
+            console.log(getDepsExact(dependencies, configuration))
+
             return expect(getDepsExact(dependencies, configuration))
               .to.eql([
                 {
@@ -307,6 +309,8 @@ describe('#deps/src/common', () => {
               'mock-package': 'latest'
             }
 
+            console.log(getDepsExact(dependencies, configuration))
+
             return expect(getDepsExact(dependencies, configuration))
               .to.eql([
                 {
@@ -325,6 +329,8 @@ describe('#deps/src/common', () => {
           }
 
           const configuration = {}
+
+          console.log(getDepsExact(dependencies, configuration))
 
           return expect(getDepsExact(dependencies, configuration))
             .to.eql([
@@ -347,6 +353,8 @@ describe('#deps/src/common', () => {
           const configuration = {
             'mock-package': '1.2.3'
           }
+
+          console.log(getDepsExact(dependencies, configuration))
 
           return expect(getDepsExact(dependencies, configuration))
             .to.eql([])

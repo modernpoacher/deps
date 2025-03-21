@@ -305,6 +305,56 @@ export const isPreRelease = (v) => /-/.test(v)
  */
 export const isExact = (v) => /^\d/.test(v)
 
+function includeExact ([name, version]) {
+  return isExact(version)
+}
+
+function excludeExact ([name, version]) {
+  return !isExact(version)
+}
+
+function getMapConfigurationDependencies (configurationDependencies) {
+  /**
+   *  We are producing an array of objects from the entries of the `packageDependencies`
+   *
+   *  Each object in the array represents an entry (key and value) from `packageDependencies`
+   */
+  return function mapConfigurationDependencies (entry) {
+    const [
+      name,
+      version
+    ] = entry
+
+    return {
+      name,
+      version: (
+        name in configurationDependencies
+          ? configurationDependencies[name]
+          : version
+      )
+    }
+  }
+}
+
+function mapPackageDependencies (entry) {
+  const [
+    name,
+    version
+  ] = entry
+
+  if (isPreRelease(version)) {
+    return {
+      name,
+      version
+    }
+  }
+
+  return {
+    name,
+    version: 'latest'
+  }
+}
+
 /**
  *  @function getDepsExact
  *
@@ -319,11 +369,8 @@ export function getDepsExact (packageDependencies, configurationDependencies) {
 
   return (
     Object.entries(packageDependencies)
-      .reduce((accumulator, [name, version]) => (
-        isExact(version)
-          ? accumulator.concat({ name, version: Reflect.has(configurationDependencies, name) ? Reflect.get(configurationDependencies, name) : version })
-          : accumulator
-      ), [])
+      .filter(includeExact)
+      .map(getMapConfigurationDependencies(configurationDependencies))
   )
 }
 
@@ -340,13 +387,8 @@ export function getDeps (packageDependencies) {
 
   return (
     Object.entries(packageDependencies)
-      .reduce((accumulator, [name, version]) => (
-        isExact(version)
-          ? accumulator
-          : isPreRelease(version)
-            ? accumulator.concat({ name, version })
-            : accumulator.concat({ name, version: 'latest' })
-      ), [])
+      .filter(excludeExact)
+      .map(mapPackageDependencies)
   )
 }
 

@@ -1,11 +1,11 @@
 /**
- * A package
- * @typedef {import('../common/index.mjs').Package} Package
+ *  A package
+ *  @typedef {import('../common/index.mjs').Package} Package
  */
 
 /**
- * A configuration
- * @typedef {import('../common/index.mjs').Configuration} Configuration
+ *  A configuration
+ *  @typedef {import('../common/index.mjs').Configuration} Configuration
  */
 
 import debug from 'debug'
@@ -55,8 +55,7 @@ log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveExactCommands (p, s, r, f) {
   log('getInstallSaveExactCommands')
@@ -79,8 +78,7 @@ export function getInstallSaveExactCommands (p, s, r, f) {
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallCommands (p, s, r, f) {
   log('getInstallCommands')
@@ -104,8 +102,7 @@ export function getInstallCommands (p, s, r, f) {
  *  @param {Configuration} c - Configuration
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function installSaveExact (d, p, s, r, f) {
   log('installSaveExact')
@@ -142,8 +139,7 @@ export function installSaveExact (d, p, s, r, f) {
  *  @param {Configuration} c - Configuration
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function install (d, p, s, r, f) {
   log('install')
@@ -181,8 +177,7 @@ export function install (d, p, s, r, f) {
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<void>}
+ *  @returns {Promise<void>}
  */
 export async function execute (d = DIRECTORY, p = {}, c = {}, s = false, r = REGISTRY, f = false) {
   log('execute')

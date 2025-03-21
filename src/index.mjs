@@ -1,11 +1,11 @@
 /**
- * Package or configuration dependencies
- * @typedef {import('./common/index.mjs').Dependencies} Dependencies
+ *  Package or configuration dependencies
+ *  @typedef {import('./common/index.mjs').Dependencies} Dependencies
  */
 
 /**
- * Dependency descriptor
- * @typedef {import('./common/index.mjs').DependencyDescriptor} DependencyDescriptor
+ *  Dependency descriptor
+ *  @typedef {import('./common/index.mjs').DependencyDescriptor} DependencyDescriptor
  */
 
 import debug from 'debug'
@@ -77,8 +77,7 @@ export function use (key) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveExactCommands (deps, r, f) {
   log('getInstallSaveExactCommands')
@@ -96,8 +95,7 @@ export function getInstallSaveExactCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallCommands (deps, r, f) {
   log('getInstallCommands')
@@ -115,8 +113,7 @@ export function getInstallCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
   log('getInstallSaveBundleSaveExactCommands')
@@ -138,8 +135,7 @@ export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveBundleCommands (deps, r, f) {
   log('getInstallSaveBundleCommands')
@@ -161,8 +157,7 @@ export function getInstallSaveBundleCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
   log('getInstallSaveOptionalSaveExactCommands')
@@ -184,8 +179,7 @@ export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveOptionalCommands (deps, r, f) {
   log('getInstallSaveOptionalCommands')
@@ -207,8 +201,7 @@ export function getInstallSaveOptionalCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveDevSaveExactCommands (deps, r, f) {
   log('getInstallSaveDevSaveExactCommands')
@@ -230,8 +223,7 @@ export function getInstallSaveDevSaveExactCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveDevCommands (deps, r, f) {
   log('getInstallSaveDevCommands')
@@ -253,8 +245,7 @@ export function getInstallSaveDevCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveProdSaveExactCommands (deps, r, f) {
   log('getInstallSaveProdSaveExactCommands')
@@ -276,8 +267,7 @@ export function getInstallSaveProdSaveExactCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {string}
+ *  @returns {string}
  */
 export function getInstallSaveProdCommands (deps, r, f) {
   log('getInstallSaveProdCommands')
@@ -300,8 +290,7 @@ export function getInstallSaveProdCommands (deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function installSaveBundleSaveExact (d, deps, r, f) {
   log('installSaveBundleSaveExact')
@@ -339,8 +328,7 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function installSaveBundle (d, deps, r, f) {
   log('installSaveBundle')
@@ -378,8 +366,7 @@ export function installSaveBundle (d, deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function installSaveOptionalSaveExact (d, deps, r, f) {
   log('installSaveOptionalSaveExact')
@@ -417,8 +404,7 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
  *  @param {Dependencies} dependencies - Dependencies
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function installSaveOptional (d, dependencies, r, f) {
   log('installSaveOptional')
@@ -456,8 +442,7 @@ export function installSaveOptional (d, dependencies, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function installSaveDevSaveExact (d, deps, r, f) {
   log('installSaveDevSaveExact')
@@ -495,8 +480,7 @@ export function installSaveDevSaveExact (d, deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function installSaveDev (d, deps, r, f) {
   log('installSaveDev')
@@ -534,8 +518,7 @@ export function installSaveDev (d, deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function installSaveProdSaveExact (d, deps, r, f) {
   log('installSaveProdSaveExact')
@@ -573,8 +556,7 @@ export function installSaveProdSaveExact (d, deps, r, f) {
  *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function installSaveProd (d, deps, r, f) {
   log('installSaveProd')
@@ -613,8 +595,7 @@ export function installSaveProd (d, deps, r, f) {
  *  @param {Dependencies} configurationDependencies - Configuration dependencies
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<void>}
+ *  @returns {Promise<void>}
  */
 export async function executeBundle (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeBundle')
@@ -638,8 +619,7 @@ export async function executeBundle (d = DIRECTORY, packageDependencies = {}, co
  *  @param {Dependencies} configurationDependencies - Configuration dependencies
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<void>}
+ *  @returns {Promise<void>}
  */
 export async function executeOptional (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeOptional')
@@ -663,8 +643,7 @@ export async function executeOptional (d = DIRECTORY, packageDependencies = {}, 
  *  @param {Dependencies} configurationDependencies - Configuration dependencies
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<void>}
+ *  @returns {Promise<void>}
  */
 export async function executeDev (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeDev')
@@ -688,8 +667,7 @@ export async function executeDev (d = DIRECTORY, packageDependencies = {}, confi
  *  @param {Dependencies} configurationDependencies - Configuration dependencies
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
- *
- *  @return {Promise<void>}
+ *  @returns {Promise<void>}
  */
 export async function executeProd (d = DIRECTORY, packageDependencies = {}, configurationDependencies = {}, r = REGISTRY, f = false) {
   log('executeProd')

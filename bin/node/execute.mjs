@@ -15,6 +15,8 @@ import {
   Command
 } from 'commander'
 
+import '#deps/src/common/debug'
+
 import {
   VERSION,
   PLATFORM
@@ -53,14 +55,6 @@ import {
   getPackage
 } from '#deps/bin/common'
 
-const {
-  env: {
-    DEBUG = '@modernpoacher/deps*'
-  }
-} = process
-
-debug.enable(DEBUG)
-
 const log = debug('@modernpoacher/deps')
 
 log(`\`execute\` (${VERSION} - ${PLATFORM}) is awake`)
@@ -96,13 +90,12 @@ async function isHeadDefaultBranch (directory) {
 }
 
 /**
- * @function getIgnoreFromConfiguration
+ *  @function getIgnoreFromConfiguration
  *
- * Interrogates `.depsrc` or `.depsrc.json` for an `ignore` value
+ *  Interrogates `.depsrc` or `.depsrc.json` for an `ignore` value
  *
- * @param {string} directory
- *
- * @return {Promise<boolean>}
+ *  @param {string} directory
+ *  @returns {Promise<boolean>}
  */
 async function getIgnoreFromConfiguration (directory) {
   log('getIgnoreFromConfiguration')
@@ -119,13 +112,12 @@ async function getIgnoreFromConfiguration (directory) {
 }
 
 /**
- * @function getAuthorFromConfiguration
+ *  @function getAuthorFromConfiguration
  *
- * Interrogates `.depsrc` or `.depsrc.json` for an `author` value
+ *  Interrogates `.depsrc` or `.depsrc.json` for an `author` value
  *
- * @param {string} directory
- *
- * @return {Promise<string|null>}
+ *  @param {string} directory
+ *  @returns {Promise<string|null>}
  */
 async function getAuthorFromConfiguration (directory) {
   log('getAuthorFromConfiguration')
@@ -142,13 +134,12 @@ async function getAuthorFromConfiguration (directory) {
 }
 
 /**
- * @function getAuthorFromPackage
+ *  @function getAuthorFromPackage
  *
- * Interrogates `package.json` for an `author` value
+ *  Interrogates `package.json` for an `author` value
  *
- * @param {string} directory
- *
- * @return {Promise<string|null>}
+ *  @param {string} directory
+ *  @returns {Promise<string|null>}
  */
 async function getAuthorFromPackage (directory) {
   log('getAuthorFromPackage')
@@ -165,13 +156,12 @@ async function getAuthorFromPackage (directory) {
 }
 
 /**
- * @function getMessageFromConfiguration
+ *  @function getMessageFromConfiguration
  *
- * Interrogates `.depsrc` or `.depsrc.json` for a `message` value
+ *  Interrogates `.depsrc` or `.depsrc.json` for a `message` value
  *
- * @param {string} directory
- *
- * @return {Promise<string|null>}
+ *  @param {string} directory
+ *  @returns {Promise<string|null>}
  */
 async function getMessageFromConfiguration (directory) {
   log('getMessageFromConfiguration')
@@ -188,34 +178,32 @@ async function getMessageFromConfiguration (directory) {
 }
 
 /**
- * @function toAuthor
+ *  @function toAuthor
  *
- * Ensures that the `author` is set either from the command line,
- * configuration, package, or a default
+ *  Ensures that the `author` is set either from the command line,
+ *  configuration, package, or a default
  *
- * Since it can be null `author` may not default in function arguments
+ *  Since it can be null `author` may not default in function arguments
  *
- * @param {string|null} author
- * @param {string} directory
- *
- * @return {Promise<string>}
+ *  @param {string|null} author
+ *  @param {string} directory
+ *  @returns {Promise<string>}
  */
 async function toAuthor (author, directory) {
   return author || await getAuthorFromConfiguration(directory) || await getAuthorFromPackage(directory) || AUTHOR
 }
 
 /**
- * @function toMessage
+ *  @function toMessage
  *
- * Ensures that the `message` is set either from the command line,
- * configuration, or a default
+ *  Ensures that the `message` is set either from the command line,
+ *  configuration, or a default
  *
- * Since it can be null `message` may not default in function arguments
+ *  Since it can be null `message` may not default in function arguments
  *
- * @param {string|null} message
- * @param {string} directory
- *
- * @return {Promise<string>}
+ *  @param {string|null} message
+ *  @param {string} directory
+ *  @returns {Promise<string>}
  */
 async function toMessage (message, directory) {
   return message || await getMessageFromConfiguration(directory) || MESSAGE

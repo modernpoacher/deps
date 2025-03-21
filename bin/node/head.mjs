@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-import debug from 'debug'
-
 import {
   exec
 } from 'node:child_process'
@@ -10,11 +8,7 @@ import {
   join
 } from 'node:path'
 
-import {
-  getArgs,
-  use,
-  handleComplete
-} from '#deps/bin/common'
+import '#deps/src/common/debug'
 
 import {
   PLATFORM,
@@ -25,13 +19,11 @@ import {
   getOptions
 } from '#deps/src/common/options'
 
-const {
-  env: {
-    DEBUG = '@modernpoacher/deps*'
-  }
-} = process
-
-debug.enable(DEBUG)
+import {
+  getArgs,
+  use,
+  handleComplete
+} from '#deps/bin/common'
 
 const command = (
   PLATFORM === 'win32'

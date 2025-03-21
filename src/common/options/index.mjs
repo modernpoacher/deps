@@ -39,21 +39,20 @@ log(`\`common/options\` (${VERSION} - ${PLATFORM}) is awake`)
  *  Get the installation `exec` child process options
  *
  *  @param {string} cwd normalized directory
- *
- *  @return {{
-*    maxBuffer: number,
-*    stdio: string
-*    env: {
-*      DEBUG_COLORS: string,
-*      FORCE_COLOR: number,
-*      NODE_OPTIONS: string,
-*      SSH_AUTH_SOCK?: string,
-*      HOME?: string,
-*      PATH?: string
-*    }
-*    cwd: string
-*  }}
-*/
+ *  @returns {{
+ *    maxBuffer: number,
+ *    stdio: string
+ *    env: {
+ *      DEBUG_COLORS: string,
+ *      FORCE_COLOR: number,
+ *      NODE_OPTIONS: string,
+ *      SSH_AUTH_SOCK?: string,
+ *      HOME?: string,
+ *      PATH?: string
+ *    }
+ *    cwd: string
+ *  }}
+ */
 export function getOptions (cwd) {
   log('getOptions')
 

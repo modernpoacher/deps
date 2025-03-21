@@ -150,8 +150,7 @@ export function err (key, directory) {
  *  Get an error code from an error
  *
  *  @param {Error}
- *
- *  @return {number}
+ *  @returns {number}
  */
 const getErrorCode = ({ code = 0 } = {}) => code
 
@@ -161,8 +160,7 @@ const getErrorCode = ({ code = 0 } = {}) => code
  *  Get an error message from an error
  *
  *  @param {Error}
- *
- *  @return {string}
+ *  @returns {string}
  */
 const getErrorMessage = ({ message = '' } = {}) => message
 
@@ -172,8 +170,7 @@ const getErrorMessage = ({ message = '' } = {}) => message
  *  Determine whether an error is a safe non-zero exit from a Git command
  *
  *  @param {Error}
- *
- *  @return {boolean}
+ *  @returns {boolean}
  */
 function isCommandError (e) {
   log('isCommandError')
@@ -190,8 +187,7 @@ function isCommandError (e) {
  *  Get the default branch from `.git/refs/remotes/origin/HEAD`
  *
  *  @param {string} d - A directory configured for Git
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function catGitRefsRemotesOriginHead (d = DIRECTORY) {
   log('catGitRefsRemotesOriginHead')
@@ -224,8 +220,7 @@ export function catGitRefsRemotesOriginHead (d = DIRECTORY) {
  *  Get the remote default branch
  *
  *  @param {string} d - A directory configured for Git
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function awkGitRemoteShowOriginHead (d = DIRECTORY) {
   log('awkGitRemoteShowOriginHead')
@@ -258,8 +253,7 @@ export function awkGitRemoteShowOriginHead (d = DIRECTORY) {
  *  Determine whether a directory is configured for Git
  *
  *  @param {string} d - A directory
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function gitRevParseShowTopLevel (d = DIRECTORY) {
   log('gitRevParseShowTopLevel')
@@ -292,8 +286,7 @@ export function gitRevParseShowTopLevel (d = DIRECTORY) {
  *  Determine which branch is HEAD
  *
  *  @param {string} d - A directory
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function gitRevParseAbbrevRefHead (d = DIRECTORY) {
   log('gitRevParseAbbrevRefHead')
@@ -327,8 +320,7 @@ export function gitRevParseAbbrevRefHead (d = DIRECTORY) {
  *
  *  @param {string} d - A directory configured for Git
  *  @param {string} branch - The Git branch
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function gitCheckout (d = DIRECTORY, branch = BRANCH) {
   log('gitCheckout')
@@ -365,8 +357,7 @@ export function gitCheckout (d = DIRECTORY, branch = BRANCH) {
  *  Pull changes from the Git remote
  *
  *  @param {string} d - A directory configured for Git
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function gitPull (d = DIRECTORY) {
   log('gitPull')
@@ -403,8 +394,7 @@ export function gitPull (d = DIRECTORY) {
  *  Push changes to the Git remote
  *
  *  @param {string} d - A directory configured for Git
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function gitPush (d = DIRECTORY) {
   log('gitPush')
@@ -441,8 +431,7 @@ export function gitPush (d = DIRECTORY) {
  *  Push tags changes to the Git remote
  *
  *  @param {string} d - A directory configured for Git
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function gitPushTags (d = DIRECTORY) {
   log('gitPushTags')
@@ -480,8 +469,7 @@ export function gitPushTags (d = DIRECTORY) {
  *
  *  @param {string} d - A directory configured for Git
  *  @param {string} add - An add parameter
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function gitAdd (d = DIRECTORY, add = ADD) {
   log('gitAdd')
@@ -520,8 +508,7 @@ export function gitAdd (d = DIRECTORY, add = ADD) {
  *  @param {string} c - A directory configured for Git
  *  @param {string} message - A commit message
  *  @param {string} author - The commit author
- *
- *  @return {Promise<string>}
+ *  @returns {Promise<string>}
  */
 export function gitCommit (d = DIRECTORY, message = MESSAGE, author = AUTHOR) {
   log('gitCommit')

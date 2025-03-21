@@ -6,6 +6,8 @@ import {
   Command
 } from 'commander'
 
+import '#deps/src/common/debug'
+
 import {
   VERSION,
   PLATFORM
@@ -30,14 +32,6 @@ import {
 import {
   execute
 } from '#deps/src/install'
-
-const {
-  env: {
-    DEBUG = '@modernpoacher/deps*'
-  }
-} = process
-
-debug.enable(DEBUG)
 
 const log = debug('@modernpoacher/deps')
 

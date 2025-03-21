@@ -79,8 +79,8 @@
     "#deps/src": "./src/index.mjs",
     "#deps/src/*": "./src/*.mjs",
     "#deps/src/common": "./src/common/index.mjs",
-    "#deps/src/common/debug": "./src/common/debug.mjs",
     "#deps/src/common/*": "./src/common/*/index.mjs",
+    "#deps/src/common/debug": "./src/common/debug.mjs",
     "#deps/src/install": "./src/install/index.mjs",
     "#where-am-i": "./where-am-i.mjs"
   }

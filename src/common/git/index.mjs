@@ -28,7 +28,7 @@ const ADD = 'package.json package-lock.json'
 
 export const MESSAGE = PLATFORM === 'win32'
   ? 'Updated `package.json` &/ `package-lock.json`'
-  : 'Updated \\`package.json\\` &/ \\`package-lock.json\\`' /* eslint-disable-line no-useless-escape */
+  : 'Updated \\`package.json\\` &/ \\`package-lock.json\\`'
 
 export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
 

@@ -37,7 +37,7 @@
     "deps-install": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/install.mjs",
     "deps-push": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/push.mjs",
     "deps-wipe": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/wipe.mjs",
-    "lint": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning eslint . --ext .mjs,.cjs",
+    "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
     "prepare": "husky",
     "start": "npm run deps",
@@ -60,15 +60,11 @@
     "supports-color": "^10.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
-    "@babel/eslint-parser": "^7.26.10",
-    "@babel/preset-env": "^7.26.9",
-    "@babel/register": "^7.25.9",
+    "@sequencemedia/eslint-config-standard": "^0.2.44",
     "chai": "^5.2.0",
-    "core-js": "^3.41.0",
     "cross-env": "^7.0.3",
-    "eslint": "8.57.1",
-    "eslint-config-standard": "^17.1.0",
+    "eslint": "^9.23.0",
+    "globals": "^16.0.0",
     "husky": "^9.1.7",
     "mocha": "^11.1.0"
   },

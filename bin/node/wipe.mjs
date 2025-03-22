@@ -8,6 +8,8 @@ import {
   join
 } from 'node:path'
 
+import '#deps/src/common/debug'
+
 import {
   PLATFORM,
   BIN
@@ -16,8 +18,6 @@ import {
 import {
   getOptions
 } from '#deps/src/common/options'
-
-import '#deps/src/common/debug'
 
 import {
   getArgs,

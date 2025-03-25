@@ -60,7 +60,7 @@
     "supports-color": "^10.0.0"
   },
   "devDependencies": {
-    "@sequencemedia/eslint-config-standard": "^0.2.44",
+    "@sequencemedia/eslint-config-standard": "^0.2.45",
     "chai": "^5.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.23.0",

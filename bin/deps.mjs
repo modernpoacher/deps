@@ -111,7 +111,7 @@ async function app () {
     try {
       await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry, force)
     } catch (e) {
-      handleError(e)
+      if (e instanceof Error) handleError(e)
     }
 
     log('Dev')
@@ -119,7 +119,7 @@ async function app () {
     try {
       await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry, force)
     } catch (e) {
-      handleError(e)
+      if (e instanceof Error) handleError(e)
     }
   } else {
     if (P) {
@@ -128,7 +128,7 @@ async function app () {
       try {
         await executeProd(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), registry, force)
       } catch (e) {
-        handleError(e)
+        if (e instanceof Error) handleError(e)
       }
     } else {
       if (D) {
@@ -137,7 +137,7 @@ async function app () {
         try {
           await executeDev(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), registry, force)
         } catch (e) {
-          handleError(e)
+          if (e instanceof Error) handleError(e)
         }
       } else {
         if (O) {
@@ -146,7 +146,7 @@ async function app () {
           try {
             await executeOptional(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), registry, force)
           } catch (e) {
-            handleError(e)
+            if (e instanceof Error) handleError(e)
           }
         } else {
           if (B) {
@@ -155,7 +155,7 @@ async function app () {
             try {
               await executeBundle(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), registry, force)
             } catch (e) {
-              handleError(e)
+              if (e instanceof Error) handleError(e)
             }
           }
         }

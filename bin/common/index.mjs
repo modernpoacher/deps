@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 
+/**
+ *  @typedef {DepsTypes.Package} Package
+ *  @typedef {DepsTypes.Configuration} Configuration
+ */
+
 import debug from 'debug'
 
 import stripAnsi from 'strip-ansi'
@@ -15,7 +20,6 @@ import {
 import {
   resolve,
   join,
-  // relative,
   normalize
 } from 'node:path'
 
@@ -30,7 +34,8 @@ import {
 
 import {
   VERSION,
-  PLATFORM
+  PLATFORM,
+  BIN
 } from '#deps/src/common/env'
 
 import {
@@ -49,6 +54,7 @@ import {
 } from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')
+const info = debug('@modernpoacher/deps:info')
 const error = debug('@modernpoacher/deps:error')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
@@ -59,11 +65,17 @@ const CODE = 0
 
 const MESSAGE = 'Either no error message has been defined or no error has been supplied'
 
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
 export const tidy = (v) => v.replace(/\n{2,}}/gm, String.fromCharCode(10)).trim()
 
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
 export const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
-
-// const toRelativePath = (to) => relative(process.cwd(), to) // const toRelativePath = relative.bind(null, process.cwd())
 
 const getRmrfCommands = PLATFORM === 'win32'
   ? () => tidy(`
@@ -77,37 +89,75 @@ rm -rf node_modules \
 
 const getNpmiCommands = PLATFORM === 'win32'
   ? (registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i')))
-  : (registry = REGISTRY, force = false) => tidy(`
-${getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'npm i'))))}
-`)
+  : (registry = REGISTRY, force = false) => tidy(getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'npm i')))))
 
 const getDepsCommands = PLATFORM === 'win32'
   ? (registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'deps')))
-  : (registry = REGISTRY, force = false) => tidy(`
-${getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'deps'))))}
-`)
+  : (registry = REGISTRY, force = false) => tidy(getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'deps')))))
 
-export function getArgs () {
-  return (
-    PLATFORM === 'win32'
-      ? ARGV.map((v) => v.startsWith('-') ? v : `"${v}"`)
-      : ARGV.map((v) => v.startsWith('-') ? v : `'${v}'`)
-  ).join(
-    String.fromCodePoint(32)
-  )
+export const DEPS = PLATFORM === 'win32'
+  ? `bash "${join(BIN, '.\\bash\\deps.sh')}"`
+  : `bash '${join(BIN, './bash/deps.sh')}'`
+
+export const HEAD = PLATFORM === 'win32'
+  ? `bash "${join(BIN, '.\\bash\\head.sh')}"`
+  : `bash '${join(BIN, './bash/head.sh')}'`
+
+export const PUSH = PLATFORM === 'win32'
+  ? `bash "${join(BIN, '.\\bash\\push.sh')}"`
+  : `bash '${join(BIN, './bash/push.sh')}'`
+
+export const WIPE = PLATFORM === 'win32'
+  ? `bash "${join(BIN, '.\\bash\\wipe.sh')}"`
+  : `bash '${join(BIN, './bash/wipe.sh')}'`
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+function toDouble (v) {
+  return v.startsWith('-') ? v : `"${v}"` // double-quote
 }
 
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+function toSingle (v) {
+  return v.startsWith('-') ? v : `'${v}'` // single-quote
+}
+
+export const ARGS = PLATFORM === 'win32'
+  ? ARGV.map(toDouble).join(String.fromCodePoint(32))
+  : ARGV.map(toSingle).join(String.fromCodePoint(32))
+
+/**
+ *  @param {string} v
+ *  @returns {boolean}
+ */
 function filter (v) {
   return Boolean(stripAnsi(v).trim())
 }
 
+/**
+ *  @param {string} key
+ *  @returns {(value: string) => void}
+ */
 export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
+  /**
+   *  @param {string} v
+   *  @returns {void}
+   */
   function write (v) {
     log(v.trimEnd())
   }
 
+  /**
+   *  @param {string} value
+   *  @returns {void}
+   */
   return function use (value) {
     value.split(String.fromCharCode(10))
       .filter(filter)
@@ -115,6 +165,9 @@ export function use (key) {
   }
 }
 
+/**
+ *  @param {{ code?: number, message?: string }} [e]
+ */
 export function handleError (e = {}) {
   const {
     code = CODE
@@ -128,14 +181,24 @@ export function handleError (e = {}) {
   error(message)
 }
 
+/**
+ *  @param {Error | null} [e]
+ *  @returns {void}
+ */
 export function handleComplete (e = null) {
   if (!e) return log('👍')
   error('👎')
 }
 
-const handlePackageError = ({ message = MESSAGE } = {}) => { log(`Package error: "${message}"`) }
+/**
+ *  @param {{ code?: number, message?: string }} [e]
+ */
+const handlePackageError = ({ message = MESSAGE } = {}) => { info(`Package error: "${message}"`) }
 
-const handleConfigurationError = ({ message = MESSAGE } = {}) => { log(`Configuration error: "${message}"`) }
+/**
+ *  @param {{ code?: number, message?: string }} [e]
+ */
+const handleConfigurationError = ({ message = MESSAGE } = {}) => { info(`Configuration error: "${message}"`) }
 
 const getPackageJsonPath = (directory = DIRECTORY) => resolve(join(directory, 'package.json'))
 
@@ -143,6 +206,10 @@ const getDepsRcPath = (directory = DIRECTORY) => resolve(join(directory, '.depsr
 
 const getDepsRcJsonPath = (directory = DIRECTORY) => resolve(join(directory, '.depsrc.json'))
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<Package>}
+ */
 async function getPackageJson (directory = DIRECTORY) {
   log('getPackageJson')
 
@@ -151,6 +218,10 @@ async function getPackageJson (directory = DIRECTORY) {
   )
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<Configuration>}
+ */
 async function getDepsRc (directory = DIRECTORY) {
   log('getDepsRc')
 
@@ -159,6 +230,10 @@ async function getDepsRc (directory = DIRECTORY) {
   )
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<Configuration>}
+ */
 async function getDepsRcJson (directory = DIRECTORY) {
   log('getDepsRcJson')
 
@@ -167,99 +242,126 @@ async function getDepsRcJson (directory = DIRECTORY) {
   )
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<boolean>}
+ */
 async function hasPackage (directory = DIRECTORY) {
   log('hasPackage')
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   try {
     await access(getPackageJsonPath(directory), constants.R_OK)
 
-    log('Package at "package.json"')
+    info('Package at "package.json"')
     return true
   } catch {
-    log('No package at "package.json"')
+    info('No package at "package.json"')
     return false
   }
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<Package>}
+ */
 async function getPackage (directory = DIRECTORY) {
   log('getPackage')
+
+  info(`Directory is "${directory}"`)
 
   try {
     return await getPackageJson(directory)
   } catch (e) {
-    handlePackageError(e)
+    if (e instanceof Error) handlePackageError(e)
+    return {}
   }
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<boolean>}
+ */
 async function hasConfiguration (directory = DIRECTORY) {
   log('hasConfiguration')
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   try {
     await access(getDepsRcPath(directory), constants.R_OK)
 
-    log('Configuration at ".depsrc"')
+    info('Configuration at ".depsrc"')
     return true
   } catch (e) {
-    const {
+    const { // @ts-expect-error
       code
     } = e
 
     if (code !== 'ENOENT') {
-      handleConfigurationError(e)
+      if (e instanceof Error) handleConfigurationError(e)
     } else {
       try {
         await access(getDepsRcJsonPath(directory), constants.R_OK)
 
-        log('Configuration at ".depsrc.json"')
+        info('Configuration at ".depsrc.json"')
         return true
       } catch (e) {
-        const {
+        const { // @ts-expect-error
           code
         } = e
 
         if (code !== 'ENOENT') {
-          handleConfigurationError(e)
+          if (e instanceof Error) handleConfigurationError(e)
         }
       }
     }
-  }
 
-  log('No configuration at ".depsrc" nor ".depsrc.json"') //  at "${toRelativePath(getDepsRcPath(directory))}" or "${toRelativePath(getDepsRcJsonPath(directory))}"`)
-  return false
+    info('No configuration at ".depsrc" nor ".depsrc.json"') //  at "${toRelativePath(getDepsRcPath(directory))}" or "${toRelativePath(getDepsRcJsonPath(directory))}"`)
+    return false
+  }
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<Configuration>}
+ */
 async function getConfiguration (directory = DIRECTORY) {
   log('getConfiguration')
+
+  info(`Directory is "${directory}"`)
 
   try {
     return await getDepsRc(directory)
   } catch (e) {
-    const {
+    const { // @ts-expect-error
       code
     } = e
 
     if (code !== 'ENOENT') {
-      handleConfigurationError(e)
+      if (e instanceof Error) handleConfigurationError(e)
     } else {
       try {
         return await getDepsRcJson(directory)
       } catch (e) {
-        const {
+        const { // @ts-expect-error
           code
         } = e
 
         if (code !== 'ENOENT') {
-          handleConfigurationError(e)
+          if (e instanceof Error) handleConfigurationError(e)
         }
       }
     }
+
+    return {}
   }
 }
 
+/**
+ *  @param {string} [d]
+ *  @returns {Promise<string>}
+ */
 function rmrf (d = DIRECTORY) {
   log('rmrf')
 
@@ -273,18 +375,24 @@ function rmrf (d = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
+      } = exec(commands, options, (e = null, v = '') => {
         return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('rmrf')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
 
+/**
+ *  @param {string} [d]
+ *  @param {string} [registry]
+ *  @param {boolean} [force]
+ *  @returns {Promise<string>}
+ */
 function npmi (d = DIRECTORY, registry = REGISTRY, force = false) {
   log('npmi')
 
@@ -298,18 +406,24 @@ function npmi (d = DIRECTORY, registry = REGISTRY, force = false) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
+      } = exec(commands, options, (e = null, v = '') => {
         return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('npmi')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
 
+/**
+ *  @param {string} [d]
+ *  @param {string} [registry]
+ *  @param {boolean} [force]
+ *  @returns {Promise<string>}
+ */
 function deps (d = DIRECTORY, registry = REGISTRY, force = false) {
   log('deps')
 
@@ -323,14 +437,14 @@ function deps (d = DIRECTORY, registry = REGISTRY, force = false) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
+      } = exec(commands, options, (e = null, v = '') => {
         return (!e) ? resolve(v) : reject(e)
       })
 
       const log = use('deps')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }

@@ -40,25 +40,19 @@ echo "\${BASH_REMATCH[0]}"
 
 const GIT_PULL = `
 source "${BIN}/common.sh"
-
 source_home "${BIN}"
-
 git pull
 `
 
 const GIT_PUSH = `
 source "${BIN}/common.sh"
-
 source_home "${BIN}"
-
 git push
 `
 
 const GIT_PUSH_TAGS = `
 source "${BIN}/common.sh"
-
 source_home "${BIN}"
-
 git push --tags
 `
 
@@ -66,25 +60,49 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common/git\` (${VERSION} - ${PLATFORM}) is awake`)
 
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
 const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
+/**
+ *  @param {string} v
+ *  @returns {boolean}
+ */
 function filter (v) {
   return Boolean(stripAnsi(v).trim())
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {(s: string) => boolean}
+ */
 function getIsDirectory (directory) {
   return function isDirectory (s) {
     return directory === s
   }
 }
 
-function isFatal (s) {
-  return s.toLowerCase().startsWith('fatal: not a git repository')
+/**
+ *  @param {string} v
+ *  @returns {boolean}
+ */
+function isFatal (v) {
+  return v.toLowerCase().startsWith('fatal: not a git repository')
 }
 
+/**
+ *  @param {string} key
+ *  @returns {(value: string) => void}
+ */
 export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
+  /**
+   *  @param {string} v
+   *  @returns {void}
+   */
   function write (v) {
     log(v.trimEnd())
   }
@@ -96,11 +114,20 @@ export function use (key) {
   }
 }
 
+/**
+ *  @param {string} key
+ *  @param {string} directory
+ *  @returns {(value: string) => void}
+ */
 export function out (key, directory) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   const isDirectory = getIsDirectory(directory)
 
+  /**
+   *  @param {string} v
+   *  @returns {boolean}
+   */
   function filterOut (v) {
     const s = v.trim()
 
@@ -109,6 +136,10 @@ export function out (key, directory) {
     )
   }
 
+  /**
+   *  @param {string} v
+   *  @returns {void}
+   */
   function write (v) {
     if (v.trim()) log(v.trimEnd())
   }
@@ -120,11 +151,20 @@ export function out (key, directory) {
   }
 }
 
+/**
+ *  @param {string} key
+ *  @param {string} directory
+ *  @returns {(value: string) => void}
+ */
 export function err (key, directory) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
   const isDirectory = getIsDirectory(directory)
 
+  /**
+   *  @param {string} v
+   *  @returns {boolean}
+   */
   function filterErr (v) {
     const s = v.trim()
 
@@ -133,6 +173,10 @@ export function err (key, directory) {
     )
   }
 
+  /**
+   *  @param {string} v
+   *  @returns {void}
+   */
   function write (v) {
     if (v.trim()) log(v.trimEnd())
   }
@@ -149,7 +193,7 @@ export function err (key, directory) {
  *
  *  Get an error code from an error
  *
- *  @param {Error}
+ *  @param {{code?: number, message?: string}} e
  *  @returns {number}
  */
 const getErrorCode = ({ code = 0 } = {}) => code
@@ -159,7 +203,7 @@ const getErrorCode = ({ code = 0 } = {}) => code
  *
  *  Get an error message from an error
  *
- *  @param {Error}
+ *  @param {{code?: number, message?: string}} e
  *  @returns {string}
  */
 const getErrorMessage = ({ message = '' } = {}) => message
@@ -169,7 +213,7 @@ const getErrorMessage = ({ message = '' } = {}) => message
  *
  *  Determine whether an error is a safe non-zero exit from a Git command
  *
- *  @param {Error}
+ *  @param {{code?: number, message?: string}} e
  *  @returns {boolean}
  */
 function isCommandError (e) {
@@ -202,14 +246,12 @@ export function catGitRefsRemotesOriginHead (d = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v = '') => {
-        (!e)
-          ? resolve(trim(v))
-          : reject(e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e) ? resolve(trim(v)) : reject(e)
       })
 
-      stdout.on('data', out('cat-git-refs-remotes-origin-head', directory))
-      stderr.on('data', err('cat-git-refs-remotes-origin-head', directory))
+      if (stdout) stdout.on('data', out('cat-git-refs-remotes-origin-head', directory))
+      if (stderr) stderr.on('data', err('cat-git-refs-remotes-origin-head', directory))
     })
   )
 }
@@ -235,14 +277,12 @@ export function awkGitRemoteShowOriginHead (d = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v = '') => {
-        (!e)
-          ? resolve(trim(v))
-          : reject(e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e) ? resolve(trim(v)) : reject(e)
       })
 
-      stdout.on('data', out('git-remote-show-origin-head', directory))
-      stderr.on('data', err('git-remote-show-origin-head', directory))
+      if (stdout) stdout.on('data', out('git-remote-show-origin-head', directory))
+      if (stderr) stderr.on('data', err('git-remote-show-origin-head', directory))
     })
   )
 }
@@ -268,14 +308,12 @@ export function gitRevParseShowTopLevel (d = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v = '') => {
-        (!e)
-          ? resolve(trim(v))
-          : reject(e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e) ? resolve(trim(v)) : reject(e)
       })
 
-      stdout.on('data', out('git-rev-parse-show-toplevel', directory))
-      stderr.on('data', err('git-rev-parse-show-toplevel', directory))
+      if (stdout) stdout.on('data', out('git-rev-parse-show-toplevel', directory))
+      if (stderr) stderr.on('data', err('git-rev-parse-show-toplevel', directory))
     })
   )
 }
@@ -301,14 +339,12 @@ export function gitRevParseAbbrevRefHead (d = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v = '') => {
-        (!e)
-          ? resolve(trim(v))
-          : reject(e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e) ? resolve(trim(v)) : reject(e)
       })
 
-      stdout.on('data', out('git-rev-parse-abbrev-ref-head', directory))
-      stderr.on('data', err('git-rev-parse-abbrev-ref-head', directory))
+      if (stdout) stdout.on('data', out('git-rev-parse-abbrev-ref-head', directory))
+      if (stderr) stderr.on('data', err('git-rev-parse-abbrev-ref-head', directory))
     })
   )
 }
@@ -335,8 +371,8 @@ export function gitCheckout (d = DIRECTORY, branch = BRANCH) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        (!e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e)
           ? resolve(v)
           : isCommandError(e)
             ? resolve(v)
@@ -345,8 +381,8 @@ export function gitCheckout (d = DIRECTORY, branch = BRANCH) {
 
       const log = use('git-checkout')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -372,8 +408,8 @@ export function gitPull (d = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        (!e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e)
           ? resolve(v)
           : isCommandError(e)
             ? resolve(v)
@@ -382,8 +418,8 @@ export function gitPull (d = DIRECTORY) {
 
       const log = use('git-pull')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -409,8 +445,8 @@ export function gitPush (d = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        (!e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e)
           ? resolve(v)
           : isCommandError(e)
             ? resolve(v)
@@ -419,8 +455,8 @@ export function gitPush (d = DIRECTORY) {
 
       const log = use('git-push')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -446,8 +482,8 @@ export function gitPushTags (d = DIRECTORY) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        (!e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e)
           ? resolve(v)
           : isCommandError(e)
             ? resolve(v)
@@ -456,8 +492,8 @@ export function gitPushTags (d = DIRECTORY) {
 
       const log = use('git-push-tags')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -484,8 +520,8 @@ export function gitAdd (d = DIRECTORY, add = ADD) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        (!e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e)
           ? resolve(v)
           : isCommandError(e)
             ? resolve(v)
@@ -494,8 +530,8 @@ export function gitAdd (d = DIRECTORY, add = ADD) {
 
       const log = use('git-add')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -505,9 +541,9 @@ export function gitAdd (d = DIRECTORY, add = ADD) {
  *
  *  Commit changes to Git with a default value if none is supplied
  *
- *  @param {string} c - A directory configured for Git
+ *  @param {string} d - A directory configured for Git
  *  @param {string} message - A commit message
- *  @param {string} author - The commit author
+ *  @param {string | { name: string; email: string }} author - The commit author
  *  @returns {Promise<string>}
  */
 export function gitCommit (d = DIRECTORY, message = MESSAGE, author = AUTHOR) {
@@ -523,8 +559,8 @@ export function gitCommit (d = DIRECTORY, message = MESSAGE, author = AUTHOR) {
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        (!e)
+      } = exec(commands, options, (e = null, v = '') => {
+        return (!e)
           ? resolve(v)
           : isCommandError(e)
             ? resolve(v)
@@ -533,8 +569,8 @@ export function gitCommit (d = DIRECTORY, message = MESSAGE, author = AUTHOR) {
 
       const log = use('git-commit')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }

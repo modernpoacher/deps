@@ -13,35 +13,35 @@ import {
 describe('#deps/src/install', () => {
   describe('`getInstallSaveExactCommands`', () => {
     it('is a function', () => {
-      return expect(getInstallSaveExactCommands)
+      expect(getInstallSaveExactCommands)
         .to.be.a('function')
     })
   })
 
   describe('`getInstallCommands`', () => {
     it('is a function', () => {
-      return expect(getInstallCommands)
+      expect(getInstallCommands)
         .to.be.a('function')
     })
   })
 
   describe('`installSaveExact`', () => {
     it('is a function', () => {
-      return expect(installSaveExact)
+      expect(installSaveExact)
         .to.be.a('function')
     })
   })
 
   describe('`install`', () => {
     it('is a function', () => {
-      return expect(install)
+      expect(install)
         .to.be.a('function')
     })
   })
 
   describe('`execute`', () => {
     it('is a function', () => {
-      return expect(execute)
+      expect(execute)
         .to.be.a('function')
     })
   })
@@ -51,7 +51,7 @@ describe('#deps/src/install', () => {
       it('returns a string', () => {
         const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
 
-        return expect(getInstallSaveExactCommands(MOCK_PACKAGES))
+        expect(getInstallSaveExactCommands(MOCK_PACKAGES))
           .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --no-save')
       })
     })
@@ -61,7 +61,7 @@ describe('#deps/src/install', () => {
         const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
         const MOCK_SAVE = true
 
-        return expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE))
+        expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE))
           .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact')
       })
 
@@ -71,7 +71,7 @@ describe('#deps/src/install', () => {
           const MOCK_SAVE = true
           const MOCK_REGISTRY = 'REGISTRY'
 
-          return expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY))
+          expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY))
             .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --registry REGISTRY')
         })
 
@@ -82,7 +82,7 @@ describe('#deps/src/install', () => {
             const MOCK_REGISTRY = 'REGISTRY'
             const MOCK_FORCE = true
 
-            return expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
+            expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
               .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --registry REGISTRY')
           })
         })
@@ -94,7 +94,7 @@ describe('#deps/src/install', () => {
         const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
         const MOCK_SAVE = false
 
-        return expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE))
+        expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE))
           .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --no-save')
       })
 
@@ -104,7 +104,7 @@ describe('#deps/src/install', () => {
           const MOCK_SAVE = false
           const MOCK_REGISTRY = 'REGISTRY'
 
-          return expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY))
+          expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY))
             .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --registry REGISTRY --no-save')
         })
 
@@ -115,7 +115,7 @@ describe('#deps/src/install', () => {
             const MOCK_REGISTRY = 'REGISTRY'
             const MOCK_FORCE = true
 
-            return expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
+            expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
               .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --registry REGISTRY --no-save')
           })
         })
@@ -128,7 +128,7 @@ describe('#deps/src/install', () => {
       it('returns a string', () => {
         const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
 
-        return expect(getInstallCommands(MOCK_PACKAGES))
+        expect(getInstallCommands(MOCK_PACKAGES))
           .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --no-save')
       })
     })
@@ -138,7 +138,7 @@ describe('#deps/src/install', () => {
         const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
         const MOCK_SAVE = true
 
-        return expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE))
+        expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE))
           .to.equal('npm i PACKAGE NAME@PACKAGE VERSION')
       })
 
@@ -148,7 +148,7 @@ describe('#deps/src/install', () => {
           const MOCK_SAVE = true
           const MOCK_REGISTRY = 'REGISTRY'
 
-          return expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY))
+          expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY))
             .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --registry REGISTRY')
         })
 
@@ -159,7 +159,7 @@ describe('#deps/src/install', () => {
             const MOCK_REGISTRY = 'REGISTRY'
             const MOCK_FORCE = true
 
-            return expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
+            expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
               .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --registry REGISTRY')
           })
         })
@@ -171,7 +171,7 @@ describe('#deps/src/install', () => {
         const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
         const MOCK_SAVE = false
 
-        return expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE))
+        expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE))
           .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --no-save')
       })
 
@@ -181,7 +181,7 @@ describe('#deps/src/install', () => {
           const MOCK_SAVE = false
           const MOCK_REGISTRY = 'REGISTRY'
 
-          return expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY))
+          expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY))
             .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --registry REGISTRY --no-save')
         })
 
@@ -192,7 +192,7 @@ describe('#deps/src/install', () => {
             const MOCK_REGISTRY = 'REGISTRY'
             const MOCK_FORCE = true
 
-            return expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
+            expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
               .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --registry REGISTRY --no-save')
           })
         })

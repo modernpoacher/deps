@@ -51,13 +51,25 @@ const info = debug('@modernpoacher/deps:info')
 
 log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
+/**
+ *  @param {string} v
+ *  @returns {boolean}
+ */
 function filter (v) {
   return Boolean(stripAnsi(v).trim())
 }
 
+/**
+ *  @param {string} key
+ *  @returns {(value: string) => void}
+ */
 export function use (key) {
   const log = debug(`@modernpoacher/deps:${key}`)
 
+  /**
+   *  @param {string} v
+   *  @returns {void}
+   */
   function write (v) {
     log(v.trimEnd())
   }
@@ -74,7 +86,7 @@ export function use (key) {
  *
  *  Get the `npm install --save-exact` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -92,7 +104,7 @@ export function getInstallSaveExactCommands (deps, r, f) {
  *
  *  Get the `npm install` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -110,7 +122,7 @@ export function getInstallCommands (deps, r, f) {
  *
  *  Get the `npm install --save-bundle --save-exact` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -132,7 +144,7 @@ export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
  *
  *  Get the `npm install --save-bundle` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -154,7 +166,7 @@ export function getInstallSaveBundleCommands (deps, r, f) {
  *
  *  Get the `npm install --save-optional --save-exact` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -176,7 +188,7 @@ export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
  *
  *  Get the `npm install --save-optional` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -198,7 +210,7 @@ export function getInstallSaveOptionalCommands (deps, r, f) {
  *
  *  Get the `npm install --save-dev --save-exact` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -220,7 +232,7 @@ export function getInstallSaveDevSaveExactCommands (deps, r, f) {
  *
  *  Get the `npm install --save-dev` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -242,7 +254,7 @@ export function getInstallSaveDevCommands (deps, r, f) {
  *
  *  Get the `npm install --save-prod --save-exact` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -264,7 +276,7 @@ export function getInstallSaveProdSaveExactCommands (deps, r, f) {
  *
  *  Get the `npm install --save-prod` commands as a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {string}
@@ -287,7 +299,7 @@ export function getInstallSaveProdCommands (deps, r, f) {
  *  Spawn the `npm install --save-bundle --save-exact` commands
  *
  *  @param {string} d - Directory
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
@@ -297,7 +309,7 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -313,8 +325,8 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
 
       const log = use('install-save-bundle-save-exact')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -325,7 +337,7 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
  *  Spawn the `npm install --save-bundle` commands
  *
  *  @param {string} d - Directory
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
@@ -335,7 +347,7 @@ export function installSaveBundle (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -351,8 +363,8 @@ export function installSaveBundle (d, deps, r, f) {
 
       const log = use('install-save-bundle')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -363,7 +375,7 @@ export function installSaveBundle (d, deps, r, f) {
  *  Spawn the `npm install --save-optional --save-exact` commands
  *
  *  @param {string} d - Directory
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
@@ -373,7 +385,7 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -389,8 +401,8 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
 
       const log = use('install-save-otional-save-exact')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -401,21 +413,21 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
  *  Spawn the `npm install --save-optional` commands
  *
  *  @param {string} d - Directory
- *  @param {Dependencies} dependencies - Dependencies
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependencies
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
  */
-export function installSaveOptional (d, dependencies, r, f) {
+export function installSaveOptional (d, deps, r, f) {
   log('installSaveOptional')
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(getInstallSaveOptionalCommands(dependencies, r, f))
+      const commands = getCommands(getInstallSaveOptionalCommands(deps, r, f))
       const options = getOptions(directory)
 
       const {
@@ -427,8 +439,8 @@ export function installSaveOptional (d, dependencies, r, f) {
 
       const log = use('install-save-otional')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -439,7 +451,7 @@ export function installSaveOptional (d, dependencies, r, f) {
  *  Spawn the `npm install --save-dev --save-exact` commands
  *
  *  @param {string} d - Directory
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
@@ -449,7 +461,7 @@ export function installSaveDevSaveExact (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -465,8 +477,8 @@ export function installSaveDevSaveExact (d, deps, r, f) {
 
       const log = use('install-save-dev-save-exact')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -477,7 +489,7 @@ export function installSaveDevSaveExact (d, deps, r, f) {
  *  Spawn the `npm install --save-dev` commands
  *
  *  @param {string} d - Directory
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
@@ -487,7 +499,7 @@ export function installSaveDev (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -503,8 +515,8 @@ export function installSaveDev (d, deps, r, f) {
 
       const log = use('install-save-dev')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -515,7 +527,7 @@ export function installSaveDev (d, deps, r, f) {
  *  Spawn the `npm install --save-prod --save-exact` commands
  *
  *  @param {string} d - Directory
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
@@ -525,7 +537,7 @@ export function installSaveProdSaveExact (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -541,8 +553,8 @@ export function installSaveProdSaveExact (d, deps, r, f) {
 
       const log = use('install-save-prod-save-exact')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -553,7 +565,7 @@ export function installSaveProdSaveExact (d, deps, r, f) {
  *  Spawn the `npm install --save-prod` commands
  *
  *  @param {string} d - Directory
- *  @param {DependencyDescriptor|DependencyDescriptor[]} deps - Dependency descriptor(s)
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
@@ -563,7 +575,7 @@ export function installSaveProd (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -579,8 +591,8 @@ export function installSaveProd (d, deps, r, f) {
 
       const log = use('install-save-prod')
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }

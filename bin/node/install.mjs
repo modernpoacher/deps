@@ -115,7 +115,7 @@ async function app () {
     try {
       await execute(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), save, registry, force)
     } catch (e) {
-      handleError(e)
+      if (e instanceof Error) handleError(e)
     }
   } else {
     if (D) {
@@ -124,7 +124,7 @@ async function app () {
       try {
         await execute(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), save, registry, force)
       } catch (e) {
-        handleError(e)
+        if (e instanceof Error) handleError(e)
       }
     } else {
       if (O) {
@@ -133,7 +133,7 @@ async function app () {
         try {
           await execute(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), save, registry, force)
         } catch (e) {
-          handleError(e)
+          if (e instanceof Error) handleError(e)
         }
       } else {
         if (B) {
@@ -142,7 +142,7 @@ async function app () {
           try {
             await execute(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), save, registry, force)
           } catch (e) {
-            handleError(e)
+            if (e instanceof Error) handleError(e)
           }
         } else {
           if (p) {
@@ -151,7 +151,7 @@ async function app () {
             try {
               await execute(DEPS_PATH, getPeerDependencies(PACKAGE), getPeerDependencies(CONFIGURATION), save, registry, force)
             } catch (e) {
-              handleError(e)
+              if (e instanceof Error) handleError(e)
             }
           }
         }

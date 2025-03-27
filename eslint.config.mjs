@@ -1,5 +1,7 @@
 import globals from 'globals'
 import standard from '@sequencemedia/eslint-config-standard/configs/recommended/merge'
+import typescript from '@sequencemedia/eslint-config-typescript/configs/recommended/merge'
+import typescriptParser from '@typescript-eslint/parser'
 
 export default [
   /**
@@ -7,7 +9,7 @@ export default [
    */
   standard({
     files: [
-      '**/*.{mjs,cjs}'
+      '**/*.{mjs,cjs,mts,cts}'
     ],
     ignores: [
       'src',
@@ -21,7 +23,7 @@ export default [
   }),
   standard({
     files: [
-      'src/**/*.{mjs,cjs}'
+      'src/**/*.{mjs,cjs,mts,cts}'
     ],
     languageOptions: {
       globals: {
@@ -31,11 +33,53 @@ export default [
   }),
   standard({
     files: [
-      'test/**/*.{mjs,cjs}'
+      'test/**/*.{mjs,cjs,mts,cts}'
     ],
     languageOptions: {
       globals: {
         ...globals.mocha
+      }
+    }
+  }),
+  /**
+   *  TypeScript config
+   */
+  typescript({
+    files: [
+      '**/*.{mts,cts}'
+    ],
+    ignores: [
+      'src',
+      'test'
+    ],
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        projectService: true,
+        project: 'tsconfig.json'
+      },
+      globals: {
+        ...globals.node,
+        DepsTypes: 'readonly',
+        NodeJS: 'readonly'
+      }
+    }
+  }),
+  typescript({
+    files: [
+      'src/**/*.{mts,cts}',
+      'test/**/*.{mts,cts}'
+    ],
+    languageOptions: {
+      parser: typescriptParser,
+      parserOptions: {
+        projectService: true,
+        project: 'tsconfig.json'
+      },
+      globals: {
+        ...globals.browser,
+        DepsTypes: 'readonly',
+        NodeJS: 'readonly'
       }
     }
   })

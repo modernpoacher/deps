@@ -1,11 +1,7 @@
 /**
- *  A package
- *  @typedef {import('../common/index.mjs').Package} Package
- */
-
-/**
- *  A configuration
- *  @typedef {import('../common/index.mjs').Configuration} Configuration
+ *  @typedef {DepsTypes.DependencyDescriptor}  DependencyDescriptor
+ *  @typedef {DepsTypes.Package} Package
+ *  @typedef {DepsTypes.Configuration} Configuration
  */
 
 import debug from 'debug'
@@ -51,7 +47,7 @@ log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
  *
  *  Get the `install --save-exact` commands as a string
  *
- *  @param {Package} p - Package
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -74,7 +70,7 @@ export function getInstallSaveExactCommands (p, s, r, f) {
  *
  *  Get the `install` commands as a string
  *
- *  @param {Package} p - Package
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -98,10 +94,10 @@ export function getInstallCommands (p, s, r, f) {
  *  Spawn the `install --save-exact` commands
  *
  *  @param {string} d - Directory
- *  @param {Package} p - Package
- *  @param {Configuration} c - Configuration
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *  @returns {Promise<string>}
  */
 export function installSaveExact (d, p, s, r, f) {
@@ -109,7 +105,7 @@ export function installSaveExact (d, p, s, r, f) {
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -123,8 +119,8 @@ export function installSaveExact (d, p, s, r, f) {
         return (!e) ? resolve(v) : reject(e)
       })
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }
@@ -135,10 +131,10 @@ export function installSaveExact (d, p, s, r, f) {
  *  Spawn the `install` commands
  *
  *  @param {string} d - Directory
- *  @param {Package} p - Package
- *  @param {Configuration} c - Configuration
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
+ *  @param {boolean} f - Force
  *  @returns {Promise<string>}
  */
 export function install (d, p, s, r, f) {
@@ -146,7 +142,7 @@ export function install (d, p, s, r, f) {
 
   const directory = normalize(d.trim())
 
-  log(`Directory is "${directory}"`)
+  info(`Directory is "${directory}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -160,8 +156,8 @@ export function install (d, p, s, r, f) {
         return (!e) ? resolve(v) : reject(e)
       })
 
-      stdout.on('data', log)
-      stderr.on('data', log)
+      if (stdout) stdout.on('data', log)
+      if (stderr) stderr.on('data', log)
     })
   )
 }

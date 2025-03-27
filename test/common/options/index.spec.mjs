@@ -9,7 +9,7 @@ import {
 describe('#deps/src/common/options', () => {
   describe('`getOptions`', () => {
     it('is a function', () => {
-      return expect(getOptions)
+      expect(getOptions)
         .to.be.a('function')
     })
   })

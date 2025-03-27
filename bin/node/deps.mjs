@@ -4,39 +4,23 @@ import {
   exec
 } from 'node:child_process'
 
-import {
-  join
-} from 'node:path'
-
 import '#deps/src/common/debug'
-
-import {
-  PLATFORM,
-  BIN
-} from '#deps/src/common/env'
 
 import {
   getOptions
 } from '#deps/src/common/options'
 
 import {
-  getArgs,
+  DEPS,
+  ARGS,
   use,
   handleComplete
 } from '#deps/bin/common'
 
-const command = (
-  PLATFORM === 'win32'
-    ? `bash "${join(BIN, '.\\bash\\deps.sh')}"`
-    : `bash '${join(BIN, './bash/deps.sh')}'`
-)
-
-const args = getArgs()
-
 const {
   stdout,
   stderr
-} = exec(`${command} ${args}`, getOptions(), handleComplete)
+} = exec(`${DEPS} ${ARGS}`, getOptions(), handleComplete)
 
-stdout.on('data', use('deps-deps'))
-stderr.on('data', use('deps-deps:error'))
+if (stdout) stdout.on('data', use('deps-deps'))
+if (stderr) stderr.on('data', use('deps-deps:error'))

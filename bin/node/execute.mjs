@@ -56,10 +56,14 @@ import {
 } from '#deps/bin/common'
 
 const log = debug('@modernpoacher/deps')
+const info = debug('@modernpoacher/deps:info')
 
 log(`\`execute\` (${VERSION} - ${PLATFORM}) is awake`)
 
-function handleCommandError (e) {
+/**
+ *  @param {{ code?: number, message?: string }} [e]
+ */
+function handleCommandError (e = {}) {
   const {
     code = 0
   } = e
@@ -67,6 +71,10 @@ function handleCommandError (e) {
   if (code !== 128) handleError(e)
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<string>}
+ */
 async function getDefaultBranch (directory) {
   const branch = await catGitRefsRemotesOriginHead(directory)
   if (branch) return branch
@@ -75,12 +83,20 @@ async function getDefaultBranch (directory) {
   )
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<string>}
+ */
 async function getCurrentBranch (directory) {
   return (
     await gitRevParseAbbrevRefHead(directory)
   )
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<boolean>}
+ */
 async function isHeadDefaultBranch (directory) {
   const defaultBranch = await getDefaultBranch(directory)
   const currentBranch = await getCurrentBranch(directory)
@@ -117,7 +133,7 @@ async function getIgnoreFromConfiguration (directory) {
  *  Interrogates `.depsrc` or `.depsrc.json` for an `author` value
  *
  *  @param {string} directory
- *  @returns {Promise<string|null>}
+ *  @returns {Promise<string | null>}
  */
 async function getAuthorFromConfiguration (directory) {
   log('getAuthorFromConfiguration')
@@ -139,7 +155,7 @@ async function getAuthorFromConfiguration (directory) {
  *  Interrogates `package.json` for an `author` value
  *
  *  @param {string} directory
- *  @returns {Promise<string|null>}
+ *  @returns {Promise<string | null>}
  */
 async function getAuthorFromPackage (directory) {
   log('getAuthorFromPackage')
@@ -161,7 +177,7 @@ async function getAuthorFromPackage (directory) {
  *  Interrogates `.depsrc` or `.depsrc.json` for a `message` value
  *
  *  @param {string} directory
- *  @returns {Promise<string|null>}
+ *  @returns {Promise<string | null>}
  */
 async function getMessageFromConfiguration (directory) {
   log('getMessageFromConfiguration')
@@ -185,9 +201,9 @@ async function getMessageFromConfiguration (directory) {
  *
  *  Since it can be null `author` may not default in function arguments
  *
- *  @param {string|null} author
+ *  @param {string | { name: string; email: string }} author
  *  @param {string} directory
- *  @returns {Promise<string>}
+ *  @returns {Promise<string | { name: string; email: string }>}
  */
 async function toAuthor (author, directory) {
   return author || await getAuthorFromConfiguration(directory) || await getAuthorFromPackage(directory) || AUTHOR
@@ -201,7 +217,7 @@ async function toAuthor (author, directory) {
  *
  *  Since it can be null `message` may not default in function arguments
  *
- *  @param {string|null} message
+ *  @param {string | null} message
  *  @param {string} directory
  *  @returns {Promise<string>}
  */
@@ -209,14 +225,30 @@ async function toMessage (message, directory) {
   return message || await getMessageFromConfiguration(directory) || MESSAGE
 }
 
-const filterDeps = (v) => !!v // de-falsy
+/**
+ *  @param {string | undefined} v
+ *  @returns {boolean}
+ */
+const filterDeps = (v) => Boolean(v) // de-falsy
 
-const reduceDeps = (a, v) => a.includes(v) ? a : a.concat(v) // de-dupe
+/**
+ *  @param {string[]} a
+ *  @param {string} v
+ *  @returns {string[]}
+ */
+const reduceDeps = (a, v = '') => a.includes(v) ? a : a.concat(v) // de-dupe
 
+/**
+ *  @param {string[]} directories
+ */
 function * genDirsList (directories = []) {
   while (directories.length) yield directories.shift()
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<string[]>}
+ */
 async function getPathList (directory) {
   log('getPathList')
 
@@ -229,9 +261,16 @@ async function getPathList (directory) {
   )
 }
 
+/**
+ *  @param {Array<string | undefined>} [directories]
+ *  @returns {Promise<string[]>}
+ */
 async function getDepsList (directories = []) {
   log('getDepsList')
 
+  /**
+   *  Transform `directories` to create `alpha`
+   */
   const alpha = (
     directories
       .filter(filterDeps)
@@ -240,19 +279,40 @@ async function getDepsList (directories = []) {
   )
 
   try {
-    const omega = await Promise.all(alpha.map(mapRevParseShowTopLevel))
+    /**
+     *  Recreate `directories` from `alpha`
+     *
+     *  @type {Array<string | undefined>}
+     */
+    const directories = (
+      await Promise.all(
+        alpha
+          .map(mapRevParseShowTopLevel)
+      )
+    )
 
-    return (
-      omega
+    /**
+     *  Transform `directories` to create `omega`
+     */
+    const omega = (
+      directories
         .filter(filterDeps)
         .reduce(reduceDeps, [])
         .sort()
     )
+
+    return omega
   } catch (e) {
-    handleError(e)
+    if (e instanceof Error) handleError(e)
   }
+
+  return []
 }
 
+/**
+ *  @param {string} directory
+ *  @returns {Promise<string | undefined>}
+ */
 async function mapRevParseShowTopLevel (directory) {
   log('mapRevParseShowTopLevel')
 
@@ -261,10 +321,17 @@ async function mapRevParseShowTopLevel (directory) {
       await gitRevParseShowTopLevel(directory)
     )
   } catch (e) {
-    handleCommandError(e)
+    if (e instanceof Error) handleCommandError(e)
   }
 }
 
+/**
+ *  @param {string} directory
+ *  @param {string} registry
+ *  @param {boolean} force
+ *  @param {string} message
+ *  @param {string | { name: string; email: string }} author
+ */
 async function iterate (directory, registry, force, message, author) {
   log('iterate')
 
@@ -282,11 +349,18 @@ async function iterate (directory, registry, force, message, author) {
         }
       }
     } catch (e) {
-      handleCommandError(e)
+      if (e instanceof Error) handleCommandError(e)
     }
   }
 }
 
+/**
+ *  @param {string} directory
+ *  @param {string} registry
+ *  @param {boolean} force
+ *  @param {string} message
+ *  @param {string | { name: string; email: string }} author
+ */
 async function iteratePath (directory, registry, force, message, author) {
   log('iteratePath')
 
@@ -299,17 +373,28 @@ async function iteratePath (directory, registry, force, message, author) {
       const depsList = await getDepsList(pathList)
 
       if (depsList.length) {
-        for (const d of genDirsList(depsList)) await iterate(d, registry, force, message, author)
+        for (const d of genDirsList(depsList)) if (d) await iterate(d, registry, force, message, author)
       }
     }
   }
 }
 
+/**
+ *  @param {string} directory
+ *  @param {string} registry
+ *  @param {boolean} force
+ *  @param {string} message
+ *  @param {string | { name: string; email: string }} author
+ */
 async function execute (directory = DIRECTORY, registry = REGISTRY, force = false, message = MESSAGE, author = AUTHOR) {
   log('execute')
 
   try {
-    log({ directory, registry, force, message, author })
+    info(`Directory is "${directory}"`)
+    info(`Registry is "${registry}"`)
+    info(`Force is "${force}"`)
+    info(`Message is "${message}"`)
+    info(`Author is "${author}"`)
 
     await gitPull(directory)
     await rmrf(directory)
@@ -320,10 +405,17 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
     await gitPush(directory)
     await gitPushTags(directory)
   } catch (e) {
-    handleError(e)
+    if (e instanceof Error) handleError(e)
   }
 }
 
+/**
+ *  @param {string} directory
+ *  @param {string} registry
+ *  @param {boolean} force
+ *  @param {string} message
+ *  @param {string | { name: string; email: string }} author
+ */
 async function executeFrom (directory, registry, force, message, author) {
   log('executeFrom')
 
@@ -333,19 +425,28 @@ async function executeFrom (directory, registry, force, message, author) {
     try {
       if (D === await gitRevParseShowTopLevel(D)) {
         const B = await isHeadDefaultBranch(D)
+
         if (B) {
           const ignore = await getIgnoreFromConfiguration(D)
+
           if (!ignore) {
             await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
           }
         }
       }
     } catch (e) {
-      handleCommandError(e)
+      if (e instanceof Error) handleCommandError(e)
     }
   }
 }
 
+/**
+ *  @param {string} directory
+ *  @param {string} registry
+ *  @param {boolean} force
+ *  @param {string} message
+ *  @param {string | { name: string; email: string }} author
+ */
 async function executeOnly (directory, registry, force, message, author) {
   log('executeOnly')
 
@@ -355,19 +456,28 @@ async function executeOnly (directory, registry, force, message, author) {
     try {
       if (D === await gitRevParseShowTopLevel(D)) {
         const B = await isHeadDefaultBranch(D)
+
         if (B) {
           const ignore = await getIgnoreFromConfiguration(D)
+
           if (!ignore) {
             await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
           }
         }
       }
     } catch (e) {
-      handleCommandError(e)
+      if (e instanceof Error) handleCommandError(e)
     }
   }
 }
 
+/**
+ *  @param {string} directory
+ *  @param {string} registry
+ *  @param {boolean} force
+ *  @param {string} message
+ *  @param {string | { name: string; email: string }} author
+ */
 async function executePath (directory, registry, force, message, author) {
   log('executePath')
 
@@ -377,15 +487,17 @@ async function executePath (directory, registry, force, message, author) {
     try {
       if (D === await gitRevParseShowTopLevel(D)) {
         const B = await isHeadDefaultBranch(D)
+
         if (B) {
           const ignore = await getIgnoreFromConfiguration(D)
+
           if (!ignore) {
             await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
           }
         }
       }
     } catch (e) {
-      const {
+      const { // @ts-expect-error
         code
       } = e
 
@@ -395,7 +507,7 @@ async function executePath (directory, registry, force, message, author) {
         )
       }
 
-      handleCommandError(e)
+      if (e instanceof Error) handleCommandError(e)
     }
   }
 }
@@ -449,7 +561,7 @@ async function app () {
     try {
       await executePath(P, registry, force, message, author)
     } catch (e) {
-      handleError(e)
+      if (e instanceof Error) handleError(e)
     }
   } else {
     if (F) {
@@ -458,7 +570,7 @@ async function app () {
       try {
         await executeFrom(P, registry, force, message, author)
       } catch (e) {
-        handleError(e)
+        if (e instanceof Error) handleError(e)
       }
     } else {
       if (O) {
@@ -467,7 +579,7 @@ async function app () {
         try {
           await executeOnly(P, registry, force, message, author)
         } catch (e) {
-          handleError(e)
+          if (e instanceof Error) handleError(e)
         }
       }
     }

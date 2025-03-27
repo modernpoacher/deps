@@ -17,7 +17,7 @@ import {
 const {
   name: NAME,
   version: VERSION
-} = JSON.parse(readFileSync(join(PATH, 'package.json')))
+} = JSON.parse(readFileSync(join(PATH, 'package.json')).toString('utf8'))
 
 const PLATFORM = platform()
 

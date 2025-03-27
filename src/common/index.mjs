@@ -1,40 +1,8 @@
 /**
- *  Package or configuration dependencies
- *
- *  @typedef {Record<string, string>} Dependencies
- */
-
-/**
- *  A dependency descriptor
- *
- *  @typedef {Object} DependencyDescriptor
- *  @property {string} name - Dependency name in NPM.
- *  @property {string} version - Dependency version or "latest".
- */
-
-/**
- *  A package
- *
- *  @typedef {Object} Package
- *  @property {string|{name: string, email: string}} author
- *  @property {Dependencies} dependencies - Production dependencies.
- *  @property {Dependencies} devDependencies - Development dependencies.
- *  @property {Dependencies} optionalDependencies - Optional dependencies.
- *  @property {Dependencies} bundleDependencies - Bundle dependencies.
- *  @property {Dependencies} peerDependencies - Peer dependencies
- */
-
-/**
- *  A configuration
- *
- *  @typedef {Object} Configuration
- *  @property {string|{name: string, email: string}} author
- *  @property {boolean} ignore
- *  @property {Dependencies} dependencies - Production dependencies.
- *  @property {Dependencies} devDependencies - Development dependencies.
- *  @property {Dependencies} optionalDependencies - Optional dependencies.
- *  @property {Dependencies} bundleDependencies - Bundle dependencies.
- *  @property {Dependencies} peerDependencies - Peer dependencies
+ *  @typedef {DepsTypes.Dependencies} Dependencies
+ *  @typedef {DepsTypes.DependencyDescriptor} DependencyDescriptor
+ *  @typedef {DepsTypes.Package} Package
+ *  @typedef {DepsTypes.Configuration} Configuration
  */
 
 import debug from 'debug'
@@ -62,8 +30,16 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
 
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
 export const tidy = (v) => v.replace(/\n{2,}}/gm, String.fromCharCode(10)).trim()
 
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
 export const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
 
 /**
@@ -71,7 +47,7 @@ export const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd
  *
  *  Get the `--save-prod` parameter
  *
- *  @param {string} current commands string
+ *  @param {string} commands commands string
  *  @returns {string}
  */
 export const getSaveProdParameter = (commands) => commands.concat(' --save-prod')
@@ -81,7 +57,7 @@ export const getSaveProdParameter = (commands) => commands.concat(' --save-prod'
  *
  *  Get the `--save-dev` parameter
  *
- *  @param {string} current commands string
+ *  @param {string} commands commands string
  *  @returns {string}
  */
 export const getSaveDevParameter = (commands) => commands.concat(' --save-dev')
@@ -192,7 +168,7 @@ export const getCommands = PLATFORM === 'win32'
  *
  *  Get the production dependencies by destructuring the package or configuration
  *
- *  @param {Package|Configuration}
+ *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
 export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
@@ -202,7 +178,7 @@ export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
  *
  *  Get the development dependencies by destructuring the package or configuration
  *
- *  @param {Package|Configuration}
+ *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
 export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependencies
@@ -212,7 +188,7 @@ export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependen
  *
  *  Get the optional dependencies by destructuring the package or configuration
  *
- *  @param {Package|Configuration}
+ *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
 export const getOptionalDependencies = ({ optionalDependencies = {} } = {}) => optionalDependencies
@@ -222,7 +198,7 @@ export const getOptionalDependencies = ({ optionalDependencies = {} } = {}) => o
  *
  *  Get the bundle dependencies by destructuring the package or configuration
  *
- *  @param {Package|Configuration}
+ *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
 export const getBundleDependencies = ({ bundleDependencies = {} } = {}) => bundleDependencies
@@ -232,17 +208,17 @@ export const getBundleDependencies = ({ bundleDependencies = {} } = {}) => bundl
  *
  *  Get the peer dependencies by destructuring the package or configuration
  *
- *  @param {Package|Configuration}
+ *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getPeerDependencies = ({ peerDependencies } = {}) => peerDependencies
+export const getPeerDependencies = ({ peerDependencies = {} } = {}) => peerDependencies
 
 /**
  *  @function getIgnore
  *
  *  Get the ignore flag by destructuring the configuration
  *
- *  @param {Configuration}
+ *  @param {Configuration} deps
  *  @returns {boolean}
  */
 export const getIgnore = ({ ignore = false } = {}) => ignore === true
@@ -252,11 +228,12 @@ export const getIgnore = ({ ignore = false } = {}) => ignore === true
  *
  *  Get the author by destructuring the package or configuration
  *
- *  @param {Package|Configuration}
- *  @returns {string|null}
+ *  @param {Package | Configuration} deps
+ *  @returns {string | null}
  */
 export const getAuthor = ({ author = '' } = {}) => {
-  if ((author || false) instanceof Object) {
+  if (typeof author === 'string') return author
+  if (typeof (author || false) === 'object') {
     const {
       name: NAME = '',
       email: EMAIL = ''
@@ -272,7 +249,7 @@ export const getAuthor = ({ author = '' } = {}) => {
     )
   }
 
-  return author || null
+  return null
 }
 
 /**
@@ -280,8 +257,8 @@ export const getAuthor = ({ author = '' } = {}) => {
  *
  *  Get the message by destructuring the configuration
  *
- *  @param {Configuration}
- *  @returns {string|null}
+ *  @param {Configuration} deps
+ *  @returns {string | null}
  */
 export const getMessage = ({ message = '' } = {}) => message || null
 
@@ -439,13 +416,13 @@ export function getDeps (packageDependencies) {
  *
  *  Normalise the commands string
  *
- *  @param {string} value
+ *  @param {string} commands
  *  @returns {string}
  */
 export function normalizeCommands (commands) {
   const s = String.fromCharCode(32)
 
-  while (/\s{2,}|\n+/.test(commands)) {
+  while (/\s{2,} | \n+/.test(commands)) {
     commands = commands.replace(/\s{2,}/gm, s).replace(/\n+/gm, s)
   }
 
@@ -459,7 +436,7 @@ export function normalizeCommands (commands) {
  *
  *  Transform by destructuring the value
  *
- *  @param {DependencyDescriptor}
+ *  @param {DependencyDescriptor | { name?: string, version?: string }} dependencyDescriptor
  *  @returns {string}
  */
 export const transformDependency = ({ name = '@modernpoacher/deps', version = 'latest' } = {}) => `${name}@${version}`
@@ -469,7 +446,7 @@ export const transformDependency = ({ name = '@modernpoacher/deps', version = 'l
  *
  *  Transform the parameter to a string
  *
- *  @param {DependencyDescriptor|DependencyDescriptor[]} value
+ *  @param {DependencyDescriptor | DependencyDescriptor[]} value
  *  @returns {string}
  */
 export function transform (value) {

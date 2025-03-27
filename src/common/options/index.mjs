@@ -1,3 +1,7 @@
+/**
+ *  @typedef {DepsTypes.Options} Options
+ */
+
 import debug from 'debug'
 
 import {
@@ -14,14 +18,17 @@ const {
   }
 } = process
 
+/**
+ *  @type {Options}
+ */
 export const OPTIONS = {
   maxBuffer: 1024 * 2000,
   stdio: 'inherit',
   env: {
     DEBUG_COLORS: 'yes',
     FORCE_COLOR: PLATFORM === 'win32'
-      ? 3
-      : 2,
+      ? '3'
+      : '2',
     NODE_OPTIONS,
     SSH_AUTH_SOCK,
     HOME,
@@ -36,22 +43,8 @@ log(`\`common/options\` (${VERSION} - ${PLATFORM}) is awake`)
 /**
  *  @function getOptions
  *
- *  Get the installation `exec` child process options
- *
- *  @param {string} cwd normalized directory
- *  @returns {{
- *    maxBuffer: number,
- *    stdio: string
- *    env: {
- *      DEBUG_COLORS: string,
- *      FORCE_COLOR: number,
- *      NODE_OPTIONS: string,
- *      SSH_AUTH_SOCK?: string,
- *      HOME?: string,
- *      PATH?: string
- *    }
- *    cwd: string
- *  }}
+ *  @param {string} [cwd] normalized directory
+ *  @returns {Options & { cwd?: string }}
  */
 export function getOptions (cwd) {
   log('getOptions')

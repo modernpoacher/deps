@@ -107,9 +107,8 @@ async function isHeadDefaultBranch (directory) {
 
 /**
  *  @function getIgnoreFromConfiguration
- *
+ *  @description
  *  Interrogates `.depsrc` or `.depsrc.json` for an `ignore` value
- *
  *  @param {string} directory
  *  @returns {Promise<boolean>}
  */
@@ -129,9 +128,8 @@ async function getIgnoreFromConfiguration (directory) {
 
 /**
  *  @function getAuthorFromConfiguration
- *
+ *  @description
  *  Interrogates `.depsrc` or `.depsrc.json` for an `author` value
- *
  *  @param {string} directory
  *  @returns {Promise<string | null>}
  */
@@ -151,9 +149,8 @@ async function getAuthorFromConfiguration (directory) {
 
 /**
  *  @function getAuthorFromPackage
- *
+ *  @description
  *  Interrogates `package.json` for an `author` value
- *
  *  @param {string} directory
  *  @returns {Promise<string | null>}
  */
@@ -173,9 +170,8 @@ async function getAuthorFromPackage (directory) {
 
 /**
  *  @function getMessageFromConfiguration
- *
+ *  @description
  *  Interrogates `.depsrc` or `.depsrc.json` for a `message` value
- *
  *  @param {string} directory
  *  @returns {Promise<string | null>}
  */
@@ -195,12 +191,11 @@ async function getMessageFromConfiguration (directory) {
 
 /**
  *  @function toAuthor
- *
+ *  @description
  *  Ensures that the `author` is set either from the command line,
  *  configuration, package, or a default
  *
  *  Since it can be null `author` may not default in function arguments
- *
  *  @param {string | { name: string; email: string }} author
  *  @param {string} directory
  *  @returns {Promise<string | { name: string; email: string }>}
@@ -211,12 +206,11 @@ async function toAuthor (author, directory) {
 
 /**
  *  @function toMessage
- *
+ *  @description
  *  Ensures that the `message` is set either from the command line,
  *  configuration, or a default
  *
  *  Since it can be null `message` may not default in function arguments
- *
  *  @param {string | null} message
  *  @param {string} directory
  *  @returns {Promise<string>}
@@ -240,6 +234,7 @@ const reduceDeps = (a, v = '') => a.includes(v) ? a : a.concat(v) // de-dupe
 
 /**
  *  @param {string[]} directories
+ *  @yields {string | undefined}
  */
 function * genDirsList (directories = []) {
   while (directories.length) yield directories.shift()
@@ -281,7 +276,6 @@ async function getDepsList (directories = []) {
   try {
     /**
      *  Recreate `directories` from `alpha`
-     *
      *  @type {Array<string | undefined>}
      */
     const directories = (
@@ -331,6 +325,7 @@ async function mapRevParseShowTopLevel (directory) {
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
+ *  @returns {Promise<void>}
  */
 async function iterate (directory, registry, force, message, author) {
   log('iterate')
@@ -385,6 +380,7 @@ async function iteratePath (directory, registry, force, message, author) {
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
+ *  @returns {Promise<void>}
  */
 async function execute (directory = DIRECTORY, registry = REGISTRY, force = false, message = MESSAGE, author = AUTHOR) {
   log('execute')
@@ -415,6 +411,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
+ *  @returns {Promise<void>}
  */
 async function executeFrom (directory, registry, force, message, author) {
   log('executeFrom')
@@ -446,6 +443,7 @@ async function executeFrom (directory, registry, force, message, author) {
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
+ *  @returns {Promise<void>}
  */
 async function executeOnly (directory, registry, force, message, author) {
   log('executeOnly')
@@ -477,6 +475,7 @@ async function executeOnly (directory, registry, force, message, author) {
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
+ *  @returns {Promise<void>}
  */
 async function executePath (directory, registry, force, message, author) {
   log('executePath')
@@ -512,6 +511,9 @@ async function executePath (directory, registry, force, message, author) {
   }
 }
 
+/**
+ *  @function app
+ */
 async function app () {
   log('Deps')
 

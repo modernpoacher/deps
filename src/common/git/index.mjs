@@ -190,9 +190,8 @@ export function err (key, directory) {
 
 /**
  *  @function getErrorCode
- *
+ *  @description
  *  Get an error code from an error
- *
  *  @param {{code?: number, message?: string}} e
  *  @returns {number}
  */
@@ -200,9 +199,8 @@ const getErrorCode = ({ code = 0 } = {}) => code
 
 /**
  *  @function getErrorMessage
- *
+ *  @description
  *  Get an error message from an error
- *
  *  @param {{code?: number, message?: string}} e
  *  @returns {string}
  */
@@ -210,9 +208,8 @@ const getErrorMessage = ({ message = '' } = {}) => message
 
 /**
  *  @function isCommandError
- *
+ *  @description
  *  Determine whether an error is a safe non-zero exit from a Git command
- *
  *  @param {{code?: number, message?: string}} e
  *  @returns {boolean}
  */
@@ -227,9 +224,8 @@ function isCommandError (e) {
 
 /**
  *  @function catGitRefsRemotesOriginHead
- *
+ *  @description
  *  Get the default branch from `.git/refs/remotes/origin/HEAD`
- *
  *  @param {string} d - A directory configured for Git
  *  @returns {Promise<string>}
  */
@@ -258,9 +254,8 @@ export function catGitRefsRemotesOriginHead (d = DIRECTORY) {
 
 /**
  *  @function awkGitRemoteShowOriginHead
- *
+ *  @description
  *  Get the remote default branch
- *
  *  @param {string} d - A directory configured for Git
  *  @returns {Promise<string>}
  */
@@ -289,9 +284,8 @@ export function awkGitRemoteShowOriginHead (d = DIRECTORY) {
 
 /**
  *  @function gitRevParseShowTopLevel
- *
+ *  @description
  *  Determine whether a directory is configured for Git
- *
  *  @param {string} d - A directory
  *  @returns {Promise<string>}
  */
@@ -320,9 +314,8 @@ export function gitRevParseShowTopLevel (d = DIRECTORY) {
 
 /**
  *  @function gitRevParseAbbrevRefHead
- *
+ *  @description
  *  Determine which branch is HEAD
- *
  *  @param {string} d - A directory
  *  @returns {Promise<string>}
  */
@@ -351,9 +344,8 @@ export function gitRevParseAbbrevRefHead (d = DIRECTORY) {
 
 /**
  *  @function gitCheckout
- *
+ *  @description
  *  Switch to the default value if none is supplied
- *
  *  @param {string} d - A directory configured for Git
  *  @param {string} branch - The Git branch
  *  @returns {Promise<string>}
@@ -389,9 +381,8 @@ export function gitCheckout (d = DIRECTORY, branch = BRANCH) {
 
 /**
  *  @function gitPull
- *
+ *  @description
  *  Pull changes from the Git remote
- *
  *  @param {string} d - A directory configured for Git
  *  @returns {Promise<string>}
  */
@@ -426,9 +417,8 @@ export function gitPull (d = DIRECTORY) {
 
 /**
  *  @function gitPush
- *
+ *  @description
  *  Push changes to the Git remote
- *
  *  @param {string} d - A directory configured for Git
  *  @returns {Promise<string>}
  */
@@ -463,9 +453,8 @@ export function gitPush (d = DIRECTORY) {
 
 /**
  *  @function gitPushTags
- *
+ *  @description
  *  Push tags changes to the Git remote
- *
  *  @param {string} d - A directory configured for Git
  *  @returns {Promise<string>}
  */
@@ -500,9 +489,8 @@ export function gitPushTags (d = DIRECTORY) {
 
 /**
  *  @function gitAdd
- *
+ *  @description
  *  Add changes to Git with a default value if none is supplied
- *
  *  @param {string} d - A directory configured for Git
  *  @param {string} add - An add parameter
  *  @returns {Promise<string>}
@@ -538,9 +526,8 @@ export function gitAdd (d = DIRECTORY, add = ADD) {
 
 /**
  *  @function gitCommit
- *
+ *  @description
  *  Commit changes to Git with a default value if none is supplied
- *
  *  @param {string} d - A directory configured for Git
  *  @param {string} message - A commit message
  *  @param {string | { name: string; email: string }} author - The commit author

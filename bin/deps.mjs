@@ -39,6 +39,9 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
+/**
+ *  @function app
+ */
 async function app () {
   log('Deps')
 

@@ -42,7 +42,8 @@ log(`\`common/options\` (${VERSION} - ${PLATFORM}) is awake`)
 
 /**
  *  @function getOptions
- *
+ *  @description
+ *  `exec` shell options
  *  @param {string} [cwd] normalized directory
  *  @returns {Options & { cwd?: string }}
  */

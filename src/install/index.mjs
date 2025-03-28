@@ -44,9 +44,8 @@ log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
 
 /**
  *  @function getInstallSaveExactCommands
- *
+ *  @description
  *  Get the `install --save-exact` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
@@ -67,9 +66,8 @@ export function getInstallSaveExactCommands (p, s, r, f) {
 
 /**
  *  @function getInstallCommands
- *
+ *  @description
  *  Get the `install` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
@@ -90,9 +88,8 @@ export function getInstallCommands (p, s, r, f) {
 
 /**
  *  @function installSaveExact
- *
+ *  @description
  *  Spawn the `install --save-exact` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
@@ -127,9 +124,8 @@ export function installSaveExact (d, p, s, r, f) {
 
 /**
  *  @function install
- *
+ *  @description
  *  Spawn the `install` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
@@ -164,9 +160,8 @@ export function install (d, p, s, r, f) {
 
 /**
  *  @function execute
- *
+ *  @description
  *  Execute the `install --save-exact` and `install` commands
- *
  *  @param {string} d - Directory
  *  @param {Package} p - Package
  *  @param {Configuration} c - Configuration

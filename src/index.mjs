@@ -83,9 +83,8 @@ export function use (key) {
 
 /**
  *  @function getInstallSaveExactCommands
- *
+ *  @description
  *  Get the `npm install --save-exact` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -101,9 +100,8 @@ export function getInstallSaveExactCommands (deps, r, f) {
 
 /**
  *  @function getInstallCommands
- *
+ *  @description
  *  Get the `npm install` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -119,9 +117,8 @@ export function getInstallCommands (deps, r, f) {
 
 /**
  *  @function getInstallSaveBundleSaveExactCommands
- *
+ *  @description
  *  Get the `npm install --save-bundle --save-exact` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -141,9 +138,8 @@ export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
 
 /**
  *  @function getInstallSaveBundleCommands
- *
+ *  @description
  *  Get the `npm install --save-bundle` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -163,9 +159,8 @@ export function getInstallSaveBundleCommands (deps, r, f) {
 
 /**
  *  @function getInstallSaveOptionalSaveExactCommands
- *
+ *  @description
  *  Get the `npm install --save-optional --save-exact` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -185,9 +180,8 @@ export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
 
 /**
  *  @function getInstallSaveOptionalCommands
- *
+ *  @description
  *  Get the `npm install --save-optional` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -207,9 +201,8 @@ export function getInstallSaveOptionalCommands (deps, r, f) {
 
 /**
  *  @function getInstallSaveDevSaveExactCommands
- *
+ *  @description
  *  Get the `npm install --save-dev --save-exact` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -229,9 +222,8 @@ export function getInstallSaveDevSaveExactCommands (deps, r, f) {
 
 /**
  *  @function getInstallSaveDevCommands
- *
+ *  @description
  *  Get the `npm install --save-dev` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -251,9 +243,8 @@ export function getInstallSaveDevCommands (deps, r, f) {
 
 /**
  *  @function getInstallSaveProdSaveExactCommands
- *
+ *  @description
  *  Get the `npm install --save-prod --save-exact` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -273,9 +264,8 @@ export function getInstallSaveProdSaveExactCommands (deps, r, f) {
 
 /**
  *  @function getInstallSaveProdCommands
- *
+ *  @description
  *  Get the `npm install --save-prod` commands as a string
- *
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
  *  @param {boolean} f - Force
@@ -295,9 +285,8 @@ export function getInstallSaveProdCommands (deps, r, f) {
 
 /**
  *  @function installSaveBundleSaveExact
- *
+ *  @description
  *  Spawn the `npm install --save-bundle --save-exact` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -333,9 +322,8 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
 
 /**
  *  @function installSaveBundle
- *
+ *  @description
  *  Spawn the `npm install --save-bundle` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -371,9 +359,8 @@ export function installSaveBundle (d, deps, r, f) {
 
 /**
  *  @function installSaveOptionalSaveExact
- *
+ *  @description
  *  Spawn the `npm install --save-optional --save-exact` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -409,9 +396,8 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
 
 /**
  *  @function installSaveOptional
- *
+ *  @description
  *  Spawn the `npm install --save-optional` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependencies
  *  @param {string} r - Registry
@@ -447,9 +433,8 @@ export function installSaveOptional (d, deps, r, f) {
 
 /**
  *  @function installSaveDevSaveExact
- *
+ *  @description
  *  Spawn the `npm install --save-dev --save-exact` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -485,9 +470,8 @@ export function installSaveDevSaveExact (d, deps, r, f) {
 
 /**
  *  @function installSaveDev
- *
+ *  @description
  *  Spawn the `npm install --save-dev` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -523,9 +507,8 @@ export function installSaveDev (d, deps, r, f) {
 
 /**
  *  @function installSaveProdSaveExact
- *
+ *  @description
  *  Spawn the `npm install --save-prod --save-exact` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -561,9 +544,8 @@ export function installSaveProdSaveExact (d, deps, r, f) {
 
 /**
  *  @function installSaveProd
- *
+ *  @description
  *  Spawn the `npm install --save-prod` commands
- *
  *  @param {string} d - Directory
  *  @param {DependencyDescriptor | DependencyDescriptor[]} deps - Dependency descriptor(s)
  *  @param {string} r - Registry
@@ -599,9 +581,8 @@ export function installSaveProd (d, deps, r, f) {
 
 /**
  *  @function executeBundle
- *
+ *  @description
  *  Execute the `npm install --save-bundle --save-exact` and `npm install --save-bundle` commands
- *
  *  @param {string} d - Directory
  *  @param {Dependencies} packageDependencies - Package dependencies
  *  @param {Dependencies} configurationDependencies - Configuration dependencies
@@ -623,9 +604,8 @@ export async function executeBundle (d = DIRECTORY, packageDependencies = {}, co
 
 /**
  *  @function executeOptional
- *
+ *  @description
  *  Execute the `npm install --save-optional --save-exact` and `npm install --save-optional` commands
- *
  *  @param {string} d - Directory
  *  @param {Dependencies} packageDependencies - Package dependencies
  *  @param {Dependencies} configurationDependencies - Configuration dependencies
@@ -647,9 +627,8 @@ export async function executeOptional (d = DIRECTORY, packageDependencies = {}, 
 
 /**
  *  @function executeDev
- *
+ *  @description
  *  Execute the `npm install --save-dev --save-exact` and `npm install --save-dev` commands
- *
  *  @param {string} d - Directory
  *  @param {Dependencies} packageDependencies - Package dependencies
  *  @param {Dependencies} configurationDependencies - Configuration dependencies
@@ -671,9 +650,8 @@ export async function executeDev (d = DIRECTORY, packageDependencies = {}, confi
 
 /**
  *  @function executeProd
- *
+ *  @description
  *  Execute the `npm install --save-prod --save-exact` and `npm install --save-prod` commands
- *
  *  @param {string} d - Directory
  *  @param {Dependencies} packageDependencies - Package dependencies
  *  @param {Dependencies} configurationDependencies - Configuration dependencies

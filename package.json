@@ -56,13 +56,13 @@
   "dependencies": {
     "commander": "^13.1.0",
     "debug": "^4.4.0",
-    "glob": "^11.0.1",
+    "glob": "^11.0.2",
     "strip-ansi": "^7.1.0",
     "supports-color": "^10.0.0"
   },
   "devDependencies": {
     "@sequencemedia/eslint-config-standard": "^0.2.50",
-    "@sequencemedia/eslint-config-typescript": "^0.1.77",
+    "@sequencemedia/eslint-config-typescript": "^0.1.78",
     "@sequencemedia/eslint-merge": "^0.0.20",
     "@types/chai": "^5.2.1",
     "@types/debug": "^4.1.12",
@@ -71,7 +71,7 @@
     "chai": "^5.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.25.1",
-    "eslint-plugin-jsdoc": "^50.6.9",
+    "eslint-plugin-jsdoc": "^50.6.10",
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "mocha": "^11.1.0"

@@ -24,9 +24,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/modernpoacher/deps.git"
+    "url": "git+https://github.com/modernpoacher/deps.git"
   },
-  "homepage": "https://github.com/modernpoacher/deps",
+  "homepage": "https://github.com/modernpoacher/deps#readme",
   "bugs": {
     "url": "https://github.com/modernpoacher/deps/issues"
   },

@@ -6,6 +6,8 @@ import {
   expect
 } from 'chai'
 
+import '#deps/test/debug'
+
 import {
   getSaveProdParameter,
   getSaveDevParameter,

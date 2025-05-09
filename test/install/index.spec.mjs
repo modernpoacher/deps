@@ -2,6 +2,8 @@ import {
   expect
 } from 'chai'
 
+import '#deps/test/debug'
+
 import {
   getInstallSaveExactCommands,
   getInstallCommands,

@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-import debug from 'debug'
-
 import {
   resolve,
   dirname
@@ -15,7 +13,7 @@ import {
   Command
 } from 'commander'
 
-import '#deps/src/common/debug'
+import debug from '#deps/src/common/debug'
 
 import {
   VERSION,

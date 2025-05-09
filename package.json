@@ -67,6 +67,7 @@
     "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.10",
+    "@types/node": "^22.15.17",
     "@typescript-eslint/parser": "^8.32.0",
     "chai": "^5.2.0",
     "cross-env": "^7.0.3",
@@ -86,6 +87,7 @@
     "#deps/src/common/*": "./src/common/*/index.mjs",
     "#deps/src/common/debug": "./src/common/debug.mjs",
     "#deps/src/install": "./src/install/index.mjs",
+    "#deps/test/*": "./test/*.mjs",
     "#where-am-i": "./where-am-i.mjs"
   }
 }

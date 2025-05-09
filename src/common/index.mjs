@@ -5,13 +5,13 @@
  *  @typedef {DepsTypes.Configuration} Configuration
  */
 
-import debug from 'debug'
-
-import PATH from '#where-am-i'
-
 import {
   join
 } from 'node:path'
+
+import PATH from '#where-am-i'
+
+import debug from '#deps/src/common/debug'
 
 import {
   VERSION,

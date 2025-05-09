@@ -1,7 +1,3 @@
-import debug from 'debug'
-
-import PATH from '#where-am-i'
-
 import {
   join
 } from 'node:path'
@@ -13,6 +9,10 @@ import {
 import {
   platform
 } from 'node:os'
+
+import PATH from '#where-am-i'
+
+import debug from '#deps/src/common/debug'
 
 const {
   name: NAME,

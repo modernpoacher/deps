@@ -8,8 +8,6 @@
  *  @typedef {import('./common/index.mjs').DependencyDescriptor} DependencyDescriptor
  */
 
-import debug from 'debug'
-
 import stripAnsi from 'strip-ansi'
 
 import {
@@ -19,6 +17,8 @@ import {
 import {
   exec
 } from 'node:child_process'
+
+import debug from '#deps/src/common/debug'
 
 import {
   VERSION,

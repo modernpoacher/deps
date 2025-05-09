@@ -5,8 +5,6 @@
  *  @typedef {DepsTypes.Configuration} Configuration
  */
 
-import debug from 'debug'
-
 import stripAnsi from 'strip-ansi'
 
 import {
@@ -31,6 +29,8 @@ import {
   access,
   readFile
 } from 'node:fs/promises'
+
+import debug from '#deps/src/common/debug'
 
 import {
   VERSION,

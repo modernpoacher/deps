@@ -4,8 +4,6 @@
  *  @typedef {DepsTypes.Configuration} Configuration
  */
 
-import debug from 'debug'
-
 import {
   normalize
 } from 'node:path'
@@ -13,6 +11,8 @@ import {
 import {
   exec
 } from 'node:child_process'
+
+import debug from '#deps/src/common/debug'
 
 import {
   VERSION,

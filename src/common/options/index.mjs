@@ -2,7 +2,7 @@
  *  @typedef {DepsTypes.Options} Options
  */
 
-import debug from 'debug'
+import debug from '#deps/src/common/debug'
 
 import {
   VERSION,

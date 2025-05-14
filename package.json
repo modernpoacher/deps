@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "commander": "^13.1.0",
-    "debug": "^4.4.0",
+    "debug": "^4.4.1",
     "glob": "^11.0.2",
     "strip-ansi": "^7.1.0",
     "supports-color": "^10.0.0"

@@ -61,9 +61,9 @@
     "supports-color": "^10.0.0"
   },
   "devDependencies": {
-    "@sequencemedia/eslint-config-standard": "^0.2.58",
-    "@sequencemedia/eslint-config-typescript": "^0.1.92",
-    "@sequencemedia/eslint-merge": "^0.0.25",
+    "@sequencemedia/eslint-config-standard": "^0.2.59",
+    "@sequencemedia/eslint-config-typescript": "^0.1.93",
+    "@sequencemedia/eslint-merge": "^0.0.26",
     "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.10",
@@ -71,11 +71,11 @@
     "@typescript-eslint/parser": "^8.32.1",
     "chai": "^5.2.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.26.0",
+    "eslint": "^9.27.0",
     "eslint-plugin-jsdoc": "^50.6.17",
     "globals": "^16.1.0",
     "husky": "^9.1.7",
-    "mocha": "^11.2.2"
+    "mocha": "^11.3.0"
   },
   "imports": {
     "#deps/bin": "./bin/index.mjs",

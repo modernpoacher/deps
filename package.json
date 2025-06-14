@@ -56,7 +56,7 @@
   "dependencies": {
     "commander": "^14.0.0",
     "debug": "^4.4.1",
-    "glob": "^11.0.2",
+    "glob": "^11.0.3",
     "strip-ansi": "^7.1.0",
     "supports-color": "^10.0.0"
   },
@@ -67,15 +67,15 @@
     "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^22.15.30",
-    "@typescript-eslint/parser": "^8.33.1",
+    "@types/node": "^24.0.1",
+    "@typescript-eslint/parser": "^8.34.0",
     "chai": "^5.2.0",
     "cross-env": "^7.0.3",
-    "eslint": "^9.28.0",
-    "eslint-plugin-jsdoc": "^50.7.1",
+    "eslint": "^9.29.0",
+    "eslint-plugin-jsdoc": "^51.0.1",
     "globals": "^16.2.0",
     "husky": "^9.1.7",
-    "mocha": "^11.5.0"
+    "mocha": "^11.6.0"
   },
   "imports": {
     "#deps/bin": "./bin/index.mjs",

@@ -61,8 +61,8 @@
     "supports-color": "^10.0.0"
   },
   "devDependencies": {
-    "@sequencemedia/eslint-config-standard": "^0.2.68",
-    "@sequencemedia/eslint-config-typescript": "^0.1.106",
+    "@sequencemedia/eslint-config-standard": "^0.2.69",
+    "@sequencemedia/eslint-config-typescript": "^0.1.107",
     "@sequencemedia/eslint-merge": "^0.0.33",
     "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
@@ -72,7 +72,7 @@
     "chai": "^5.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.29.0",
-    "eslint-plugin-jsdoc": "^51.0.3",
+    "eslint-plugin-jsdoc": "^51.0.6",
     "globals": "^16.2.0",
     "husky": "^9.1.7",
     "mocha": "^11.7.0"

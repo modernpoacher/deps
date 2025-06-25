@@ -62,20 +62,20 @@
   },
   "devDependencies": {
     "@sequencemedia/eslint-config-standard": "^0.2.69",
-    "@sequencemedia/eslint-config-typescript": "^0.1.109",
+    "@sequencemedia/eslint-config-typescript": "^0.1.110",
     "@sequencemedia/eslint-merge": "^0.0.33",
     "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^24.0.3",
+    "@types/node": "^24.0.4",
     "@typescript-eslint/parser": "^8.35.0",
     "chai": "^5.2.0",
     "cross-env": "^7.0.3",
     "eslint": "^9.29.0",
-    "eslint-plugin-jsdoc": "^51.2.2",
+    "eslint-plugin-jsdoc": "^51.2.3",
     "globals": "^16.2.0",
     "husky": "^9.1.7",
-    "mocha": "^11.7.0"
+    "mocha": "^11.7.1"
   },
   "imports": {
     "#deps/bin": "./bin/index.mjs",

@@ -58,7 +58,7 @@
     "debug": "^4.4.1",
     "glob": "^11.0.3",
     "strip-ansi": "^7.1.0",
-    "supports-color": "^10.0.0"
+    "supports-color": "^10.1.0"
   },
   "devDependencies": {
     "@sequencemedia/eslint-config-standard": "^0.2.74",

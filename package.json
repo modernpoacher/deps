@@ -68,11 +68,11 @@
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.10",
     "@types/node": "^24.3.0",
-    "@typescript-eslint/parser": "^8.41.0",
+    "@typescript-eslint/parser": "^8.42.0",
     "chai": "^6.0.1",
     "cross-env": "^10.0.0",
     "eslint": "^9.34.0",
-    "eslint-plugin-jsdoc": "^54.1.1",
+    "eslint-plugin-jsdoc": "^54.3.0",
     "globals": "^16.3.0",
     "husky": "^9.1.7",
     "mocha": "^11.7.2"

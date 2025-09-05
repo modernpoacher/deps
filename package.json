@@ -61,13 +61,13 @@
     "supports-color": "^10.2.0"
   },
   "devDependencies": {
-    "@sequencemedia/eslint-config-standard": "^0.2.78",
-    "@sequencemedia/eslint-config-typescript": "^0.1.136",
-    "@sequencemedia/eslint-merge": "^0.0.46",
+    "@sequencemedia/eslint-config-standard": "^0.2.79",
+    "@sequencemedia/eslint-config-typescript": "^0.1.137",
+    "@sequencemedia/eslint-merge": "^0.0.47",
     "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^24.3.0",
+    "@types/node": "^24.3.1",
     "@typescript-eslint/parser": "^8.42.0",
     "chai": "^6.0.1",
     "cross-env": "^10.0.0",

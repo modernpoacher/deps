@@ -1,4 +1,8 @@
 /**
+ *  @typedef {import('node:child_process').ExecException} ExecException
+ */
+
+/**
  *  Package or configuration dependencies
  *  @typedef {import('./common/index.mjs').Dependencies} Dependencies
  */
@@ -6,6 +10,13 @@
 /**
  *  Dependency descriptor
  *  @typedef {import('./common/index.mjs').DependencyDescriptor} DependencyDescriptor
+ */
+
+/**
+ *  @callback HandleComplete
+ *  @param {ExecException | null} e
+ *  @param {string} v
+ *  @returns {void}
  */
 
 import stripAnsi from 'strip-ansi'
@@ -304,13 +315,21 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveBundleSaveExactCommands(deps, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('install-save-bundle-save-exact')
 
@@ -341,13 +360,21 @@ export function installSaveBundle (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveBundleCommands(deps, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('install-save-bundle')
 
@@ -378,13 +405,21 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveOptionalSaveExactCommands(deps, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('install-save-otional-save-exact')
 
@@ -415,13 +450,21 @@ export function installSaveOptional (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveOptionalCommands(deps, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('install-save-otional')
 
@@ -452,13 +495,21 @@ export function installSaveDevSaveExact (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveDevSaveExactCommands(deps, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('install-save-dev-save-exact')
 
@@ -489,13 +540,21 @@ export function installSaveDev (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveDevCommands(deps, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('install-save-dev')
 
@@ -526,13 +585,21 @@ export function installSaveProdSaveExact (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveProdSaveExactCommands(deps, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('install-save-prod-save-exact')
 
@@ -563,13 +630,21 @@ export function installSaveProd (d, deps, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveProdCommands(deps, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('install-save-prod')
 

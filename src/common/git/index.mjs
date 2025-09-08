@@ -1,3 +1,14 @@
+/**
+ *  @typedef {import('node:child_process').ExecException} ExecException
+ */
+
+/**
+ *  @callback HandleComplete
+ *  @param {ExecException | null} e
+ *  @param {string} v
+ *  @returns {void}
+ */
+
 import stripAnsi from 'strip-ansi'
 
 import {
@@ -60,11 +71,19 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common/git\` (${VERSION} - ${PLATFORM}) is awake`)
 
+const LF = String.fromCharCode(10)
+
 /**
  *  @param {string} v
  *  @returns {string}
  */
-const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
+const trimEnd = (v) => v.trimEnd()
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+const trim = (v) => v.split(LF).map(trimEnd).join(LF).trim()
 
 /**
  *  @param {string} v
@@ -108,7 +127,7 @@ export function use (key) {
   }
 
   return function use (value) {
-    value.split(String.fromCharCode(10))
+    value.split(LF)
       .filter(filter)
       .forEach(write)
   }
@@ -145,7 +164,7 @@ export function out (key, directory) {
   }
 
   return function out (value) {
-    value.split(String.fromCharCode(10))
+    value.split(LF)
       .filter(filter).filter(filterOut)
       .forEach(write)
   }
@@ -182,7 +201,7 @@ export function err (key, directory) {
   }
 
   return function err (value) {
-    value.split(String.fromCharCode(10))
+    value.split(LF)
       .filter(filter).filter(filterErr)
       .forEach(write)
   }
@@ -238,13 +257,21 @@ export function catGitRefsRemotesOriginHead (d = DIRECTORY) {
     new Promise((resolve, reject) => {
       const commands = CAT_GIT_REFS_REMOTES_ORIGIN_HEAD.trim()
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(trim(v))
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e) ? resolve(trim(v)) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       if (stdout) stdout.on('data', out('cat-git-refs-remotes-origin-head', directory))
       if (stderr) stderr.on('data', err('cat-git-refs-remotes-origin-head', directory))
@@ -268,13 +295,21 @@ export function awkGitRemoteShowOriginHead (d = DIRECTORY) {
     new Promise((resolve, reject) => {
       const commands = 'git remote show origin | awk \'/HEAD branch/ {print $NF}\''
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e = null, v = '') {
+        if (!e) {
+          resolve(trim(v))
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e) ? resolve(trim(v)) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       if (stdout) stdout.on('data', out('git-remote-show-origin-head', directory))
       if (stderr) stderr.on('data', err('git-remote-show-origin-head', directory))
@@ -298,13 +333,21 @@ export function gitRevParseShowTopLevel (d = DIRECTORY) {
     new Promise((resolve, reject) => {
       const commands = 'git rev-parse --show-toplevel'
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(trim(v))
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e) ? resolve(trim(v)) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       if (stdout) stdout.on('data', out('git-rev-parse-show-toplevel', directory))
       if (stderr) stderr.on('data', err('git-rev-parse-show-toplevel', directory))
@@ -328,13 +371,21 @@ export function gitRevParseAbbrevRefHead (d = DIRECTORY) {
     new Promise((resolve, reject) => {
       const commands = 'git rev-parse --abbrev-ref HEAD'
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(trim(v))
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e) ? resolve(trim(v)) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       if (stdout) stdout.on('data', out('git-rev-parse-abbrev-ref-head', directory))
       if (stderr) stderr.on('data', err('git-rev-parse-abbrev-ref-head', directory))
@@ -360,16 +411,21 @@ export function gitCheckout (d = DIRECTORY, branch = BRANCH) {
       const commands = `git checkout ${branch}`
       const options = getOptions(directory)
 
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e || isCommandError(e)) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
+
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e)
-          ? resolve(v)
-          : isCommandError(e)
-            ? resolve(v)
-            : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('git-checkout')
 
@@ -395,17 +451,21 @@ export function gitPull (d = DIRECTORY) {
     new Promise((resolve, reject) => {
       const commands = GIT_PULL.trim()
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e || isCommandError(e)) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e)
-          ? resolve(v)
-          : isCommandError(e)
-            ? resolve(v)
-            : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('git-pull')
 
@@ -431,17 +491,21 @@ export function gitPush (d = DIRECTORY) {
     new Promise((resolve, reject) => {
       const commands = GIT_PUSH.trim()
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e || isCommandError(e)) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e)
-          ? resolve(v)
-          : isCommandError(e)
-            ? resolve(v)
-            : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('git-push')
 
@@ -467,17 +531,21 @@ export function gitPushTags (d = DIRECTORY) {
     new Promise((resolve, reject) => {
       const commands = GIT_PUSH_TAGS.trim()
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e || isCommandError(e)) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e)
-          ? resolve(v)
-          : isCommandError(e)
-            ? resolve(v)
-            : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('git-push-tags')
 
@@ -504,17 +572,21 @@ export function gitAdd (d = DIRECTORY, add = ADD) {
     new Promise((resolve, reject) => {
       const commands = `git add ${add}`
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e || isCommandError(e)) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e)
-          ? resolve(v)
-          : isCommandError(e)
-            ? resolve(v)
-            : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('git-add')
 
@@ -542,17 +614,21 @@ export function gitCommit (d = DIRECTORY, message = MESSAGE, author = AUTHOR) {
     new Promise((resolve, reject) => {
       const commands = `git commit -m "${message}" --author "${author}"`
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e || isCommandError(e)) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e)
-          ? resolve(v)
-          : isCommandError(e)
-            ? resolve(v)
-            : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('git-commit')
 

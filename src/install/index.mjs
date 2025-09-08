@@ -1,7 +1,15 @@
 /**
- *  @typedef {DepsTypes.DependencyDescriptor}  DependencyDescriptor
+ *  @typedef {import('node:child_process').ExecException} ExecException
+ *  @typedef {DepsTypes.DependencyDescriptor} DependencyDescriptor
  *  @typedef {DepsTypes.Package} Package
  *  @typedef {DepsTypes.Configuration} Configuration
+ */
+
+/**
+ *  @callback HandleComplete
+ *  @param {ExecException | null} e
+ *  @param {string} v
+ *  @returns {void}
  */
 
 import {
@@ -108,13 +116,21 @@ export function installSaveExact (d, p, s, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallSaveExactCommands(p, s, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       if (stdout) stdout.on('data', log)
       if (stderr) stderr.on('data', log)
@@ -144,13 +160,21 @@ export function install (d, p, s, r, f) {
     new Promise((resolve, reject) => {
       const commands = getCommands(getInstallCommands(p, s, r, f))
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e, v) => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       if (stdout) stdout.on('data', log)
       if (stderr) stderr.on('data', log)

@@ -30,17 +30,26 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
 
-/**
- *  @param {string} v
- *  @returns {string}
- */
-export const tidy = (v) => v.replace(/\n{2,}}/gm, String.fromCharCode(10)).trim()
+const LF = String.fromCharCode(10)
+const SP = String.fromCharCode(32)
 
 /**
  *  @param {string} v
  *  @returns {string}
  */
-export const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
+export const tidy = (v) => v.replace(/\n{2,}}/gm, LF).trim()
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+export const trimEnd = (v) => v.trimEnd()
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+export const trim = (v) => v.split(LF).map(trimEnd).join(LF).trim()
 
 /**
  *  @function getSaveProdParameter
@@ -394,14 +403,14 @@ export function getDeps (packageDependencies) {
  *  @returns {string}
  */
 export function normalizeCommands (commands) {
-  const s = String.fromCharCode(32)
+  let c = commands
 
-  while (/\s{2,} | \n+/.test(commands)) {
-    commands = commands.replace(/\s{2,}/gm, s).replace(/\n+/gm, s)
+  while (/\s{2,} | \n+/.test(c)) {
+    c = c.replace(/\s{2,}/gm, SP).replace(/\n+/gm, SP)
   }
 
   return (
-    commands.trim()
+    c.trim()
   )
 }
 
@@ -426,7 +435,7 @@ export function transform (value) {
 
   return (
     Array.isArray(value)
-      ? value.map(transformDependency).join(String.fromCharCode(32)).trim()
+      ? value.map(transformDependency).join(SP).trim()
       : transformDependency(value)
   )
 }

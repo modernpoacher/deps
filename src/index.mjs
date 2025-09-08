@@ -140,13 +140,9 @@ export function getInstallCommands (deps, r, f) {
 export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
   log('getInstallSaveBundleSaveExactCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getSaveBundleParameter(getInstallSaveExactCommands(deps, r, f))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -161,13 +157,9 @@ export function getInstallSaveBundleSaveExactCommands (deps, r, f) {
 export function getInstallSaveBundleCommands (deps, r, f) {
   log('getInstallSaveBundleCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getSaveBundleParameter(getInstallCommands(deps, r, f))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -182,13 +174,9 @@ export function getInstallSaveBundleCommands (deps, r, f) {
 export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
   log('getInstallSaveOptionalSaveExactCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getSaveOptionalParameter(getInstallSaveExactCommands(deps, r, f))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -203,13 +191,9 @@ export function getInstallSaveOptionalSaveExactCommands (deps, r, f) {
 export function getInstallSaveOptionalCommands (deps, r, f) {
   log('getInstallSaveOptionalCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getSaveOptionalParameter(getInstallCommands(deps, r, f))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -224,13 +208,9 @@ export function getInstallSaveOptionalCommands (deps, r, f) {
 export function getInstallSaveDevSaveExactCommands (deps, r, f) {
   log('getInstallSaveDevSaveExactCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getSaveDevParameter(getInstallSaveExactCommands(deps, r, f))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -245,13 +225,9 @@ export function getInstallSaveDevSaveExactCommands (deps, r, f) {
 export function getInstallSaveDevCommands (deps, r, f) {
   log('getInstallSaveDevCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getSaveDevParameter(getInstallCommands(deps, r, f))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -266,13 +242,9 @@ export function getInstallSaveDevCommands (deps, r, f) {
 export function getInstallSaveProdSaveExactCommands (deps, r, f) {
   log('getInstallSaveProdSaveExactCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getSaveProdParameter(getInstallSaveExactCommands(deps, r, f))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -287,13 +259,9 @@ export function getInstallSaveProdSaveExactCommands (deps, r, f) {
 export function getInstallSaveProdCommands (deps, r, f) {
   log('getInstallSaveProdCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getSaveProdParameter(getInstallCommands(deps, r, f))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -327,6 +295,8 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
           reject(e)
         }
       }
+
+      info(commands)
 
       const {
         stdout,
@@ -373,6 +343,8 @@ export function installSaveBundle (d, deps, r, f) {
         }
       }
 
+      info(commands)
+
       const {
         stdout,
         stderr
@@ -417,6 +389,8 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
           reject(e)
         }
       }
+
+      info(commands)
 
       const {
         stdout,
@@ -463,6 +437,8 @@ export function installSaveOptional (d, deps, r, f) {
         }
       }
 
+      info(commands)
+
       const {
         stdout,
         stderr
@@ -507,6 +483,8 @@ export function installSaveDevSaveExact (d, deps, r, f) {
           reject(e)
         }
       }
+
+      info(commands)
 
       const {
         stdout,
@@ -553,6 +531,8 @@ export function installSaveDev (d, deps, r, f) {
         }
       }
 
+      info(commands)
+
       const {
         stdout,
         stderr
@@ -598,6 +578,8 @@ export function installSaveProdSaveExact (d, deps, r, f) {
         }
       }
 
+      info(commands)
+
       const {
         stdout,
         stderr
@@ -642,6 +624,8 @@ export function installSaveProd (d, deps, r, f) {
           reject(e)
         }
       }
+
+      info(commands)
 
       const {
         stdout,

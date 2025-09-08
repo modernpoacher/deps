@@ -63,13 +63,9 @@ log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
 export function getInstallSaveExactCommands (p, s, r, f) {
   log('getInstallSaveExactCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(`npm i ${transform(p)}`))))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -85,13 +81,9 @@ export function getInstallSaveExactCommands (p, s, r, f) {
 export function getInstallCommands (p, s, r, f) {
   log('getInstallCommands')
 
-  const commands = normalizeCommands(
+  return normalizeCommands(
     getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, `npm i ${transform(p)}`)))
   )
-
-  info(commands)
-
-  return commands
 }
 
 /**
@@ -126,6 +118,8 @@ export function installSaveExact (d, p, s, r, f) {
           reject(e)
         }
       }
+
+      info(commands)
 
       const {
         stdout,
@@ -170,6 +164,8 @@ export function install (d, p, s, r, f) {
           reject(e)
         }
       }
+
+      info(commands)
 
       const {
         stdout,

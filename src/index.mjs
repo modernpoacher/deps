@@ -62,6 +62,8 @@ const info = debug('@modernpoacher/deps:info')
 
 log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
+const LF = String.fromCharCode(10)
+
 /**
  *  @param {string} v
  *  @returns {boolean}
@@ -86,7 +88,7 @@ export function use (key) {
   }
 
   return function use (value) {
-    value.split(String.fromCharCode(10))
+    value.split(LF)
       .filter(filter)
       .forEach(write)
   }

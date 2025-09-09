@@ -211,14 +211,14 @@ export function handleComplete (e) {
 }
 
 /**
- *  @param {{ code?: number, message?: string }} [e]
+ *  @param {{ code?: number, message?: string }} e
  */
-const handlePackageError = ({ message = MESSAGE } = {}) => { info(`Package error: "${message}"`) }
+const handlePackageError = ({ message = MESSAGE }) => { info(`Package error: "${message}"`) }
 
 /**
- *  @param {{ code?: number, message?: string }} [e]
+ *  @param {{ code?: number, message?: string }} e
  */
-const handleConfigurationError = ({ message = MESSAGE } = {}) => { info(`Configuration error: "${message}"`) }
+const handleConfigurationError = ({ message = MESSAGE }) => { info(`Configuration error: "${message}"`) }
 
 const getPackageJsonPath = (directory = DIRECTORY) => resolve(join(directory, 'package.json'))
 
@@ -402,7 +402,7 @@ function rmrf (d = DIRECTORY) {
         }
       }
 
-      info(commands)
+      info(commands, options)
 
       const {
         stdout,
@@ -443,7 +443,7 @@ function npmi (d = DIRECTORY, registry = REGISTRY, force = false) {
         }
       }
 
-      info(commands)
+      info(commands, options)
 
       const {
         stdout,
@@ -484,7 +484,7 @@ function deps (d = DIRECTORY, registry = REGISTRY, force = false) {
         }
       }
 
-      info(commands)
+      info(commands, options)
 
       const {
         stdout,

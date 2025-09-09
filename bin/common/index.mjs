@@ -1,8 +1,19 @@
 #!/usr/bin/env node
 
 /**
+ *  @typedef {import('node:child_process').ExecException} ExecException
+ */
+
+/**
  *  @typedef {DepsTypes.Package} Package
  *  @typedef {DepsTypes.Configuration} Configuration
+ */
+
+/**
+ *  @callback HandleComplete
+ *  @param {ExecException | null} e
+ *  @param {string} v
+ *  @returns {void}
  */
 
 import stripAnsi from 'strip-ansi'
@@ -65,17 +76,26 @@ const CODE = 0
 
 const MESSAGE = 'Either no error message has been defined or no error has been supplied'
 
-/**
- *  @param {string} v
- *  @returns {string}
- */
-export const tidy = (v) => v.replace(/\n{2,}}/gm, String.fromCharCode(10)).trim()
+const LF = String.fromCodePoint(10)
+const SP = String.fromCodePoint(32)
 
 /**
  *  @param {string} v
  *  @returns {string}
  */
-export const trim = (v) => v.split(String.fromCharCode(10)).map((v) => v.trimEnd()).join(String.fromCharCode(10)).trim()
+export const trimEnd = (v) => v.trimEnd()
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+export const tidy = (v) => v.replace(/\n{2,}}/gm, LF).trim()
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+export const trim = (v) => v.split(LF).map(trimEnd).join(LF).trim()
 
 const getRmrfCommands = PLATFORM === 'win32'
   ? () => tidy(`
@@ -128,8 +148,8 @@ function toSingle (v) {
 }
 
 export const ARGS = PLATFORM === 'win32'
-  ? ARGV.map(toDouble).join(String.fromCodePoint(32))
-  : ARGV.map(toSingle).join(String.fromCodePoint(32))
+  ? ARGV.map(toDouble).join(SP)
+  : ARGV.map(toSingle).join(SP)
 
 /**
  *  @param {string} v
@@ -159,7 +179,7 @@ export function use (key) {
    *  @returns {void}
    */
   return function use (value) {
-    value.split(String.fromCharCode(10))
+    value.split(LF)
       .filter(filter)
       .forEach(write)
   }
@@ -182,10 +202,10 @@ export function handleError (e = {}) {
 }
 
 /**
- *  @param {Error | null} [e]
+ *  @param {Error | null} e
  *  @returns {void}
  */
-export function handleComplete (e = null) {
+export function handleComplete (e) {
   if (!e) return log('👍')
   error('👎')
 }
@@ -371,13 +391,23 @@ function rmrf (d = DIRECTORY) {
     new Promise((resolve, reject) => {
       const commands = getRmrfCommands()
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
+
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('rmrf')
 
@@ -402,13 +432,23 @@ function npmi (d = DIRECTORY, registry = REGISTRY, force = false) {
     new Promise((resolve, reject) => {
       const commands = getNpmiCommands(registry, force)
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
+
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('npmi')
 
@@ -433,13 +473,23 @@ function deps (d = DIRECTORY, registry = REGISTRY, force = false) {
     new Promise((resolve, reject) => {
       const commands = getDepsCommands(registry, force)
       const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(v)
+        } else {
+          reject(e)
+        }
+      }
+
+      info(commands)
 
       const {
         stdout,
         stderr
-      } = exec(commands, options, (e = null, v = '') => {
-        return (!e) ? resolve(v) : reject(e)
-      })
+      } = exec(commands, options, handleComplete)
 
       const log = use('deps')
 

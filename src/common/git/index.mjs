@@ -71,7 +71,7 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common/git\` (${VERSION} - ${PLATFORM}) is awake`)
 
-const LF = String.fromCharCode(10)
+const LF = String.fromCodePoint(10)
 
 /**
  *  @param {string} v

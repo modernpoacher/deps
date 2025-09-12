@@ -1,6 +1,15 @@
 #!/usr/bin/env node
 
 import {
+  stdout,
+  stderr
+} from 'node:process'
+
+import {
+  createWriteStream
+} from 'node:fs'
+
+import {
   resolve,
   dirname
 } from 'node:path'
@@ -13,11 +22,15 @@ import {
   Command
 } from 'commander'
 
+import write from '@sequencemedia/write'
+
 import debug from '#deps/src/common/debug'
 
 import {
   VERSION,
-  PLATFORM
+  PLATFORM,
+  OUT,
+  ERR
 } from '#deps/src/common/env'
 
 import {
@@ -508,6 +521,9 @@ async function executePath (directory, registry, force, message, author) {
     }
   }
 }
+
+if (OUT) stdout.write = write(stdout, createWriteStream(OUT))
+if (ERR) stderr.write = write(stderr, createWriteStream(ERR))
 
 /**
  *  @function app

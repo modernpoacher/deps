@@ -101,12 +101,10 @@ export const trim = (v) => v.split(LF).map(trimEnd).join(LF).trim()
 
 const getRmrfCommands = PLATFORM === 'win32'
   ? () => tidy(`
-rmdir /s /q node_modules 2> nul & \
-del package-lock.json 2> nul
+rmdir /s /q node_modules 2> nul & del package-lock.json 2> nul
 `)
   : () => tidy(`
-rm -rf node_modules \
-  package-lock.json
+rm -rf node_modules package-lock.json
 `)
 
 const getNpmiCommands = PLATFORM === 'win32'
@@ -404,7 +402,7 @@ function rmrf (d = DIRECTORY) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -445,7 +443,7 @@ function npmi (d = DIRECTORY, registry = REGISTRY, force = false) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -486,7 +484,7 @@ function deps (d = DIRECTORY, registry = REGISTRY, force = false) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,

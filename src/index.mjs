@@ -296,7 +296,7 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -343,7 +343,7 @@ export function installSaveBundle (d, deps, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -390,7 +390,7 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -437,7 +437,7 @@ export function installSaveOptional (d, deps, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -484,7 +484,7 @@ export function installSaveDevSaveExact (d, deps, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -531,7 +531,7 @@ export function installSaveDev (d, deps, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -578,7 +578,7 @@ export function installSaveProdSaveExact (d, deps, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -625,7 +625,7 @@ export function installSaveProd (d, deps, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,

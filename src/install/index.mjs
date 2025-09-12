@@ -119,7 +119,7 @@ export function installSaveExact (d, p, s, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,
@@ -165,7 +165,7 @@ export function install (d, p, s, r, f) {
         }
       }
 
-      info(commands, options)
+      info(commands) // , options)
 
       const {
         stdout,

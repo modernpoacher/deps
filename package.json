@@ -54,7 +54,7 @@
     "deps-wipe": "bin/deps/wipe.sh"
   },
   "dependencies": {
-    "@sequencemedia/write": "^0.2.1",
+    "@sequencemedia/write": "^0.2.2",
     "commander": "^14.0.1",
     "debug": "^4.4.1",
     "glob": "^11.0.3",

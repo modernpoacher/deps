@@ -1,27 +1,17 @@
 #!/usr/bin/env node
 
 import {
-  stdout,
-  stderr
-} from 'node:process'
-
-import {
-  createWriteStream
-} from 'node:fs'
-
-import {
   Command
 } from 'commander'
 
-import write from '@sequencemedia/write'
+import '#deps/src/common/write'
 
 import debug from '#deps/src/common/debug'
 
 import {
   VERSION,
-  PLATFORM,
-  OUT,
-  ERR
+  PLATFORM
+
 } from '#deps/src/common/env'
 
 import {
@@ -47,9 +37,6 @@ import {
 const log = debug('@modernpoacher/deps')
 
 log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
-
-if (OUT) stdout.write = write(stdout, createWriteStream(OUT))
-if (ERR) stderr.write = write(stderr, createWriteStream(ERR))
 
 /**
  *  @function app

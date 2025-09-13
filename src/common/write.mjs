@@ -11,10 +11,11 @@ import write from '@sequencemedia/write'
 
 const {
   env: {
-    STDOUT,
-    STDERR
+    WRITE
   }
 } = process
 
-if (STDOUT) stdout.write = write(stdout, createWriteStream(STDOUT))
-if (STDERR) stderr.write = write(stderr, createWriteStream(STDERR))
+if (WRITE) {
+  stdout.write = write(stdout, createWriteStream(WRITE))
+  stderr.write = write(stderr, createWriteStream(WRITE))
+}

@@ -23,9 +23,7 @@ const PLATFORM = platform()
 
 const {
   env: {
-    HOME,
-    OUT,
-    ERR
+    HOME
   }
 } = process
 
@@ -42,7 +40,5 @@ export {
   VERSION,
   PLATFORM,
   HOME,
-  BIN,
-  OUT,
-  ERR
+  BIN
 }

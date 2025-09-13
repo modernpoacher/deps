@@ -46,9 +46,7 @@ import debug from '#deps/src/common/debug'
 import {
   VERSION,
   PLATFORM,
-  BIN,
-  OUT,
-  ERR
+  BIN
 } from '#deps/src/common/env'
 
 import {
@@ -504,8 +502,6 @@ export {
   REGISTRY,
   AUTHOR,
   NVM,
-  OUT,
-  ERR,
   handlePackageError,
   handleConfigurationError,
   getPackageJsonPath,

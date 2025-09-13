@@ -87,6 +87,7 @@
     "#deps/src/common": "./src/common/index.mjs",
     "#deps/src/common/*": "./src/common/*/index.mjs",
     "#deps/src/common/debug": "./src/common/debug.mjs",
+    "#deps/src/common/write": "./src/common/write.mjs",
     "#deps/src/install": "./src/install/index.mjs",
     "#deps/test/*": "./test/*.mjs",
     "#where-am-i": "./where-am-i.mjs"

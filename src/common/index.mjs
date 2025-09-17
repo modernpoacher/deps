@@ -168,7 +168,7 @@ export const getCommands = PLATFORM === 'win32'
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
+export const getProdDependencies = ({ dependencies = {} }) => dependencies
 
 /**
  *  @function getDevDependencies
@@ -177,7 +177,7 @@ export const getProdDependencies = ({ dependencies = {} } = {}) => dependencies
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependencies
+export const getDevDependencies = ({ devDependencies = {} }) => devDependencies
 
 /**
  *  @function getOptionalDependencies
@@ -186,7 +186,7 @@ export const getDevDependencies = ({ devDependencies = {} } = {}) => devDependen
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getOptionalDependencies = ({ optionalDependencies = {} } = {}) => optionalDependencies
+export const getOptionalDependencies = ({ optionalDependencies = {} }) => optionalDependencies
 
 /**
  *  @function getBundleDependencies
@@ -195,7 +195,7 @@ export const getOptionalDependencies = ({ optionalDependencies = {} } = {}) => o
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getBundleDependencies = ({ bundleDependencies = {} } = {}) => bundleDependencies
+export const getBundleDependencies = ({ bundleDependencies = {} }) => bundleDependencies
 
 /**
  *  @function getPeerDependencies
@@ -204,7 +204,7 @@ export const getBundleDependencies = ({ bundleDependencies = {} } = {}) => bundl
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getPeerDependencies = ({ peerDependencies = {} } = {}) => peerDependencies
+export const getPeerDependencies = ({ peerDependencies = {} }) => peerDependencies
 
 /**
  *  @function getIgnore
@@ -213,7 +213,7 @@ export const getPeerDependencies = ({ peerDependencies = {} } = {}) => peerDepen
  *  @param {Configuration} deps
  *  @returns {boolean}
  */
-export const getIgnore = ({ ignore = false } = {}) => ignore === true
+export const getIgnore = ({ ignore = false }) => ignore === true
 
 /**
  *  @function getAuthor
@@ -222,7 +222,7 @@ export const getIgnore = ({ ignore = false } = {}) => ignore === true
  *  @param {Package | Configuration} deps
  *  @returns {string | null}
  */
-export const getAuthor = ({ author = '' } = {}) => {
+export const getAuthor = ({ author = '' }) => {
   if (typeof author === 'string') return author
   if (typeof (author || false) === 'object') {
     const {
@@ -250,7 +250,7 @@ export const getAuthor = ({ author = '' } = {}) => {
  *  @param {Configuration} deps
  *  @returns {string | null}
  */
-export const getMessage = ({ message = '' } = {}) => message || null
+export const getMessage = ({ message = '' }) => message || null
 
 /**
  *  @function isPreRelease
@@ -271,7 +271,10 @@ export const isPreRelease = (v) => /-/.test(v)
 export const isExact = (v) => /^\d/.test(v)
 
 /**
- *  @param {[name: string, version: string]} entry
+ *  @param {[
+ *    name: string,
+ *    version: string
+ *  ]} entry
  *  @returns {boolean}
  */
 function includeVersionIsExact ([name, version]) {
@@ -279,7 +282,10 @@ function includeVersionIsExact ([name, version]) {
 }
 
 /**
- *  @param {[name: string, version: string]} entry
+ *  @param {[
+ *    name: string,
+ *    version: string
+ *  ]} entry
  *  @returns {boolean}
  */
 function excludeVersionIsExact ([name, version]) {
@@ -297,14 +303,20 @@ function excludeVersionIsExact ([name, version]) {
  *  Each entry is mapped to the same package name in `configurationDependencies` if it
  *  appears there. Otherwise, the `packageDependencies` version is used
  *  @param {Record<string, string>} configurationDependencies
- *  @returns {(entry: [name: string, version: string]) => {
+ *  @returns {(entry: [
+ *    name: string,
+ *    version: string
+ *  ]) => {
  *    name: string,
  *    version: string
  *  }}
  */
 function getMapToDepsExactVersionFromConfiguration (configurationDependencies) {
   /**
-   *  @param {[name: string, version: string]} entry
+   *  @param {[
+   *    name: string,
+   *    version: string
+   *  ]} entry
    *  @returns {{
    *    name: string,
    *    version: string
@@ -335,7 +347,10 @@ function getMapToDepsExactVersionFromConfiguration (configurationDependencies) {
  *
  *  Where the version is a pre-release, that version is used. Otherwise the version is
  *  set to `latest` to ensure that package is updated
- *  @param {[name: string, version: string]} entry
+ *  @param {[
+ *    name: string,
+ *    version: string
+ *  ]} entry
  *  @returns {{
  *    name: string,
  *    version: string
@@ -421,7 +436,7 @@ export function normalizeCommands (commands) {
  *  @param {DependencyDescriptor | { name?: string, version?: string }} dependencyDescriptor
  *  @returns {string}
  */
-export const transformDependency = ({ name = '@modernpoacher/deps', version = 'latest' } = {}) => `${name}@${version}`
+export const transformDependency = ({ name = '@modernpoacher/deps', version = 'latest' }) => `${name}@${version}`
 
 /**
  *  @function transform

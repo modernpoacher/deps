@@ -12,9 +12,9 @@
     "."
   ],
   "exclude": [
-    "test",
     ".circleci",
     ".github",
     ".husky",
+    "test"
   ]
 }

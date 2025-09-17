@@ -214,7 +214,7 @@ export function err (key, directory) {
  *  @param {{code?: number, message?: string}} e
  *  @returns {number}
  */
-const getErrorCode = ({ code = 0 } = {}) => code
+const getErrorCode = ({ code = 0 }) => code
 
 /**
  *  @function getErrorMessage
@@ -223,7 +223,7 @@ const getErrorCode = ({ code = 0 } = {}) => code
  *  @param {{code?: number, message?: string}} e
  *  @returns {string}
  */
-const getErrorMessage = ({ message = '' } = {}) => message
+const getErrorMessage = ({ message = '' }) => message
 
 /**
  *  @function isCommandError

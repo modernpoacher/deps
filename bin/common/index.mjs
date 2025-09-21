@@ -83,19 +83,25 @@ const SP = String.fromCodePoint(32)
  *  @param {string} v
  *  @returns {string}
  */
-export const trimEnd = (v) => v.trimEnd()
+export function trimEnd (v) {
+  return v.trimEnd()
+}
 
 /**
  *  @param {string} v
  *  @returns {string}
  */
-export const tidy = (v) => v.replace(/\n{2,}}/gm, LF).trim()
+export function tidy (v) {
+  return v.replace(/\n{2,}}/gm, LF).trim()
+}
 
 /**
  *  @param {string} v
  *  @returns {string}
  */
-export const trim = (v) => v.split(LF).map(trimEnd).join(LF).trim()
+export function trim (v) {
+  return v.split(LF).map(trimEnd).join(LF).trim()
+}
 
 const getRmrfCommands = PLATFORM === 'win32'
   ? () => tidy(`
@@ -211,18 +217,40 @@ export function handleComplete (e) {
 /**
  *  @param {{ code?: number, message?: string }} e
  */
-const handlePackageError = ({ message = MESSAGE }) => { info(`Package error: "${message}"`) }
+function handlePackageError ({ message = MESSAGE }) {
+  info(`Package error: "${message}"`)
+}
 
 /**
  *  @param {{ code?: number, message?: string }} e
  */
-const handleConfigurationError = ({ message = MESSAGE }) => { info(`Configuration error: "${message}"`) }
+function handleConfigurationError ({ message = MESSAGE }) {
+  info(`Configuration error: "${message}"`)
+}
 
-const getPackageJsonPath = (directory = DIRECTORY) => resolve(join(directory, 'package.json'))
+/**
+ *
+ * @param directory
+ */
+function getPackageJsonPath (directory = DIRECTORY) {
+  return resolve(join(directory, 'package.json'))
+}
 
-const getDepsRcPath = (directory = DIRECTORY) => resolve(join(directory, '.depsrc'))
+/**
+ *
+ * @param directory
+ */
+function getDepsRcPath (directory = DIRECTORY) {
+  return resolve(join(directory, '.depsrc'))
+}
 
-const getDepsRcJsonPath = (directory = DIRECTORY) => resolve(join(directory, '.depsrc.json'))
+/**
+ *
+ * @param directory
+ */
+function getDepsRcJsonPath (directory = DIRECTORY) {
+  return resolve(join(directory, '.depsrc.json'))
+}
 
 /**
  *  @param {string} directory

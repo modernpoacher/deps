@@ -37,19 +37,25 @@ const SP = String.fromCodePoint(32)
  *  @param {string} v
  *  @returns {string}
  */
-export const tidy = (v) => v.replace(/\n{2,}}/gm, LF).trim()
+export function tidy (v) {
+  return v.replace(/\n{2,}}/gm, LF).trim()
+}
 
 /**
  *  @param {string} v
  *  @returns {string}
  */
-export const trimEnd = (v) => v.trimEnd()
+export function trimEnd (v) {
+  return v.trimEnd()
+}
 
 /**
  *  @param {string} v
  *  @returns {string}
  */
-export const trim = (v) => v.split(LF).map(trimEnd).join(LF).trim()
+export function trim (v) {
+  return v.split(LF).map(trimEnd).join(LF).trim()
+}
 
 /**
  *  @function getSaveProdParameter
@@ -58,7 +64,9 @@ export const trim = (v) => v.split(LF).map(trimEnd).join(LF).trim()
  *  @param {string} commands commands string
  *  @returns {string}
  */
-export const getSaveProdParameter = (commands) => commands.concat(' --save-prod')
+export function getSaveProdParameter (commands) {
+  return commands.concat(' --save-prod')
+}
 
 /**
  *  @function getSaveDevParameter
@@ -67,7 +75,9 @@ export const getSaveProdParameter = (commands) => commands.concat(' --save-prod'
  *  @param {string} commands commands string
  *  @returns {string}
  */
-export const getSaveDevParameter = (commands) => commands.concat(' --save-dev')
+export function getSaveDevParameter (commands) {
+  return commands.concat(' --save-dev')
+}
 
 /**
  *  @function getSaveBundleParameter
@@ -76,7 +86,9 @@ export const getSaveDevParameter = (commands) => commands.concat(' --save-dev')
  *  @param {string} commands - Current commands string
  *  @returns {string}
  */
-export const getSaveBundleParameter = (commands) => commands.concat(' --save-bundle')
+export function getSaveBundleParameter (commands) {
+  return commands.concat(' --save-bundle')
+}
 
 /**
  *  @function getSaveOptionalParameter
@@ -85,7 +97,9 @@ export const getSaveBundleParameter = (commands) => commands.concat(' --save-bun
  *  @param {string} commands - Current commands string
  *  @returns {string}
  */
-export const getSaveOptionalParameter = (commands) => commands.concat(' --save-optional')
+export function getSaveOptionalParameter (commands) {
+  return commands.concat(' --save-optional')
+}
 
 /**
  *  @function getRegistryParameter
@@ -95,7 +109,9 @@ export const getSaveOptionalParameter = (commands) => commands.concat(' --save-o
  *  @param {string} commands - Current commands string
  *  @returns {string}
  */
-export const getRegistryParameter = (r, commands) => r ? commands.concat(` --registry ${r}`) : commands
+export function getRegistryParameter (r, commands) {
+  return r ? commands.concat(` --registry ${r}`) : commands
+}
 
 /**
  *  @function getForceParameter
@@ -105,7 +121,9 @@ export const getRegistryParameter = (r, commands) => r ? commands.concat(` --reg
  *  @param {string} commands - Current commands string
  *  @returns {string}
  */
-export const getForceParameter = (f, commands) => f ? commands.concat(' --force') : commands
+export function getForceParameter (f, commands) {
+  return f ? commands.concat(' --force') : commands
+}
 
 /**
  *  @function getNoSaveParameter
@@ -115,7 +133,9 @@ export const getForceParameter = (f, commands) => f ? commands.concat(' --force'
  *  @param {string} commands - Current commands string
  *  @returns {string}
  */
-export const getNoSaveParameter = (s, commands) => s ? commands : commands.concat(' --no-save')
+export function getNoSaveParameter (s, commands) {
+  return s ? commands : commands.concat(' --no-save')
+}
 
 /**
  *  @function getSaveExactParameter
@@ -124,7 +144,9 @@ export const getNoSaveParameter = (s, commands) => s ? commands : commands.conca
  *  @param {string} commands - Current commands string
  *  @returns {string}
  */
-export const getSaveExactParameter = (commands) => commands.concat(' --save-exact')
+export function getSaveExactParameter (commands) {
+  return commands.concat(' --save-exact')
+}
 
 /**
  *  @function getExportPath
@@ -133,10 +155,12 @@ export const getSaveExactParameter = (commands) => commands.concat(' --save-exac
  *  @param {string} commands - Current commands string
  *  @returns {string}
  */
-export const getExportPath = (commands) => `
+export function getExportPath (commands) {
+  return `
 export PATH=/usr/local/bin:$PATH &> /dev/null
 ${commands}
 `
+}
 
 /**
  *  @function getNvm
@@ -145,10 +169,12 @@ ${commands}
  *  @param {string} commands - Current commands string
  *  @returns {string}
  */
-export const getNvm = (commands) => `
+export function getNvm (commands) {
+  return `
 bash "${NVM}" 2> /dev/null
 ${commands}
 `
+}
 
 /**
  *  @function getCommands
@@ -168,7 +194,9 @@ export const getCommands = PLATFORM === 'win32'
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getProdDependencies = ({ dependencies = {} }) => dependencies
+export function getProdDependencies ({ dependencies = {} }) {
+  return dependencies
+}
 
 /**
  *  @function getDevDependencies
@@ -177,7 +205,9 @@ export const getProdDependencies = ({ dependencies = {} }) => dependencies
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getDevDependencies = ({ devDependencies = {} }) => devDependencies
+export function getDevDependencies ({ devDependencies = {} }) {
+  return devDependencies
+}
 
 /**
  *  @function getOptionalDependencies
@@ -186,7 +216,9 @@ export const getDevDependencies = ({ devDependencies = {} }) => devDependencies
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getOptionalDependencies = ({ optionalDependencies = {} }) => optionalDependencies
+export function getOptionalDependencies ({ optionalDependencies = {} }) {
+  return optionalDependencies
+}
 
 /**
  *  @function getBundleDependencies
@@ -195,7 +227,9 @@ export const getOptionalDependencies = ({ optionalDependencies = {} }) => option
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getBundleDependencies = ({ bundleDependencies = {} }) => bundleDependencies
+export function getBundleDependencies ({ bundleDependencies = {} }) {
+  return bundleDependencies
+}
 
 /**
  *  @function getPeerDependencies
@@ -204,7 +238,9 @@ export const getBundleDependencies = ({ bundleDependencies = {} }) => bundleDepe
  *  @param {Package | Configuration} deps
  *  @returns {Dependencies}
  */
-export const getPeerDependencies = ({ peerDependencies = {} }) => peerDependencies
+export function getPeerDependencies ({ peerDependencies = {} }) {
+  return peerDependencies
+}
 
 /**
  *  @function getIgnore
@@ -213,7 +249,9 @@ export const getPeerDependencies = ({ peerDependencies = {} }) => peerDependenci
  *  @param {Configuration} deps
  *  @returns {boolean}
  */
-export const getIgnore = ({ ignore = false }) => ignore === true
+export function getIgnore ({ ignore = false }) {
+  return ignore === true
+}
 
 /**
  *  @function getAuthor
@@ -222,7 +260,7 @@ export const getIgnore = ({ ignore = false }) => ignore === true
  *  @param {Package | Configuration} deps
  *  @returns {string | null}
  */
-export const getAuthor = ({ author = '' }) => {
+export function getAuthor ({ author = '' }) {
   if (typeof author === 'string') return author
   if (typeof (author || false) === 'object') {
     const {
@@ -250,7 +288,9 @@ export const getAuthor = ({ author = '' }) => {
  *  @param {Configuration} deps
  *  @returns {string | null}
  */
-export const getMessage = ({ message = '' }) => message || null
+export function getMessage ({ message = '' }) {
+  return message || null
+}
 
 /**
  *  @function isPreRelease
@@ -259,7 +299,9 @@ export const getMessage = ({ message = '' }) => message || null
  *  @param {string} v
  *  @returns {boolean}
  */
-export const isPreRelease = (v) => /-/.test(v)
+export function isPreRelease (v) {
+  return /-/.test(v)
+}
 
 /**
  *  @function isExact
@@ -268,7 +310,9 @@ export const isPreRelease = (v) => /-/.test(v)
  *  @param {string} v
  *  @returns {boolean}
  */
-export const isExact = (v) => /^\d/.test(v)
+export function isExact (v) {
+  return /^\d/.test(v)
+}
 
 /**
  *  @param {[
@@ -436,7 +480,9 @@ export function normalizeCommands (commands) {
  *  @param {DependencyDescriptor | { name?: string, version?: string }} dependencyDescriptor
  *  @returns {string}
  */
-export const transformDependency = ({ name = '@modernpoacher/deps', version = 'latest' }) => `${name}@${version}`
+export function transformDependency ({ name = '@modernpoacher/deps', version = 'latest' }) {
+  return `${name}@${version}`
+}
 
 /**
  *  @function transform

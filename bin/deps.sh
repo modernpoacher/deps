@@ -9,11 +9,4 @@ source "$BIN/common.sh"
 
 source_home "$BIN"
 
-# echo SSH auth sock is $SSH_AUTH_SOCK
-# echo Home is $HOME
-# echo Path is $PATH
-
-# echo DIR is $DIR
-# echo BIN is $BIN
-
 node "$BIN/deps.mjs" "$@"

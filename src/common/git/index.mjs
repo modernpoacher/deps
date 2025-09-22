@@ -22,6 +22,10 @@ import {
 import debug from '#deps/src/common/debug'
 
 import {
+  use,
+} from '#deps/src/common/format'
+
+import {
   BIN,
   VERSION,
   PLATFORM
@@ -73,17 +77,9 @@ log(`\`common/git\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const LF = String.fromCodePoint(10)
 
-/**
- *  @param {string} v
- *  @returns {string}
- */
-const trimEnd = (v) => v.trimEnd()
-
-/**
- *  @param {string} v
- *  @returns {string}
- */
-const trim = (v) => v.split(LF).map(trimEnd).join(LF).trim()
+export {
+  trim
+}
 
 /**
  *  @param {string} v
@@ -242,6 +238,78 @@ function isCommandError (e) {
   return (
     getErrorCode(e) === 1 &&
     getErrorMessage(e).toLowerCase().startsWith('command failed:')
+  )
+}
+
+/**
+ *  @function gitConfigUserName
+ *  @description
+ *  Get the user email from Git config
+ *  @param {string} d - A directory configured for Git
+ *  @returns {Promise<string>}
+ */
+export function gitConfigUserName (d = DIRECTORY) {
+  const directory = normalize(d.trim())
+
+  return (
+    new Promise((resolve, reject) => {
+      const commands = 'git config user.name'
+      const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(trim(v))
+        } else {
+          reject(e)
+        }
+      }
+
+      const {
+        stdout,
+        stderr
+      } = exec(commands, options, handleComplete)
+
+      if (stdout) stdout.on('data', out('git-config-user-name', directory))
+      if (stderr) stderr.on('data', err('git-config-user-name', directory))
+    })
+  )
+}
+
+/**
+ *  @function gitConfigUserEmail
+ *  @description
+ *  Get the user email from Git config
+ *  @param {string} d - A directory configured for Git
+ *  @returns {Promise<string>}
+ */
+export function gitConfigUserEmail (d = DIRECTORY) {
+  const directory = normalize(d.trim())
+
+  return (
+    new Promise((resolve, reject) => {
+      const commands = 'git config user.email'
+      const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(trim(v))
+        } else {
+          reject(e)
+        }
+      }
+
+      const {
+        stdout,
+        stderr
+      } = exec(commands, options, handleComplete)
+
+      if (stdout) stdout.on('data', out('git-config-user-email', directory))
+      if (stderr) stderr.on('data', err('git-config-user-email', directory))
+    })
   )
 }
 

@@ -7,13 +7,6 @@ source "$BIN/common.sh"
 
 source_home "$BIN"
 
-# echo SSH auth sock is $SSH_AUTH_SOCK
-# echo Home is $HOME
-# echo Path is $PATH
-
-# echo DIR is $DIR
-# echo BIN is $BIN
-
 EXP="[-0-9a-zA-Z]*$"
 
 function has_git {

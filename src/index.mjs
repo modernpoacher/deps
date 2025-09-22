@@ -19,8 +19,6 @@
  *  @returns {void}
  */
 
-import stripAnsi from 'strip-ansi'
-
 import {
   normalize
 } from 'node:path'

@@ -19,8 +19,6 @@
  *  @returns {void}
  */
 
-import stripAnsi from 'strip-ansi'
-
 import {
   normalize
 } from 'node:path'
@@ -30,6 +28,10 @@ import {
 } from 'node:child_process'
 
 import debug from '#deps/src/common/debug'
+
+import {
+  use
+} from '#deps/src/common/format'
 
 import {
   VERSION,
@@ -61,42 +63,6 @@ const log = debug('@modernpoacher/deps')
 const info = debug('@modernpoacher/deps:info')
 
 log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
-
-const LF = String.fromCodePoint(10)
-
-/**
- *  @param {string} v
- *  @returns {boolean}
- */
-function filter (v) {
-  return Boolean(stripAnsi(v).trim())
-}
-
-/**
- *  @param {string} key
- *  @returns {(value: string) => void}
- */
-export function use (key) {
-  const log = debug(`@modernpoacher/deps:${key}`)
-
-  /**
-   *  @param {string} v
-   *  @returns {void}
-   */
-  function write (v) {
-    log(v.trimEnd())
-  }
-
-  /**
-   *  @param {string} value
-   *  @returns {void}
-   */
-  return function use (value) {
-    value.split(LF)
-      .filter(filter)
-      .forEach(write)
-  }
-}
 
 /**
  *  @function getInstallSaveExactCommands

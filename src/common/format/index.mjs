@@ -2,14 +2,14 @@ import debug from 'debug'
 
 import stripAnsi from 'strip-ansi'
 
-const LF = String.fromCodePoint(32)
+const LF = String.fromCodePoint(10)
 
 /**
  *  @param {string} v
  *  @returns {string}
  */
-export function tidy (v) {
-  return v.replace(/\n{2,}}/gm, LF).trim()
+export function trim (v) {
+  return v.split(LF).map(trimEnd).join(LF).trim()
 }
 
 /**
@@ -24,8 +24,8 @@ export function trimEnd (v) {
  *  @param {string} v
  *  @returns {string}
  */
-export function trim (v) {
-  return v.split(LF).map(trimEnd).join(LF).trim()
+export function tidy (v) {
+  return v.replace(/\n{2,}}/gm, LF).trim()
 }
 
 /**

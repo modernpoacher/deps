@@ -22,6 +22,11 @@ import {
 import debug from '#deps/src/common/debug'
 
 import {
+  use,
+  trim
+} from '#deps/src/common/format'
+
+import {
   BIN,
   VERSION,
   PLATFORM
@@ -75,30 +80,6 @@ const LF = String.fromCodePoint(10)
 
 /**
  *  @param {string} v
- *  @returns {string}
- */
-export function trim (v) {
-  return v.split(LF).map(trimEnd).join(LF).trim()
-}
-
-/**
- *  @param {string} v
- *  @returns {string}
- */
-export function trimEnd (v) {
-  return v.trimEnd()
-}
-
-/**
- *  @param {string} v
- *  @returns {string}
- */
-export function tidy (v) {
-  return v.replace(/\n{2,}}/gm, LF).trim()
-}
-
-/**
- *  @param {string} v
  *  @returns {boolean}
  */
 function filter (v) {
@@ -121,32 +102,6 @@ function getIsDirectory (directory) {
  */
 function isFatal (v) {
   return v.toLowerCase().startsWith('fatal: not a git repository')
-}
-
-/**
- *  @param {string} key
- *  @returns {(value: string) => void}
- */
-export function use (key) {
-  const log = debug(`@modernpoacher/deps:${key}`)
-
-  /**
-   *  @param {string} v
-   *  @returns {void}
-   */
-  function write (v) {
-    log(v.trimEnd())
-  }
-
-  /**
-   *  @param {string} value
-   *  @returns {void}
-   */
-  return function use (value) {
-    value.split(LF)
-      .filter(filter)
-      .forEach(write)
-  }
 }
 
 /**

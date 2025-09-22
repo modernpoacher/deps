@@ -25,6 +25,8 @@ import {
 import {
   MESSAGE,
   AUTHOR,
+  gitConfigUserName,
+  gitConfigUserEmail,
   catGitRefsRemotesOriginHead,
   awkGitRemoteShowOriginHead,
   gitRevParseShowTopLevel,
@@ -148,6 +150,26 @@ async function getAuthorFromConfiguration (directory) {
 }
 
 /**
+ *  @function getAuthorFromGit
+ *  @description
+ *  Interrogates Git config for the user name and email
+ *  @param {string} directory
+ *  @returns {Promise<string | null>}
+ */
+async function getAuthorFromGit (directory) {
+  log('getAuthorFromGitConfig')
+
+  const GIT = {
+    name: await gitConfigUserName(directory),
+    email: await gitConfigUserEmail(directory)
+  }
+
+  return (
+    getAuthor(GIT)
+  )
+}
+
+/**
  *  @function getAuthorFromPackage
  *  @description
  *  Interrogates `package.json` for an `author` value
@@ -201,7 +223,7 @@ async function getMessageFromConfiguration (directory) {
  *  @returns {Promise<string | { name: string; email: string }>}
  */
 async function toAuthor (author, directory) {
-  return author || await getAuthorFromConfiguration(directory) || await getAuthorFromPackage(directory) || AUTHOR
+  return author || await getAuthorFromConfiguration(directory) || await getAuthorFromGit(directory) || await getAuthorFromPackage(directory) || AUTHOR
 }
 
 /**
@@ -336,8 +358,10 @@ async function iterate (directory, registry, force, message, author) {
     try {
       if (D === await gitRevParseShowTopLevel(D)) {
         const B = await isHeadDefaultBranch(D)
+
         if (B) {
           const ignore = await getIgnoreFromConfiguration(D)
+
           if (!ignore) {
             await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
           }
@@ -355,6 +379,7 @@ async function iterate (directory, registry, force, message, author) {
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
+ *  @returns {Promise<void>}
  */
 async function iteratePath (directory, registry, force, message, author) {
   log('iteratePath')

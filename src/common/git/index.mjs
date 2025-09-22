@@ -217,6 +217,78 @@ function isCommandError (e) {
 }
 
 /**
+ *  @function gitConfigUserName
+ *  @description
+ *  Get the user email from Git config
+ *  @param {string} d - A directory configured for Git
+ *  @returns {Promise<string>}
+ */
+export function gitConfigUserName (d = DIRECTORY) {
+  const directory = normalize(d.trim())
+
+  return (
+    new Promise((resolve, reject) => {
+      const commands = 'git config user.name'
+      const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(trim(v))
+        } else {
+          reject(e)
+        }
+      }
+
+      const {
+        stdout,
+        stderr
+      } = exec(commands, options, handleComplete)
+
+      if (stdout) stdout.on('data', out('git-config-user-name', directory))
+      if (stderr) stderr.on('data', err('git-config-user-name', directory))
+    })
+  )
+}
+
+/**
+ *  @function gitConfigUserEmail
+ *  @description
+ *  Get the user email from Git config
+ *  @param {string} d - A directory configured for Git
+ *  @returns {Promise<string>}
+ */
+export function gitConfigUserEmail (d = DIRECTORY) {
+  const directory = normalize(d.trim())
+
+  return (
+    new Promise((resolve, reject) => {
+      const commands = 'git config user.email'
+      const options = getOptions(directory)
+      /**
+       *  @type {HandleComplete}
+       */
+      function handleComplete (e, v) {
+        if (!e) {
+          resolve(trim(v))
+        } else {
+          reject(e)
+        }
+      }
+
+      const {
+        stdout,
+        stderr
+      } = exec(commands, options, handleComplete)
+
+      if (stdout) stdout.on('data', out('git-config-user-email', directory))
+      if (stderr) stderr.on('data', err('git-config-user-email', directory))
+    })
+  )
+}
+
+/**
  *  @function catGitRefsRemotesOriginHead
  *  @description
  *  Get the default branch from `.git/refs/remotes/origin/HEAD`

@@ -162,14 +162,14 @@ export function handleComplete (e) {
  *  @param {{ code?: number, message?: string }} e
  */
 function handlePackageError ({ message = MESSAGE }) {
-  info(`Package error: "${message}"`)
+  error(`Package error: "${message}"`)
 }
 
 /**
  *  @param {{ code?: number, message?: string }} e
  */
 function handleConfigurationError ({ message = MESSAGE }) {
-  info(`Configuration error: "${message}"`)
+  error(`Configuration error: "${message}"`)
 }
 
 /**

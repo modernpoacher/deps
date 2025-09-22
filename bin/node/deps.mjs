@@ -6,9 +6,7 @@ import {
 
 import '#deps/src/common/write'
 
-import {
-  use
-} from '#deps/src/common/format'
+import '#deps/src/common/debug'
 
 import {
   getOptions
@@ -17,6 +15,7 @@ import {
 import {
   DEPS,
   ARGS,
+  use,
   handleComplete
 } from '#deps/bin/common'
 

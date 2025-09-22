@@ -30,6 +30,7 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`common\` (${VERSION} - ${PLATFORM}) is awake`)
 
+const LF = String.fromCodePoint(10)
 const SP = String.fromCodePoint(32)
 
 /**

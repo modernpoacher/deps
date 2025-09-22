@@ -16,6 +16,8 @@
  *  @returns {void}
  */
 
+import stripAnsi from 'strip-ansi'
+
 import {
   argv
 } from 'node:process'
@@ -40,10 +42,6 @@ import {
 } from 'node:fs/promises'
 
 import debug from '#deps/src/common/debug'
-
-import {
-  use,
-} from '#deps/src/common/format'
 
 import {
   VERSION,
@@ -78,6 +76,7 @@ const CODE = 0
 
 const MESSAGE = 'Either no error message has been defined or no error has been supplied'
 
+const LF = String.fromCodePoint(10)
 const SP = String.fromCodePoint(32)
 
 /**
@@ -155,6 +154,40 @@ function toSingle (v) {
 export const ARGS = PLATFORM === 'win32'
   ? ARGV.map(toDouble).join(SP)
   : ARGV.map(toSingle).join(SP)
+
+/**
+ *  @param {string} v
+ *  @returns {boolean}
+ */
+function filter (v) {
+  return Boolean(stripAnsi(v).trim())
+}
+
+/**
+ *  @param {string} key
+ *  @returns {(value: string) => void}
+ */
+export function use (key) {
+  const log = debug(`@modernpoacher/deps:${key}`)
+
+  /**
+   *  @param {string} v
+   *  @returns {void}
+   */
+  function write (v) {
+    log(v.trimEnd())
+  }
+
+  /**
+   *  @param {string} value
+   *  @returns {void}
+   */
+  return function use (value) {
+    value.split(LF)
+      .filter(filter)
+      .forEach(write)
+  }
+}
 
 /**
  *  @param {{ code?: number, message?: string }} [e]

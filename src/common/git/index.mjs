@@ -22,10 +22,6 @@ import {
 import debug from '#deps/src/common/debug'
 
 import {
-  use,
-} from '#deps/src/common/format'
-
-import {
   BIN,
   VERSION,
   PLATFORM
@@ -77,8 +73,28 @@ log(`\`common/git\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const LF = String.fromCodePoint(10)
 
-export {
-  trim
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+export function trim (v) {
+  return v.split(LF).map(trimEnd).join(LF).trim()
+}
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+export function trimEnd (v) {
+  return v.trimEnd()
+}
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+export function tidy (v) {
+  return v.replace(/\n{2,}}/gm, LF).trim()
 }
 
 /**

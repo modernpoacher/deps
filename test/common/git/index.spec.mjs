@@ -5,9 +5,12 @@ import {
 import '#deps/test/debug'
 
 import {
+  use
+} from '#deps/src/common/format'
+
+import {
   MESSAGE,
   AUTHOR,
-  use,
   out,
   err,
   catGitRefsRemotesOriginHead,

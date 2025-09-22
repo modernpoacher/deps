@@ -9,13 +9,16 @@ import '#deps/src/common/write'
 import '#deps/src/common/debug'
 
 import {
+  use
+} from '#deps/src/common/format'
+
+import {
   getOptions
 } from '#deps/src/common/options'
 
 import {
   WIPE,
   ARGS,
-  use,
   handleComplete
 } from '#deps/bin/common'
 

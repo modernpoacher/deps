@@ -22,6 +22,11 @@ import {
 import debug from '#deps/src/common/debug'
 
 import {
+  use,
+  trim
+} from '#deps/src/common/format'
+
+import {
   BIN,
   VERSION,
   PLATFORM
@@ -73,17 +78,9 @@ log(`\`common/git\` (${VERSION} - ${PLATFORM}) is awake`)
 
 const LF = String.fromCodePoint(10)
 
-/**
- *  @param {string} v
- *  @returns {string}
- */
-const trimEnd = (v) => v.trimEnd()
-
-/**
- *  @param {string} v
- *  @returns {string}
- */
-const trim = (v) => v.split(LF).map(trimEnd).join(LF).trim()
+export {
+  trim
+}
 
 /**
  *  @param {string} v
@@ -109,28 +106,6 @@ function getIsDirectory (directory) {
  */
 function isFatal (v) {
   return v.toLowerCase().startsWith('fatal: not a git repository')
-}
-
-/**
- *  @param {string} key
- *  @returns {(value: string) => void}
- */
-export function use (key) {
-  const log = debug(`@modernpoacher/deps:${key}`)
-
-  /**
-   *  @param {string} v
-   *  @returns {void}
-   */
-  function write (v) {
-    log(v.trimEnd())
-  }
-
-  return function use (value) {
-    value.split(LF)
-      .filter(filter)
-      .forEach(write)
-  }
 }
 
 /**

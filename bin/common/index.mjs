@@ -83,6 +83,14 @@ const SP = String.fromCodePoint(32)
  *  @param {string} v
  *  @returns {string}
  */
+export function trim (v) {
+  return v.split(LF).map(trimEnd).join(LF).trim()
+}
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
 export function trimEnd (v) {
   return v.trimEnd()
 }
@@ -93,14 +101,6 @@ export function trimEnd (v) {
  */
 export function tidy (v) {
   return v.replace(/\n{2,}}/gm, LF).trim()
-}
-
-/**
- *  @param {string} v
- *  @returns {string}
- */
-export function trim (v) {
-  return v.split(LF).map(trimEnd).join(LF).trim()
 }
 
 const getRmrfCommands = PLATFORM === 'win32'

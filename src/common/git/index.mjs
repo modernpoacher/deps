@@ -126,6 +126,10 @@ export function use (key) {
     log(v.trimEnd())
   }
 
+  /**
+   *  @param {string} value
+   *  @returns {void}
+   */
   return function use (value) {
     value.split(LF)
       .filter(filter)

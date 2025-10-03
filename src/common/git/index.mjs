@@ -23,6 +23,7 @@ import debug from '#deps/src/common/debug'
 
 import {
   BIN,
+  NAME,
   VERSION,
   PLATFORM
 } from '#deps/src/common/env'
@@ -74,7 +75,7 @@ git push --tags
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`common/git\` (${VERSION} - ${PLATFORM}) is awake`)
+log(`\`common/git\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
 
 const LF = String.fromCodePoint(10)
 

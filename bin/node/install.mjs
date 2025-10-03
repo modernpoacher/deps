@@ -9,9 +9,9 @@ import '#deps/src/common/write'
 import debug from '#deps/src/common/debug'
 
 import {
+  NAME,
   VERSION,
   PLATFORM
-
 } from '#deps/src/common/env'
 
 import {
@@ -36,7 +36,7 @@ import {
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`install\` (${VERSION} - ${PLATFORM}) is awake`)
+log(`\`install\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
 
 /**
  *  @function app

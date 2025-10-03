@@ -18,6 +18,7 @@ import '#deps/src/common/write'
 import debug from '#deps/src/common/debug'
 
 import {
+  NAME,
   VERSION,
   PLATFORM
 } from '#deps/src/common/env'
@@ -64,7 +65,7 @@ import {
 const log = debug('@modernpoacher/deps')
 const info = debug('@modernpoacher/deps:info')
 
-log(`\`execute\` (${VERSION} - ${PLATFORM}) is awake`)
+log(`\`execute\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
 
 const {
   table

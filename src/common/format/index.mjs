@@ -1,16 +1,17 @@
 import debug from 'debug'
 
-import {
-  homedir
-} from 'node:os'
-
 import stripAnsi from 'strip-ansi'
 
 import {
-  PLATFORM
+  NAME,
+  VERSION,
+  PLATFORM,
+  HOMEDIR
 } from '#deps/src/common/env'
 
-const HOMEDIR = homedir()
+const log = debug('@modernpoacher/deps')
+
+log(`\`common/format\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
 
 /**
  *  @function toHomeDir

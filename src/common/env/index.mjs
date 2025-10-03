@@ -7,7 +7,8 @@ import {
 } from 'node:fs'
 
 import {
-  platform
+  platform,
+  homedir
 } from 'node:os'
 
 import PATH from '#where-am-i'
@@ -20,6 +21,8 @@ const {
 } = JSON.parse(readFileSync(join(PATH, 'package.json')).toString('utf8'))
 
 const PLATFORM = platform()
+
+const HOMEDIR = homedir()
 
 const {
   env: {
@@ -39,6 +42,7 @@ export {
   NAME,
   VERSION,
   PLATFORM,
+  HOMEDIR,
   HOME,
   BIN
 }

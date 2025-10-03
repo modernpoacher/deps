@@ -42,15 +42,16 @@ import {
 import debug from '#deps/src/common/debug'
 
 import {
-  use,
-  tidy
-} from '#deps/src/common/format'
-
-import {
   VERSION,
   PLATFORM,
   BIN
 } from '#deps/src/common/env'
+
+import {
+  toHomeDir,
+  use,
+  tidy
+} from '#deps/src/common/format'
 
 import {
   getOptions
@@ -239,7 +240,7 @@ async function getDepsRcJson (directory = DIRECTORY) {
 async function hasPackage (directory = DIRECTORY) {
   log('hasPackage')
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   try {
     await access(getPackageJsonPath(directory), constants.R_OK)
@@ -259,7 +260,7 @@ async function hasPackage (directory = DIRECTORY) {
 async function getPackage (directory = DIRECTORY) {
   log('getPackage')
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   try {
     return await getPackageJson(directory)
@@ -276,7 +277,7 @@ async function getPackage (directory = DIRECTORY) {
 async function hasConfiguration (directory = DIRECTORY) {
   log('hasConfiguration')
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   try {
     await access(getDepsRcPath(directory), constants.R_OK)
@@ -319,7 +320,7 @@ async function hasConfiguration (directory = DIRECTORY) {
 async function getConfiguration (directory = DIRECTORY) {
   log('getConfiguration')
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   try {
     return await getDepsRc(directory)

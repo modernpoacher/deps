@@ -30,13 +30,14 @@ import {
 import debug from '#deps/src/common/debug'
 
 import {
-  use
-} from '#deps/src/common/format'
-
-import {
   VERSION,
   PLATFORM
 } from '#deps/src/common/env'
+
+import {
+  toHomeDir,
+  use
+} from '#deps/src/common/format'
 
 import {
   getOptions
@@ -249,7 +250,7 @@ export function installSaveBundleSaveExact (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -296,7 +297,7 @@ export function installSaveBundle (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -343,7 +344,7 @@ export function installSaveOptionalSaveExact (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -390,7 +391,7 @@ export function installSaveOptional (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -437,7 +438,7 @@ export function installSaveDevSaveExact (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -484,7 +485,7 @@ export function installSaveDev (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -531,7 +532,7 @@ export function installSaveProdSaveExact (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -578,7 +579,7 @@ export function installSaveProd (d, deps, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {

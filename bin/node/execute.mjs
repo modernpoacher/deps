@@ -23,6 +23,10 @@ import {
 } from '#deps/src/common/env'
 
 import {
+  toHomeDir
+} from '#deps/src/common/format'
+
+import {
   MESSAGE,
   AUTHOR,
   gitConfigUserName,
@@ -411,7 +415,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
   log('execute')
 
   try {
-    info(`Directory is "${directory}"`)
+    info(`Directory is "${toHomeDir(directory)}"`)
     info(`Registry is "${registry}"`)
     info(`Force is "${force}"`)
     info(`Message is "${message}"`)

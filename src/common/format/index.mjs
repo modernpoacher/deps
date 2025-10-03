@@ -1,6 +1,24 @@
 import debug from 'debug'
 
+import {
+  homedir
+} from 'node:os'
+
 import stripAnsi from 'strip-ansi'
+
+import {
+  PLATFORM
+} from '#deps/src/common/env'
+
+const HOMEDIR = homedir()
+
+/**
+ *  @function toHomeDir
+ *  @type {(directory: string) => string}
+ */
+export const toHomeDir = PLATFORM === 'win32'
+  ? (directory) => directory
+  : (directory) => directory.includes(HOMEDIR) ? directory.replace(HOMEDIR, '~/') : directory
 
 const LF = String.fromCodePoint(10)
 

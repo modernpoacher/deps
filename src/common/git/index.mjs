@@ -22,15 +22,15 @@ import {
 import debug from '#deps/src/common/debug'
 
 import {
-  use,
-  trim
-} from '#deps/src/common/format'
-
-import {
   BIN,
   VERSION,
   PLATFORM
 } from '#deps/src/common/env'
+
+import {
+  use,
+  trim
+} from '#deps/src/common/format'
 
 import {
   getOptions

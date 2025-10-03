@@ -28,6 +28,10 @@ import {
 } from '#deps/src/common/env'
 
 import {
+  toHomeDir
+} from '#deps/src/common/format'
+
+import {
   getOptions
 } from '#deps/src/common/options'
 
@@ -102,7 +106,7 @@ export function installSaveExact (d, p, s, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -148,7 +152,7 @@ export function install (d, p, s, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${directory}"`)
+  info(`Directory is "${toHomeDir(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {

@@ -66,6 +66,10 @@ const info = debug('@modernpoacher/deps:info')
 
 log(`\`execute\` (${VERSION} - ${PLATFORM}) is awake`)
 
+const {
+  table
+} = console
+
 /**
  *  @param {{ code?: number, message?: string }} [e]
  */
@@ -592,7 +596,7 @@ async function app () {
     author
   } = commander.opts()
 
-  log({
+  table({
     ...(P ? { path: P } : {}),
     ...(F ? { from: F } : {}),
     ...(O ? { only: O } : {}),

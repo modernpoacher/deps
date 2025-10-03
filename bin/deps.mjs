@@ -37,6 +37,10 @@ const log = debug('@modernpoacher/deps')
 
 log(`\`deps\` (${VERSION} - ${PLATFORM}) is awake`)
 
+const {
+  table
+} = console
+
 /**
  *  @function app
  */
@@ -78,7 +82,7 @@ async function app () {
     registry
   } = commander.opts()
 
-  log({
+  table({
     saveProd: P,
     saveDev: D,
     saveOptional: O,

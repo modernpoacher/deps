@@ -18,7 +18,7 @@ const HOMEDIR = homedir()
  */
 export const toHomeDir = PLATFORM === 'win32'
   ? (directory) => directory
-  : (directory) => directory.includes(HOMEDIR) ? directory.replace(HOMEDIR, '~/') : directory
+  : (directory) => directory.includes(HOMEDIR) ? directory.replace(HOMEDIR, '~') : directory
 
 const LF = String.fromCodePoint(10)
 

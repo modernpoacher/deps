@@ -249,14 +249,19 @@ async function toMessage (message, directory) {
  *  @param {string | undefined} v
  *  @returns {boolean}
  */
-const filterDeps = (v) => Boolean(v) // de-falsy
+export function filterDeps (v) { // de-falsy
+  return Boolean(v)
+}
 
 /**
  *  @param {string[]} a
  *  @param {string} v
  *  @returns {string[]}
  */
-const reduceDeps = (a, v = '') => a.includes(v) ? a : a.concat(v) // de-dupe
+export function reduceDeps (a, v = '') { // de-dupe
+  if (!a.includes(v)) a.push(v)
+  return a
+}
 
 /**
  *  @param {string[]} directories
@@ -283,6 +288,15 @@ async function getPathList (directory) {
 }
 
 /**
+ * @param {string} alpha
+ * @param {string} omega
+ * @returns {number}
+ */
+function sort (alpha, omega) {
+  return alpha.localeCompare(omega)
+}
+
+/**
  *  @param {Array<string | undefined>} [directories]
  *  @returns {Promise<string[]>}
  */
@@ -291,12 +305,13 @@ async function getDepsList (directories = []) {
 
   /**
    *  Transform `directories` to create `alpha`
+   *  @type {string[]}
    */
   const alpha = (
     directories
-      .filter(filterDeps)
+      .filter(Boolean)
       .reduce(reduceDeps, [])
-      .sort()
+      .sort(sort)
   )
 
   try {
@@ -313,12 +328,13 @@ async function getDepsList (directories = []) {
 
     /**
      *  Transform `directories` to create `omega`
+     *  @type {string[]}
      */
     const omega = (
       directories
-        .filter(filterDeps)
+        .filter(Boolean)
         .reduce(reduceDeps, [])
-        .sort()
+        .sort(sort)
     )
 
     return omega

@@ -41,7 +41,14 @@ const LF = String.fromCodePoint(10)
  *  @returns {string}
  */
 export function trim (v) {
-  return v.split(LF).map(trimEnd).join(LF).trim()
+  return (
+    v
+      .split(LF)
+      .map((v) => v.trim() ? v.trimEnd() : '')
+      .filter(Boolean)
+      .join(LF)
+      .trim()
+  )
 }
 
 /**

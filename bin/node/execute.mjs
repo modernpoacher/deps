@@ -126,15 +126,15 @@ async function isHeadDefaultBranch (directory) {
 async function getIgnoreFromConfiguration (directory) {
   log('getIgnoreFromConfiguration')
 
-  const CONFIGURATION = (
-    await hasConfiguration(directory)
-      ? await getConfiguration(directory)
-      : {}
-  )
+  if (await hasConfiguration(directory)) {
+    return (
+      getIgnore(
+        await getConfiguration(directory)
+      )
+    )
+  }
 
-  return (
-    getIgnore(CONFIGURATION)
-  )
+  return false
 }
 
 /**
@@ -147,15 +147,15 @@ async function getIgnoreFromConfiguration (directory) {
 async function getAuthorFromConfiguration (directory) {
   log('getAuthorFromConfiguration')
 
-  const CONFIGURATION = (
-    await hasConfiguration(directory)
-      ? await getConfiguration(directory)
-      : {}
-  )
+  if (await hasConfiguration(directory)) {
+    return (
+      getAuthor(
+        await getConfiguration(directory)
+      )
+    )
+  }
 
-  return (
-    getAuthor(CONFIGURATION)
-  )
+  return null
 }
 
 /**
@@ -168,13 +168,11 @@ async function getAuthorFromConfiguration (directory) {
 async function getAuthorFromGit (directory) {
   log('getAuthorFromGitConfig')
 
-  const GIT = {
-    name: await gitConfigUserName(directory),
-    email: await gitConfigUserEmail(directory)
-  }
-
   return (
-    getAuthor(GIT)
+    getAuthor({
+      name: await gitConfigUserName(directory),
+      email: await gitConfigUserEmail(directory)
+    })
   )
 }
 
@@ -188,15 +186,15 @@ async function getAuthorFromGit (directory) {
 async function getAuthorFromPackage (directory) {
   log('getAuthorFromPackage')
 
-  const PACKAGE = (
-    await hasPackage(directory)
-      ? await getPackage(directory)
-      : {}
-  )
+  if (await hasPackage(directory)) {
+    return (
+      getAuthor(
+        await getPackage(directory)
+      )
+    )
+  }
 
-  return (
-    getAuthor(PACKAGE)
-  )
+  return null
 }
 
 /**
@@ -209,15 +207,15 @@ async function getAuthorFromPackage (directory) {
 async function getMessageFromConfiguration (directory) {
   log('getMessageFromConfiguration')
 
-  const CONFIGURATION = (
-    await hasConfiguration(directory)
-      ? await getConfiguration(directory)
-      : {}
-  )
+  if (await hasConfiguration(directory)) {
+    return (
+      getMessage(
+        await getConfiguration(directory)
+      )
+    )
+  }
 
-  return (
-    getMessage(CONFIGURATION)
-  )
+  return null
 }
 
 /**
@@ -226,7 +224,7 @@ async function getMessageFromConfiguration (directory) {
  *  Ensures that the `author` is set either from the command line,
  *  configuration, package, or a default
  *
- *  Since it can be null `author` may not default in function arguments
+ *  Since it can be null `author` will not default in function arguments
  *  @param {string | { name: string; email: string }} author
  *  @param {string} directory
  *  @returns {Promise<string | { name: string; email: string }>}
@@ -241,7 +239,7 @@ async function toAuthor (author, directory) {
  *  Ensures that the `message` is set either from the command line,
  *  configuration, or a default
  *
- *  Since it can be null `message` may not default in function arguments
+ *  Since it can be null `message` will not default in function arguments
  *  @param {string | null} message
  *  @param {string} directory
  *  @returns {Promise<string>}
@@ -251,21 +249,21 @@ async function toMessage (message, directory) {
 }
 
 /**
+ *  @type {(v: string | undefined) => v is string}
  *  @param {string | undefined} v
  *  @returns {boolean}
  */
-export function filterDeps (v) { // de-falsy
+function filter (v) { // de-falsy
   return Boolean(v)
 }
 
 /**
- *  @param {string[]} a
- *  @param {string} v
- *  @returns {string[]}
+ * @param {string} alpha
+ * @param {string} omega
+ * @returns {number}
  */
-export function reduceDeps (a, v = '') { // de-dupe
-  if (!a.includes(v)) a.push(v)
-  return a
+function sort (alpha, omega) {
+  return alpha.localeCompare(omega)
 }
 
 /**
@@ -288,21 +286,12 @@ async function getPathList (directory) {
   return (
     array
       .map(dirname)
-      .sort()
+      .sort(sort)
   )
 }
 
 /**
- * @param {string} alpha
- * @param {string} omega
- * @returns {number}
- */
-function sort (alpha, omega) {
-  return alpha.localeCompare(omega)
-}
-
-/**
- *  @param {Array<string | undefined>} [directories]
+ *  @param {(string | undefined)[]} [directories]
  *  @returns {Promise<string[]>}
  */
 async function getDepsList (directories = []) {
@@ -313,16 +302,15 @@ async function getDepsList (directories = []) {
    *  @type {string[]}
    */
   const alpha = (
-    directories
-      .filter(Boolean)
-      .reduce(reduceDeps, [])
+    Array.from(new Set(directories))
+      .filter(filter)
       .sort(sort)
   )
 
   try {
     /**
      *  Recreate `directories` from `alpha`
-     *  @type {Array<string | undefined>}
+     *  @type {(string | undefined)[]}
      */
     const directories = (
       await Promise.all(
@@ -336,9 +324,8 @@ async function getDepsList (directories = []) {
      *  @type {string[]}
      */
     const omega = (
-      directories
-        .filter(Boolean)
-        .reduce(reduceDeps, [])
+      Array.from(new Set(directories))
+        .filter(filter)
         .sort(sort)
     )
 

@@ -44,11 +44,19 @@ export function trim (v) {
   return (
     v
       .split(LF)
-      .map((v) => v.trim() ? v.trimEnd() : '')
+      .map(mapTrim)
       .filter(Boolean)
       .join(LF)
       .trim()
   )
+}
+
+/**
+ *  @param {string} v
+ *  @returns {string}
+ */
+export function mapTrim (v) {
+  return v.trim() ? v.trimEnd() : ''
 }
 
 /**

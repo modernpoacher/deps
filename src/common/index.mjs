@@ -14,8 +14,6 @@ import PATH from '#where-am-i'
 import debug from '#deps/src/common/debug'
 
 import {
-  NAME,
-  VERSION,
   PLATFORM
 } from '#deps/src/common/env'
 
@@ -34,7 +32,7 @@ export const NVM = join(PATH, 'nvm.sh')
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`common\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
+log('`common` is awake')
 
 const SP = String.fromCodePoint(32)
 

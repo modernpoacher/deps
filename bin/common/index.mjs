@@ -43,8 +43,6 @@ import debug from '#deps/src/common/debug'
 
 import {
   BIN,
-  NAME,
-  VERSION,
   PLATFORM
 } from '#deps/src/common/env'
 
@@ -73,7 +71,7 @@ const log = debug('@modernpoacher/deps')
 const info = debug('@modernpoacher/deps:info')
 const error = debug('@modernpoacher/deps:error')
 
-log(`\`common\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
+log('`common` is awake')
 
 const ARGV = argv.slice(2)
 

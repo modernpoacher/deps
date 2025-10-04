@@ -1,17 +1,15 @@
-import debug from 'debug'
-
 import stripAnsi from 'strip-ansi'
 
+import debug from '#deps/src/common/debug'
+
 import {
-  NAME,
-  VERSION,
   PLATFORM,
   HOMEDIR
 } from '#deps/src/common/env'
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`common/format\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
+log('`common/format` is awake')
 
 /**
  *  @function formatAuthor

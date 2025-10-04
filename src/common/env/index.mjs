@@ -35,7 +35,7 @@ const BIN = PLATFORM === 'win32'
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`common/env\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
+log('`common/env` is awake')
 
 export {
   NAME,

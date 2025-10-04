@@ -5,8 +5,6 @@
 import debug from '#deps/src/common/debug'
 
 import {
-  NAME,
-  VERSION,
   PLATFORM
 } from '#deps/src/common/env'
 
@@ -39,7 +37,7 @@ export const OPTIONS = {
 
 const log = debug('@modernpoacher/deps')
 
-log(`\`common/options\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
+log('`common/options` is awake')
 
 /**
  *  @function getOptions

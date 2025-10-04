@@ -30,12 +30,6 @@ import {
 import debug from '#deps/src/common/debug'
 
 import {
-  NAME,
-  VERSION,
-  PLATFORM
-} from '#deps/src/common/env'
-
-import {
   formatDirectory,
   use
 } from '#deps/src/common/format'
@@ -64,7 +58,7 @@ import {
 const log = debug('@modernpoacher/deps')
 const info = debug('@modernpoacher/deps:info')
 
-log(`\`deps\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
+log('`deps` is awake')
 
 /**
  *  @function getInstallSaveExactCommands

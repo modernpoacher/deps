@@ -29,7 +29,7 @@ import {
 } from '#deps/src/common/env'
 
 import {
-  toHomeDir
+  formatDirectory
 } from '#deps/src/common/format'
 
 import {
@@ -107,7 +107,7 @@ export function installSaveExact (d, p, s, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${toHomeDir(directory)}"`)
+  info(`Directory is "${formatDirectory(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {
@@ -153,7 +153,7 @@ export function install (d, p, s, r, f) {
 
   const directory = normalize(d.trim())
 
-  info(`Directory is "${toHomeDir(directory)}"`)
+  info(`Directory is "${formatDirectory(directory)}"`)
 
   return (
     new Promise((resolve, reject) => {

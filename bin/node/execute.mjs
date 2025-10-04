@@ -24,7 +24,8 @@ import {
 } from '#deps/src/common/env'
 
 import {
-  toHomeDir
+  formatDirectory,
+  formatAuthor
 } from '#deps/src/common/format'
 
 import {
@@ -169,10 +170,10 @@ async function getAuthorFromGit (directory) {
   log('getAuthorFromGitConfig')
 
   return (
-    getAuthor({
-      name: await gitConfigUserName(directory),
-      email: await gitConfigUserEmail(directory)
-    })
+    formatAuthor(
+      await gitConfigUserName(directory) ?? '',
+      await gitConfigUserEmail(directory) ?? ''
+    )
   )
 }
 
@@ -423,7 +424,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
   log('execute')
 
   try {
-    info(`Directory is "${toHomeDir(directory)}"`)
+    info(`Directory is "${formatDirectory(directory)}"`)
     info(`Registry is "${registry}"`)
     info(`Force is "${force}"`)
     info(`Message is "${message}"`)

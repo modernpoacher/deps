@@ -14,10 +14,25 @@ const log = debug('@modernpoacher/deps')
 log(`\`common/format\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
 
 /**
- *  @function toHomeDir
+ *  @function formatAuthor
+ *  @type {(name: string, email: string) => string | null}
+ */
+export function formatAuthor (name, email) {
+  const n = name.trim()
+  const e = email.trim()
+
+  return (
+    n && e
+      ? `${n} <${e}>`
+      : null
+  )
+}
+
+/**
+ *  @function formatDirectory
  *  @type {(directory: string) => string}
  */
-export const toHomeDir = PLATFORM === 'win32'
+export const formatDirectory = PLATFORM === 'win32'
   ? (directory) => directory
   : (directory) => directory.includes(HOMEDIR) ? directory.replace(HOMEDIR, '~') : directory
 

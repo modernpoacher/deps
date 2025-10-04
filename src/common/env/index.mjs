@@ -21,7 +21,6 @@ const {
 } = JSON.parse(readFileSync(join(PATH, 'package.json')).toString('utf8'))
 
 const PLATFORM = platform()
-
 const HOMEDIR = homedir()
 
 const {

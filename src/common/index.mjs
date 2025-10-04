@@ -20,6 +20,7 @@ import {
 } from '#deps/src/common/env'
 
 import {
+  formatAuthor,
   tidy
 } from '#deps/src/common/format'
 
@@ -243,22 +244,37 @@ export function getIgnore ({ ignore = false }) {
 export function getAuthor ({ author = '' }) {
   if (typeof author === 'string') return author
   if (typeof (author || false) === 'object') {
-    const {
-      name: NAME = '',
-      email: EMAIL = ''
-    } = author
-
-    const name = String(NAME).trim()
-    const email = String(EMAIL).trim()
-
     return (
-      name && email
-        ? `${name} <${email}>`
-        : null
+      formatAuthor(
+        String(getName(author) ?? ''),
+        String(getEmail(author) ?? '')
+      )
     )
   }
 
   return null
+}
+
+/**
+ *  @function getName
+ *  @description
+ *  Get the name by destructuring the configuration `author`
+ *  @param {Configuration} author
+ *  @returns {string}
+ */
+export function getName ({ name = '' }) {
+  return name
+}
+
+/**
+ *  @function getEmail
+ *  @description
+ *  Get the email by destructuring the configuration `author`
+ *  @param {Configuration} author
+ *  @returns {string}
+ */
+export function getEmail ({ email = '' }) {
+  return email
 }
 
 /**

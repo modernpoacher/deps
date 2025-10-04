@@ -64,7 +64,9 @@ export function trimEnd (v) {
  *  @returns {string}
  */
 export function tidy (v) {
-  return v.replace(/\n{2,}}/gm, LF)
+  let s = v
+  while (/\n{2,}/gm.test(s)) s = s.replace(/\n{2,}/gm, LF)
+  return s
 }
 
 /**

@@ -64,7 +64,6 @@ import {
 } from '#deps/bin/common'
 
 const log = debug('@modernpoacher/deps')
-const info = debug('@modernpoacher/deps:info')
 
 log(`\`execute\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
 
@@ -424,11 +423,14 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
   log('execute')
 
   try {
-    info(`Directory is "${formatDirectory(directory)}"`)
-    info(`Registry is "${registry}"`)
-    info(`Force is "${force}"`)
-    info(`Message is "${message}"`)
-    info(`Author is "${author}"`)
+    table({
+      directory: formatDirectory(directory),
+      registry,
+      force,
+      message
+    })
+
+    table(typeof author === 'string' ? { author } : author)
 
     await gitPull(directory)
     await rmrf(directory)

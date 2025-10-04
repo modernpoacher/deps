@@ -80,7 +80,7 @@ export function use (key) {
    *  @returns {void}
    */
   function write (v) {
-    log(v.trimEnd())
+    if (v.trim()) log(v.trimEnd())
   }
 
   /**

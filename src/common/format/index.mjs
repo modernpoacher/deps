@@ -1,5 +1,10 @@
 import stripAnsi from 'strip-ansi'
 
+import {
+  normalize,
+  resolve
+} from 'node:path'
+
 import debug from '#deps/src/common/debug'
 
 import {
@@ -31,8 +36,12 @@ export function formatAuthor (name, email) {
  *  @type {(directory: string) => string}
  */
 export const formatDirectory = PLATFORM === 'win32'
-  ? (directory) => directory
-  : (directory) => directory.includes(HOMEDIR) ? directory.replace(HOMEDIR, '~') : directory
+  ? (directory) => resolve(normalize(directory)).trim()
+  : (directory) => {
+      const d = resolve(normalize(directory)).trim()
+      if (d.startsWith(HOMEDIR)) return d.replace(new RegExp('^' + HOMEDIR), '~')
+      return d
+    }
 
 const LF = String.fromCodePoint(10)
 

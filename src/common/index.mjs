@@ -19,6 +19,7 @@ import {
 
 import {
   formatAuthor,
+  trim,
   tidy
 } from '#deps/src/common/format'
 
@@ -163,8 +164,8 @@ ${commands}
  *  @returns {string}
  */
 export const getCommands = PLATFORM === 'win32'
-  ? (commands = 'npm i') => tidy(commands)
-  : (commands = 'npm i') => tidy(getExportPath(getNvm(commands)))
+  ? (commands = 'npm i') => trim(tidy(commands))
+  : (commands = 'npm i') => trim(tidy(getExportPath(getNvm(commands))))
 
 /**
  *  @function getProdDependencies

@@ -49,6 +49,7 @@ import {
 import {
   formatDirectory,
   use,
+  trim,
   tidy
 } from '#deps/src/common/format'
 
@@ -82,20 +83,20 @@ const MESSAGE = 'Either no error message has been defined or no error has been s
 const SP = String.fromCodePoint(32)
 
 const getRmrfCommands = PLATFORM === 'win32'
-  ? () => tidy(`
+  ? () => trim(tidy(`
 rmdir /s /q node_modules 2> nul & del package-lock.json 2> nul
-`)
-  : () => tidy(`
+`))
+  : () => trim(tidy(`
 rm -rf node_modules package-lock.json
-`)
+`))
 
 const getNpmiCommands = PLATFORM === 'win32'
-  ? (registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i')))
-  : (registry = REGISTRY, force = false) => tidy(getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'npm i')))))
+  ? (registry = REGISTRY, force = false) => trim(tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i'))))
+  : (registry = REGISTRY, force = false) => trim(tidy(getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'npm i'))))))
 
 const getDepsCommands = PLATFORM === 'win32'
-  ? (registry = REGISTRY, force = false) => tidy(getRegistryParameter(registry, getForceParameter(force, 'deps')))
-  : (registry = REGISTRY, force = false) => tidy(getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'deps')))))
+  ? (registry = REGISTRY, force = false) => trim(tidy(getRegistryParameter(registry, getForceParameter(force, 'deps'))))
+  : (registry = REGISTRY, force = false) => trim(tidy(getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'deps'))))))
 
 export const DEPS = PLATFORM === 'win32'
   ? `bash "${join(BIN, '.\\bash\\deps.sh')}"`

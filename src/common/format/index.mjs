@@ -57,7 +57,7 @@ export function trimEnd (v) {
  *  @returns {string}
  */
 export function tidy (v) {
-  return v.replace(/\n{2,}}/gm, LF).trim()
+  return v.replace(/\n{2,}}/gm, LF)
 }
 
 /**

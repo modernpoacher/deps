@@ -9,33 +9,43 @@ import {
 } from '#deps/src/common/format'
 
 import {
-  MESSAGE,
   AUTHOR,
+  DIRECTORY,
+  MESSAGE,
   out,
   err,
-  catGitRefsRemotesOriginHead,
   awkGitRemoteShowOriginHead,
-  gitRevParseShowTopLevel,
-  gitRevParseAbbrevRefHead,
+  catGitRefsRemotesOriginHead,
+  gitAdd,
   gitCheckout,
+  gitCommit,
+  gitConfigUserName,
+  gitConfigUserEmail,
   gitPull,
   gitPush,
   gitPushTags,
-  gitAdd,
-  gitCommit
+  gitRevParseAbbrevRefHead,
+  gitRevParseShowTopLevel
 } from '#deps/src/common/git'
 
 describe('#deps/src/common/git', () => {
-  describe('`MESSAGE`', () => {
+  describe('`AUTHOR`', () => {
     it('is a string', () => {
-      expect(MESSAGE)
+      expect(AUTHOR)
         .to.be.a('string')
     })
   })
 
-  describe('`AUTHOR`', () => {
+  describe('`DIRECTORY`', () => {
     it('is a string', () => {
-      expect(AUTHOR)
+      expect(DIRECTORY)
+        .to.be.a('string')
+    })
+  })
+
+  describe('`MESSAGE`', () => {
+    it('is a string', () => {
+      expect(MESSAGE)
         .to.be.a('string')
     })
   })
@@ -61,13 +71,6 @@ describe('#deps/src/common/git', () => {
     })
   })
 
-  describe('`catGitRefsRemotesOriginHead`', () => {
-    it('is a function', () => {
-      expect(catGitRefsRemotesOriginHead)
-        .to.be.a('function')
-    })
-  })
-
   describe('`awkGitRemoteShowOriginHead`', () => {
     it('is a function', () => {
       expect(awkGitRemoteShowOriginHead)
@@ -75,16 +78,16 @@ describe('#deps/src/common/git', () => {
     })
   })
 
-  describe('`gitRevParseShowTopLevel`', () => {
+  describe('`catGitRefsRemotesOriginHead`', () => {
     it('is a function', () => {
-      expect(gitRevParseShowTopLevel)
+      expect(catGitRefsRemotesOriginHead)
         .to.be.a('function')
     })
   })
 
-  describe('`gitRevParseAbbrevRefHead`', () => {
+  describe('`gitAdd`', () => {
     it('is a function', () => {
-      expect(gitRevParseAbbrevRefHead)
+      expect(gitAdd)
         .to.be.a('function')
     })
   })
@@ -92,6 +95,27 @@ describe('#deps/src/common/git', () => {
   describe('`gitCheckout`', () => {
     it('is a function', () => {
       expect(gitCheckout)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`gitCommit`', () => {
+    it('is a function', () => {
+      expect(gitCommit)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`gitConfigUserName`', () => {
+    it('is a function', () => {
+      expect(gitConfigUserName)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`gitConfigUserEmail`', () => {
+    it('is a function', () => {
+      expect(gitConfigUserEmail)
         .to.be.a('function')
     })
   })
@@ -117,16 +141,16 @@ describe('#deps/src/common/git', () => {
     })
   })
 
-  describe('`gitAdd`', () => {
+  describe('`gitRevParseAbbrevRefHead`', () => {
     it('is a function', () => {
-      expect(gitAdd)
+      expect(gitRevParseAbbrevRefHead)
         .to.be.a('function')
     })
   })
 
-  describe('`gitCommit`', () => {
+  describe('`gitRevParseShowTopLevel`', () => {
     it('is a function', () => {
-      expect(gitCommit)
+      expect(gitRevParseShowTopLevel)
         .to.be.a('function')
     })
   })

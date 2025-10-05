@@ -7,7 +7,9 @@ import '#deps/test/debug'
 import {
   NAME,
   VERSION,
-  PLATFORM
+  PLATFORM,
+  BIN,
+  HOME
 } from '#deps/src/common/env'
 
 describe('#deps/src/common/env', () => {
@@ -28,6 +30,20 @@ describe('#deps/src/common/env', () => {
   describe('`PLATFORM`', () => {
     it('is a string', () => {
       expect(PLATFORM)
+        .to.be.a('string')
+    })
+  })
+
+  describe('`BIN`', () => {
+    it('is a string', () => {
+      expect(BIN)
+        .to.be.a('string')
+    })
+  })
+
+  describe('`HOME`', () => {
+    it('is a string', () => {
+      expect(HOME)
         .to.be.a('string')
     })
   })

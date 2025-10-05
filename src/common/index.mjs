@@ -129,13 +129,13 @@ export function getSaveExactParameter (commands) {
 }
 
 /**
- *  @function getExportPath
+ *  @function getBin
  *  @description
  *  Get the export PATH shell script
  *  @param {string} commands - Current commands string
  *  @returns {string}
  */
-export function getExportPath (commands) {
+export function getBin (commands) {
   return `
 export PATH=/usr/local/bin:$PATH &> /dev/null
 ${commands}
@@ -165,7 +165,7 @@ ${commands}
  */
 export const getCommands = PLATFORM === 'win32'
   ? (commands = 'npm i') => trim(tidy(commands))
-  : (commands = 'npm i') => trim(tidy(getExportPath(getNvm(commands))))
+  : (commands = 'npm i') => trim(tidy(getBin(getNvm(commands))))
 
 /**
  *  @function getProdDependencies

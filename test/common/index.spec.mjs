@@ -9,28 +9,69 @@ import {
 import '#deps/test/debug'
 
 import {
-  getSaveProdParameter,
-  getSaveDevParameter,
-  getSaveOptionalParameter,
-  getSaveBundleParameter,
-  getRegistryParameter,
-  getNoSaveParameter,
-  getSaveExactParameter,
+  AUTHOR,
+  DIRECTORY,
+  NVM,
+  REGISTRY,
   getCommands,
-  isExact,
   getDepsExact,
   getDeps,
-  normalizeCommands,
-  transformDependency,
-  transform,
+  getAuthor,
+  getName,
+  getEmail,
+  getIgnore,
+  getMessage,
+  getNvm,
+  getBin,
   getProdDependencies,
   getDevDependencies,
   getOptionalDependencies,
   getBundleDependencies,
-  getPeerDependencies
+  getPeerDependencies,
+  getForceParameter,
+  getRegistryParameter,
+  getSaveProdParameter,
+  getSaveDevParameter,
+  getSaveOptionalParameter,
+  getSaveBundleParameter,
+  getSaveExactParameter,
+  getNoSaveParameter,
+  isExact,
+  isPreRelease,
+  normalizeCommands,
+  transform,
+  transformDependency
 } from '#deps/src/common'
 
 describe('#deps/src/common', () => {
+  describe('`AUTHOR`', () => {
+    it('is a function', () => {
+      expect(AUTHOR)
+        .to.be.a('string')
+    })
+  })
+
+  describe('`DIRECTORY`', () => {
+    it('is a function', () => {
+      expect(DIRECTORY)
+        .to.be.a('string')
+    })
+  })
+
+  describe('`NVM`', () => {
+    it('is a function', () => {
+      expect(NVM)
+        .to.be.a('string')
+    })
+  })
+
+  describe('`REGISTRY`', () => {
+    it('is a function', () => {
+      expect(REGISTRY)
+        .to.be.a('string')
+    })
+  })
+
   describe('`getSaveProdParameter`', () => {
     it('is a function', () => {
       expect(getSaveProdParameter)
@@ -59,9 +100,9 @@ describe('#deps/src/common', () => {
     })
   })
 
-  describe('`getRegistryParameter`', () => {
+  describe('`getSaveExactParameter`', () => {
     it('is a function', () => {
-      expect(getRegistryParameter)
+      expect(getSaveExactParameter)
         .to.be.a('function')
     })
   })
@@ -73,9 +114,16 @@ describe('#deps/src/common', () => {
     })
   })
 
-  describe('`getSaveExactParameter`', () => {
+  describe('`getForceParameter`', () => {
     it('is a function', () => {
-      expect(getSaveExactParameter)
+      expect(getForceParameter)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getRegistryParameter`', () => {
+    it('is a function', () => {
+      expect(getRegistryParameter)
         .to.be.a('function')
     })
   })
@@ -129,6 +177,13 @@ describe('#deps/src/common', () => {
     })
   })
 
+  describe('`isPreRelease`', () => {
+    it('is a function', () => {
+      expect(isPreRelease)
+        .to.be.a('function')
+    })
+  })
+
   describe('`getDepsExact`', () => {
     it('is a function', () => {
       expect(getDepsExact)
@@ -139,6 +194,55 @@ describe('#deps/src/common', () => {
   describe('`getDeps`', () => {
     it('is a function', () => {
       expect(getDeps)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getAuthor`', () => {
+    it('is a function', () => {
+      expect(getAuthor)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getName`', () => {
+    it('is a function', () => {
+      expect(getName)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getEmail`', () => {
+    it('is a function', () => {
+      expect(getEmail)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getIgnore`', () => {
+    it('is a function', () => {
+      expect(getIgnore)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getMessage`', () => {
+    it('is a function', () => {
+      expect(getMessage)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getNvm`', () => {
+    it('is a function', () => {
+      expect(getNvm)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getBin`', () => {
+    it('is a function', () => {
+      expect(getBin)
         .to.be.a('function')
     })
   })
@@ -246,6 +350,26 @@ describe('#deps/src/common', () => {
         const dependency = '^0.0.0'
 
         expect(isExact(dependency)) // eslint-disable-line no-unused-expressions -- Assertion
+          .to.be.false
+      })
+    })
+  })
+
+  describe('`isPreRelease()`', () => {
+    describe('The dependency version is pre-release', () => {
+      it('returns an array', () => {
+        const dependency = '0-0'
+
+        expect(isPreRelease(dependency)) // eslint-disable-line no-unused-expressions -- Assertion
+          .to.be.true
+      })
+    })
+
+    describe('The dependency version is not exact', () => {
+      it('returns an array', () => {
+        const dependency = '0.0.0'
+
+        expect(isPreRelease(dependency)) // eslint-disable-line no-unused-expressions -- Assertion
           .to.be.false
       })
     })
@@ -375,6 +499,96 @@ describe('#deps/src/common', () => {
           expect(getDepsExact(dependencies, configuration))
             .to.eql([])
         })
+      })
+    })
+  })
+
+  describe('`getAuthor()`', () => {
+    describe('The dependency author is a string', () => {
+      it('returns a string', () => {
+        const dependencies = {
+          author: 'author'
+        }
+
+        expect(getAuthor(dependencies))
+          .to.be.a('string')
+      })
+    })
+
+    describe('The dependency author is an object', () => {
+      it('returns a string', () => {
+        const dependencies = {
+          author: {
+            name: 'name',
+            email: 'email'
+          }
+        }
+
+        expect(getAuthor(dependencies))
+          .to.be.a('string')
+      })
+    })
+  })
+
+  describe('`getName()`', () => {
+    describe('The author name is a string', () => {
+      it('returns a string', () => {
+        const author = {
+          name: 'name'
+        }
+
+        expect(getName(author))
+          .to.be.a('string')
+      })
+    })
+  })
+
+  describe('`getEmail()`', () => {
+    describe('The author email is a string', () => {
+      it('returns a string', () => {
+        const author = {
+          email: 'email'
+        }
+
+        expect(getEmail(author))
+          .to.be.a('string')
+      })
+    })
+  })
+
+  describe('`getIgnore()`', () => {
+    describe('The dependency ignore is true', () => {
+      it('returns true', () => {
+        const dependencies = {
+          ignore: true
+        }
+
+        expect(getIgnore(dependencies)) // eslint-disable-line no-unused-expressions -- Assertion
+          .to.be.true
+      })
+    })
+
+    describe('The dependency ignore is false', () => {
+      it('returns a boolean', () => {
+        const dependencies = {
+          ignore: false
+        }
+
+        expect(getIgnore(dependencies)) // eslint-disable-line no-unused-expressions -- Assertion
+          .to.be.false
+      })
+    })
+  })
+
+  describe('`getMessage()`', () => {
+    describe('The dependency message is a string', () => {
+      it('returns a string', () => {
+        const dependencies = {
+          message: 'message'
+        }
+
+        expect(getMessage(dependencies))
+          .to.be.a('string')
       })
     })
   })

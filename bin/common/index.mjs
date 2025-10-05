@@ -64,7 +64,7 @@ import {
   NVM,
   getRegistryParameter,
   getForceParameter,
-  getExportPath,
+  getBin,
   getNvm
 } from '#deps/src/common'
 
@@ -92,11 +92,11 @@ rm -rf node_modules package-lock.json
 
 const getNpmiCommands = PLATFORM === 'win32'
   ? (registry = REGISTRY, force = false) => trim(tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i'))))
-  : (registry = REGISTRY, force = false) => trim(tidy(getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'npm i'))))))
+  : (registry = REGISTRY, force = false) => trim(tidy(getBin(getNvm(getRegistryParameter(registry, getForceParameter(force, 'npm i'))))))
 
 const getDepsCommands = PLATFORM === 'win32'
   ? (registry = REGISTRY, force = false) => trim(tidy(getRegistryParameter(registry, getForceParameter(force, 'deps'))))
-  : (registry = REGISTRY, force = false) => trim(tidy(getExportPath(getNvm(getRegistryParameter(registry, getForceParameter(force, 'deps'))))))
+  : (registry = REGISTRY, force = false) => trim(tidy(getBin(getNvm(getRegistryParameter(registry, getForceParameter(force, 'deps'))))))
 
 export const DEPS = PLATFORM === 'win32'
   ? `bash "${join(BIN, '.\\bash\\deps.sh')}"`

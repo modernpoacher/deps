@@ -9,7 +9,7 @@ import debug from '#deps/src/common/debug'
 
 import {
   PLATFORM,
-  HOMEDIR
+  HOME
 } from '#deps/src/common/env'
 
 const log = debug('@modernpoacher/deps')
@@ -39,7 +39,7 @@ export const formatDirectory = PLATFORM === 'win32'
   ? (directory) => resolve(normalize(directory)).trim()
   : (directory) => {
       const d = resolve(normalize(directory)).trim()
-      if (d.startsWith(HOMEDIR)) return d.replace(new RegExp('^' + HOMEDIR), '~')
+      if (d.startsWith(HOME)) return d.replace(new RegExp('^' + HOME), '~')
       return d
     }
 

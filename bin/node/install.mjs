@@ -44,7 +44,7 @@ log(`\`install\` (${NAME} - ${VERSION} - ${PLATFORM}) is awake`)
 async function app () {
   log('Deps')
 
-  const commander = new Command()
+  const commander = new Command(NAME)
 
   const {
     argv

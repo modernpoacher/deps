@@ -11,7 +11,6 @@ import '#deps/test/debug'
 import {
   AUTHOR,
   DIRECTORY,
-  NVM,
   REGISTRY,
   getCommands,
   getDepsExact,
@@ -54,13 +53,6 @@ describe('#deps/src/common', () => {
   describe('`DIRECTORY`', () => {
     it('is a function', () => {
       expect(DIRECTORY)
-        .to.be.a('string')
-    })
-  })
-
-  describe('`NVM`', () => {
-    it('is a function', () => {
-      expect(NVM)
         .to.be.a('string')
     })
   })

@@ -557,7 +557,7 @@ async function executePath (directory, registry, force, message, author) {
 async function app () {
   log('Deps')
 
-  const commander = new Command()
+  const commander = new Command(NAME)
 
   const {
     argv

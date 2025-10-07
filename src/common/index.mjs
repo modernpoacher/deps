@@ -5,16 +5,11 @@
  *  @typedef {DepsTypes.Configuration} Configuration
  */
 
-import {
-  join
-} from 'node:path'
-
-import PATH from '#where-am-i'
-
 import debug from '#deps/src/common/debug'
 
 import {
-  PLATFORM
+  PLATFORM,
+  NVM
 } from '#deps/src/common/env'
 
 import {
@@ -28,8 +23,6 @@ export const DIRECTORY = '.'
 export const REGISTRY = 'https://registry.npmjs.org'
 
 export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
-
-export const NVM = join(PATH, 'nvm.sh')
 
 const log = debug('@modernpoacher/deps')
 

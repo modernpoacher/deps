@@ -28,6 +28,8 @@ const {
   }
 } = process
 
+const NVM = join(PATH, 'nvm.sh')
+
 const BIN = PLATFORM === 'win32'
   ? join(PATH, '.\\bin') // \\bash')
   : join(PATH, './bin') // /bash')
@@ -41,5 +43,6 @@ export {
   VERSION,
   PLATFORM,
   HOME,
+  NVM,
   BIN
 }

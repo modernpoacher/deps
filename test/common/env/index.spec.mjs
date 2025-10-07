@@ -8,6 +8,7 @@ import {
   NAME,
   VERSION,
   PLATFORM,
+  NVM,
   BIN,
   HOME
 } from '#deps/src/common/env'
@@ -30,6 +31,13 @@ describe('#deps/src/common/env', () => {
   describe('`PLATFORM`', () => {
     it('is a string', () => {
       expect(PLATFORM)
+        .to.be.a('string')
+    })
+  })
+
+  describe('`NVM`', () => {
+    it('is a string', () => {
+      expect(NVM)
         .to.be.a('string')
     })
   })

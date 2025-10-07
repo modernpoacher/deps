@@ -42,6 +42,7 @@ import {
 import debug from '#deps/src/common/debug'
 
 import {
+  NVM,
   BIN,
   PLATFORM
 } from '#deps/src/common/env'
@@ -61,11 +62,10 @@ import {
   DIRECTORY,
   REGISTRY,
   AUTHOR,
-  NVM,
   getRegistryParameter,
   getForceParameter,
-  getBin,
-  getNvm
+  getNvm,
+  getBin
 } from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')

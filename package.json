@@ -54,7 +54,7 @@
     "deps-wipe": "bin/deps/wipe.sh"
   },
   "dependencies": {
-    "@sequencemedia/write": "^0.2.21",
+    "@sequencemedia/write": "^0.2.22",
     "commander": "^14.0.1",
     "debug": "^4.4.3",
     "glob": "^11.0.3",
@@ -63,17 +63,17 @@
   },
   "devDependencies": {
     "@sequencemedia/eslint-config-standard": "^0.2.91",
-    "@sequencemedia/eslint-config-typescript": "^0.1.156",
-    "@sequencemedia/eslint-merge": "^0.0.56",
+    "@sequencemedia/eslint-config-typescript": "^0.1.157",
+    "@sequencemedia/eslint-merge": "^0.0.57",
     "@types/chai": "^5.2.2",
     "@types/debug": "^4.1.12",
     "@types/mocha": "^10.0.10",
     "@types/node": "^24.7.2",
-    "@typescript-eslint/parser": "^8.46.0",
+    "@typescript-eslint/parser": "^8.46.1",
     "chai": "^6.2.0",
     "cross-env": "^10.1.0",
     "eslint": "^9.37.0",
-    "eslint-plugin-jsdoc": "^61.1.1",
+    "eslint-plugin-jsdoc": "^61.1.2",
     "globals": "^16.4.0",
     "husky": "^9.1.7",
     "mocha": "^11.7.4"

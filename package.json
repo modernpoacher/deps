@@ -73,8 +73,8 @@
     "chai": "^6.2.2",
     "cross-env": "^10.1.0",
     "eslint": "9.38.0",
-    "eslint-plugin-jsdoc": "^62.3.0",
-    "globals": "^17.0.0",
+    "eslint-plugin-jsdoc": "^62.3.1",
+    "globals": "^17.1.0",
     "husky": "^9.1.7",
     "mocha": "^11.7.5"
   },

@@ -55,7 +55,7 @@
   },
   "dependencies": {
     "@sequencemedia/write": "^0.2.46",
-    "commander": "^14.0.3",
+    "commander": "^15.0.0",
     "debug": "^4.4.3",
     "glob": "^13.0.6",
     "strip-ansi": "^7.2.0",
@@ -68,15 +68,15 @@
     "@types/chai": "^5.2.3",
     "@types/debug": "^4.1.13",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^25.6.2",
-    "@typescript-eslint/parser": "^8.59.2",
+    "@types/node": "^25.9.2",
+    "@typescript-eslint/parser": "^8.61.0",
     "chai": "^6.2.2",
     "cross-env": "^10.1.0",
     "eslint": "9.38.0",
-    "eslint-plugin-jsdoc": "^62.9.0",
+    "eslint-plugin-jsdoc": "^63.0.2",
     "globals": "^17.6.0",
     "husky": "^9.1.7",
-    "mocha": "^11.7.5"
+    "mocha": "^11.7.6"
   },
   "imports": {
     "#deps/bin": "./bin/index.mjs",

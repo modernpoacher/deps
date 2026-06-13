@@ -7,11 +7,8 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Authenticate with NPM
-          command: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-      - run:
           name: Install
-          command: npm ci
+          command: npm i
       - run:
           name: Lint
           command: npm run lint
@@ -24,12 +21,10 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Publish to NPM
+          name: Publish to npm
           command: |
-            echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-            echo ".publish" >> .npmignore
-            git clone https://github.com/modernpoacher/publish.git .publish
-            .publish/publish.sh
+            export NPM_ID_TOKEN=$(circleci run oidc get --claims '{"aud": "npm:registry.npmjs.org"}')
+            npm publish --access public
 
 workflows:
   commit-workflow:

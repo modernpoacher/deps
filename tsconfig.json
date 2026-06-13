@@ -15,5 +15,8 @@
     ".github",
     ".husky",
     "test"
+  ],
+  "types": [
+    "node"
   ]
 }

@@ -7,7 +7,7 @@ import {
 
 import {
   glob
-} from 'glob'
+} from 'node:fs/promises'
 
 import {
   Command
@@ -249,108 +249,23 @@ async function toMessage (message, directory) {
 }
 
 /**
- *  @type {(v: string | undefined) => v is string}
- *  @param {string | undefined} v
- *  @returns {boolean}
- */
-function filter (v) { // de-falsy
-  return Boolean(v)
-}
-
-/**
- * @param {string} alpha
- * @param {string} omega
- * @returns {number}
- */
-function sort (alpha, omega) {
-  return alpha.localeCompare(omega)
-}
-
-/**
- *  @param {string[]} directories
- *  @yields {string | undefined}
- */
-function * genDirsList (directories = []) {
-  while (directories.length) yield directories.shift()
-}
-
-/**
  *  @param {string} directory
- *  @returns {Promise<string[]>}
+ *  @yields {string}
  */
-async function getPathList (directory) {
-  log('getPathList')
+async function * genDirectory (directory) {
+  log('genDirectory')
 
-  const array = await glob(`${directory}/*/package.json`)
+  const p = [
+    `${directory}/package.json`,
+    `${directory}/**/package.json`
+  ]
 
-  return (
-    array
-      .map(dirname)
-      .sort(sort)
-  )
-}
+  const e = [
+    `${directory}/node_modules`,
+    `${directory}/**/node_modules`
+  ]
 
-/**
- *  @param {(string | undefined)[]} [directories]
- *  @returns {Promise<string[]>}
- */
-async function getDepsList (directories = []) {
-  log('getDepsList')
-
-  /**
-   *  Transform `directories` to create `alpha`
-   *  @type {string[]}
-   */
-  const alpha = (
-    Array.from(new Set(directories))
-      .filter(filter)
-      .sort(sort)
-  )
-
-  try {
-    /**
-     *  Recreate `directories` from `alpha`
-     *  @type {(string | undefined)[]}
-     */
-    const directories = (
-      await Promise.all(
-        alpha
-          .map(mapRevParseShowTopLevel)
-      )
-    )
-
-    /**
-     *  Transform `directories` to create `omega`
-     *  @type {string[]}
-     */
-    const omega = (
-      Array.from(new Set(directories))
-        .filter(filter)
-        .sort(sort)
-    )
-
-    return omega
-  } catch (e) {
-    if (e instanceof Error) handleError(e)
-  }
-
-  return []
-}
-
-/**
- *  @param {string} directory
- *  @returns {Promise<string | undefined>}
- */
-async function mapRevParseShowTopLevel (directory) {
-  log('mapRevParseShowTopLevel')
-
-  try {
-    return (
-      await gitRevParseShowTopLevel(directory)
-    )
-  } catch (e) {
-    if (e instanceof Error) handleCommandError(e)
-  }
+  for await (const packageJson of await glob(p, { exclude: e })) yield dirname(packageJson)
 }
 
 /**
@@ -399,15 +314,7 @@ async function iteratePath (directory, registry, force, message, author) {
   if (directory) {
     const D = resolve(directory)
 
-    const pathList = await getPathList(D)
-
-    if (pathList.length) {
-      const depsList = await getDepsList(pathList)
-
-      if (depsList.length) {
-        for (const d of genDirsList(depsList)) if (d) await iterate(d, registry, force, message, author)
-      }
-    }
+    for await (const d of genDirectory(D)) await iterate(d, registry, force, message, author)
   }
 }
 

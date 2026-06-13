@@ -143,6 +143,7 @@ export function handleError (e = {}) {
   } = e
 
   if (code > 1) error(code)
+
   const {
     message = MESSAGE
   } = e

@@ -250,22 +250,34 @@ async function toMessage (message, directory) {
 
 /**
  *  @param {string} directory
+ *  @returns {string[]}
+ */
+function toPackagePatterns (directory) {
+  return [
+    `${directory}/package.json`,
+    `${directory}/**/package.json`
+  ]
+}
+
+/**
+ *  @param {string} directory
+ *  @returns {string[]}
+ */
+function toExcludePatterns (directory) {
+  return [
+    `${directory}/node_modules`,
+    `${directory}/**/node_modules`
+  ]
+}
+
+/**
+ *  @param {string} directory
  *  @yields {string}
  */
 async function * genDirectory (directory) {
   log('genDirectory')
 
-  const p = [
-    `${directory}/package.json`,
-    `${directory}/**/package.json`
-  ]
-
-  const e = [
-    `${directory}/node_modules`,
-    `${directory}/**/node_modules`
-  ]
-
-  for await (const packageJson of await glob(p, { exclude: e })) yield dirname(packageJson)
+  for await (const packageJson of await glob(toPackagePatterns(directory), { exclude: toExcludePatterns (directory) })) yield dirname(packageJson)
 }
 
 /**

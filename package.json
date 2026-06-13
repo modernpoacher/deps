@@ -40,6 +40,7 @@
     "deps-wipe": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=production node bin/deps/wipe.mjs",
     "lint": "eslint .",
     "lint:fix": "npm run lint -- --fix",
+    "prepare": "husky || true",
     "start": "npm run deps",
     "test": "cross-env NODE_OPTIONS=--disable-warning=ExperimentalWarning DEBUG_COLORS=yes NODE_ENV=test mocha test --recursive --verbose --color"
   },

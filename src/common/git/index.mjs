@@ -27,6 +27,7 @@ import {
 } from '#deps/src/common/env'
 
 import {
+  formatDirectory,
   use,
   trim
 } from '#deps/src/common/format'
@@ -241,8 +242,8 @@ export function gitConfigUserName (d = DIRECTORY) {
         stderr
       } = exec(commands, options, handleComplete)
 
-      if (stdout) stdout.on('data', out('git-config-user-name', directory))
-      if (stderr) stderr.on('data', err('git-config-user-name', directory))
+      if (stdout) stdout.on('data', out('git-config-user-name', formatDirectory(directory)))
+      if (stderr) stderr.on('data', err('git-config-user-name', formatDirectory(directory)))
     })
   )
 }
@@ -277,8 +278,8 @@ export function gitConfigUserEmail (d = DIRECTORY) {
         stderr
       } = exec(commands, options, handleComplete)
 
-      if (stdout) stdout.on('data', out('git-config-user-email', directory))
-      if (stderr) stderr.on('data', err('git-config-user-email', directory))
+      if (stdout) stdout.on('data', out('git-config-user-email', formatDirectory(directory)))
+      if (stderr) stderr.on('data', err('git-config-user-email', formatDirectory(directory)))
     })
   )
 }
@@ -315,8 +316,8 @@ export function catGitRefsRemotesOriginHead (d = DIRECTORY) {
         stderr
       } = exec(commands, options, handleComplete)
 
-      if (stdout) stdout.on('data', out('cat-git-refs-remotes-origin-head', directory))
-      if (stderr) stderr.on('data', err('cat-git-refs-remotes-origin-head', directory))
+      if (stdout) stdout.on('data', out('cat-git-refs-remotes-origin-head', formatDirectory(directory)))
+      if (stderr) stderr.on('data', err('cat-git-refs-remotes-origin-head', formatDirectory(directory)))
     })
   )
 }
@@ -353,8 +354,8 @@ export function awkGitRemoteShowOriginHead (d = DIRECTORY) {
         stderr
       } = exec(commands, options, handleComplete)
 
-      if (stdout) stdout.on('data', out('git-remote-show-origin-head', directory))
-      if (stderr) stderr.on('data', err('git-remote-show-origin-head', directory))
+      if (stdout) stdout.on('data', out('git-remote-show-origin-head', formatDirectory(directory)))
+      if (stderr) stderr.on('data', err('git-remote-show-origin-head', formatDirectory(directory)))
     })
   )
 }
@@ -391,8 +392,8 @@ export function gitRevParseShowTopLevel (d = DIRECTORY) {
         stderr
       } = exec(commands, options, handleComplete)
 
-      if (stdout) stdout.on('data', out('git-rev-parse-show-toplevel', directory))
-      if (stderr) stderr.on('data', err('git-rev-parse-show-toplevel', directory))
+      if (stdout) stdout.on('data', out('git-rev-parse-show-toplevel', formatDirectory(directory)))
+      if (stderr) stderr.on('data', err('git-rev-parse-show-toplevel', formatDirectory(directory)))
     })
   )
 }
@@ -429,8 +430,8 @@ export function gitRevParseAbbrevRefHead (d = DIRECTORY) {
         stderr
       } = exec(commands, options, handleComplete)
 
-      if (stdout) stdout.on('data', out('git-rev-parse-abbrev-ref-head', directory))
-      if (stderr) stderr.on('data', err('git-rev-parse-abbrev-ref-head', directory))
+      if (stdout) stdout.on('data', out('git-rev-parse-abbrev-ref-head', formatDirectory(directory)))
+      if (stderr) stderr.on('data', err('git-rev-parse-abbrev-ref-head', formatDirectory(directory)))
     })
   )
 }

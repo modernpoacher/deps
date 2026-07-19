@@ -136,6 +136,7 @@ export const ARGS = PLATFORM === 'win32'
 
 /**
  *  @param {{ code?: number, message?: string }} [e]
+ *  @returns {void}
  */
 export function handleError (e = {}) {
   const {
@@ -162,6 +163,7 @@ export function handleComplete (e) {
 
 /**
  *  @param {{ code?: number, message?: string }} e
+ *  @returns {void}
  */
 function handlePackageError ({ message = MESSAGE }) {
   error(`Package error: "${message}"`)
@@ -169,30 +171,31 @@ function handlePackageError ({ message = MESSAGE }) {
 
 /**
  *  @param {{ code?: number, message?: string }} e
+ *  @returns {void}
  */
 function handleConfigurationError ({ message = MESSAGE }) {
   error(`Configuration error: "${message}"`)
 }
 
 /**
- *
- * @param directory
+ *  @param {string} directory
+ *  @returns {string}
  */
 function getPackageJsonPath (directory = DIRECTORY) {
   return resolve(join(directory, 'package.json'))
 }
 
 /**
- *
- * @param directory
+ *  @param {string} directory
+ *  @returns {string}
  */
 function getDepsRcPath (directory = DIRECTORY) {
   return resolve(join(directory, '.depsrc'))
 }
 
 /**
- *
- * @param directory
+ *  @param {string} directory
+ *  @returns {string}
  */
 function getDepsRcJsonPath (directory = DIRECTORY) {
   return resolve(join(directory, '.depsrc.json'))

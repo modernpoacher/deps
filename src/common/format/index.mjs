@@ -110,8 +110,8 @@ export function use (key) {
   function write (v) {
     const s = v.trim()
     if (s) {
-      const d = resolve(normalize(s))
-      if (d.startsWith(HOME)) {
+      if (s.startsWith(HOME)) {
+        const d = resolve(normalize(s))
         log(d.replace(new RegExp('^' + HOME), '~'))
       } else {
         log(v.trimEnd())

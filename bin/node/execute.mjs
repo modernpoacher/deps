@@ -277,7 +277,7 @@ function toExcludePatterns (directory) {
 async function * genDirectory (directory) {
   log('genDirectory')
 
-  for await (const packageJson of await glob(toPackagePatterns(directory), { exclude: toExcludePatterns (directory) })) yield dirname(packageJson)
+  for await (const p of glob(toPackagePatterns(directory), { exclude: toExcludePatterns (directory) })) yield dirname(p)
 }
 
 /**

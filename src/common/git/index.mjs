@@ -23,7 +23,8 @@ import debug from '#deps/src/common/debug'
 
 import {
   BIN,
-  PLATFORM
+  PLATFORM,
+  HOME
 } from '#deps/src/common/env'
 
 import {
@@ -131,7 +132,13 @@ export function out (key, directory) {
    *  @returns {void}
    */
   function write (v) {
-    if (v.trim()) log(formatDirectory(v.trimEnd()))
+    if (v.trim()) {
+      if (v.trimStart().startsWith(HOME)) {
+        log(formatDirectory(v))
+      } else {
+        log(v.trimEnd())
+      }
+    }
   }
 
   return function out (value) {
@@ -168,7 +175,13 @@ export function err (key, directory) {
    *  @returns {void}
    */
   function write (v) {
-    if (v.trim()) log(formatDirectory(v.trimEnd()))
+    if (v.trim()) {
+      if (v.trimStart().startsWith(HOME)) {
+        log(formatDirectory(v))
+      } else {
+        log(v.trimEnd())
+      }
+    }
   }
 
   return function err (value) {

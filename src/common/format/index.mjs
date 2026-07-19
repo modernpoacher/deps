@@ -108,7 +108,13 @@ export function use (key) {
    *  @returns {void}
    */
   function write (v) {
-    if (v.trim()) log(formatDirectory(v.trimEnd()))
+    if (v.trim()) {
+      if (v.trimStart().startsWith(HOME)) {
+        log(formatDirectory(v))
+      } else {
+        log(v.trimEnd())
+      }
+    }
   }
 
   /**

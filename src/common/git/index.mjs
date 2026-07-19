@@ -131,7 +131,7 @@ export function out (key, directory) {
    *  @returns {void}
    */
   function write (v) {
-    if (v.trim()) log(v.trimEnd())
+    if (v.trim()) log(formatDirectory(v.trimEnd()))
   }
 
   return function out (value) {
@@ -168,7 +168,7 @@ export function err (key, directory) {
    *  @returns {void}
    */
   function write (v) {
-    if (v.trim()) log(v.trimEnd())
+    if (v.trim()) log(formatDirectory(v.trimEnd()))
   }
 
   return function err (value) {

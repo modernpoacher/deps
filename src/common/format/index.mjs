@@ -38,9 +38,9 @@ export function formatAuthor (name, email) {
  *  @type {(directory: string) => string}
  */
 export const formatDirectory = PLATFORM === 'win32'
-  ? (directory) => resolve(normalize(directory)).trim()
+  ? (directory) => resolve(normalize(directory.trim()))
   : (directory) => {
-      const d = resolve(normalize(directory)).trim()
+      const d = resolve(normalize(directory.trim()))
       if (d.startsWith(HOME)) return d.replace(new RegExp('^' + HOME), '~')
       return d
     }
@@ -108,7 +108,7 @@ export function use (key) {
    *  @returns {void}
    */
   function write (v) {
-    if (v.trim()) log(v.trimEnd())
+    if (v.trim()) log(formatDirectory(v.trimEnd()))
   }
 
   /**

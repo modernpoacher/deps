@@ -108,9 +108,11 @@ export function use (key) {
    *  @returns {void}
    */
   function write (v) {
-    if (v.trim()) {
-      if (v.trimStart().startsWith(HOME)) {
-        log(formatDirectory(v))
+    const s = v.trim()
+    if (s) {
+      const d = resolve(normalize(s))
+      if (d.startsWith(HOME)) {
+        log(d.replace(new RegExp('^' + HOME), '~'))
       } else {
         log(v.trimEnd())
       }

@@ -182,8 +182,8 @@ export function err (key, directory) {
  *  @function getErrorCode
  *  @description
  *  Get an error code from an error
- *  @param {{code?: number, message?: string}} e
- *  @returns {number}
+ *  @param {{code?: string | number, message?: string}} e
+ *  @returns {string | number}
  */
 const getErrorCode = ({ code = 0 }) => code
 
@@ -191,7 +191,7 @@ const getErrorCode = ({ code = 0 }) => code
  *  @function getErrorMessage
  *  @description
  *  Get an error message from an error
- *  @param {{code?: number, message?: string}} e
+ *  @param {{code?: string | number, message?: string}} e
  *  @returns {string}
  */
 const getErrorMessage = ({ message = '' }) => message
@@ -200,7 +200,7 @@ const getErrorMessage = ({ message = '' }) => message
  *  @function isCommandError
  *  @description
  *  Determine whether an error is a safe non-zero exit from a Git command
- *  @param {{code?: number, message?: string}} e
+ *  @param {{code?: string | number, message?: string}} e
  *  @returns {boolean}
  */
 function isCommandError (e) {

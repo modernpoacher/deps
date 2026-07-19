@@ -5,7 +5,10 @@
     "allowJs": true,
     "checkJs": true,
     "noEmit": true,
-    "strict": true
+    "strict": true,
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "."
@@ -15,8 +18,5 @@
     ".github",
     ".husky",
     "test"
-  ],
-  "types": [
-    "node"
   ]
 }

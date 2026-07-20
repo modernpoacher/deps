@@ -41,7 +41,7 @@ export const formatDirectory = PLATFORM === 'win32'
   ? (directory) => resolve(normalize(directory.trim()))
   : (directory) => {
       const d = directory.trim()
-      if (d.startsWith(HOME)) return resolve(normalize(d.replace(new RegExp('^' + HOME), '~')))
+      if (d.startsWith(HOME)) return resolve(normalize(d)).replace(new RegExp('^' + HOME), '~')
       return d
     }
 
@@ -111,7 +111,7 @@ export function use (key) {
     const s = v.trim()
     if (s) {
       if (s.startsWith(HOME)) {
-        log(resolve(normalize(s.replace(new RegExp('^' + HOME), '~'))))
+        log(resolve(normalize(s)).replace(new RegExp('^' + HOME), '~'))
       } else {
         log(v.trimEnd())
       }

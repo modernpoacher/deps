@@ -135,8 +135,7 @@ export function out (key, directory) {
     const s = v.trim()
     if (s) {
       if (s.startsWith(HOME)) {
-        const d = resolve(normalize(s))
-        log(d.replace(new RegExp('^' + HOME), '~'))
+        log(resolve(normalize(s.replace(new RegExp('^' + HOME), '~'))))
       } else {
         log(v.trimEnd())
       }
@@ -184,8 +183,7 @@ export function err (key, directory) {
     const s = v.trim()
     if (s) {
       if (s.startsWith(HOME)) {
-        const d = resolve(normalize(s))
-        log(d.replace(new RegExp('^' + HOME), '~'))
+        log(resolve(normalize(s.replace(new RegExp('^' + HOME), '~'))))
       } else {
         log(v.trimEnd())
       }

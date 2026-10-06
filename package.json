@@ -54,7 +54,7 @@
     "deps-wipe": "bin/deps/wipe.sh"
   },
   "dependencies": {
-    "@sequencemedia/write": "^0.2.74",
+    "@sequencemedia/write": "^0.2.75",
     "commander": "^15.0.0",
     "debug": "^4.4.3",
     "supports-color": "^11.0.0"
@@ -67,7 +67,7 @@
     "@types/debug": "^4.1.13",
     "@types/mocha": "^10.0.10",
     "@types/node": "^26.6.4",
-    "@typescript-eslint/parser": "^8.71.0",
+    "@typescript-eslint/parser": "^8.71.1",
     "chai": "^6.3.0",
     "cross-env": "^10.1.0",
     "eslint": "9.38.0",

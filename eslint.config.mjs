@@ -3,7 +3,6 @@ import jsdoc from 'eslint-plugin-jsdoc'
 import merge from '@sequencemedia/eslint-merge'
 import standard from '@sequencemedia/eslint-config-standard/configs/recommended/merge'
 import typescript from '@sequencemedia/eslint-config-typescript/configs/recommended/merge'
-import typescriptParser from '@typescript-eslint/parser'
 
 export default [
   merge(
@@ -70,10 +69,6 @@ export default [
       'test'
     ],
     languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        projectService: true
-      },
       globals: {
         ...globals.node,
         DepsTypes: 'readonly',
@@ -87,10 +82,6 @@ export default [
       'test/**/*.{mts,cts}'
     ],
     languageOptions: {
-      parser: typescriptParser,
-      parserOptions: {
-        projectService: true
-      },
       globals: {
         ...globals.browser,
         DepsTypes: 'readonly',

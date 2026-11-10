@@ -77,15 +77,28 @@ describe('#deps/src/install', () => {
             .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --registry REGISTRY')
         })
 
-        describe('Force is true', () => {
+        describe('User Config is defined', () => {
           it('returns a string', () => {
             const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
             const MOCK_SAVE = true
             const MOCK_REGISTRY = 'REGISTRY'
-            const MOCK_FORCE = true
+            const MOCK_USERCONFIG = 'USERCONFIG'
 
-            expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
-              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --registry REGISTRY')
+            expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG))
+              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --userconfig USERCONFIG --registry REGISTRY')
+          })
+
+          describe('Force is true', () => {
+            it('returns a string', () => {
+              const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+              const MOCK_SAVE = true
+              const MOCK_REGISTRY = 'REGISTRY'
+              const MOCK_USERCONFIG = 'USERCONFIG'
+              const MOCK_FORCE = true
+
+              expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG, MOCK_FORCE))
+                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --userconfig USERCONFIG --registry REGISTRY')
+            })
           })
         })
       })
@@ -110,15 +123,28 @@ describe('#deps/src/install', () => {
             .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --registry REGISTRY --no-save')
         })
 
-        describe('Force is true', () => {
+        describe('User Config is defined', () => {
           it('returns a string', () => {
             const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
             const MOCK_SAVE = false
             const MOCK_REGISTRY = 'REGISTRY'
-            const MOCK_FORCE = true
+            const MOCK_USERCONFIG = 'USERCONFIG'
 
-            expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
-              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --registry REGISTRY --no-save')
+            expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG))
+              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --userconfig USERCONFIG --registry REGISTRY --no-save')
+          })
+
+          describe('Force is true', () => {
+            it('returns a string', () => {
+              const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+              const MOCK_SAVE = false
+              const MOCK_REGISTRY = 'REGISTRY'
+              const MOCK_USERCONFIG = 'USERCONFIG'
+              const MOCK_FORCE = true
+
+              expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG, MOCK_FORCE))
+                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --userconfig USERCONFIG --registry REGISTRY --no-save')
+            })
           })
         })
       })
@@ -154,15 +180,28 @@ describe('#deps/src/install', () => {
             .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --registry REGISTRY')
         })
 
-        describe('Force is true', () => {
+        describe('User Config is defined', () => {
           it('returns a string', () => {
             const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
             const MOCK_SAVE = true
             const MOCK_REGISTRY = 'REGISTRY'
-            const MOCK_FORCE = true
+            const MOCK_USERCONFIG = 'USERCONFIG'
 
-            expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
-              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --registry REGISTRY')
+            expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG))
+              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --userconfig USERCONFIG --registry REGISTRY')
+          })
+
+          describe('Force is true', () => {
+            it('returns a string', () => {
+              const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+              const MOCK_SAVE = true
+              const MOCK_REGISTRY = 'REGISTRY'
+              const MOCK_USERCONFIG = 'USERCONFIG'
+              const MOCK_FORCE = true
+
+              expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG, MOCK_FORCE))
+                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --userconfig USERCONFIG --registry REGISTRY')
+            })
           })
         })
       })
@@ -187,15 +226,28 @@ describe('#deps/src/install', () => {
             .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --registry REGISTRY --no-save')
         })
 
-        describe('Force is true', () => {
+        describe('User Config is defined', () => {
           it('returns a string', () => {
             const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
             const MOCK_SAVE = false
             const MOCK_REGISTRY = 'REGISTRY'
-            const MOCK_FORCE = true
+            const MOCK_USERCONFIG = 'USERCONFIG'
 
-            expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_FORCE))
-              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --registry REGISTRY --no-save')
+            expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG))
+              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --userconfig USERCONFIG --registry REGISTRY --no-save')
+          })
+
+          describe('Force is true', () => {
+            it('returns a string', () => {
+              const MOCK_PACKAGES = { name: 'PACKAGE NAME', version: 'PACKAGE VERSION' }
+              const MOCK_SAVE = false
+              const MOCK_REGISTRY = 'REGISTRY'
+              const MOCK_USERCONFIG = 'USERCONFIG'
+              const MOCK_FORCE = true
+
+              expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG, MOCK_FORCE))
+                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --userconfig USERCONFIG --registry REGISTRY --no-save')
+            })
           })
         })
       })

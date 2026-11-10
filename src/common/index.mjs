@@ -22,6 +22,8 @@ export const DIRECTORY = '.'
 
 export const REGISTRY = 'https://registry.npmjs.org'
 
+export const USERCONFIG = '~/.npmrc'
+
 export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
 
 const log = debug('@modernpoacher/deps')
@@ -84,6 +86,18 @@ export function getSaveOptionalParameter (commands) {
  */
 export function getRegistryParameter (r, commands) {
   return r ? commands.concat(` --registry ${r}`) : commands
+}
+
+/**
+ *  @function getUserConfigParameter
+ *  @description
+ *  Get the "userconfig" parameter and argument
+ *  @param {string} u - User Config
+ *  @param {string} commands - Current commands string
+ *  @returns {string}
+ */
+export function getUserConfigParameter (u, commands) {
+  return u ? commands.concat(` --userconfig ${u}`) : commands
 }
 
 /**

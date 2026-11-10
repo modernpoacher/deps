@@ -27,8 +27,9 @@ import {
   getOptionalDependencies,
   getBundleDependencies,
   getPeerDependencies,
-  getForceParameter,
   getRegistryParameter,
+  getUserConfigParameter,
+  getForceParameter,
   getSaveProdParameter,
   getSaveDevParameter,
   getSaveOptionalParameter,
@@ -106,16 +107,23 @@ describe('#deps/src/common', () => {
     })
   })
 
-  describe('`getForceParameter`', () => {
+  describe('`getRegistryParameter`', () => {
     it('is a function', () => {
-      expect(getForceParameter)
+      expect(getRegistryParameter)
         .to.be.a('function')
     })
   })
 
-  describe('`getRegistryParameter`', () => {
+  describe('`getUserConfigParameter`', () => {
     it('is a function', () => {
-      expect(getRegistryParameter)
+      expect(getUserConfigParameter)
+        .to.be.a('function')
+    })
+  })
+
+  describe('`getForceParameter`', () => {
+    it('is a function', () => {
+      expect(getForceParameter)
         .to.be.a('function')
     })
   })
@@ -304,15 +312,47 @@ describe('#deps/src/common', () => {
     })
   })
 
+  describe('`getUserConfigParameter()`', () => {
+    describe('The "userconfig" argument is truthy', () => {
+      it('returns a string', () => {
+        expect(getUserConfigParameter('MOCK USERCONFIG', 'MOCK COMMANDS'))
+          .to.eql('MOCK COMMANDS --userconfig MOCK USERCONFIG')
+      })
+    })
+
+    describe('The "userconfig" argument is falsy', () => {
+      it('returns a string', () => {
+        expect(getUserConfigParameter('', 'MOCK COMMANDS'))
+          .to.eql('MOCK COMMANDS')
+      })
+    })
+  })
+
+  describe('`getForceParameter()`', () => {
+    describe('The "force" argument is true', () => {
+      it('returns a string', () => {
+        expect(getForceParameter(true, 'MOCK COMMANDS'))
+          .to.eql('MOCK COMMANDS --force')
+      })
+    })
+
+    describe('The "force" argument is false', () => {
+      it('returns a string', () => {
+        expect(getForceParameter(false, 'MOCK COMMANDS'))
+          .to.eql('MOCK COMMANDS')
+      })
+    })
+  })
+
   describe('`getNoSaveParameter()`', () => {
-    describe('The "save" argument is truthy', () => {
+    describe('The "save" argument is true', () => {
       it('returns a string', () => {
         expect(getNoSaveParameter(true, 'MOCK COMMANDS'))
           .to.eql('MOCK COMMANDS')
       })
     })
 
-    describe('The "save" argument is falsy', () => {
+    describe('The "save" argument is false', () => {
       it('returns a string', () => {
         expect(getNoSaveParameter(false, 'MOCK COMMANDS'))
           .to.eql('MOCK COMMANDS --no-save')

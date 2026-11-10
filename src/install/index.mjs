@@ -33,8 +33,10 @@ import {
 import {
   DIRECTORY,
   REGISTRY,
+  USERCONFIG,
   getNoSaveParameter,
   getRegistryParameter,
+  getUserConfigParameter,
   getForceParameter,
   getSaveExactParameter,
   getCommands,
@@ -56,14 +58,15 @@ log('`install` is awake')
  *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
+ *  @param {string} u - User Config
  *  @param {boolean} f - Force
  *  @returns {string}
  */
-export function getInstallSaveExactCommands (p, s, r, f) {
+export function getInstallSaveExactCommands (p, s, r, u, f) {
   log('getInstallSaveExactCommands')
 
   return normalizeCommands(
-    getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, getSaveExactParameter(`npm i ${transform(p)}`))))
+    getNoSaveParameter(s, getRegistryParameter(r, getUserConfigParameter(u, getForceParameter(f, getSaveExactParameter(`npm i ${transform(p)}`)))))
   )
 }
 
@@ -74,14 +77,15 @@ export function getInstallSaveExactCommands (p, s, r, f) {
  *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
+ *  @param {string} u - User Config
  *  @param {boolean} f - Force
  *  @returns {string}
  */
-export function getInstallCommands (p, s, r, f) {
+export function getInstallCommands (p, s, r, u, f) {
   log('getInstallCommands')
 
   return normalizeCommands(
-    getNoSaveParameter(s, getRegistryParameter(r, getForceParameter(f, `npm i ${transform(p)}`)))
+    getNoSaveParameter(s, getRegistryParameter(r, getUserConfigParameter(u, getForceParameter(f, `npm i ${transform(p)}`))))
   )
 }
 
@@ -93,10 +97,11 @@ export function getInstallCommands (p, s, r, f) {
  *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
+ *  @param {string} u - User Config
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
  */
-export function installSaveExact (d, p, s, r, f) {
+export function installSaveExact (d, p, s, r, u, f) {
   log('installSaveExact')
 
   const directory = normalize(d.trim())
@@ -105,7 +110,7 @@ export function installSaveExact (d, p, s, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(getInstallSaveExactCommands(p, s, r, f))
+      const commands = getCommands(getInstallSaveExactCommands(p, s, r, u, f))
       const options = getOptions(directory)
       /**
        *  @type {HandleComplete}
@@ -139,10 +144,11 @@ export function installSaveExact (d, p, s, r, f) {
  *  @param {DependencyDescriptor | DependencyDescriptor[]} p - Package
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
+ *  @param {string} u - User Config
  *  @param {boolean} f - Force
  *  @returns {Promise<string>}
  */
-export function install (d, p, s, r, f) {
+export function install (d, p, s, r, u, f) {
   log('install')
 
   const directory = normalize(d.trim())
@@ -151,7 +157,7 @@ export function install (d, p, s, r, f) {
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getCommands(getInstallCommands(p, s, r, f))
+      const commands = getCommands(getInstallCommands(p, s, r, u, f))
       const options = getOptions(directory)
       /**
        *  @type {HandleComplete}
@@ -186,17 +192,18 @@ export function install (d, p, s, r, f) {
  *  @param {Configuration} c - Configuration
  *  @param {boolean} s - Save
  *  @param {string} r - Registry
+ *  @param {string} u - User Config
  *  @param {boolean} f - Force
  *  @returns {Promise<void>}
  */
-export async function execute (d = DIRECTORY, p = {}, c = {}, s = false, r = REGISTRY, f = false) {
+export async function execute (d = DIRECTORY, p = {}, c = {}, s = false, r = REGISTRY, u = USERCONFIG, f = false) {
   log('execute')
 
   const depsExact = getDepsExact(p, c)
 
-  if (depsExact.length) await installSaveExact(d, depsExact, s, r, f)
+  if (depsExact.length) await installSaveExact(d, depsExact, s, r, u, f)
 
   const deps = getDeps(p)
 
-  if (deps.length) await install(d, deps, s, r, f)
+  if (deps.length) await install(d, deps, s, r, u, f)
 }

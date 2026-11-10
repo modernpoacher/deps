@@ -97,7 +97,7 @@ export function getRegistryParameter (r, commands) {
  *  @returns {string}
  */
 export function getUserConfigParameter (u, commands) {
-  return u ? commands.concat(` --userconfig ${u}`) : commands
+  return u ? commands.concat(` --userconfig '${u}'`) : commands
 }
 
 /**

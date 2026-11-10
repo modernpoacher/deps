@@ -316,7 +316,7 @@ describe('#deps/src/common', () => {
     describe('The "userconfig" argument is truthy', () => {
       it('returns a string', () => {
         expect(getUserConfigParameter('MOCK USERCONFIG', 'MOCK COMMANDS'))
-          .to.eql('MOCK COMMANDS --userconfig MOCK USERCONFIG')
+          .to.eql('MOCK COMMANDS --userconfig \'MOCK USERCONFIG\'')
       })
     })
 

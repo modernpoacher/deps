@@ -85,7 +85,7 @@ describe('#deps/src/install', () => {
             const MOCK_USERCONFIG = 'USERCONFIG'
 
             expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG))
-              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --userconfig USERCONFIG --registry REGISTRY')
+              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --userconfig \'USERCONFIG\' --registry REGISTRY')
           })
 
           describe('Force is true', () => {
@@ -97,7 +97,7 @@ describe('#deps/src/install', () => {
               const MOCK_FORCE = true
 
               expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG, MOCK_FORCE))
-                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --userconfig USERCONFIG --registry REGISTRY')
+                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --userconfig \'USERCONFIG\' --registry REGISTRY')
             })
           })
         })
@@ -131,7 +131,7 @@ describe('#deps/src/install', () => {
             const MOCK_USERCONFIG = 'USERCONFIG'
 
             expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG))
-              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --userconfig USERCONFIG --registry REGISTRY --no-save')
+              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --userconfig \'USERCONFIG\' --registry REGISTRY --no-save')
           })
 
           describe('Force is true', () => {
@@ -143,7 +143,7 @@ describe('#deps/src/install', () => {
               const MOCK_FORCE = true
 
               expect(getInstallSaveExactCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG, MOCK_FORCE))
-                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --userconfig USERCONFIG --registry REGISTRY --no-save')
+                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --save-exact --force --userconfig \'USERCONFIG\' --registry REGISTRY --no-save')
             })
           })
         })
@@ -188,7 +188,7 @@ describe('#deps/src/install', () => {
             const MOCK_USERCONFIG = 'USERCONFIG'
 
             expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG))
-              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --userconfig USERCONFIG --registry REGISTRY')
+              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --userconfig \'USERCONFIG\' --registry REGISTRY')
           })
 
           describe('Force is true', () => {
@@ -200,7 +200,7 @@ describe('#deps/src/install', () => {
               const MOCK_FORCE = true
 
               expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG, MOCK_FORCE))
-                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --userconfig USERCONFIG --registry REGISTRY')
+                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --userconfig \'USERCONFIG\' --registry REGISTRY')
             })
           })
         })
@@ -234,7 +234,7 @@ describe('#deps/src/install', () => {
             const MOCK_USERCONFIG = 'USERCONFIG'
 
             expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG))
-              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --userconfig USERCONFIG --registry REGISTRY --no-save')
+              .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --userconfig \'USERCONFIG\' --registry REGISTRY --no-save')
           })
 
           describe('Force is true', () => {
@@ -246,7 +246,7 @@ describe('#deps/src/install', () => {
               const MOCK_FORCE = true
 
               expect(getInstallCommands(MOCK_PACKAGES, MOCK_SAVE, MOCK_REGISTRY, MOCK_USERCONFIG, MOCK_FORCE))
-                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --userconfig USERCONFIG --registry REGISTRY --no-save')
+                .to.equal('npm i PACKAGE NAME@PACKAGE VERSION --force --userconfig \'USERCONFIG\' --registry REGISTRY --no-save')
             })
           })
         })

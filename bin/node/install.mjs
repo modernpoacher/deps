@@ -80,6 +80,7 @@ async function app () {
     peer: p,
     save,
     registry,
+    userconfig,
     force
   } = commander.opts()
 
@@ -91,6 +92,7 @@ async function app () {
     peer: p,
     save,
     ...(registry ? { registry } : {}),
+    ...(userconfig ? { userconfig } : {}),
     ...(force ? { force } : {})
   })
 
@@ -117,7 +119,7 @@ async function app () {
     log('Prod')
 
     try {
-      await execute(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), save, registry, force)
+      await execute(DEPS_PATH, getProdDependencies(PACKAGE), getProdDependencies(CONFIGURATION), save, registry, userconfig, force)
     } catch (e) {
       if (e instanceof Error) handleError(e)
     }
@@ -126,7 +128,7 @@ async function app () {
       log('Dev')
 
       try {
-        await execute(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), save, registry, force)
+        await execute(DEPS_PATH, getDevDependencies(PACKAGE), getDevDependencies(CONFIGURATION), save, registry, userconfig, force)
       } catch (e) {
         if (e instanceof Error) handleError(e)
       }
@@ -135,7 +137,7 @@ async function app () {
         log('Optional')
 
         try {
-          await execute(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), save, registry, force)
+          await execute(DEPS_PATH, getOptionalDependencies(PACKAGE), getOptionalDependencies(CONFIGURATION), save, registry, userconfig, force)
         } catch (e) {
           if (e instanceof Error) handleError(e)
         }
@@ -144,7 +146,7 @@ async function app () {
           log('Bundle')
 
           try {
-            await execute(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), save, registry, force)
+            await execute(DEPS_PATH, getBundleDependencies(PACKAGE), getBundleDependencies(CONFIGURATION), save, registry, userconfig, force)
           } catch (e) {
             if (e instanceof Error) handleError(e)
           }
@@ -153,7 +155,7 @@ async function app () {
             log('Peer')
 
             try {
-              await execute(DEPS_PATH, getPeerDependencies(PACKAGE), getPeerDependencies(CONFIGURATION), save, registry, force)
+              await execute(DEPS_PATH, getPeerDependencies(PACKAGE), getPeerDependencies(CONFIGURATION), save, registry, userconfig, force)
             } catch (e) {
               if (e instanceof Error) handleError(e)
             }

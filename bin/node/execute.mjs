@@ -47,6 +47,7 @@ import {
 import {
   DIRECTORY,
   REGISTRY,
+  USERCONFIG,
   getIgnore,
   getAuthor,
   getMessage
@@ -283,12 +284,13 @@ async function * genDirectory (directory) {
 /**
  *  @param {string} directory
  *  @param {string} registry
+ *  @param {string} userconfig
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
  *  @returns {Promise<void>}
  */
-async function iterate (directory, registry, force, message, author) {
+async function iterate (directory, registry, userconfig, force, message, author) {
   log('iterate')
 
   if (directory) {
@@ -302,7 +304,7 @@ async function iterate (directory, registry, force, message, author) {
           const ignore = await getIgnoreFromConfiguration(D)
 
           if (!ignore) {
-            await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+            await execute(D, registry, userconfig, force, await toMessage(message, D), await toAuthor(author, D))
           }
         }
       }
@@ -315,36 +317,39 @@ async function iterate (directory, registry, force, message, author) {
 /**
  *  @param {string} directory
  *  @param {string} registry
+ *  @param {string} userconfig
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
  *  @returns {Promise<void>}
  */
-async function iteratePath (directory, registry, force, message, author) {
+async function iteratePath (directory, registry, userconfig, force, message, author) {
   log('iteratePath')
 
   if (directory) {
     const D = resolve(directory)
 
-    for await (const d of genDirectory(D)) await iterate(d, registry, force, message, author)
+    for await (const d of genDirectory(D)) await iterate(d, registry, userconfig, force, message, author)
   }
 }
 
 /**
  *  @param {string} directory
  *  @param {string} registry
+ *  @param {string} userconfig
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
  *  @returns {Promise<void>}
  */
-async function execute (directory = DIRECTORY, registry = REGISTRY, force = false, message = MESSAGE, author = AUTHOR) {
+async function execute (directory = DIRECTORY, registry = REGISTRY, userconfig = USERCONFIG, force = false, message = MESSAGE, author = AUTHOR) {
   log('execute')
 
   try {
     table({
       directory: formatDirectory(directory),
       registry,
+      userconfig,
       force,
       message
     })
@@ -353,8 +358,8 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
 
     await gitPull(directory)
     await rmrf(directory)
-    await npmi(directory, registry, force)
-    await deps(directory, registry, force)
+    await npmi(directory, registry, userconfig, force)
+    await deps(directory, registry, userconfig, force)
     await gitAdd(directory)
     await gitCommit(directory, message, author)
     await gitPush(directory)
@@ -367,12 +372,13 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, force = fals
 /**
  *  @param {string} directory
  *  @param {string} registry
+ *  @param {string} userconfig
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
  *  @returns {Promise<void>}
  */
-async function executeFrom (directory, registry, force, message, author) {
+async function executeFrom (directory, registry, userconfig, force, message, author) {
   log('executeFrom')
 
   if (directory) {
@@ -386,7 +392,7 @@ async function executeFrom (directory, registry, force, message, author) {
           const ignore = await getIgnoreFromConfiguration(D)
 
           if (!ignore) {
-            await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+            await execute(D, registry, userconfig, force, await toMessage(message, D), await toAuthor(author, D))
           }
         }
       }
@@ -399,12 +405,13 @@ async function executeFrom (directory, registry, force, message, author) {
 /**
  *  @param {string} directory
  *  @param {string} registry
+ *  @param {string} userconfig
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
  *  @returns {Promise<void>}
  */
-async function executeOnly (directory, registry, force, message, author) {
+async function executeOnly (directory, registry, userconfig, force, message, author) {
   log('executeOnly')
 
   if (directory) {
@@ -418,7 +425,7 @@ async function executeOnly (directory, registry, force, message, author) {
           const ignore = await getIgnoreFromConfiguration(D)
 
           if (!ignore) {
-            await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+            await execute(D, registry, userconfig, force, await toMessage(message, D), await toAuthor(author, D))
           }
         }
       }
@@ -431,12 +438,13 @@ async function executeOnly (directory, registry, force, message, author) {
 /**
  *  @param {string} directory
  *  @param {string} registry
+ *  @param {string} userconfig
  *  @param {boolean} force
  *  @param {string} message
  *  @param {string | { name: string; email: string }} author
  *  @returns {Promise<void>}
  */
-async function executePath (directory, registry, force, message, author) {
+async function executePath (directory, registry, userconfig, force, message, author) {
   log('executePath')
 
   if (directory) {
@@ -450,7 +458,7 @@ async function executePath (directory, registry, force, message, author) {
           const ignore = await getIgnoreFromConfiguration(D)
 
           if (!ignore) {
-            await execute(D, registry, force, await toMessage(message, D), await toAuthor(author, D))
+            await execute(D, registry, userconfig, force, await toMessage(message, D), await toAuthor(author, D))
           }
         }
       }
@@ -461,7 +469,7 @@ async function executePath (directory, registry, force, message, author) {
 
       if (code === 128) {
         return (
-          await iteratePath(directory, registry, force, message, author)
+          await iteratePath(directory, registry, userconfig, force, message, author)
         )
       }
 
@@ -491,6 +499,7 @@ async function app () {
     .option('-f, --from [from]', 'Update from directory')
     .option('-o, --only [only]', 'Update only directory')
     .option('--registry [registry]', 'Installation registry')
+    .option('--userconfig [userconfig]', 'User config')
     .option('--force [force]', 'Force installation`', false)
     .option('-m, --message [message]', 'Git commit message')
     .option('-a, --author [author]', 'Git commit author')
@@ -501,6 +510,7 @@ async function app () {
     from: F,
     only: O,
     registry,
+    userconfig,
     force,
     message,
     author
@@ -511,6 +521,7 @@ async function app () {
     ...(F ? { from: F } : {}),
     ...(O ? { only: O } : {}),
     ...(registry ? { registry } : {}),
+    ...(userconfig ? { userconfig } : {}),
     ...(force ? { force } : {}),
     ...(message ? { message } : {}),
     ...(author ? { author } : {})
@@ -520,7 +531,7 @@ async function app () {
     log('Path')
 
     try {
-      await executePath(P, registry, force, message, author)
+      await executePath(P, registry, userconfig, force, message, author)
     } catch (e) {
       if (e instanceof Error) handleError(e)
     }
@@ -529,7 +540,7 @@ async function app () {
       log('From')
 
       try {
-        await executeFrom(P, registry, force, message, author)
+        await executeFrom(P, registry, userconfig, force, message, author)
       } catch (e) {
         if (e instanceof Error) handleError(e)
       }
@@ -538,7 +549,7 @@ async function app () {
         log('Only')
 
         try {
-          await executeOnly(P, registry, force, message, author)
+          await executeOnly(P, registry, userconfig, force, message, author)
         } catch (e) {
           if (e instanceof Error) handleError(e)
         }

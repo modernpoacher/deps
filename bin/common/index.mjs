@@ -63,9 +63,11 @@ import {
   REGISTRY,
   AUTHOR,
   getRegistryParameter,
+  getUserConfigParameter,
   getForceParameter,
   getNvm,
-  getBin
+  getBin,
+  USERCONFIG
 } from '#deps/src/common'
 
 const log = debug('@modernpoacher/deps')
@@ -91,12 +93,12 @@ rm -rf node_modules package-lock.json
 `))
 
 const getNpmiCommands = PLATFORM === 'win32'
-  ? (registry = REGISTRY, force = false) => trim(tidy(getRegistryParameter(registry, getForceParameter(force, 'npm i'))))
-  : (registry = REGISTRY, force = false) => trim(tidy(getBin(getNvm(getRegistryParameter(registry, getForceParameter(force, 'npm i'))))))
+  ? (registry = REGISTRY, userconfig = USERCONFIG, force = false) => trim(tidy(getRegistryParameter(registry, getUserConfigParameter(userconfig, getForceParameter(force, 'npm i')))))
+  : (registry = REGISTRY, userconfig = USERCONFIG, force = false) => trim(tidy(getBin(getNvm(getRegistryParameter(registry, getUserConfigParameter(userconfig, getForceParameter(force, 'npm i')))))))
 
 const getDepsCommands = PLATFORM === 'win32'
-  ? (registry = REGISTRY, force = false) => trim(tidy(getRegistryParameter(registry, getForceParameter(force, 'deps'))))
-  : (registry = REGISTRY, force = false) => trim(tidy(getBin(getNvm(getRegistryParameter(registry, getForceParameter(force, 'deps'))))))
+  ? (registry = REGISTRY, userconfig = USERCONFIG, force = false) => trim(tidy(getRegistryParameter(registry, getUserConfigParameter(userconfig, getForceParameter(force, 'deps')))))
+  : (registry = REGISTRY, userconfig = USERCONFIG, force = false) => trim(tidy(getBin(getNvm(getRegistryParameter(registry, getUserConfigParameter(userconfig, getForceParameter(force, 'deps')))))))
 
 export const DEPS = PLATFORM === 'win32'
   ? `bash "${join(BIN, '.\\bash\\deps.sh')}"`
@@ -395,17 +397,18 @@ function rmrf (d = DIRECTORY) {
 /**
  *  @param {string} [d]
  *  @param {string} [registry]
+ *  @param {string} [userconfig]
  *  @param {boolean} [force]
  *  @returns {Promise<string>}
  */
-function npmi (d = DIRECTORY, registry = REGISTRY, force = false) {
+function npmi (d = DIRECTORY, registry = REGISTRY, userconfig = USERCONFIG, force = false) {
   log('npmi')
 
   const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getNpmiCommands(registry, force)
+      const commands = getNpmiCommands(registry, userconfig, force)
       const options = getOptions(directory)
       /**
        *  @type {HandleComplete}
@@ -436,17 +439,18 @@ function npmi (d = DIRECTORY, registry = REGISTRY, force = false) {
 /**
  *  @param {string} [d]
  *  @param {string} [registry]
+ *  @param {string} [userconfig]
  *  @param {boolean} [force]
  *  @returns {Promise<string>}
  */
-function deps (d = DIRECTORY, registry = REGISTRY, force = false) {
+function deps (d = DIRECTORY, registry = REGISTRY, userconfig = USERCONFIG, force = false) {
   log('deps')
 
   const directory = normalize(d.trim())
 
   return (
     new Promise((resolve, reject) => {
-      const commands = getDepsCommands(registry, force)
+      const commands = getDepsCommands(registry, userconfig, force)
       const options = getOptions(directory)
       /**
        *  @type {HandleComplete}

@@ -64,7 +64,7 @@ async function app () {
     .option('-O, --save-optional [optionalDependencies]', 'Install `optionalDependencies`', false)
     .option('-B, --save-bundle [bundleDependencies]', 'Install `bundleDependencies`', false)
     .option('--registry [registry]', 'Installation registry')
-    .option('--userconfig [userconfig]', 'User Config')
+    .option('--userconfig [userconfig]', 'User config')
     .option('--force [force]', 'Force installation`', false)
     .parse(argv)
 

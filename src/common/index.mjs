@@ -22,7 +22,7 @@ export const DIRECTORY = '.'
 
 export const REGISTRY = 'https://registry.npmjs.org'
 
-export const USERCONFIG = '~/.npmrc'
+export const USERCONFIG = ''
 
 export const AUTHOR = 'Modern Poacher Limited <modernpoacher@modernpoacher.com>'
 

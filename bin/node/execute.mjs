@@ -349,7 +349,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, userconfig =
     table({
       directory: formatDirectory(directory),
       registry,
-      userconfig,
+      userconfig: formatDirectory(userconfig),
       force,
       message
     })
@@ -517,11 +517,11 @@ async function app () {
   } = commander.opts()
 
   table({
-    ...(P ? { path: P } : {}),
-    ...(F ? { from: F } : {}),
-    ...(O ? { only: O } : {}),
+    ...(P ? { path: formatDirectory(P) } : {}),
+    ...(F ? { from: formatDirectory(F) } : {}),
+    ...(O ? { only: formatDirectory(O) } : {}),
     ...(registry ? { registry } : {}),
-    ...(userconfig ? { userconfig } : {}),
+    ...(userconfig ? { userconfig: formatDirectory(userconfig) } : {}),
     ...(force ? { force } : {}),
     ...(message ? { message } : {}),
     ...(author ? { author } : {})

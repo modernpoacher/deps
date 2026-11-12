@@ -13,6 +13,10 @@ import {
 } from '#deps/src/common/env'
 
 import {
+  formatDirectory
+} from '#deps/src/common/format'
+
+import {
   getProdDependencies,
   getDevDependencies,
   getOptionalDependencies,
@@ -91,7 +95,7 @@ async function app () {
     saveOptional: O,
     saveBundle: B,
     ...(registry ? { registry } : {}),
-    ...(userconfig ? { userconfig } : {}),
+    ...(userconfig ? { userconfig: formatDirectory(userconfig) } : {}),
     ...(force ? { force } : {})
   })
 

@@ -139,7 +139,8 @@ export function use (key) {
    *  @returns {void}
    */
   return function use (value) {
-    value.split(LF)
+    value
+      .split(LF)
       .filter(filter)
       .forEach(write)
   }

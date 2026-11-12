@@ -25,6 +25,7 @@ import {
 
 import {
   formatDirectory,
+  formatUserConfig,
   formatAuthor
 } from '#deps/src/common/format'
 
@@ -349,7 +350,7 @@ async function execute (directory = DIRECTORY, registry = REGISTRY, userconfig =
     table({
       directory: formatDirectory(directory),
       registry,
-      userconfig: formatDirectory(userconfig),
+      userconfig: formatUserConfig(userconfig),
       force,
       message
     })
@@ -521,7 +522,7 @@ async function app () {
     ...(F ? { from: formatDirectory(F) } : {}),
     ...(O ? { only: formatDirectory(O) } : {}),
     ...(registry ? { registry } : {}),
-    ...(userconfig ? { userconfig: formatDirectory(userconfig) } : {}),
+    ...(userconfig ? { userconfig: formatUserConfig(userconfig) } : {}),
     ...(force ? { force } : {}),
     ...(message ? { message } : {}),
     ...(author ? { author } : {})

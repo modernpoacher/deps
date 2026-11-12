@@ -13,7 +13,7 @@ import {
 } from '#deps/src/common/env'
 
 import {
-  formatDirectory
+  formatUserConfig
 } from '#deps/src/common/format'
 
 import {
@@ -95,7 +95,7 @@ async function app () {
     saveOptional: O,
     saveBundle: B,
     ...(registry ? { registry } : {}),
-    ...(userconfig ? { userconfig: formatDirectory(userconfig) } : {}),
+    ...(userconfig ? { userconfig: formatUserConfig(userconfig) } : {}),
     ...(force ? { force } : {})
   })
 

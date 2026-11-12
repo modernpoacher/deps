@@ -4,7 +4,10 @@ import {
 
 import {
   normalize,
-  resolve
+  resolve,
+  join,
+  dirname,
+  basename
 } from 'node:path'
 
 import debug from '#deps/src/common/debug'
@@ -43,6 +46,20 @@ export const formatDirectory = PLATFORM === 'win32'
       const d = directory.trim()
       if (d.startsWith(HOME)) return resolve(normalize(d)).replace(new RegExp('^' + HOME), '~')
       return d
+    }
+
+/**
+ *  @function formatUserConfig
+ *  @type {(directory: string) => string}
+ */
+export const formatUserConfig = PLATFORM === 'win32'
+  ? (userconfig) => {
+      const u = userconfig.trim()
+      return resolve(join(dirname(normalize(u)), basename(u)))
+    }
+  : (userconfig) => {
+      const u = userconfig.trim()
+      return (u.startsWith(HOME)) ? resolve(join(dirname(normalize(u)), basename(u))).replace(new RegExp('^' + HOME), '~') : u
     }
 
 const LF = String.fromCodePoint(10)

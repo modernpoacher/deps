@@ -22,6 +22,31 @@ const log = debug('@modernpoacher/deps')
 log('`common/format` is awake')
 
 /**
+ *  @function formatDirectory
+ *  @type {(directory: string) => string}
+ */
+export const formatDirectory = PLATFORM === 'win32'
+  ? (directory) => resolve(normalize(directory.trim()))
+  : (directory) => {
+      const d = directory.trim()
+      return (d.startsWith(HOME)) ? resolve(normalize(d)).replace(new RegExp('^' + HOME), '~') : d
+    }
+
+/**
+ *  @function formatUserConfig
+ *  @type {(userconfig: string) => string}
+ */
+export const formatUserConfig = PLATFORM === 'win32'
+  ? (userconfig) => {
+      const u = userconfig.trim()
+      return resolve(join(dirname(normalize(u)), basename(u)))
+    }
+  : (userconfig) => {
+      const u = userconfig.trim()
+      return (u.startsWith(HOME)) ? resolve(join(dirname(normalize(u)), basename(u))).replace(new RegExp('^' + HOME), '~') : u
+    }
+
+/**
  *  @function formatAuthor
  *  @type {(name: string, email: string) => string | null}
  */
@@ -35,32 +60,6 @@ export function formatAuthor (name, email) {
       : null
   )
 }
-
-/**
- *  @function formatDirectory
- *  @type {(directory: string) => string}
- */
-export const formatDirectory = PLATFORM === 'win32'
-  ? (directory) => resolve(normalize(directory.trim()))
-  : (directory) => {
-      const d = directory.trim()
-      if (d.startsWith(HOME)) return resolve(normalize(d)).replace(new RegExp('^' + HOME), '~')
-      return d
-    }
-
-/**
- *  @function formatUserConfig
- *  @type {(directory: string) => string}
- */
-export const formatUserConfig = PLATFORM === 'win32'
-  ? (userconfig) => {
-      const u = userconfig.trim()
-      return resolve(join(dirname(normalize(u)), basename(u)))
-    }
-  : (userconfig) => {
-      const u = userconfig.trim()
-      return (u.startsWith(HOME)) ? resolve(join(dirname(normalize(u)), basename(u))).replace(new RegExp('^' + HOME), '~') : u
-    }
 
 const LF = String.fromCodePoint(10)
 

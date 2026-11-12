@@ -54,11 +54,11 @@ export function formatAuthor (name, email) {
   const n = name.trim()
   const e = email.trim()
 
-  return (
-    n && e
-      ? `${n} <${e}>`
-      : null
-  )
+  if (n && e) {
+    return `${n} <${e}>`
+  }
+
+  return null
 }
 
 const LF = String.fromCodePoint(10)

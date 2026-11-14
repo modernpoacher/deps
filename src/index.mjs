@@ -4,12 +4,12 @@
 
 /**
  *  Package or configuration dependencies
- *  @typedef {import('./common/index.mjs').Dependencies} Dependencies
+ *  @typedef {DepsTypes.Dependencies} Dependencies
  */
 
 /**
  *  Dependency descriptor
- *  @typedef {import('./common/index.mjs').DependencyDescriptor} DependencyDescriptor
+ *  @typedef {DepsTypes.DependencyDescriptor} DependencyDescriptor
  */
 
 /**

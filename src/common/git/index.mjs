@@ -9,7 +9,9 @@
  *  @returns {void}
  */
 
-import stripAnsi from 'strip-ansi'
+import {
+  stripVTControlCharacters as stripAnsi
+} from 'node:util'
 
 import {
   normalize,

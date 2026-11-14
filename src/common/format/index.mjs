@@ -26,7 +26,10 @@ log('`common/format` is awake')
  *  @type {(directory: string) => string}
  */
 export const formatDirectory = PLATFORM === 'win32'
-  ? (directory) => resolve(normalize(directory.trim()))
+  ? (directory) => {
+      const d = directory.trim()
+      return resolve(normalize(d))
+    }
   : (directory) => {
       const d = directory.trim()
       return (d.startsWith(HOME)) ? resolve(normalize(d)).replace(new RegExp('^' + HOME), '~') : d

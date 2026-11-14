@@ -9,6 +9,13 @@
  *  @returns {void}
  */
 
+/**
+ *  @callback ArrayHandleComplete
+ *  @param {ExecException | null} e
+ *  @param {...string} a
+ *  @returns {void}
+ */
+
 import {
   stripVTControlCharacters as stripAnsi
 } from 'node:util'
@@ -671,7 +678,7 @@ export function gitAdd (d = DIRECTORY, add = ADD) {
  *  @param {string} d - A directory configured for Git
  *  @param {string} message - A commit message
  *  @param {string | { name: string; email: string }} author - The commit author
- *  @returns {Promise<string>}
+ *  @returns {Promise<string[]>}
  */
 export function gitCommit (d = DIRECTORY, message = MESSAGE, author = AUTHOR) {
   log('gitCommit')
@@ -683,11 +690,11 @@ export function gitCommit (d = DIRECTORY, message = MESSAGE, author = AUTHOR) {
       const commands = `git commit -m "${message}" --author "${author}"`
       const options = getOptions(directory)
       /**
-       *  @type {HandleComplete}
+       *  @type {ArrayHandleComplete}
        */
-      function handleComplete (e, v) {
+      function handleComplete (e, ...a) {
         if (!e || isCommandError(e)) {
-          resolve(v)
+          resolve(a)
         } else {
           reject(e)
         }

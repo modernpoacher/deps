@@ -62,6 +62,7 @@ async function app () {
     .option('-p, --peer [peerDependencies]', 'Install `peerDependencies`', false)
     .option('-s, --save [save]', 'Save installed dependencies', false)
     .option('--registry [registry]', 'Installation registry')
+    .option('--userconfig [userconfig]', 'User config')
     .option('--force [force]', 'Force installation`', false)
     .parse(argv)
 

@@ -162,6 +162,7 @@ deps \
   --save-optional \ # Boolean
   --save-bundle \ # Boolean
   --registry '<REGISTRY>' \
+  --userconfig '<USERCONFIG>' \
   --force # Boolean
 
 deps-execute \
@@ -169,6 +170,7 @@ deps-execute \
   --from '<FROM>' \
   --only '<ONLY>' \
   --registry '<REGISTRY>' \
+  --userconfig '<USERCONFIG>' \
   --force \ # Boolean
   --message '<MESSAGE>' \
   --author '<AUTHOR>'
@@ -181,6 +183,7 @@ deps-install \
   --peer \ # Boolean
   --save \ # Boolean
   --registry '<REGISTRY>' \
+  --userconfig '<USERCONFIG>' \
   --force # Boolean
 
 deps-deps \
@@ -202,6 +205,7 @@ npm run deps -- \
   --save-optional \ # Boolean
   --save-bundle \ # Boolean
   --registry '<REGISTRY>' \
+  --userconfig '<USERCONFIG>' \
   --force # Boolean
 
 npm run deps-execute -- \
@@ -209,6 +213,7 @@ npm run deps-execute -- \
   --from '<FROM>' \
   --only '<ONLY>' \
   --registry '<REGISTRY>' \
+  --userconfig '<USERCONFIG>' \
   --force \ # Boolean
   --message '<MESSAGE>' \
   --author '<AUTHOR>'
@@ -221,6 +226,7 @@ npm run deps-install -- \
   --peer \ # Boolean
   --save \ # Boolean
   --registry '<REGISTRY>' \
+  --userconfig '<USERCONFIG>' \
   --force # Boolean
 
 npm run deps-deps -- \

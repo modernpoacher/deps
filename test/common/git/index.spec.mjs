@@ -1,3 +1,13 @@
+import childProcess from 'node:child_process'
+
+import {
+  syncBuiltinESMExports
+} from 'node:module'
+
+import {
+  mock
+} from 'node:test'
+
 import {
   expect
 } from 'chai'
@@ -152,6 +162,230 @@ describe('#deps/src/common/git', () => {
     it('is a function', () => {
       expect(gitRevParseShowTopLevel)
         .to.be.a('function')
+    })
+  })
+
+  describe('awkGitRemoteShowOriginHead()', () => {
+    before(() => {
+      mock.restoreAll()
+      syncBuiltinESMExports()
+    })
+
+    afterEach(() => {
+      mock.restoreAll()
+      syncBuiltinESMExports()
+    })
+
+    describe('Either', () => {
+      const error = null
+
+      before(() => {
+        mock.method(childProcess, 'exec', (commands, options, callback) => {
+          callback(error, ' mock/branch\n')
+
+          return { stdout: null, stderr: null }
+        })
+
+        syncBuiltinESMExports()
+      })
+
+      it('returns a string', async () => {
+        expect(await awkGitRemoteShowOriginHead('.'))
+          .to.equal('mock/branch')
+      })
+    })
+
+    describe('Or', () => {
+      const error = new Error('MOCK ERROR')
+
+      before(() => {
+        mock.method(childProcess, 'exec', (commands, options, callback) => {
+          callback(error)
+
+          return { stdout: null, stderr: null }
+        })
+
+        syncBuiltinESMExports()
+      })
+
+      it('rejects', async () => {
+        await awkGitRemoteShowOriginHead('.')
+          .then(() => {
+            expect.fail('EXPECTATION FAILURE')
+          })
+          .catch((e) => {
+            expect(e)
+              .to.equal(error)
+          })
+      })
+    })
+  })
+
+  describe('catGitRefsRemotesOriginHead()', () => {
+    before(() => {
+      mock.restoreAll()
+      syncBuiltinESMExports()
+    })
+
+    afterEach(() => {
+      mock.restoreAll()
+      syncBuiltinESMExports()
+    })
+
+    describe('Either', () => {
+      const error = null
+
+      before(() => {
+        mock.method(childProcess, 'exec', (commands, options, callback) => {
+          callback(error, ' mock/branch\n')
+
+          return { stdout: null, stderr: null }
+        })
+
+        syncBuiltinESMExports()
+      })
+
+      it('returns a string', async () => {
+        expect(await catGitRefsRemotesOriginHead('.'))
+          .to.equal('mock/branch')
+      })
+    })
+
+    describe('Or', () => {
+      const error = new Error('MOCK ERROR')
+
+      before(() => {
+        mock.method(childProcess, 'exec', (commands, options, callback) => {
+          callback(error)
+
+          return { stdout: null, stderr: null }
+        })
+
+        syncBuiltinESMExports()
+      })
+
+      it('rejects', async () => {
+        await catGitRefsRemotesOriginHead('.')
+          .then(() => {
+            expect.fail('EXPECTATION FAILURE')
+          })
+          .catch((e) => {
+            expect(e)
+              .to.equal(error)
+          })
+      })
+    })
+  })
+
+  describe('gitRevParseAbbrevRefHead()', () => {
+    before(() => {
+      mock.restoreAll()
+      syncBuiltinESMExports()
+    })
+
+    afterEach(() => {
+      mock.restoreAll()
+      syncBuiltinESMExports()
+    })
+
+    describe('Either', () => {
+      const error = null
+
+      before(() => {
+        mock.method(childProcess, 'exec', (commands, options, callback) => {
+          callback(error, ' mock/branch\n')
+
+          return { stdout: null, stderr: null }
+        })
+
+        syncBuiltinESMExports()
+      })
+
+      it('returns a string', async () => {
+        expect(await gitRevParseAbbrevRefHead('.'))
+          .to.equal('mock/branch')
+      })
+    })
+
+    describe('Or', () => {
+      const error = new Error('MOCK ERROR')
+
+      before(() => {
+        mock.method(childProcess, 'exec', (commands, options, callback) => {
+          callback(error)
+
+          return { stdout: null, stderr: null }
+        })
+
+        syncBuiltinESMExports()
+      })
+
+      it('rejects', async () => {
+        await gitRevParseAbbrevRefHead('.')
+          .then(() => {
+            expect.fail('EXPECTATION FAILURE')
+          })
+          .catch((e) => {
+            expect(e)
+              .to.equal(error)
+          })
+      })
+    })
+  })
+
+  describe('gitRevParseShowTopLevel()', () => {
+    before(() => {
+      mock.restoreAll()
+      syncBuiltinESMExports()
+    })
+
+    afterEach(() => {
+      mock.restoreAll()
+      syncBuiltinESMExports()
+    })
+
+    describe('Either', () => {
+      const error = null
+
+      before(() => {
+        mock.method(childProcess, 'exec', (commands, options, callback) => {
+          callback(error, ' /mock/path\n')
+
+          return { stdout: null, stderr: null }
+        })
+
+        syncBuiltinESMExports()
+      })
+
+      it('returns a string', async () => {
+        expect(await gitRevParseShowTopLevel('.'))
+          .to.equal('/mock/path')
+      })
+    })
+
+    describe('Or', () => {
+      const error = new Error('MOCK ERROR')
+
+      before(() => {
+        mock.method(childProcess, 'exec', (commands, options, callback) => {
+          callback(error)
+
+          return { stdout: null, stderr: null }
+        })
+
+        syncBuiltinESMExports()
+      })
+
+      it('rejects', async () => {
+        await gitRevParseShowTopLevel('.')
+          .then(() => {
+            expect.fail('EXPECTATION FAILURE')
+          })
+          .catch((e) => {
+            expect(e)
+              .to.equal(error)
+          })
+      })
     })
   })
 })

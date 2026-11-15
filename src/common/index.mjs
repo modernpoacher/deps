@@ -31,6 +31,19 @@ const log = debug('@modernpoacher/deps')
 log('`common` is awake')
 
 const SP = String.fromCodePoint(32)
+// const LF = String.fromCodePoint(10)
+
+/**
+ *  @function sortDependencies
+ *  @description
+ *  Sort the dependencies by name
+ *  @param {DependencyDescriptor} one
+ *  @param {DependencyDescriptor} two
+ *  @returns {number}
+ */
+function sortDependencies ({ name: alpha = '' }, { name: omega = '' }) {
+  return alpha.localeCompare(omega)
+}
 
 /**
  *  @function getSaveProdParameter
@@ -498,7 +511,7 @@ export function transform (value) {
 
   return (
     Array.isArray(value)
-      ? value.map(transformDependency).join(SP).trim()
+      ? value.sort(sortDependencies).map(transformDependency).join(SP).trim() // + '\\' + LF).trim()
       : transformDependency(value)
   )
 }

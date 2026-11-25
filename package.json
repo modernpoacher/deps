@@ -60,17 +60,17 @@
     "supports-color": "^11.0.0"
   },
   "devDependencies": {
-    "@sequencemedia/eslint-config-standard": "0.4.4",
-    "@sequencemedia/eslint-config-typescript": "0.2.16",
-    "@sequencemedia/eslint-merge": "^0.0.97",
+    "@sequencemedia/eslint-config-standard": "0.4.5",
+    "@sequencemedia/eslint-config-typescript": "0.2.17",
+    "@sequencemedia/eslint-merge": "^0.0.99",
     "@types/chai": "^5.2.3",
     "@types/debug": "^4.1.13",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^26.6.6",
+    "@types/node": "^26.6.7",
     "chai": "^6.3.0",
     "cross-env": "^10.1.0",
     "eslint": "10.15.0",
-    "eslint-plugin-jsdoc": "^65.5.3",
+    "eslint-plugin-jsdoc": "^65.5.4",
     "globals": "^17.14.0",
     "husky": "^9.1.7",
     "mocha": "^12.0.3"
